@@ -1,0 +1,6 @@
+# Análisis de Componentes Principales
+
+```{r setup2, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+

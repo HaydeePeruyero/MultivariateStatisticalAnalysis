@@ -1,0 +1,23 @@
+# Apéndices
+
+```{r setup6, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+```{r, include=FALSE}
+workingDir <-  "."
+setwd(workingDir)
+```
+
+## Introducción a R
+
+## Git + Github
+
+## Gráficas Multivariadas
+
+## Escalas de Medición
+
+## Valores Faltantes
+
+
+

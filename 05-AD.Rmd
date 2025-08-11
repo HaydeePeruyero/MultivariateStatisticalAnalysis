@@ -1,0 +1,12 @@
+# Análisis de Discriminante
+
+```{r setup5, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+```{r, include=FALSE}
+workingDir <-  "."
+setwd(workingDir)
+```
+
+

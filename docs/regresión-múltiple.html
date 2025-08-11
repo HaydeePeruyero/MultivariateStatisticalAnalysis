@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Sección 2 Regresión múltiple | Estadística Multivariada</title>
+  <meta name="description" content="Curso ENES Morelia Semestre 2026-1" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Sección 2 Regresión múltiple | Estadística Multivariada" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Curso ENES Morelia Semestre 2026-1" />
+  <meta name="github-repo" content="HaydeePeruyero/MultivariateStatisticalAnalysis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Sección 2 Regresión múltiple | Estadística Multivariada" />
+  
+  <meta name="twitter:description" content="Curso ENES Morelia Semestre 2026-1" />
+  
+
+<meta name="author" content="Haydeé Peruyero" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="análisis-de-componentes-principales.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MultivariateStatisticalAnalysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="01-Regresion_multiple.html"><a href="#estad%C3%ADstica-multivariada"><i class="fa fa-check"></i><b>1</b> Estadística Multivariada</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1.1</b> Temario</a></li>
+<li class="chapter" data-level="1.2" data-path="01-Regresion_multiple.html"><a href="#evaluaci%C3%B3n"><i class="fa fa-check"></i><b>1.2</b> Evaluación</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#proyecto-final"><i class="fa fa-check"></i><b>1.3</b> Proyecto final</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#referencias"><i class="fa fa-check"></i><b>1.4</b> Referencias</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#material-interesante"><i class="fa fa-check"></i><b>1.5</b> Material interesante</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#datacamp"><i class="fa fa-check"></i><b>1.6</b> DataCamp</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="01-Regresion_multiple.html"><a href="#regresi%C3%B3n-m%C3%BAltiple"><i class="fa fa-check"></i><b>2</b> Regresión múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="01-Regresion_multiple.html"><a href="#por-qu%C3%A9-estad%C3%ADstica-multivariada"><i class="fa fa-check"></i><b>2.1</b> ¿Por qué estadística multivariada?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="01-Regresion_multiple.html"><a href="#qu%C3%A9-es-multivariado-y-por-qu%C3%A9-lo-necesitamos"><i class="fa fa-check"></i><b>2.1.1</b> ¿Qué es “multivariado” y por qué lo necesitamos?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="01-Regresion_multiple.html"><a href="#regresi%C3%B3n-m%C3%BAltiple-1"><i class="fa fa-check"></i><b>2.2</b> Regresión múltiple</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="01-Regresion_multiple.html"><a href="#modelo-y-estimaci%C3%B3n"><i class="fa fa-check"></i><b>2.2.1</b> Modelo y estimación</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-de-componentes-principales"><i class="fa fa-check"></i><b>3</b> Análisis de Componentes Principales</a></li>
+<li class="chapter" data-level="4" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-factorial"><i class="fa fa-check"></i><b>4</b> Análisis Factorial</a></li>
+<li class="chapter" data-level="5" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-de-conglomerados"><i class="fa fa-check"></i><b>5</b> Análisis de Conglomerados</a></li>
+<li class="chapter" data-level="6" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-de-discriminante"><i class="fa fa-check"></i><b>6</b> Análisis de Discriminante</a></li>
+<li class="chapter" data-level="7" data-path="01-Regresion_multiple.html"><a href="#ap%C3%A9ndices"><i class="fa fa-check"></i><b>7</b> Apéndices</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="01-Regresion_multiple.html"><a href="#introducci%C3%B3n-a-r"><i class="fa fa-check"></i><b>7.1</b> Introducción a R</a></li>
+<li class="chapter" data-level="7.2" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>7.2</b> Git + Github</a></li>
+<li class="chapter" data-level="7.3" data-path="01-Regresion_multiple.html"><a href="#gr%C3%A1ficas-multivariadas"><i class="fa fa-check"></i><b>7.3</b> Gráficas Multivariadas</a></li>
+<li class="chapter" data-level="7.4" data-path="01-Regresion_multiple.html"><a href="#escalas-de-medici%C3%B3n"><i class="fa fa-check"></i><b>7.4</b> Escalas de Medición</a></li>
+<li class="chapter" data-level="7.5" data-path="apéndices.html"><a href="apéndices.html#valores-faltantes"><i class="fa fa-check"></i><b>7.5</b> Valores Faltantes</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estadística Multivariada</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regresión-múltiple" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Sección 2</span> Regresión múltiple<a href="#regresi%C3%B3n-m%C3%BAltiple" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="por-qué-estadística-multivariada" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> ¿Por qué estadística multivariada?<a href="#por-qu%C3%A9-estad%C3%ADstica-multivariada" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El proceso de modelado consiste en construir expresiones matemáticas que permitan representar el comportamiento de una variable que queremos estudiar. Cuando contamos con varias variables, suele interesarnos analizar cómo unas influyen sobre otras, determinando si existe una relación, su intensidad y su forma. En muchos casos, estas relaciones pueden ser complejas y difíciles de describir directamente; por ello, se busca aproximarlas mediante funciones matemáticas sencillas como polinomios, que conserven los elementos esenciales para explicar el fenómeno de interés.</p>
+<p>Cuando estudiamos fenómenos deterministas, es común vincular una variable dependiente con una o más variables independientes. Por ejemplo, en la ecuación de la velocidad (<span class="math inline">\(v=d/t\)</span>), la distancia depende de la velocidad y del tiempo. En la práctica, cuando realizamos distintos experimentos, las fórmulas deterministas podrían no capturar por completo el comportamiento observado. Esto puede deberse a factores no controlados, a la presencia de variabilidad natural o a efectos aleatorios. Por esta razón, además de la parte determinista del modelo, se incorpora un término que represente la discrepancia aleatoria entre lo que se predice y lo que efectivamente se observa. De forma general, esta idea se resume como:</p>
+<p><span class="math display">\[Observación = Modelo \ + \ Error\]</span></p>
+<p>Cuando se supone que la relación entre las variables puede representarse mediante una ecuación lineal, hablamos de <em>análisis de regresión lineal</em>. Si intervienen únicamente dos variables, una dependiente <span class="math inline">\(y\)</span> y independiente <span class="math inline">\(x\)</span>, se trata de <strong>regresión lineal simple</strong>. En cambio, cuando la variable de interés <span class="math inline">\(y\)</span> depende de dos o más variables independientes <span class="math inline">\(x_1,x_2, ...\)</span> hablamos de <strong>regresión lineal múltiple</strong>.</p>
+<p><em>Supongamos que queremos predecir el rendimiento académico de un estudiante, ¿solo necesitamos las horas que estudia?</em></p>
+<p>En este caso se tiene que el puntaje o rendimiento lo podemos representar con <span class="math inline">\(y\)</span> y las horas de estudio con <span class="math inline">\(x\)</span>. Entonces esta propuesta de modelo, la podríamos representar como:</p>
+<p><span class="math display">\[y=\beta_0+\beta_1x\]</span>
+Donde <span class="math inline">\(\beta_0\)</span> es la ordenada al origen y <span class="math inline">\(\beta_1\)</span> la pendiente. Esta recta podría no ajustarse al modelo por diferentes razones, entonces lo que se hace es considerar un error aleatorio <span class="math inline">\(\epsilon\)</span>. El modelo que ya considera este error se representa como:</p>
+<p><span class="math display">\[y=\beta_0+\beta_1x+\epsilon.\]</span></p>
+<p>A este modelo se le conoce como modelo de <strong>regresión lineal simple</strong> y a <span class="math inline">\(\beta_0,\beta_1\)</span> se les conoce como <strong>coeficientes de regresión</strong>.</p>
+<p>En problemas reales, casi nunca una sola variable explica el fenómeno. Las decisiones y predicciones mejoran cuando integramos múltiples fuentes de información.</p>
+<p>Ejemplos:
+- Salud: riesgo de una enfermedad según edad, IMC, actividad física, dieta y antecedentes.
+- Ingeniería: vida útil de una pieza según temperatura, vibración, material y carga.
+- Biología: crecimiento de una planta por agua, luz, fertilizante, temperatura.</p>
+<p><strong>Ejemplo:</strong> Si queremos predecir el rendimiento académico de un estudiante, ¿solo necesitamos las horas que estudia? ¿qué otras variables podrían influir en el puntaje de un examen?</p>
+<details>
+<summary>
+<b> Rendimiento escolar </b>
+</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="regresión-múltiple.html#cb1-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-2"><a href="regresión-múltiple.html#cb1-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb1-3"><a href="regresión-múltiple.html#cb1-3" tabindex="-1"></a>data_intro <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-4"><a href="regresión-múltiple.html#cb1-4" tabindex="-1"></a>  <span class="at">estudiante =</span> <span class="fu">paste0</span>(<span class="st">&quot;E&quot;</span>, <span class="dv">1</span><span class="sc">:</span>n),</span>
+<span id="cb1-5"><a href="regresión-múltiple.html#cb1-5" tabindex="-1"></a>  <span class="at">horas_estudio =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>),</span>
+<span id="cb1-6"><a href="regresión-múltiple.html#cb1-6" tabindex="-1"></a>  <span class="at">horas_sueno  =</span> <span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">9</span>,<span class="dv">7</span>),</span>
+<span id="cb1-7"><a href="regresión-múltiple.html#cb1-7" tabindex="-1"></a>  <span class="at">asistencia   =</span> <span class="fu">c</span>(<span class="fl">0.9</span>,<span class="fl">0.95</span>,<span class="fl">0.8</span>,<span class="fl">0.85</span>,<span class="fl">0.7</span>,<span class="fl">0.9</span>,<span class="fl">0.8</span>,<span class="fl">0.9</span>,<span class="dv">1</span>,<span class="fl">0.95</span>),</span>
+<span id="cb1-8"><a href="regresión-múltiple.html#cb1-8" tabindex="-1"></a>  <span class="at">puntaje      =</span> <span class="fu">c</span>(<span class="dv">65</span>,<span class="dv">70</span>,<span class="dv">68</span>,<span class="dv">80</span>,<span class="dv">60</span>,<span class="dv">75</span>,<span class="dv">65</span>,<span class="dv">78</span>,<span class="dv">88</span>,<span class="dv">85</span>)</span>
+<span id="cb1-9"><a href="regresión-múltiple.html#cb1-9" tabindex="-1"></a>)</span>
+<span id="cb1-10"><a href="regresión-múltiple.html#cb1-10" tabindex="-1"></a>data_intro</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 5
+##    estudiante horas_estudio horas_sueno asistencia puntaje
+##    &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+##  1 E1                     2           7       0.9       65
+##  2 E2                     3           8       0.95      70
+##  3 E3                     4           6       0.8       68
+##  4 E4                     5           7       0.85      80
+##  5 E5                     1           5       0.7       60
+##  6 E6                     3           8       0.9       75
+##  7 E7                     2           7       0.8       65
+##  8 E8                     4           6       0.9       78
+##  9 E9                     5           9       1         88
+## 10 E10                    6           7       0.95      85</code></pre>
+</details>
+<p>¿Qué pasa si solo graficamos horas de estudio vs puntaje?</p>
+<details>
+<summary>
+<b> Plot hotas de estudio vs puntaje sugerida</b>
+</summary>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="regresión-múltiple.html#cb3-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="regresión-múltiple.html#cb3-2" tabindex="-1"></a><span class="fu">ggplot</span>(data_intro, <span class="fu">aes</span>(horas_estudio, puntaje)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="regresión-múltiple.html#cb3-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="regresión-múltiple.html#cb3-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a href="regresión-múltiple.html#cb3-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;¿Solo horas de estudio explican el puntaje?&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</details>
+<p>¿Se ajusta un modelo lineal? ¿Porqué?</p>
+<div id="qué-es-multivariado-y-por-qué-lo-necesitamos" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> ¿Qué es “multivariado” y por qué lo necesitamos?<a href="#qu%C3%A9-es-multivariado-y-por-qu%C3%A9-lo-necesitamos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Idea central:</strong> cuando <strong>varias</strong> <span class="math inline">\(x\)</span> influyen sobre <span class="math inline">\(y\)</span>, estudiar cada <span class="math inline">\(x\)</span> por separado puede engañarnos. El análisis multivariado permite:</p>
+<ul>
+<li><strong>Aislar efectos</strong>: estimar el efecto de <span class="math inline">\(x_1\)</span> <em>manteniendo constantes</em> <span class="math inline">\(x_2,x_3,...\)</span>.</li>
+<li><strong>Mejorar predicción</strong>: reducir error al añadir información relevante.</li>
+<li><strong>Controlar confusores</strong>: variables que cambian la relación aparente entre <span class="math inline">\(y\)</span> y <span class="math inline">\(x\)</span>.</li>
+</ul>
+<p><strong>Ejemplo:</strong> Si ajustamos ahora un modelo con varias variables, ¿vamos a observar un cambio? ¿se ajustará mejor?</p>
+<details>
+<summary>
+<b>Código (modelos + comparaciones)</b>
+</summary>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="regresión-múltiple.html#cb5-1" tabindex="-1"></a><span class="co"># Modelo simple</span></span>
+<span id="cb5-2"><a href="regresión-múltiple.html#cb5-2" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(puntaje <span class="sc">~</span> horas_estudio, <span class="at">data =</span> data_intro)</span>
+<span id="cb5-3"><a href="regresión-múltiple.html#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="regresión-múltiple.html#cb5-4" tabindex="-1"></a><span class="co"># Modelo múltiple</span></span>
+<span id="cb5-5"><a href="regresión-múltiple.html#cb5-5" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(puntaje <span class="sc">~</span> horas_estudio <span class="sc">+</span> horas_sueno <span class="sc">+</span> asistencia, <span class="at">data =</span> data_intro)</span>
+<span id="cb5-6"><a href="regresión-múltiple.html#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="regresión-múltiple.html#cb5-7" tabindex="-1"></a><span class="co"># Medidas clave</span></span>
+<span id="cb5-8"><a href="regresión-múltiple.html#cb5-8" tabindex="-1"></a>R2_m1  <span class="ot">&lt;-</span> <span class="fu">glance</span>(m1)<span class="sc">$</span>r.squared</span>
+<span id="cb5-9"><a href="regresión-múltiple.html#cb5-9" tabindex="-1"></a>R2_m2  <span class="ot">&lt;-</span> <span class="fu">glance</span>(m2)<span class="sc">$</span>r.squared</span>
+<span id="cb5-10"><a href="regresión-múltiple.html#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="regresión-múltiple.html#cb5-11" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;El R2 del modelo simple:&quot;</span>, R2_m1))</span></code></pre></div>
+<pre><code>## [1] &quot;El R2 del modelo simple: 0.824317362184441&quot;</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="regresión-múltiple.html#cb7-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;El R2 del modelo multiple:&quot;</span>, R2_m2))</span></code></pre></div>
+<pre><code>## [1] &quot;El R2 del modelo multiple: 0.895428180549875&quot;</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="regresión-múltiple.html#cb9-1" tabindex="-1"></a><span class="co">#R2adj_m1 &lt;- glance(m1)$adj.r.squared</span></span>
+<span id="cb9-2"><a href="regresión-múltiple.html#cb9-2" tabindex="-1"></a><span class="co">#R2adj _m2 &lt;- glance(m2)$adj.r.squared</span></span></code></pre></div>
+<ul>
+<li>¿Aumentó <span class="math inline">\(R^2\)</span> al incluir más variables? ¿Por qué tiende a subir?</li>
+<li>¿Qué cambia en la interpretación de horas_estudio al controlar por horas_sueno y asistencia?</li>
+<li>¿Puede un predictor ser importante en bivariado y no en multivariado (o viceversa)?</li>
+</ul>
+</div>
+</div>
+<div id="regresión-múltiple-1" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Regresión múltiple<a href="#regresi%C3%B3n-m%C3%BAltiple-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="modelo-y-estimación" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Modelo y estimación<a href="#modelo-y-estimaci%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Los modelos en regresión lineal múltiple están dados por la siguiente forma, donde <span class="math inline">\(y\)</span> depende de <span class="math inline">\(p\)</span> variables predictoras:</p>
+<p><span class="math display">\[y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2} + \beta_px_{ip}+\epsilon_i.\]</span></p>
+<p>Se suele asumir que los errores <span class="math inline">\(\epsilon_i\)</span> son i.i.d. con distribución normal de media 0 y varianza <span class="math inline">\(\sigma^2\)</span> desconocida. Los coeficientes <span class="math inline">\(\beta_i\)</span> son constantes desconocidas y son los parámetros del modelo. Cada <span class="math inline">\(\beta_j\)</span> representa el cambio esperado en la respuesta <span class="math inline">\(y\)</span> por el cambio unitario en <span class="math inline">\(x_i\)</span> cuando todas las demás variables independientes <span class="math inline">\(x_i(i\neq j)\)</span> se mantienen constantes.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="regresión-múltiple.html#cb10-1" tabindex="-1"></a><span class="co"># Forma general</span></span>
+<span id="cb10-2"><a href="regresión-múltiple.html#cb10-2" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> ... <span class="sc">+</span> xp, <span class="at">data =</span> datos)</span>
+<span id="cb10-3"><a href="regresión-múltiple.html#cb10-3" tabindex="-1"></a><span class="co"># summary(ajuste)</span></span></code></pre></div>
+<p>Los coeficientes los podemos interpretar como sigue:</p>
+<ul>
+<li><strong>Intercepto (<span class="math inline">\(\beta_0\)</span>)</strong>: valor esperado de <span class="math inline">\(y\)</span> cuando todas las <span class="math inline">\(x\)</span>=0.</li>
+<li><strong>Pendiente <span class="math inline">\(\beta_j\)</span></strong>: efecto <strong>parcial</strong> de <span class="math inline">\(x_j\)</span> sobre <span class="math inline">\(y\)</span> manteniendo las demás constantes.</li>
+</ul>
+<p>En los modelos de regreción lineal, solemos usar las siguientes medidas de bondad de ajuste:</p>
+<ul>
+<li><strong><span class="math inline">\(R^2\)</span></strong>: proporción de varianza de <span class="math inline">\(y\)</span> explicada.</li>
+<li><strong><span class="math inline">\(R^2\)</span> ajustado</strong>: penaliza por número de predictores (mejor para comparar modelos con distinto número de x).</li>
+<li><strong>RMSE (<span class="math inline">\(\sigma\)</span>)</strong>: error típico de predicción en unidades de <span class="math inline">\(y\)</span>.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="regresión-múltiple.html#cb11-1" tabindex="-1"></a>comp <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(</span>
+<span id="cb11-2"><a href="regresión-múltiple.html#cb11-2" tabindex="-1"></a>  <span class="fu">glance</span>(m1) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">modelo=</span><span class="st">&quot;simple&quot;</span>),</span>
+<span id="cb11-3"><a href="regresión-múltiple.html#cb11-3" tabindex="-1"></a>  <span class="fu">glance</span>(m2) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">modelo=</span><span class="st">&quot;multiple&quot;</span>)</span>
+<span id="cb11-4"><a href="regresión-múltiple.html#cb11-4" tabindex="-1"></a>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(modelo, r.squared, adj.r.squared)</span>
+<span id="cb11-5"><a href="regresión-múltiple.html#cb11-5" tabindex="-1"></a>comp</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 3
+##   modelo   r.squared adj.r.squared
+##   &lt;chr&gt;        &lt;dbl&gt;         &lt;dbl&gt;
+## 1 simple       0.824         0.802
+## 2 multiple     0.895         0.843</code></pre>
+<p>Para este modelo algunos de los supuestos se siguen del modelo de regresión lineal
+simple y se agregan algunos que tienen que ver con la relación que pudiera existir entre
+las variables regresoras.</p>
+<ul>
+<li>El modelo es lineal en los parámetros.<br />
+<em>Chequeo</em>: residuales vs ajustados sin patrón claro.</li>
+<li>El modelo está especificado correctamente.</li>
+<li>Covarianza cero entre variables regresoras y el error.</li>
+<li>Esperanza del error igual a cero.</li>
+<li>Homocedasticidad.</li>
+<li>No autocorrelación entre los errores.</li>
+<li>Los errores siguen una distribución normal.</li>
+<li>Mas observaciones que parámetros a estimar.</li>
+<li>Variación entre los valores de las variables regresoras.</li>
+<li>No colinealidad (multicolinealidad) entre las variables regresoras, es decir, no existe
+una relación lineal entre <span class="math inline">\(x_i\)</span> y <span class="math inline">\(x_j\)</span> (es decir, las variables son linealmente independientes).</li>
+</ul>
+<details>
+<summary>
+<b>Supuestos</b>
+</summary>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="regresión-múltiple.html#cb13-1" tabindex="-1"></a><span class="co"># Modelo m2</span></span>
+<span id="cb13-2"><a href="regresión-múltiple.html#cb13-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb13-3"><a href="regresión-múltiple.html#cb13-3" tabindex="-1"></a><span class="fu">plot</span>(m2, <span class="at">which=</span><span class="dv">1</span>)  <span class="co"># Residuales vs ajustados</span></span>
+<span id="cb13-4"><a href="regresión-múltiple.html#cb13-4" tabindex="-1"></a><span class="fu">plot</span>(m2, <span class="at">which=</span><span class="dv">2</span>)  <span class="co"># QQ-plot</span></span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</details>
+<hr />
+<p><strong>Ejercicio</strong>: Supongamos que tenemos los siguientes datos: precio de vivienda según metros, habitaciones y distancia al centro.</p>
+<details>
+<summary>
+<b>Dataset</b>
+</summary>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="regresión-múltiple.html#cb14-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb14-2"><a href="regresión-múltiple.html#cb14-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">14</span></span>
+<span id="cb14-3"><a href="regresión-múltiple.html#cb14-3" tabindex="-1"></a>casas <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb14-4"><a href="regresión-múltiple.html#cb14-4" tabindex="-1"></a>  <span class="at">precio =</span> <span class="fu">c</span>(<span class="dv">200</span>,<span class="dv">220</span>,<span class="dv">250</span>,<span class="dv">275</span>,<span class="dv">300</span>,<span class="dv">180</span>,<span class="dv">210</span>,<span class="dv">260</span>,<span class="dv">280</span>,<span class="dv">320</span>,<span class="dv">190</span>,<span class="dv">240</span>,<span class="dv">230</span>,<span class="dv">305</span>),</span>
+<span id="cb14-5"><a href="regresión-múltiple.html#cb14-5" tabindex="-1"></a>  <span class="at">metros =</span> <span class="fu">c</span>(<span class="dv">80</span>,<span class="dv">90</span>,<span class="dv">100</span>,<span class="dv">110</span>,<span class="dv">120</span>,<span class="dv">70</span>,<span class="dv">85</span>,<span class="dv">105</span>,<span class="dv">115</span>,<span class="dv">130</span>,<span class="dv">75</span>,<span class="dv">95</span>,<span class="dv">92</span>,<span class="dv">125</span>),</span>
+<span id="cb14-6"><a href="regresión-múltiple.html#cb14-6" tabindex="-1"></a>  <span class="at">habitaciones =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>),</span>
+<span id="cb14-7"><a href="regresión-múltiple.html#cb14-7" tabindex="-1"></a>  <span class="at">distancia_centro =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">8</span>,<span class="dv">6</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>)</span>
+<span id="cb14-8"><a href="regresión-múltiple.html#cb14-8" tabindex="-1"></a>)</span>
+<span id="cb14-9"><a href="regresión-múltiple.html#cb14-9" tabindex="-1"></a>casas</span></code></pre></div>
+<pre><code>## # A tibble: 14 × 4
+##    precio metros habitaciones distancia_centro
+##     &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;            &lt;dbl&gt;
+##  1    200     80            2                5
+##  2    220     90            3                4
+##  3    250    100            3                6
+##  4    275    110            4                3
+##  5    300    120            4                2
+##  6    180     70            2                8
+##  7    210     85            3                6
+##  8    260    105            3                3
+##  9    280    115            4                2
+## 10    320    130            5                1
+## 11    190     75            2                7
+## 12    240     95            3                5
+## 13    230     92            3                4
+## 14    305    125            4                2</code></pre>
+</details>
+<ol style="list-style-type: decimal">
+<li>Ajusta <code>precio ~ metros</code> (simple) y <code>precio ~ metros + habitaciones + distancia_centro</code> (múltiple).<br />
+</li>
+<li>Compara <span class="math inline">\(R^2\)</span>, <span class="math inline">\(R^2\)</span> <strong>ajustado</strong> y <strong>σ (RMSE)</strong>.<br />
+</li>
+<li>Interpreta el coeficiente de <code>distancia_centro</code>.<br />
+</li>
+<li>Revisa QQ-plot y residuales vs ajustados. ¿Algún patrón?</li>
+</ol>
+<details>
+<summary>
+<b>Solución</b>
+</summary>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="regresión-múltiple.html#cb16-1" tabindex="-1"></a>m_s <span class="ot">&lt;-</span> <span class="fu">lm</span>(precio <span class="sc">~</span> metros, <span class="at">data=</span>casas)</span>
+<span id="cb16-2"><a href="regresión-múltiple.html#cb16-2" tabindex="-1"></a>m_m <span class="ot">&lt;-</span> <span class="fu">lm</span>(precio <span class="sc">~</span> metros <span class="sc">+</span> habitaciones <span class="sc">+</span> distancia_centro, <span class="at">data=</span>casas)</span>
+<span id="cb16-3"><a href="regresión-múltiple.html#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="regresión-múltiple.html#cb16-4" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">glance</span>(m_s)[,<span class="fu">c</span>(<span class="st">&quot;r.squared&quot;</span>,<span class="st">&quot;adj.r.squared&quot;</span>)]</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 2
+##   r.squared adj.r.squared
+##       &lt;dbl&gt;         &lt;dbl&gt;
+## 1     0.996         0.996</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="regresión-múltiple.html#cb18-1" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">glance</span>(m_m)[,<span class="fu">c</span>(<span class="st">&quot;r.squared&quot;</span>,<span class="st">&quot;adj.r.squared&quot;</span>)]</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 2
+##   r.squared adj.r.squared
+##       &lt;dbl&gt;         &lt;dbl&gt;
+## 1     0.997         0.996</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="regresión-múltiple.html#cb20-1" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(m_m)</span></code></pre></div>
+<pre><code>## # A tibble: 4 × 5
+##   term             estimate std.error statistic      p.value
+##   &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+## 1 (Intercept)        -8.67     14.9      -0.583 0.573       
+## 2 metros              2.53      0.162    15.6   0.0000000236
+## 3 habitaciones       -0.505     2.80     -0.180 0.861       
+## 4 distancia_centro    1.38      0.974     1.42  0.187</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="regresión-múltiple.html#cb22-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb22-2"><a href="regresión-múltiple.html#cb22-2" tabindex="-1"></a><span class="fu">plot</span>(m_m, <span class="at">which=</span><span class="dv">1</span>)</span>
+<span id="cb22-3"><a href="regresión-múltiple.html#cb22-3" tabindex="-1"></a><span class="fu">plot</span>(m_m, <span class="at">which=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</details>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="análisis-de-componentes-principales.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/edit/main/01-Regresion_multiple.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["MultivariateStatisticalAnalysis.pdf", "MultivariateStatisticalAnalysis.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  },
+  "code_folding": "hide"
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

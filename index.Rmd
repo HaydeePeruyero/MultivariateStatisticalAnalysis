@@ -1,0 +1,135 @@
+--- 
+title: "Estadística Multivariada"
+author: "Haydeé Peruyero"
+site: bookdown::bookdown_site
+output: 
+  bookdown::gitbook:
+    config:
+      code_folding: hide
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: HaydeePeruyero/MultivariateStatisticalAnalysis
+description: "Curso ENES Morelia Semestre 2026-1"
+---
+
+# Estadística Multivariada
+
+
+## Temario
+
+1. Regresión múltiple
+
+1.1 Mínimos cuadrados.
+
+1.2 Medidas de bondad de ajuste.
+
+1.3 Determinación del número de variables predictorias.
+
+2. Análisis de componentes principales
+
+2.1 Descripción de la metodología.
+
+2.2 Técnicas de extracción de componentes principales.
+
+2.3 Determinación del número de componentes principales.
+
+3. Análisis factorial
+
+3.1 Descripción de la metodología del análisis factorial.
+
+3.2 Descripción del modelo básico.
+
+3.3 Método de cálculo.
+
+3.4 Comparación con la técnica del análisis de componentes principales.
+
+3.5 Usos de software (R, Minitab, SciPy, entre otros).
+
+4. Análisis de conglomerados
+
+4.1Descripción de la metodología de análisis de conglomerados.
+
+4.2 Técnicas de jerarquización y de particionamiento.
+
+4.3 Implementación computacional.
+
+4.4 Usos de los dendogramas.
+
+4.5 Usos de software (R, Minitab, SciPy, entre otros).
+
+5. Análisis discriminante
+
+5.1 Descripción de la metodología del análisis discriminante.
+
+5.2 Discriminación entre dos grupos.
+
+5.3 Contribución por variable.
+
+5.4 Discriminación logística.
+
+5.5 Discriminación múltiple.
+
+5.6 Usos de software (R, Minitab, SciPy, entre otros).
+
+A1. R
+
+A2. Git + Github
+
+A3. Gráficas Multivariadas
+
+A4. Escalas de Medición
+
+A5. Valores Faltantes
+
+
+## Evaluación
+
+- Examenes 50%
+- Tareas 25%
+- Proyecto 20%
+- DataCamp 5%
+
+
+## Proyecto final
+
+- Buscar una base de datos "real"
+- Aplicar 3 métodos de estadística multivariada
+- Entregar documento con:
+  * Descripción de los datos
+  * Planteamiento del problema
+  * Métodos usados
+  * Interpretación de resultados
+  * Código usado
+- Repositorio con código reproducible
+- Exposición de resultados
+
+## Referencias
+
+[1] 
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+## Material interesante
+
+  - [Bookdown](https://bookdown.org/).
+  - [Software Carpentry](https://swcarpentry.github.io/r-novice-gapminder/).
+  - [Git](https://swcarpentry.github.io/git-novice/14-supplemental-rstudio/)
+  - [Why Git](https://info5940.infosci.cornell.edu/setup/git/what-is-git/)
+  - [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
+  - [STHDA](http://www.sthda.com/english/wiki/data-visualization)
+  - [YaRrr! The Pirate's Guide to R](https://bookdown.org/ndphillips/YaRrr/)
+  - [Learn ggplot2 Using Shiny App](https://link.springer.com/book/10.1007/978-3-319-53019-2)
+  - [Ggplot2: Elegant Graphics for Data Analysis](https://link.springer.com/book/10.1007/978-0-387-98141-3)
+    - [Versión online](https://ggplot2-book.org/index.html)
+  - [Use R! Colección Springer](https://www.springer.com/series/6991/books)
+  - [Lattice: Multivariate Data Visualization with R](https://link.springer.com/book/10.1007/978-0-387-75969-2)
+  - [R Graphics cookbook](http://www.cookbook-r.com/)
+  - [Cuenta pro de Github](https://education.github.com/benefits)
+  
+## DataCamp
+
+![DataCamp](img/regular.png)

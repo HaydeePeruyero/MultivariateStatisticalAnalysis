@@ -1,0 +1,11 @@
+# Análisis Factorial
+
+```{r setup3, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+```{r, include=FALSE}
+workingDir <-  "."
+setwd(workingDir)
+```
+
