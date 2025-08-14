@@ -689,6 +689,432 @@ Solución
 
 \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-9-1.pdf}}
 
+\section{Estimación de parámetros}\label{estimaciuxf3n-de-paruxe1metros}
+
+\textbf{Ejemplo (Montgomery, 2002):} : Un embotellador de bebidas gaseosas analiza las rutas de servicio de las máquinas expendedoras en su sistema de distribución. Le interesa predecir el tiempo necesario para que el representante de ruta atienda las máquinas expendedoras en una tienda.
+
+Esta actividad de servicio consiste en abastecer la máquina con productos embotellados, y algo de mantenimiento o limpieza. El ingeniero industrial responsable del estudio ha sugerido que las dos variables más importantes que afectan el tiempo de entrega \(y\) son la cantidad de cajas de producto abastecido, \(x_1\), y la distancia caminada por el representante, \(x_2\).
+
+El ingeniero ha reunido 25 observaciones de tiempo de entrega que se ven en la tabla siguiente. Se ajustará el modelo de regresión lineal multiple siguiente:
+
+\[
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 +  \varepsilon
+\]
+
+\emph{Archivo: \texttt{refrescos.csv}}.
+
+Base de datos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# }
+\NormalTok{datos }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Observacion =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{25}\NormalTok{,}
+  \AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\FloatTok{16.68}\NormalTok{, }\FloatTok{11.50}\NormalTok{, }\FloatTok{12.03}\NormalTok{, }\FloatTok{14.88}\NormalTok{, }\FloatTok{13.75}\NormalTok{,}
+        \FloatTok{18.11}\NormalTok{, }\FloatTok{8.00}\NormalTok{, }\FloatTok{17.83}\NormalTok{, }\FloatTok{79.24}\NormalTok{, }\FloatTok{21.50}\NormalTok{,}
+        \FloatTok{40.33}\NormalTok{, }\FloatTok{21.00}\NormalTok{, }\FloatTok{13.50}\NormalTok{, }\FloatTok{19.75}\NormalTok{, }\FloatTok{24.00}\NormalTok{,}
+        \FloatTok{29.00}\NormalTok{, }\FloatTok{15.35}\NormalTok{, }\FloatTok{19.00}\NormalTok{, }\FloatTok{9.50}\NormalTok{, }\FloatTok{35.10}\NormalTok{,}
+        \FloatTok{17.90}\NormalTok{, }\FloatTok{52.32}\NormalTok{, }\FloatTok{18.75}\NormalTok{, }\FloatTok{19.83}\NormalTok{, }\FloatTok{10.75}\NormalTok{),}
+  \AttributeTok{x1 =} \FunctionTok{c}\NormalTok{(}\DecValTok{7}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{,}
+         \DecValTok{7}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{30}\NormalTok{, }\DecValTok{5}\NormalTok{,}
+         \DecValTok{16}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{9}\NormalTok{,}
+         \DecValTok{10}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{17}\NormalTok{,}
+         \DecValTok{10}\NormalTok{, }\DecValTok{26}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{4}\NormalTok{),}
+  \AttributeTok{x2 =} \FunctionTok{c}\NormalTok{(}\DecValTok{560}\NormalTok{, }\DecValTok{220}\NormalTok{, }\DecValTok{340}\NormalTok{, }\DecValTok{80}\NormalTok{, }\DecValTok{150}\NormalTok{,}
+         \DecValTok{330}\NormalTok{, }\DecValTok{110}\NormalTok{, }\DecValTok{210}\NormalTok{, }\DecValTok{1460}\NormalTok{, }\DecValTok{605}\NormalTok{,}
+         \DecValTok{688}\NormalTok{, }\DecValTok{215}\NormalTok{, }\DecValTok{255}\NormalTok{, }\DecValTok{462}\NormalTok{, }\DecValTok{448}\NormalTok{,}
+         \DecValTok{776}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{132}\NormalTok{, }\DecValTok{36}\NormalTok{, }\DecValTok{770}\NormalTok{,}
+         \DecValTok{140}\NormalTok{, }\DecValTok{810}\NormalTok{, }\DecValTok{450}\NormalTok{, }\DecValTok{635}\NormalTok{, }\DecValTok{150}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{datos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Observacion     y x1   x2
+## 1            1 16.68  7  560
+## 2            2 11.50  3  220
+## 3            3 12.03  3  340
+## 4            4 14.88  4   80
+## 5            5 13.75  6  150
+## 6            6 18.11  7  330
+## 7            7  8.00  2  110
+## 8            8 17.83  7  210
+## 9            9 79.24 30 1460
+## 10          10 21.50  5  605
+## 11          11 40.33 16  688
+## 12          12 21.00 10  215
+## 13          13 13.50  4  255
+## 14          14 19.75  6  462
+## 15          15 24.00  9  448
+## 16          16 29.00 10  776
+## 17          17 15.35  6  200
+## 18          18 19.00  7  132
+## 19          19  9.50  3   36
+## 20          20 35.10 17  770
+## 21          21 17.90 10  140
+## 22          22 52.32 26  810
+## 23          23 18.75  9  450
+## 24          24 19.83  8  635
+## 25          25 10.75  4  150
+\end{verbatim}
+
+Veamos un gráfico de dispersión de los datos. ¿Qué observamos?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pairs}\NormalTok{(datos[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-11-1.pdf}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Estimar \(\beta\)
+\end{enumerate}
+
+Primero, vamos a crear la matriz \(X\) y el vector \(y\).
+
+Matrices
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Columna de 1 para el intercepto}
+\NormalTok{idv }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(datos))}
+\CommentTok{\# Creamos matriz X}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(idv,datos}\SpecialCharTok{$}\NormalTok{x1,datos}\SpecialCharTok{$}\NormalTok{x2),}\AttributeTok{nrow=}\DecValTok{25}\NormalTok{,}\AttributeTok{ncol=}\DecValTok{3}\NormalTok{)}
+\CommentTok{\# Creamos el vector y}
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{y, }\AttributeTok{nrow =} \DecValTok{25}\NormalTok{, }\AttributeTok{ncol =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Ya sabemos que nuestro estimador está dado por
+
+\[
+\hat{\beta} = (X'X)^{-1}X'y
+\]
+
+Entonces podemos encontrar el estimador.
+
+Estimador beta
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ X) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ y}
+\NormalTok{beta}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            [,1]
+## [1,] 2.34123115
+## [2,] 1.61590721
+## [3,] 0.01438483
+\end{verbatim}
+
+Entonces el ajuste por el método de mínimos cuadrados, con los coeficientes de regresión que encontramos está dado por:
+
+\(\hat{y} =\) 2.3412311 \(+\) 1.6159072 \(x_1\) \(+\) 1.6159072 \(x_2\)
+
+Esto lo podemos hacer más rápido usando la función de \texttt{lm}. Construimos el modelo.
+
+Modelo en R
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MLRM1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2, datos)}
+\NormalTok{MLRM1 }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = datos)
+## 
+## Coefficients:
+## (Intercept)           x1           x2  
+##     2.34123      1.61591      0.01438
+\end{verbatim}
+
+¿Cómo accedemos a los valores del modelo?
+
+Coeficientes
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{beta\_0 }\OtherTok{\textless{}{-}}\NormalTok{ MLRM1}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}
+\NormalTok{beta\_1 }\OtherTok{\textless{}{-}}\NormalTok{ MLRM1}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}
+\NormalTok{beta\_2 }\OtherTok{\textless{}{-}}\NormalTok{ MLRM1}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Los valores son \(\beta_0=\) 2.3412311, \(\beta_1=\) 1.6159072 y \(\beta_2=\) 0.0143848.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Estimación de la varianza del error \(\sigma^2\)
+\end{enumerate}
+
+Ya tenemos que la suma de los cuadrados de los errores está dada por
+
+\[ SSE = y'y - \hat{\beta}X'y\]
+
+Sustituimos los valores que tenemos y obtemos el SSE.
+
+SSE
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SSE }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(y)}\SpecialCharTok{\%*\%}\NormalTok{ y }\SpecialCharTok{{-}} \FunctionTok{t}\NormalTok{(beta) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ y}
+\NormalTok{SSE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 233.7317
+\end{verbatim}
+
+Y de está forma, podemos encontrar el estimador de \(\sigma^2\).
+
+Estimador
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{varest }\OtherTok{\textless{}{-}}\NormalTok{ SSE }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{nrow}\NormalTok{(y) }\SpecialCharTok{{-}} \FunctionTok{nrow}\NormalTok{(beta))}
+\NormalTok{varest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 10.62417
+\end{verbatim}
+
+Directo con las funciones de R, podemos acceder a los parámetros que se guardaron en el modelo que ya calculamos.
+
+Resumen del modelo
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(MLRM1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.7880 -0.6629  0.4364  1.1566  7.4197 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 2.341231   1.096730   2.135 0.044170 *  
+## x1          1.615907   0.170735   9.464 3.25e-09 ***
+## x2          0.014385   0.003613   3.981 0.000631 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.259 on 22 degrees of freedom
+## Multiple R-squared:  0.9596, Adjusted R-squared:  0.9559 
+## F-statistic: 261.2 on 2 and 22 DF,  p-value: 4.687e-16
+\end{verbatim}
+
+Algunos de los parámetros almacenados en el modelo nos permiten obtener también el resultado previo.
+
+Estimador
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(MLRM1)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{df.residual}\NormalTok{(MLRM1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10.62417
+\end{verbatim}
+
+\subsection{Ejercicios}\label{ejercicios}
+
+\textbf{Ejercicio 1:} Un analista hace un estudio químico y espera que el rendimiento de cierta sustancia se vea afectado por dos factores. Se realizan 17 experimentos cuyos datos se registran en el cuadro siguiente. Por experimentos similares, se sabe que los factores \(x_1\) y \(x_2\) no están relacionados; por ello, el analista decide utilizar un modelo de regresión lineal múltiple. Calcule el modelo de regresión y grafíquelo sobre las observaciones.
+
+\emph{Archivo: est\_quimico.csv}
+
+Datos Ejercicio 1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Experimento =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{17}\NormalTok{,}
+  \AttributeTok{x1 =} \FunctionTok{c}\NormalTok{(}\FloatTok{41.9}\NormalTok{, }\FloatTok{43.4}\NormalTok{, }\FloatTok{43.9}\NormalTok{, }\FloatTok{44.5}\NormalTok{, }\FloatTok{47.3}\NormalTok{, }\FloatTok{47.5}\NormalTok{, }\FloatTok{47.9}\NormalTok{, }\FloatTok{50.2}\NormalTok{, }\FloatTok{52.8}\NormalTok{, }\FloatTok{53.2}\NormalTok{, }\FloatTok{56.7}\NormalTok{, }\FloatTok{57.0}\NormalTok{, }\FloatTok{63.5}\NormalTok{, }\FloatTok{64.3}\NormalTok{, }\FloatTok{71.1}\NormalTok{, }\FloatTok{77.0}\NormalTok{, }\FloatTok{77.8}\NormalTok{),}
+  \AttributeTok{x2 =} \FunctionTok{c}\NormalTok{(}\FloatTok{29.1}\NormalTok{, }\FloatTok{29.3}\NormalTok{, }\FloatTok{29.5}\NormalTok{, }\FloatTok{29.7}\NormalTok{, }\FloatTok{29.9}\NormalTok{, }\FloatTok{30.3}\NormalTok{, }\FloatTok{30.5}\NormalTok{, }\FloatTok{30.7}\NormalTok{, }\FloatTok{30.8}\NormalTok{, }\FloatTok{30.9}\NormalTok{, }\FloatTok{31.5}\NormalTok{, }\FloatTok{31.7}\NormalTok{, }\FloatTok{31.9}\NormalTok{, }\FloatTok{32.0}\NormalTok{, }\FloatTok{32.1}\NormalTok{, }\FloatTok{32.5}\NormalTok{, }\FloatTok{32.9}\NormalTok{),}
+  \AttributeTok{y  =} \FunctionTok{c}\NormalTok{(}\FloatTok{251.3}\NormalTok{, }\FloatTok{251.3}\NormalTok{, }\FloatTok{248.3}\NormalTok{, }\FloatTok{267.5}\NormalTok{, }\FloatTok{273.0}\NormalTok{, }\FloatTok{276.5}\NormalTok{, }\FloatTok{270.3}\NormalTok{, }\FloatTok{274.9}\NormalTok{, }\FloatTok{285.0}\NormalTok{, }\FloatTok{290.0}\NormalTok{, }\FloatTok{297.0}\NormalTok{, }\FloatTok{302.5}\NormalTok{, }\FloatTok{304.5}\NormalTok{, }\FloatTok{309.3}\NormalTok{, }\FloatTok{321.7}\NormalTok{, }\FloatTok{330.7}\NormalTok{, }\FloatTok{349.0}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{datos2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Experimento   x1   x2     y
+## 1            1 41.9 29.1 251.3
+## 2            2 43.4 29.3 251.3
+## 3            3 43.9 29.5 248.3
+## 4            4 44.5 29.7 267.5
+## 5            5 47.3 29.9 273.0
+## 6            6 47.5 30.3 276.5
+## 7            7 47.9 30.5 270.3
+## 8            8 50.2 30.7 274.9
+## 9            9 52.8 30.8 285.0
+## 10          10 53.2 30.9 290.0
+## 11          11 56.7 31.5 297.0
+## 12          12 57.0 31.7 302.5
+## 13          13 63.5 31.9 304.5
+## 14          14 64.3 32.0 309.3
+## 15          15 71.1 32.1 321.7
+## 16          16 77.0 32.5 330.7
+## 17          17 77.8 32.9 349.0
+\end{verbatim}
+
+\textbf{Ejercicio 2:} Repetir el ejemplo con los datos \texttt{datasets::trees} de R que proporciona mediciones
+del diámetro, altura y volumen de madera en 31 cerezos negros talados.
+
+\textbf{Ejercicio 3:} Subir a Github los dos ejercicios previos tanto con solución en R como en Python. Comparar las funciones. Ventajas y desventajas de ambas.
+
+\section{Pruebas de Hipótesis}\label{pruebas-de-hipuxf3tesis}
+
+Cuando revisamos el \texttt{summary} del modelo, nos arroja si son significativas o no y a que nivel de significancia las variables que estamos considerando. Veamos el siguiente ejemplo.
+
+\textbf{Ejemplo: } Usaremos el conjunto de datos \texttt{data("marketing")} que contiene 200 observaciones de un experimento publicitario que evalúa el impacto de tres medios de anuncio en las ventas. Para cada observación se registran los presupuestos de publicidad (en miles de dólares) y las ventas obtenidas.
+Variables:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{youtube}: presupuesto invertido en anuncios de YouTube (miles de USD).
+\item
+  \texttt{facebook}: presupuesto invertido en Facebook (miles de USD).
+\item
+  \texttt{newspaper}: presupuesto invertido en prensa escrita (miles de USD).
+\item
+  \texttt{sales}: ventas registradas (variable respuesta).
+\end{itemize}
+
+Cargamos los datos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(datarium)}
+\FunctionTok{data}\NormalTok{(}\StringTok{"marketing"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Exploramos rápidamente la base para ver qué variables contiene y la dimensión:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(marketing)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    200 obs. of  4 variables:
+##  $ youtube  : num  276.1 53.4 20.6 181.8 217 ...
+##  $ facebook : num  45.4 47.2 55.1 49.6 13 ...
+##  $ newspaper: num  83 54.1 83.2 70.2 70.1 ...
+##  $ sales    : num  26.5 12.5 11.2 22.2 15.5 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?marketing}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## starting httpd help server ... done
+\end{verbatim}
+
+Ajustamos un modelo lineal que incluya todas las variables, es decir,
+
+\(sales=\beta_0+\beta_1 youtube+\beta_2 facebook+ \beta_3 newspaper+\epsilon\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo1}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{youtube}\SpecialCharTok{+}\NormalTok{facebook}\SpecialCharTok{+}\NormalTok{newspaper,}\AttributeTok{data=}\NormalTok{marketing)}
+\FunctionTok{summary}\NormalTok{(modelo1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = sales ~ youtube + facebook + newspaper, data = marketing)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.5932  -1.0690   0.2902   1.4272   3.3951 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  3.526667   0.374290   9.422   <2e-16 ***
+## youtube      0.045765   0.001395  32.809   <2e-16 ***
+## facebook     0.188530   0.008611  21.893   <2e-16 ***
+## newspaper   -0.001037   0.005871  -0.177     0.86    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.023 on 196 degrees of freedom
+## Multiple R-squared:  0.8972, Adjusted R-squared:  0.8956 
+## F-statistic: 570.3 on 3 and 196 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+¿Qué se puede decir sobre la significancia de la variable \(newspaper\)?
+
+Veamos qué ocurre con el modelo al eliminar la variable \(newspaper\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo2}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{facebook}\SpecialCharTok{+}\NormalTok{youtube,}\AttributeTok{data=}\NormalTok{marketing)}
+\FunctionTok{summary}\NormalTok{(modelo2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = sales ~ facebook + youtube, data = marketing)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.5572  -1.0502   0.2906   1.4049   3.3994 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  3.50532    0.35339   9.919   <2e-16 ***
+## facebook     0.18799    0.00804  23.382   <2e-16 ***
+## youtube      0.04575    0.00139  32.909   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.018 on 197 degrees of freedom
+## Multiple R-squared:  0.8972, Adjusted R-squared:  0.8962 
+## F-statistic: 859.6 on 2 and 197 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+Lo que sigue, es hacer pruebas de hipótesis tanto en las variables como en los coeficientes de regresión.
+
 \chapter{Análisis de Componentes Principales}\label{anuxe1lisis-de-componentes-principales}
 
 \chapter{Análisis Factorial}\label{anuxe1lisis-factorial}

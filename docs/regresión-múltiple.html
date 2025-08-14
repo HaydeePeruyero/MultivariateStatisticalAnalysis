@@ -158,6 +158,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="01-Regresion_multiple.html"><a href="#modelo-y-estimaci%C3%B3n"><i class="fa fa-check"></i><b>2.2.1</b> Modelo y estimación</a></li>
 </ul></li>
+<li class="chapter" data-level="2.3" data-path="01-Regresion_multiple.html"><a href="#estimaci%C3%B3n-de-par%C3%A1metros"><i class="fa fa-check"></i><b>2.3</b> Estimación de parámetros</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html"><i class="fa fa-check"></i><b>2.3.1</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="01-Regresion_multiple.html"><a href="#pruebas-de-hip%C3%B3tesis"><i class="fa fa-check"></i><b>2.4</b> Pruebas de Hipótesis</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-de-componentes-principales"><i class="fa fa-check"></i><b>3</b> Análisis de Componentes Principales</a></li>
 <li class="chapter" data-level="4" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-factorial"><i class="fa fa-check"></i><b>4</b> Análisis Factorial</a></li>
@@ -419,8 +424,301 @@ una relación lineal entre <span class="math inline">\(x_i\)</span> y <span clas
 <span id="cb22-3"><a href="regresión-múltiple.html#cb22-3" tabindex="-1"></a><span class="fu">plot</span>(m_m, <span class="at">which=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </details>
-
 </div>
+</div>
+<div id="estimación-de-parámetros" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Estimación de parámetros<a href="#estimaci%C3%B3n-de-par%C3%A1metros" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ejemplo (Montgomery, 2002):</strong> : Un embotellador de bebidas gaseosas analiza las rutas de servicio de las máquinas expendedoras en su sistema de distribución. Le interesa predecir el tiempo necesario para que el representante de ruta atienda las máquinas expendedoras en una tienda.</p>
+<p>Esta actividad de servicio consiste en abastecer la máquina con productos embotellados, y algo de mantenimiento o limpieza. El ingeniero industrial responsable del estudio ha sugerido que las dos variables más importantes que afectan el tiempo de entrega <span class="math inline">\(y\)</span> son la cantidad de cajas de producto abastecido, <span class="math inline">\(x_1\)</span>, y la distancia caminada por el representante, <span class="math inline">\(x_2\)</span>.</p>
+<p>El ingeniero ha reunido 25 observaciones de tiempo de entrega que se ven en la tabla siguiente. Se ajustará el modelo de regresión lineal multiple siguiente:</p>
+<p><span class="math display">\[
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 +  \varepsilon
+\]</span></p>
+<p><em>Archivo: <code>refrescos.csv</code></em>.</p>
+<details>
+<summary>
+<b>Base de datos</b>
+</summary>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="regresión-múltiple.html#cb23-1" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb23-2"><a href="regresión-múltiple.html#cb23-2" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb23-3"><a href="regresión-múltiple.html#cb23-3" tabindex="-1"></a>  <span class="at">Observacion =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>,</span>
+<span id="cb23-4"><a href="regresión-múltiple.html#cb23-4" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="fl">16.68</span>, <span class="fl">11.50</span>, <span class="fl">12.03</span>, <span class="fl">14.88</span>, <span class="fl">13.75</span>,</span>
+<span id="cb23-5"><a href="regresión-múltiple.html#cb23-5" tabindex="-1"></a>        <span class="fl">18.11</span>, <span class="fl">8.00</span>, <span class="fl">17.83</span>, <span class="fl">79.24</span>, <span class="fl">21.50</span>,</span>
+<span id="cb23-6"><a href="regresión-múltiple.html#cb23-6" tabindex="-1"></a>        <span class="fl">40.33</span>, <span class="fl">21.00</span>, <span class="fl">13.50</span>, <span class="fl">19.75</span>, <span class="fl">24.00</span>,</span>
+<span id="cb23-7"><a href="regresión-múltiple.html#cb23-7" tabindex="-1"></a>        <span class="fl">29.00</span>, <span class="fl">15.35</span>, <span class="fl">19.00</span>, <span class="fl">9.50</span>, <span class="fl">35.10</span>,</span>
+<span id="cb23-8"><a href="regresión-múltiple.html#cb23-8" tabindex="-1"></a>        <span class="fl">17.90</span>, <span class="fl">52.32</span>, <span class="fl">18.75</span>, <span class="fl">19.83</span>, <span class="fl">10.75</span>),</span>
+<span id="cb23-9"><a href="regresión-múltiple.html#cb23-9" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">6</span>,</span>
+<span id="cb23-10"><a href="regresión-múltiple.html#cb23-10" tabindex="-1"></a>         <span class="dv">7</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">30</span>, <span class="dv">5</span>,</span>
+<span id="cb23-11"><a href="regresión-múltiple.html#cb23-11" tabindex="-1"></a>         <span class="dv">16</span>, <span class="dv">10</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">9</span>,</span>
+<span id="cb23-12"><a href="regresión-múltiple.html#cb23-12" tabindex="-1"></a>         <span class="dv">10</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">17</span>,</span>
+<span id="cb23-13"><a href="regresión-múltiple.html#cb23-13" tabindex="-1"></a>         <span class="dv">10</span>, <span class="dv">26</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">4</span>),</span>
+<span id="cb23-14"><a href="regresión-múltiple.html#cb23-14" tabindex="-1"></a>  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">560</span>, <span class="dv">220</span>, <span class="dv">340</span>, <span class="dv">80</span>, <span class="dv">150</span>,</span>
+<span id="cb23-15"><a href="regresión-múltiple.html#cb23-15" tabindex="-1"></a>         <span class="dv">330</span>, <span class="dv">110</span>, <span class="dv">210</span>, <span class="dv">1460</span>, <span class="dv">605</span>,</span>
+<span id="cb23-16"><a href="regresión-múltiple.html#cb23-16" tabindex="-1"></a>         <span class="dv">688</span>, <span class="dv">215</span>, <span class="dv">255</span>, <span class="dv">462</span>, <span class="dv">448</span>,</span>
+<span id="cb23-17"><a href="regresión-múltiple.html#cb23-17" tabindex="-1"></a>         <span class="dv">776</span>, <span class="dv">200</span>, <span class="dv">132</span>, <span class="dv">36</span>, <span class="dv">770</span>,</span>
+<span id="cb23-18"><a href="regresión-múltiple.html#cb23-18" tabindex="-1"></a>         <span class="dv">140</span>, <span class="dv">810</span>, <span class="dv">450</span>, <span class="dv">635</span>, <span class="dv">150</span>)</span>
+<span id="cb23-19"><a href="regresión-múltiple.html#cb23-19" tabindex="-1"></a>)</span>
+<span id="cb23-20"><a href="regresión-múltiple.html#cb23-20" tabindex="-1"></a></span>
+<span id="cb23-21"><a href="regresión-múltiple.html#cb23-21" tabindex="-1"></a>datos</span></code></pre></div>
+<pre><code>##    Observacion     y x1   x2
+## 1            1 16.68  7  560
+## 2            2 11.50  3  220
+## 3            3 12.03  3  340
+## 4            4 14.88  4   80
+## 5            5 13.75  6  150
+## 6            6 18.11  7  330
+## 7            7  8.00  2  110
+## 8            8 17.83  7  210
+## 9            9 79.24 30 1460
+## 10          10 21.50  5  605
+## 11          11 40.33 16  688
+## 12          12 21.00 10  215
+## 13          13 13.50  4  255
+## 14          14 19.75  6  462
+## 15          15 24.00  9  448
+## 16          16 29.00 10  776
+## 17          17 15.35  6  200
+## 18          18 19.00  7  132
+## 19          19  9.50  3   36
+## 20          20 35.10 17  770
+## 21          21 17.90 10  140
+## 22          22 52.32 26  810
+## 23          23 18.75  9  450
+## 24          24 19.83  8  635
+## 25          25 10.75  4  150</code></pre>
+</details>
+<p>Veamos un gráfico de dispersión de los datos. ¿Qué observamos?</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="regresión-múltiple.html#cb25-1" tabindex="-1"></a><span class="fu">pairs</span>(datos[<span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<ol style="list-style-type: decimal">
+<li>Estimar <span class="math inline">\(\beta\)</span></li>
+</ol>
+<p>Primero, vamos a crear la matriz <span class="math inline">\(X\)</span> y el vector <span class="math inline">\(y\)</span>.</p>
+<details>
+<summary>
+<b>Matrices</b>
+</summary>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="regresión-múltiple.html#cb26-1" tabindex="-1"></a><span class="co"># Columna de 1 para el intercepto</span></span>
+<span id="cb26-2"><a href="regresión-múltiple.html#cb26-2" tabindex="-1"></a>idv <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(datos))</span>
+<span id="cb26-3"><a href="regresión-múltiple.html#cb26-3" tabindex="-1"></a><span class="co"># Creamos matriz X</span></span>
+<span id="cb26-4"><a href="regresión-múltiple.html#cb26-4" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(idv,datos<span class="sc">$</span>x1,datos<span class="sc">$</span>x2),<span class="at">nrow=</span><span class="dv">25</span>,<span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb26-5"><a href="regresión-múltiple.html#cb26-5" tabindex="-1"></a><span class="co"># Creamos el vector y</span></span>
+<span id="cb26-6"><a href="regresión-múltiple.html#cb26-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(datos<span class="sc">$</span>y, <span class="at">nrow =</span> <span class="dv">25</span>, <span class="at">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
+</details>
+<p>Ya sabemos que nuestro estimador está dado por</p>
+<p><span class="math display">\[
+\hat{\beta} = (X&#39;X)^{-1}X&#39;y
+\]</span></p>
+<p>Entonces podemos encontrar el estimador.</p>
+<details>
+<summary>
+<b>Estimador beta</b>
+</summary>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="regresión-múltiple.html#cb27-1" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> y</span>
+<span id="cb27-2"><a href="regresión-múltiple.html#cb27-2" tabindex="-1"></a>beta</span></code></pre></div>
+<pre><code>##            [,1]
+## [1,] 2.34123115
+## [2,] 1.61590721
+## [3,] 0.01438483</code></pre>
+</details>
+<p>Entonces el ajuste por el método de mínimos cuadrados, con los coeficientes de regresión que encontramos está dado por:</p>
+<p><span class="math inline">\(\hat{y} =\)</span> 2.3412311 <span class="math inline">\(+\)</span> 1.6159072 <span class="math inline">\(x_1\)</span> <span class="math inline">\(+\)</span> 1.6159072 <span class="math inline">\(x_2\)</span></p>
+<p>Esto lo podemos hacer más rápido usando la función de <code>lm</code>. Construimos el modelo.</p>
+<details>
+<summary>
+<b>Modelo en R</b>
+</summary>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="regresión-múltiple.html#cb29-1" tabindex="-1"></a>MLRM1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2, datos)</span>
+<span id="cb29-2"><a href="regresión-múltiple.html#cb29-2" tabindex="-1"></a>MLRM1 </span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = datos)
+## 
+## Coefficients:
+## (Intercept)           x1           x2  
+##     2.34123      1.61591      0.01438</code></pre>
+</details>
+<p>¿Cómo accedemos a los valores del modelo?</p>
+<details>
+<summary>
+<b>Coeficientes</b>
+</summary>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="regresión-múltiple.html#cb31-1" tabindex="-1"></a>beta_0 <span class="ot">&lt;-</span> MLRM1<span class="sc">$</span>coefficients[<span class="dv">1</span>]</span>
+<span id="cb31-2"><a href="regresión-múltiple.html#cb31-2" tabindex="-1"></a>beta_1 <span class="ot">&lt;-</span> MLRM1<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span>
+<span id="cb31-3"><a href="regresión-múltiple.html#cb31-3" tabindex="-1"></a>beta_2 <span class="ot">&lt;-</span> MLRM1<span class="sc">$</span>coefficients[<span class="dv">3</span>]</span></code></pre></div>
+</details>
+<p>Los valores son <span class="math inline">\(\beta_0=\)</span> 2.3412311, <span class="math inline">\(\beta_1=\)</span> 1.6159072 y <span class="math inline">\(\beta_2=\)</span> 0.0143848.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Estimación de la varianza del error <span class="math inline">\(\sigma^2\)</span></li>
+</ol>
+<p>Ya tenemos que la suma de los cuadrados de los errores está dada por</p>
+<p><span class="math display">\[ SSE = y&#39;y - \hat{\beta}X&#39;y\]</span></p>
+<p>Sustituimos los valores que tenemos y obtemos el SSE.</p>
+<details>
+<summary>
+<b>SSE</b>
+</summary>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="regresión-múltiple.html#cb32-1" tabindex="-1"></a>SSE <span class="ot">&lt;-</span> <span class="fu">t</span>(y)<span class="sc">%*%</span> y <span class="sc">-</span> <span class="fu">t</span>(beta) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> y</span>
+<span id="cb32-2"><a href="regresión-múltiple.html#cb32-2" tabindex="-1"></a>SSE</span></code></pre></div>
+<pre><code>##          [,1]
+## [1,] 233.7317</code></pre>
+</details>
+<p>Y de está forma, podemos encontrar el estimador de <span class="math inline">\(\sigma^2\)</span>.</p>
+<details>
+<summary>
+<b>Estimador</b>
+</summary>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="regresión-múltiple.html#cb34-1" tabindex="-1"></a>varest <span class="ot">&lt;-</span> SSE <span class="sc">/</span> (<span class="fu">nrow</span>(y) <span class="sc">-</span> <span class="fu">nrow</span>(beta))</span>
+<span id="cb34-2"><a href="regresión-múltiple.html#cb34-2" tabindex="-1"></a>varest</span></code></pre></div>
+<pre><code>##          [,1]
+## [1,] 10.62417</code></pre>
+</details>
+<p>Directo con las funciones de R, podemos acceder a los parámetros que se guardaron en el modelo que ya calculamos.</p>
+<details>
+<summary>
+<b>Resumen del modelo</b>
+</summary>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="regresión-múltiple.html#cb36-1" tabindex="-1"></a><span class="fu">summary</span>(MLRM1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.7880 -0.6629  0.4364  1.1566  7.4197 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 2.341231   1.096730   2.135 0.044170 *  
+## x1          1.615907   0.170735   9.464 3.25e-09 ***
+## x2          0.014385   0.003613   3.981 0.000631 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.259 on 22 degrees of freedom
+## Multiple R-squared:  0.9596, Adjusted R-squared:  0.9559 
+## F-statistic: 261.2 on 2 and 22 DF,  p-value: 4.687e-16</code></pre>
+</details>
+<p>Algunos de los parámetros almacenados en el modelo nos permiten obtener también el resultado previo.</p>
+<details>
+<summary>
+<b>Estimador</b>
+</summary>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="regresión-múltiple.html#cb38-1" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">residuals</span>(MLRM1)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> <span class="fu">df.residual</span>(MLRM1)</span></code></pre></div>
+<pre><code>## [1] 10.62417</code></pre>
+</details>
+<div id="ejercicios" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Ejercicios<a href="regresión-múltiple.html#ejercicios" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Ejercicio 1:</strong> Un analista hace un estudio químico y espera que el rendimiento de cierta sustancia se vea afectado por dos factores. Se realizan 17 experimentos cuyos datos se registran en el cuadro siguiente. Por experimentos similares, se sabe que los factores <span class="math inline">\(x_1\)</span> y <span class="math inline">\(x_2\)</span> no están relacionados; por ello, el analista decide utilizar un modelo de regresión lineal múltiple. Calcule el modelo de regresión y grafíquelo sobre las observaciones.</p>
+<p><em>Archivo: est_quimico.csv</em></p>
+<details>
+<summary>
+<b>Datos Ejercicio 1</b>
+</summary>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="regresión-múltiple.html#cb40-1" tabindex="-1"></a>datos2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb40-2"><a href="regresión-múltiple.html#cb40-2" tabindex="-1"></a>  <span class="at">Experimento =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">17</span>,</span>
+<span id="cb40-3"><a href="regresión-múltiple.html#cb40-3" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">c</span>(<span class="fl">41.9</span>, <span class="fl">43.4</span>, <span class="fl">43.9</span>, <span class="fl">44.5</span>, <span class="fl">47.3</span>, <span class="fl">47.5</span>, <span class="fl">47.9</span>, <span class="fl">50.2</span>, <span class="fl">52.8</span>, <span class="fl">53.2</span>, <span class="fl">56.7</span>, <span class="fl">57.0</span>, <span class="fl">63.5</span>, <span class="fl">64.3</span>, <span class="fl">71.1</span>, <span class="fl">77.0</span>, <span class="fl">77.8</span>),</span>
+<span id="cb40-4"><a href="regresión-múltiple.html#cb40-4" tabindex="-1"></a>  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="fl">29.1</span>, <span class="fl">29.3</span>, <span class="fl">29.5</span>, <span class="fl">29.7</span>, <span class="fl">29.9</span>, <span class="fl">30.3</span>, <span class="fl">30.5</span>, <span class="fl">30.7</span>, <span class="fl">30.8</span>, <span class="fl">30.9</span>, <span class="fl">31.5</span>, <span class="fl">31.7</span>, <span class="fl">31.9</span>, <span class="fl">32.0</span>, <span class="fl">32.1</span>, <span class="fl">32.5</span>, <span class="fl">32.9</span>),</span>
+<span id="cb40-5"><a href="regresión-múltiple.html#cb40-5" tabindex="-1"></a>  <span class="at">y  =</span> <span class="fu">c</span>(<span class="fl">251.3</span>, <span class="fl">251.3</span>, <span class="fl">248.3</span>, <span class="fl">267.5</span>, <span class="fl">273.0</span>, <span class="fl">276.5</span>, <span class="fl">270.3</span>, <span class="fl">274.9</span>, <span class="fl">285.0</span>, <span class="fl">290.0</span>, <span class="fl">297.0</span>, <span class="fl">302.5</span>, <span class="fl">304.5</span>, <span class="fl">309.3</span>, <span class="fl">321.7</span>, <span class="fl">330.7</span>, <span class="fl">349.0</span>)</span>
+<span id="cb40-6"><a href="regresión-múltiple.html#cb40-6" tabindex="-1"></a>)</span>
+<span id="cb40-7"><a href="regresión-múltiple.html#cb40-7" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="regresión-múltiple.html#cb40-8" tabindex="-1"></a>datos2</span></code></pre></div>
+<pre><code>##    Experimento   x1   x2     y
+## 1            1 41.9 29.1 251.3
+## 2            2 43.4 29.3 251.3
+## 3            3 43.9 29.5 248.3
+## 4            4 44.5 29.7 267.5
+## 5            5 47.3 29.9 273.0
+## 6            6 47.5 30.3 276.5
+## 7            7 47.9 30.5 270.3
+## 8            8 50.2 30.7 274.9
+## 9            9 52.8 30.8 285.0
+## 10          10 53.2 30.9 290.0
+## 11          11 56.7 31.5 297.0
+## 12          12 57.0 31.7 302.5
+## 13          13 63.5 31.9 304.5
+## 14          14 64.3 32.0 309.3
+## 15          15 71.1 32.1 321.7
+## 16          16 77.0 32.5 330.7
+## 17          17 77.8 32.9 349.0</code></pre>
+</details>
+<p><strong>Ejercicio 2:</strong> Repetir el ejemplo con los datos <code>datasets::trees</code> de R que proporciona mediciones
+del diámetro, altura y volumen de madera en 31 cerezos negros talados.</p>
+<p><strong>Ejercicio 3:</strong> Subir a Github los dos ejercicios previos tanto con solución en R como en Python. Comparar las funciones. Ventajas y desventajas de ambas.</p>
+</div>
+</div>
+<div id="pruebas-de-hipótesis" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Pruebas de Hipótesis<a href="#pruebas-de-hip%C3%B3tesis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Cuando revisamos el <code>summary</code> del modelo, nos arroja si son significativas o no y a que nivel de significancia las variables que estamos considerando. Veamos el siguiente ejemplo.</p>
+<p><strong>Ejemplo: </strong> Usaremos el conjunto de datos <code>data("marketing")</code> que contiene 200 observaciones de un experimento publicitario que evalúa el impacto de tres medios de anuncio en las ventas. Para cada observación se registran los presupuestos de publicidad (en miles de dólares) y las ventas obtenidas.
+Variables:</p>
+<ul>
+<li><code>youtube</code>: presupuesto invertido en anuncios de YouTube (miles de USD).</li>
+<li><code>facebook</code>: presupuesto invertido en Facebook (miles de USD).</li>
+<li><code>newspaper</code>: presupuesto invertido en prensa escrita (miles de USD).</li>
+<li><code>sales</code>: ventas registradas (variable respuesta).</li>
+</ul>
+<p>Cargamos los datos:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="regresión-múltiple.html#cb42-1" tabindex="-1"></a><span class="fu">library</span>(datarium)</span>
+<span id="cb42-2"><a href="regresión-múltiple.html#cb42-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;marketing&quot;</span>)</span></code></pre></div>
+<p>Exploramos rápidamente la base para ver qué variables contiene y la dimensión:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="regresión-múltiple.html#cb43-1" tabindex="-1"></a><span class="fu">str</span>(marketing)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    200 obs. of  4 variables:
+##  $ youtube  : num  276.1 53.4 20.6 181.8 217 ...
+##  $ facebook : num  45.4 47.2 55.1 49.6 13 ...
+##  $ newspaper: num  83 54.1 83.2 70.2 70.1 ...
+##  $ sales    : num  26.5 12.5 11.2 22.2 15.5 ...</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="regresión-múltiple.html#cb45-1" tabindex="-1"></a>?marketing</span></code></pre></div>
+<pre><code>## starting httpd help server ... done</code></pre>
+<p>Ajustamos un modelo lineal que incluya todas las variables, es decir,</p>
+<p><span class="math inline">\(sales=\beta_0+\beta_1 youtube+\beta_2 facebook+ \beta_3 newspaper+\epsilon\)</span></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="regresión-múltiple.html#cb47-1" tabindex="-1"></a>modelo1<span class="ot">&lt;-</span><span class="fu">lm</span>(sales<span class="sc">~</span>youtube<span class="sc">+</span>facebook<span class="sc">+</span>newspaper,<span class="at">data=</span>marketing)</span>
+<span id="cb47-2"><a href="regresión-múltiple.html#cb47-2" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ youtube + facebook + newspaper, data = marketing)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.5932  -1.0690   0.2902   1.4272   3.3951 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  3.526667   0.374290   9.422   &lt;2e-16 ***
+## youtube      0.045765   0.001395  32.809   &lt;2e-16 ***
+## facebook     0.188530   0.008611  21.893   &lt;2e-16 ***
+## newspaper   -0.001037   0.005871  -0.177     0.86    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.023 on 196 degrees of freedom
+## Multiple R-squared:  0.8972, Adjusted R-squared:  0.8956 
+## F-statistic: 570.3 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>¿Qué se puede decir sobre la significancia de la variable <span class="math inline">\(newspaper\)</span>?</p>
+<p>Veamos qué ocurre con el modelo al eliminar la variable <span class="math inline">\(newspaper\)</span></p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="regresión-múltiple.html#cb49-1" tabindex="-1"></a>modelo2<span class="ot">&lt;-</span><span class="fu">lm</span>(sales<span class="sc">~</span>facebook<span class="sc">+</span>youtube,<span class="at">data=</span>marketing)</span>
+<span id="cb49-2"><a href="regresión-múltiple.html#cb49-2" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ facebook + youtube, data = marketing)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.5572  -1.0502   0.2906   1.4049   3.3994 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  3.50532    0.35339   9.919   &lt;2e-16 ***
+## facebook     0.18799    0.00804  23.382   &lt;2e-16 ***
+## youtube      0.04575    0.00139  32.909   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.018 on 197 degrees of freedom
+## Multiple R-squared:  0.8972, Adjusted R-squared:  0.8962 
+## F-statistic: 859.6 on 2 and 197 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Lo que sigue, es hacer pruebas de hipótesis tanto en las variables como en los coeficientes de regresión.</p>
+
 </div>
 </div>
             </section>

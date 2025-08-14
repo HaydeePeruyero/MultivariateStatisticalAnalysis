@@ -227,3 +227,235 @@ plot(m_m, which=2)
 
 </details>
 
+
+## Estimación de parámetros
+
+
+**Ejemplo (Montgomery, 2002):** : Un embotellador de bebidas gaseosas analiza las rutas de servicio de las máquinas expendedoras en su sistema de distribución. Le interesa predecir el tiempo necesario para que el representante de ruta atienda las máquinas expendedoras en una tienda. 
+
+Esta actividad de servicio consiste en abastecer la máquina con productos embotellados, y algo de mantenimiento o limpieza. El ingeniero industrial responsable del estudio ha sugerido que las dos variables más importantes que afectan el tiempo de entrega \(y\) son la cantidad de cajas de producto abastecido, \(x_1\), y la distancia caminada por el representante, \(x_2\). 
+
+El ingeniero ha reunido 25 observaciones de tiempo de entrega que se ven en la tabla siguiente. Se ajustará el modelo de regresión lineal multiple siguiente:
+
+\[
+y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 +  \varepsilon
+\]
+
+*Archivo: `refrescos.csv`*.
+
+<details>
+<summary><b>Base de datos</b></summary>
+```{r}
+# 
+datos <- data.frame(
+  Observacion = 1:25,
+  y = c(16.68, 11.50, 12.03, 14.88, 13.75,
+        18.11, 8.00, 17.83, 79.24, 21.50,
+        40.33, 21.00, 13.50, 19.75, 24.00,
+        29.00, 15.35, 19.00, 9.50, 35.10,
+        17.90, 52.32, 18.75, 19.83, 10.75),
+  x1 = c(7, 3, 3, 4, 6,
+         7, 2, 7, 30, 5,
+         16, 10, 4, 6, 9,
+         10, 6, 7, 3, 17,
+         10, 26, 9, 8, 4),
+  x2 = c(560, 220, 340, 80, 150,
+         330, 110, 210, 1460, 605,
+         688, 215, 255, 462, 448,
+         776, 200, 132, 36, 770,
+         140, 810, 450, 635, 150)
+)
+
+datos
+```
+</details>
+
+
+Veamos un gráfico de dispersión de los datos. ¿Qué observamos?
+
+```{r}
+pairs(datos[-1])
+```
+
+
+1) Estimar $\beta$
+
+Primero, vamos a crear la matriz $X$ y el vector $y$.
+
+<details>
+<summary><b>Matrices</b></summary>
+```{r}
+# Columna de 1 para el intercepto
+idv <- rep(1, nrow(datos))
+# Creamos matriz X
+X <- matrix(c(idv,datos$x1,datos$x2),nrow=25,ncol=3)
+# Creamos el vector y
+y <- matrix(datos$y, nrow = 25, ncol = 1)
+```
+</details>
+
+Ya sabemos que nuestro estimador está dado por 
+
+\[
+\hat{\beta} = (X'X)^{-1}X'y
+\]
+
+Entonces podemos encontrar el estimador.
+
+<details>
+<summary><b>Estimador beta</b></summary>
+```{r}
+beta <- solve(t(X) %*% X) %*% t(X) %*% y
+beta
+```
+</details>
+
+Entonces el ajuste por el método de mínimos cuadrados, con los coeficientes de regresión que encontramos está dado por:
+
+$\hat{y} =$ `r beta[1]` $+$ `r beta[2]` $x_1$ $+$ `r beta[2]` $x_2$
+
+
+Esto lo podemos hacer más rápido usando la función de `lm`. Construimos el modelo.
+
+<details>
+<summary><b>Modelo en R</b></summary>
+```{r}
+MLRM1 <- lm(y ~ x1 + x2, datos)
+MLRM1 
+```
+</details>
+
+
+¿Cómo accedemos a los valores del modelo?
+
+<details>
+<summary><b>Coeficientes</b></summary>
+```{r}
+beta_0 <- MLRM1$coefficients[1]
+beta_1 <- MLRM1$coefficients[2]
+beta_2 <- MLRM1$coefficients[3]
+```
+</details>
+
+Los valores son $\beta_0=$ `r beta_0`, $\beta_1=$ `r beta_1` y $\beta_2=$ `r beta_2`.
+
+
+2) Estimación de la varianza del error $\sigma^2$
+
+Ya tenemos que la suma de los cuadrados de los errores está dada por
+
+\[ SSE = y'y - \hat{\beta}X'y\]
+
+Sustituimos los valores que tenemos y obtemos el SSE.
+
+<details>
+<summary><b>SSE</b></summary>
+```{r}
+SSE <- t(y)%*% y - t(beta) %*% t(X) %*% y
+SSE
+```
+</details>
+
+Y de está forma, podemos encontrar el estimador de $\sigma^2$. 
+
+<details>
+<summary><b>Estimador</b></summary>
+```{r}
+varest <- SSE / (nrow(y) - nrow(beta))
+varest
+```
+</details>
+
+Directo con las funciones de R, podemos acceder a los parámetros que se guardaron en el modelo que ya calculamos.
+
+<details>
+<summary><b>Resumen del modelo</b></summary>
+```{r}
+summary(MLRM1)
+```
+</details>
+
+Algunos de los parámetros almacenados en el modelo nos permiten obtener también el resultado previo. 
+
+<details>
+<summary><b>Estimador</b></summary>
+```{r}
+sum(residuals(MLRM1)^2) / df.residual(MLRM1)
+```
+</details>
+
+
+### Ejercicios
+
+**Ejercicio 1:** Un analista hace un estudio químico y espera que el rendimiento de cierta sustancia se vea afectado por dos factores. Se realizan 17 experimentos cuyos datos se registran en el cuadro siguiente. Por experimentos similares, se sabe que los factores \(x_1\) y \(x_2\) no están relacionados; por ello, el analista decide utilizar un modelo de regresión lineal múltiple. Calcule el modelo de regresión y grafíquelo sobre las observaciones. 
+
+*Archivo: est_quimico.csv*
+
+<details>
+<summary><b>Datos Ejercicio 1</b></summary>
+```{r}
+datos2 <- data.frame(
+  Experimento = 1:17,
+  x1 = c(41.9, 43.4, 43.9, 44.5, 47.3, 47.5, 47.9, 50.2, 52.8, 53.2, 56.7, 57.0, 63.5, 64.3, 71.1, 77.0, 77.8),
+  x2 = c(29.1, 29.3, 29.5, 29.7, 29.9, 30.3, 30.5, 30.7, 30.8, 30.9, 31.5, 31.7, 31.9, 32.0, 32.1, 32.5, 32.9),
+  y  = c(251.3, 251.3, 248.3, 267.5, 273.0, 276.5, 270.3, 274.9, 285.0, 290.0, 297.0, 302.5, 304.5, 309.3, 321.7, 330.7, 349.0)
+)
+
+datos2
+```
+</details>
+
+**Ejercicio 2:** Repetir el ejemplo con los datos `datasets::trees` de R que proporciona mediciones
+del diámetro, altura y volumen de madera en 31 cerezos negros talados.
+
+
+**Ejercicio 3:** Subir a Github los dos ejercicios previos tanto con solución en R como en Python. Comparar las funciones. Ventajas y desventajas de ambas.
+
+
+## Pruebas de Hipótesis
+
+Cuando revisamos el `summary` del modelo, nos arroja si son significativas o no y a que nivel de significancia las variables que estamos considerando. Veamos el siguiente ejemplo.
+
+**Ejemplo: ** Usaremos el conjunto de datos `data("marketing")` que contiene 200 observaciones de un experimento publicitario que evalúa el impacto de tres medios de anuncio en las ventas. Para cada observación se registran los presupuestos de publicidad (en miles de dólares) y las ventas obtenidas.
+Variables:
+
+- `youtube`: presupuesto invertido en anuncios de YouTube (miles de USD).
+- `facebook`: presupuesto invertido en Facebook (miles de USD).
+- `newspaper`: presupuesto invertido en prensa escrita (miles de USD).
+- `sales`: ventas registradas (variable respuesta).
+
+Cargamos los datos:
+
+```{r}
+library(datarium)
+data("marketing")
+```
+
+Exploramos rápidamente la base para ver qué variables contiene y la dimensión:
+```{r}
+str(marketing)
+?marketing
+```
+
+Ajustamos un modelo lineal que incluya todas las variables, es decir, 
+
+$sales=\beta_0+\beta_1 youtube+\beta_2 facebook+ \beta_3 newspaper+\epsilon$
+
+```{r}
+modelo1<-lm(sales~youtube+facebook+newspaper,data=marketing)
+summary(modelo1)
+```
+
+¿Qué se puede decir sobre la significancia de la variable $newspaper$?
+
+Veamos qué ocurre con el modelo al eliminar la variable $newspaper$
+
+```{r}
+modelo2<-lm(sales~facebook+youtube,data=marketing)
+summary(modelo2)
+``` 
+
+Lo que sigue, es hacer pruebas de hipótesis tanto en las variables como en los coeficientes de regresión.
+
+
+

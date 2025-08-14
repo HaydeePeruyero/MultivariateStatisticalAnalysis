@@ -10,6 +10,9 @@ por-qué-estadística-multivariada
 qué-es-multivariado-y-por-qué-lo-necesitamos
 regresión-múltiple-1
 modelo-y-estimación
+estimación-de-parámetros
+ejercicios
+pruebas-de-hipótesis
 análisis-de-componentes-principales
 análisis-factorial
 análisis-de-conglomerados
