@@ -23,3 +23,7 @@ git-github
 gráficas-multivariadas
 escalas-de-medición
 valores-faltantes
+prueba-de-la-significancia-de-la-regresión
+pruebas-sobre-coeficientes-individuales-de-regresión
+intervalos-de-confianza
+intervalo-de-confianza-de-la-respuesta-media

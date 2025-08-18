@@ -320,8 +320,8 @@ Esto lo podemos hacer más rápido usando la función de `lm`. Construimos el mo
 <details>
 <summary><b>Modelo en R</b></summary>
 ```{r}
-MLRM1 <- lm(y ~ x1 + x2, datos)
-MLRM1 
+M1 <- lm(y ~ x1 + x2, datos)
+M1 
 ```
 </details>
 
@@ -331,9 +331,9 @@ MLRM1
 <details>
 <summary><b>Coeficientes</b></summary>
 ```{r}
-beta_0 <- MLRM1$coefficients[1]
-beta_1 <- MLRM1$coefficients[2]
-beta_2 <- MLRM1$coefficients[3]
+beta_0 <- M1$coefficients[1]
+beta_1 <- M1$coefficients[2]
+beta_2 <- M1$coefficients[3]
 ```
 </details>
 
@@ -371,7 +371,7 @@ Directo con las funciones de R, podemos acceder a los parámetros que se guardar
 <details>
 <summary><b>Resumen del modelo</b></summary>
 ```{r}
-summary(MLRM1)
+summary(M1)
 ```
 </details>
 
@@ -380,7 +380,7 @@ Algunos de los parámetros almacenados en el modelo nos permiten obtener tambié
 <details>
 <summary><b>Estimador</b></summary>
 ```{r}
-sum(residuals(MLRM1)^2) / df.residual(MLRM1)
+sum(residuals(M1)^2) / df.residual(M1)
 ```
 </details>
 
@@ -416,6 +416,214 @@ del diámetro, altura y volumen de madera en 31 cerezos negros talados.
 
 Cuando revisamos el `summary` del modelo, nos arroja si son significativas o no y a que nivel de significancia las variables que estamos considerando. Veamos el siguiente ejemplo.
 
+### Prueba de la significancia de la regresión
+
+
+**Ejemplo:** Con los datos del embotellador de bebidas gaseosas, se probará la significancia de la regresión.
+
+<details>
+<summary><b>Sumas de Cuadrados</b></summary>
+```{r}
+SCT <- t(y) %*% y -  sum(y)**2 / nrow(datos)
+SCT
+
+SCE <- t(beta) %*% t(X) %*% y - sum(y)**2 / nrow(datos)
+SCE
+
+SSE <- SCT - SCE
+SSE
+                                      
+```
+</details>
+
+Para probar 
+
+\[H_0 : \beta_1 = \beta_2=0\]
+
+se calcula el estadístico:
+
+<details>
+<summary><b>Estadístico F</b></summary>
+```{r}
+F0 <- (SCE / (ncol(X) - 1)) / (SSE / (nrow(X) - (ncol(X) -1) - 1))
+F0
+```
+</details>
+
+Como el valor de $F_0$ es mayor que el valor tabulado de $F_{\alpha;p,n-p-1}=F_{0.05;2;22}=3.44$, se rechaza $H_0$. Lo cual implica qye el tiempo de entrega depende del volumen de entrega y/o de la distancia.
+
+
+Ahora, usando los modelos que ya calculamos.
+
+<details>
+<summary><b>Sumas de cuadrados</b></summary>
+```{r}
+SCT.m<-sum((datos$y-mean(datos$y))^2)
+SCT.m
+
+SCE.m <-sum((M1$fitted-mean(datos$y))^2)
+SCE.m
+
+SSE.m <-sum(M1$residuals^2)
+SSE.m
+```
+</details>
+
+
+<details>
+<summary><b>Grados de libertad</b></summary>
+```{r}
+n<-nrow(y)
+n
+
+GLT<- n-1
+GLT
+
+
+GLRes<- df.residual(M1)
+GLRes
+
+GLR<- GLT-GLRes
+GLR
+```
+</details>
+
+<details>
+<summary><b>Cuadrados medios</b></summary>
+```{r}
+CMR <- SCE /GLR
+CMR
+
+CMRes <- SSE / GLRes
+CMRes
+```
+</details>
+
+<details>
+<summary><b>Estadístico F_0</b></summary>
+```{r}
+F0 <- CMR/CMRes
+F0
+```
+</details>
+
+<details>
+<summary><b>p-valor</b></summary>
+```{r}
+pv <- 1 - pf(F0, GLR,GLRes)
+pv
+```
+</details>
+
+<details>
+<summary><b>Valor tabulado de F</b></summary>
+```{r}
+alpha <- 0.05; df1 <- 2; df2 <- 22
+F_crit <- qf(1 - alpha, df1, df2)
+F_crit
+```
+</details>
+
+
+### Pruebas sobre coeficientes individuales de regresión
+
+
+**Ejemplo:** Usando los datos del embotellador de bebidas gaseosas, se desea evaluar la importancia de la variable regresora *distancia* ($x_2$) dado que el regresor *cajas* ($x_1$) está en el modelo.
+
+<details>
+<summary><b>Estadístico t_0</b></summary>
+```{r}
+C22 <- solve(t(X) %*% X)[3,3]
+C22
+
+t0 <- beta_2 / sqrt(varest * C22)
+t0
+
+## t tabulado con confianza 95% y 22 grados de libertad
+tt <- qt(p = 0.95 + 0.05/2, df = 22, lower.tail = TRUE)
+tt
+```
+</details>
+
+
+Usando el modelo que ya tenemos calculado `M1` podemos obtener estos mismos resultados de la siguiente forma.
+
+<details>
+<summary><b>Prueba sobre coeficientes</b></summary>
+```{r}
+summary(M1)
+```
+</details>
+
+## Intervalos de confianza
+
+**Ejemplo:** Usando los datos del embotellador de bebidas gaseosas, queremos calcular el intervalo de confianza del 95\% para $\beta_1$. Recordemos que el estimador puntual de $\beta_1$ es `r beta_1`.
+
+<details>
+<summary><b>Intervalo de confianza</b></summary>
+```{r}
+C11 <- solve(t(X) %*% X)[2,2]
+
+izq <- beta_1 - tt * sqrt(varest*C11)
+izq
+
+der <- beta_1 + tt * sqrt(varest*C11)
+der
+```
+</details>
+
+
+### Intervalo de confianza de la respuesta media
+
+
+**Ejemplo:** El embotellador de bebidas gaseosas quiere establecer un intervalo de confianza del 95\% para el tiempo medio de entrega para una tienda donde se requieren $x_1=8$ cajas y la distancia es de $x_2=275$ pies. 
+
+Nuestro vector $X_0$ está dado por:
+<details>
+<summary><b>X0</b></summary>
+```{r}
+X0 <- matrix(c(1, 8, 275), nrow = 3)
+X0
+```
+</details>
+
+
+El valor ajustado en ese punto es:
+
+
+<details>
+<summary><b>Valor ajustado</b></summary>
+```{r}
+y0 <- t(X0) %*% beta
+y0
+```
+</details>
+
+La varianza de $\hat{y_0}$
+
+<details>
+<summary><b>Varianza</b></summary>
+```{r}
+var_y0 <- varest * t(X0) %*% solve(t(X) %*% X) %*% X0
+var_y0
+```
+</details>
+
+Entonces el intervalo de confianza en este punto es:
+
+<details>
+<summary><b>Intervalo de confianza</b></summary>
+```{r}
+l_izq <- y0 - tt * sqrt(var_y0) 
+l_izq
+
+l_der <- y0 + tt * sqrt(var_y0) 
+l_der
+```
+</details>
+
+
+
 **Ejemplo: ** Usaremos el conjunto de datos `data("marketing")` que contiene 200 observaciones de un experimento publicitario que evalúa el impacto de tres medios de anuncio en las ventas. Para cada observación se registran los presupuestos de publicidad (en miles de dólares) y las ventas obtenidas.
 Variables:
 
@@ -434,28 +642,43 @@ data("marketing")
 Exploramos rápidamente la base para ver qué variables contiene y la dimensión:
 ```{r}
 str(marketing)
-?marketing
+#?marketing
 ```
 
 Ajustamos un modelo lineal que incluya todas las variables, es decir, 
 
 $sales=\beta_0+\beta_1 youtube+\beta_2 facebook+ \beta_3 newspaper+\epsilon$
 
+<details>
+<summary><b>Modelo marketing</b></summary>
 ```{r}
 modelo1<-lm(sales~youtube+facebook+newspaper,data=marketing)
 summary(modelo1)
 ```
+</details>
 
 ¿Qué se puede decir sobre la significancia de la variable $newspaper$?
 
 Veamos qué ocurre con el modelo al eliminar la variable $newspaper$
 
+<details>
+<summary><b>Modelo marketing 2</b></summary>
 ```{r}
 modelo2<-lm(sales~facebook+youtube,data=marketing)
 summary(modelo2)
 ``` 
+</details>
 
 Lo que sigue, es hacer pruebas de hipótesis tanto en las variables como en los coeficientes de regresión.
+
+**Ejercicio 1:** Realizar las pruebas de hipótesis sobre la significancia de la regresión y sobre los coeficientes. Encontrar los intervalos de confianza respectivos del 95\%. 
+Para una tienda con presupuestos:
+$youtube = 150$, $facebook = 30$, $newspaper=20$ (en miles de USD):
+(a) Calcula el intervalo de confianza del 95% para la media de ventas $\mathbb{E}(sales | X_0)$.
+(b) Calcula el intervalo de predicción del 95% para una nueva observación de ventas.
+(c) Comenta la diferencia entre ambos intervalos.
+Subir respuesta y explicación de sus resultados a github. 
+
 
 
 
