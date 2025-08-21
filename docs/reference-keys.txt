@@ -13,6 +13,12 @@ modelo-y-estimación
 estimación-de-parámetros
 ejercicios
 pruebas-de-hipótesis
+prueba-de-la-significancia-de-la-regresión
+pruebas-sobre-coeficientes-individuales-de-regresión
+intervalos-de-confianza
+intervalos-de-confianza-en-los-coeficientes-de-regresión
+intervalo-de-confianza-de-la-respuesta-media
+ejercicios-1
 análisis-de-componentes-principales
 análisis-factorial
 análisis-de-conglomerados
@@ -23,10 +29,3 @@ git-github
 gráficas-multivariadas
 escalas-de-medición
 valores-faltantes
-prueba-de-la-significancia-de-la-regresión
-pruebas-sobre-coeficientes-individuales-de-regresión
-intervalos-de-confianza
-intervalo-de-confianza-de-la-respuesta-media
-ejercicios-1
-intervalos-de-confianza-en-los-coeficientes-de-regresión
-intervalos-de-confianza-simultáneos-para-coeficientes-de-regresión

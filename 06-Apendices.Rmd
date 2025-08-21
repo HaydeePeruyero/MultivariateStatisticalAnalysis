@@ -11,7 +11,13 @@ setwd(workingDir)
 
 ## Introducción a R
 
+- Tutorial de RMarkdown: [Link](https://github.com/HaydeePeruyero/Rmarkdown_and_LaTeX/blob/main/ejemplo.Rmd)
+
+- Tutorial Manejo de Proyectos: [Link](https://haydeeperuyero.github.io/Seminario_Estadistica/manejo-de-proyectos.html)
+
 ## Git + Github
+
+- Conectar R con Git y Github: [Link](https://r-ladies-morelia.github.io/blog/conectar/)
 
 ## Gráficas Multivariadas
 

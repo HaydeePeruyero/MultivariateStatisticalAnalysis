@@ -826,8 +826,8 @@ Modelo en R
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{MLRM1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2, datos)}
-\NormalTok{MLRM1 }
+\NormalTok{M1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2, datos)}
+\NormalTok{M1 }
 \end{Highlighting}
 \end{Shaded}
 
@@ -847,9 +847,9 @@ Coeficientes
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{beta\_0 }\OtherTok{\textless{}{-}}\NormalTok{ MLRM1}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}
-\NormalTok{beta\_1 }\OtherTok{\textless{}{-}}\NormalTok{ MLRM1}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}
-\NormalTok{beta\_2 }\OtherTok{\textless{}{-}}\NormalTok{ MLRM1}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}
+\NormalTok{beta\_0 }\OtherTok{\textless{}{-}}\NormalTok{ M1}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{]}
+\NormalTok{beta\_1 }\OtherTok{\textless{}{-}}\NormalTok{ M1}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}
+\NormalTok{beta\_2 }\OtherTok{\textless{}{-}}\NormalTok{ M1}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{3}\NormalTok{]}
 \end{Highlighting}
 \end{Shaded}
 
@@ -905,7 +905,7 @@ Resumen del modelo
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(MLRM1)}
+\FunctionTok{summary}\NormalTok{(M1)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -937,7 +937,7 @@ Estimador
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{sum}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(MLRM1)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{df.residual}\NormalTok{(MLRM1)}
+\FunctionTok{sum}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(M1)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{/} \FunctionTok{df.residual}\NormalTok{(M1)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -996,6 +996,410 @@ del diámetro, altura y volumen de madera en 31 cerezos negros talados.
 
 Cuando revisamos el \texttt{summary} del modelo, nos arroja si son significativas o no y a que nivel de significancia las variables que estamos considerando. Veamos el siguiente ejemplo.
 
+\subsection{Prueba de la significancia de la regresión}\label{prueba-de-la-significancia-de-la-regresiuxf3n}
+
+\textbf{Ejemplo:} Con los datos del embotellador de bebidas gaseosas, se probará la significancia de la regresión.
+
+Sumas de Cuadrados
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SCT }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(y) }\SpecialCharTok{\%*\%}\NormalTok{ y }\SpecialCharTok{{-}}  \FunctionTok{sum}\NormalTok{(y)}\SpecialCharTok{**}\DecValTok{2} \SpecialCharTok{/} \FunctionTok{nrow}\NormalTok{(datos)}
+\NormalTok{SCT}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 5784.543
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SCE }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(beta) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ y }\SpecialCharTok{{-}} \FunctionTok{sum}\NormalTok{(y)}\SpecialCharTok{**}\DecValTok{2} \SpecialCharTok{/} \FunctionTok{nrow}\NormalTok{(datos)}
+\NormalTok{SCE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 5550.811
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SSE }\OtherTok{\textless{}{-}}\NormalTok{ SCT }\SpecialCharTok{{-}}\NormalTok{ SCE}
+\NormalTok{SSE}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 233.7317
+\end{verbatim}
+
+Para probar
+
+\[H_0 : \beta_1 = \beta_2=0\]
+
+se calcula el estadístico:
+
+Estadístico F
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{F0 }\OtherTok{\textless{}{-}}\NormalTok{ (SCE }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{ncol}\NormalTok{(X) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{/}\NormalTok{ (SSE }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{nrow}\NormalTok{(X) }\SpecialCharTok{{-}}\NormalTok{ (}\FunctionTok{ncol}\NormalTok{(X) }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{))}
+\NormalTok{F0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 261.2351
+\end{verbatim}
+
+Como el valor de \(F_0\) es mayor que el valor tabulado de \(F_{\alpha;p,n-p-1}=F_{0.05;2;22}=3.44\), se rechaza \(H_0\). Lo cual implica qye el tiempo de entrega depende del volumen de entrega y/o de la distancia.
+
+Ahora, usando los modelos que ya calculamos.
+
+Sumas de cuadrados
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SCT.m}\OtherTok{\textless{}{-}}\FunctionTok{sum}\NormalTok{((datos}\SpecialCharTok{$}\NormalTok{y}\SpecialCharTok{{-}}\FunctionTok{mean}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{y))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SCT.m}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5784.543
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SCE.m }\OtherTok{\textless{}{-}}\FunctionTok{sum}\NormalTok{((M1}\SpecialCharTok{$}\NormalTok{fitted}\SpecialCharTok{{-}}\FunctionTok{mean}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{y))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SCE.m}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 5550.811
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SSE.m }\OtherTok{\textless{}{-}}\FunctionTok{sum}\NormalTok{(M1}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SSE.m}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 233.7317
+\end{verbatim}
+
+Grados de libertad
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n}\OtherTok{\textless{}{-}}\FunctionTok{nrow}\NormalTok{(y)}
+\NormalTok{n}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{GLT}\OtherTok{\textless{}{-}}\NormalTok{ n}\DecValTok{{-}1}
+\NormalTok{GLT}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 24
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{GLRes}\OtherTok{\textless{}{-}} \FunctionTok{df.residual}\NormalTok{(M1)}
+\NormalTok{GLRes}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 22
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{GLR}\OtherTok{\textless{}{-}}\NormalTok{ GLT}\SpecialCharTok{{-}}\NormalTok{GLRes}
+\NormalTok{GLR}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+Cuadrados medios
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CMR }\OtherTok{\textless{}{-}}\NormalTok{ SCE }\SpecialCharTok{/}\NormalTok{GLR}
+\NormalTok{CMR}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 2775.405
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CMRes }\OtherTok{\textless{}{-}}\NormalTok{ SSE }\SpecialCharTok{/}\NormalTok{ GLRes}
+\NormalTok{CMRes}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 10.62417
+\end{verbatim}
+
+Estadístico F\_0
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{F0 }\OtherTok{\textless{}{-}}\NormalTok{ CMR}\SpecialCharTok{/}\NormalTok{CMRes}
+\NormalTok{F0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 261.2351
+\end{verbatim}
+
+p-valor
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pv }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pf}\NormalTok{(F0, GLR,GLRes)}
+\NormalTok{pv}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              [,1]
+## [1,] 4.440892e-16
+\end{verbatim}
+
+Valor tabulado de F
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.05}\NormalTok{; df1 }\OtherTok{\textless{}{-}} \DecValTok{2}\NormalTok{; df2 }\OtherTok{\textless{}{-}} \DecValTok{22}
+\NormalTok{F\_crit }\OtherTok{\textless{}{-}} \FunctionTok{qf}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha, df1, df2)}
+\NormalTok{F\_crit}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3.443357
+\end{verbatim}
+
+\subsection{Pruebas sobre coeficientes individuales de regresión}\label{pruebas-sobre-coeficientes-individuales-de-regresiuxf3n}
+
+\textbf{Ejemplo:} Usando los datos del embotellador de bebidas gaseosas, se desea evaluar la importancia de la variable regresora \emph{distancia} (\(x_2\)) dado que el regresor \emph{cajas} (\(x_1\)) está en el modelo.
+
+Estadístico t\_0
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C22 }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ X)[}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\NormalTok{C22}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.228745e-06
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{t0 }\OtherTok{\textless{}{-}}\NormalTok{ beta\_2 }\SpecialCharTok{/} \FunctionTok{sqrt}\NormalTok{(varest }\SpecialCharTok{*}\NormalTok{ C22)}
+\NormalTok{t0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 3.981313
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# t tabulado con confianza 95\% y 22 grados de libertad}
+\NormalTok{tt }\OtherTok{\textless{}{-}} \FunctionTok{qt}\NormalTok{(}\AttributeTok{p =} \FloatTok{0.95} \SpecialCharTok{+} \FloatTok{0.05}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\AttributeTok{df =} \DecValTok{22}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{tt}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.073873
+\end{verbatim}
+
+Usando el modelo que ya tenemos calculado \texttt{M1} podemos obtener estos mismos resultados de la siguiente forma.
+
+Prueba sobre coeficientes
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(M1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.7880 -0.6629  0.4364  1.1566  7.4197 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 2.341231   1.096730   2.135 0.044170 *  
+## x1          1.615907   0.170735   9.464 3.25e-09 ***
+## x2          0.014385   0.003613   3.981 0.000631 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.259 on 22 degrees of freedom
+## Multiple R-squared:  0.9596, Adjusted R-squared:  0.9559 
+## F-statistic: 261.2 on 2 and 22 DF,  p-value: 4.687e-16
+\end{verbatim}
+
+\section{Intervalos de confianza}\label{intervalos-de-confianza}
+
+\subsection{Intervalos de confianza en los coeficientes de regresión}\label{intervalos-de-confianza-en-los-coeficientes-de-regresiuxf3n}
+
+\textbf{Ejemplo:} Usando los datos del embotellador de bebidas gaseosas, queremos calcular el intervalo de confianza del 95\% para \(\beta_1\). Recordemos que el estimador puntual de \(\beta_1\) es 1.6159072.
+
+Intervalo de confianza
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C11 }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ X)[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+
+\NormalTok{izq }\OtherTok{\textless{}{-}}\NormalTok{ beta\_1 }\SpecialCharTok{{-}}\NormalTok{ tt }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(varest}\SpecialCharTok{*}\NormalTok{C11)}
+\NormalTok{izq}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 1.261825
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{der }\OtherTok{\textless{}{-}}\NormalTok{ beta\_1 }\SpecialCharTok{+}\NormalTok{ tt }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(varest}\SpecialCharTok{*}\NormalTok{C11)}
+\NormalTok{der}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         [,1]
+## [1,] 1.96999
+\end{verbatim}
+
+\subsection{Intervalo de confianza de la respuesta media}\label{intervalo-de-confianza-de-la-respuesta-media}
+
+\textbf{Ejemplo:} El embotellador de bebidas gaseosas quiere establecer un intervalo de confianza del 95\% para el tiempo medio de entrega para una tienda donde se requieren \(x_1=8\) cajas y la distancia es de \(x_2=275\) pies.
+
+Nuestro vector \(X_0\) está dado por:
+
+X0
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X0 }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{275}\NormalTok{), }\AttributeTok{nrow =} \DecValTok{3}\NormalTok{)}
+\NormalTok{X0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]
+## [1,]    1
+## [2,]    8
+## [3,]  275
+\end{verbatim}
+
+El valor ajustado en ese punto es:
+
+Valor ajustado
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y0 }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X0) }\SpecialCharTok{\%*\%}\NormalTok{ beta}
+\NormalTok{y0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 19.22432
+\end{verbatim}
+
+La varianza de \(\hat{y_0}\)
+
+Varianza
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{var\_y0 }\OtherTok{\textless{}{-}}\NormalTok{ varest }\SpecialCharTok{*} \FunctionTok{t}\NormalTok{(X0) }\SpecialCharTok{\%*\%} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ X) }\SpecialCharTok{\%*\%}\NormalTok{ X0}
+\NormalTok{var\_y0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           [,1]
+## [1,] 0.5734134
+\end{verbatim}
+
+Entonces el intervalo de confianza en este punto es:
+
+Intervalo de confianza
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l\_izq }\OtherTok{\textless{}{-}}\NormalTok{ y0 }\SpecialCharTok{{-}}\NormalTok{ tt }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(var\_y0) }
+\NormalTok{l\_izq}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         [,1]
+## [1,] 17.6539
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l\_der }\OtherTok{\textless{}{-}}\NormalTok{ y0 }\SpecialCharTok{+}\NormalTok{ tt }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{(var\_y0) }
+\NormalTok{l\_der}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          [,1]
+## [1,] 20.79474
+\end{verbatim}
+
 \textbf{Ejemplo: } Usaremos el conjunto de datos \texttt{data("marketing")} que contiene 200 observaciones de un experimento publicitario que evalúa el impacto de tres medios de anuncio en las ventas. Para cada observación se registran los presupuestos de publicidad (en miles de dólares) y las ventas obtenidas.
 Variables:
 
@@ -1038,17 +1442,15 @@ Exploramos rápidamente la base para ver qué variables contiene y la dimensión
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{?marketing}
+\CommentTok{\#?marketing}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## starting httpd help server ... done
-\end{verbatim}
 
 Ajustamos un modelo lineal que incluya todas las variables, es decir,
 
 \(sales=\beta_0+\beta_1 youtube+\beta_2 facebook+ \beta_3 newspaper+\epsilon\)
+
+Modelo marketing
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1084,6 +1486,8 @@ Ajustamos un modelo lineal que incluya todas las variables, es decir,
 
 Veamos qué ocurre con el modelo al eliminar la variable \(newspaper\)
 
+Modelo marketing 2
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{modelo2}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(sales}\SpecialCharTok{\textasciitilde{}}\NormalTok{facebook}\SpecialCharTok{+}\NormalTok{youtube,}\AttributeTok{data=}\NormalTok{marketing)}
@@ -1115,6 +1519,72 @@ Veamos qué ocurre con el modelo al eliminar la variable \(newspaper\)
 
 Lo que sigue, es hacer pruebas de hipótesis tanto en las variables como en los coeficientes de regresión.
 
+\textbf{Ejercicio 1:} Realizar las pruebas de hipótesis sobre la significancia de la regresión y sobre los coeficientes. Encontrar los intervalos de confianza respectivos del 95\%.
+Para una tienda con presupuestos:
+\(youtube = 150\), \(facebook = 30\), \(newspaper=20\) (en miles de USD):
+(a) Calcula el intervalo de confianza del 95\% para la media de ventas \(\mathbb{E}(sales | X_0)\).
+(b) Calcula el intervalo de predicción del 95\% para una nueva observación de ventas.
+(c) Comenta la diferencia entre ambos intervalos.
+Subir respuesta y explicación de sus resultados a github.
+
+\section{Ejercicios}\label{ejercicios-1}
+
+\textbf{Ejercicio 1:} Para los datos de la \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Liga_nacional_de_futbol.csv}{Liga Nacional de Fútbol}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  Ajustar un modelo de regresión lineal múltiple que relacione la cantidad de juegos ganados con las yardas por aire del equipo (\(x_2\)), el porcentaje de jugadas por tierra (\(x_7\)) y las yardas por tierra del contrario (\(x_8\)).
+\item
+  Formar la tabla de análisis de varianza y probar la significancia de la regresión.
+\item
+  Calcular el estadístico \emph{t} para probar las hipótesis \(H_0 : \beta_2 = 0\), \(H_0 : \beta_7 = 0\) y \(H_0 : \beta_8 = 0\). ¿Qué conclusiones se pueden sacar acerca del papel de las variables \(x_2\), \(x_7\) y \(x_8\) en el modelo?
+\item
+  Calcular \(R^2\) y \(R^2_{adj}\) para este modelo.
+\item
+  Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?
+\item
+  Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.
+\item
+  Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?
+\item
+  Calcular un intervalo de confianza de \(95\%\) para \(\beta_7\) y un intervalo de confianza de \(95\%\) para la cantidad media de juegos ganados por un equipo cuando \(x_2 = 2300\), \(x_7 = 56\) y \(x_8 = 2100\).
+\item
+  Ajustar un modelo a esos datos, usando solo \(x_7\) y \(x_8\) como regresores y probar la significancia de la regresión.
+\item
+  Calcular \(R^2\) y \(R^2_{adj}\). Compararlos con los resultados del modelo anterior.
+\item
+  Calcular un intervalo de confianza de \(95\%\) para \(\beta_7\). También, un intervalo de confianza de \(95\%\) para la cantidad media de juegos ganados por un equipo cuando \(x_7 = 56\) y \(x_8 = 2100\). Comparar las longitudes de esos intervalos de confianza con las longitudes de los correspondientes al modelo anterior.
+\item
+  ¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?
+\end{enumerate}
+
+\textbf{Ejericio 2:} Véase los datos de \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv}{rendimiento de gasolina}.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  Ajustar un modelo de regresión lineal múltiple que relacione el rendimiento de la gasolina \emph{y}, en millas por galón, la cilindrada del motor (\(x_1\)) y la cantidad de gargantas del carburador (\(x_6\)).
+\item
+  Formar la tabla de análisis de varianza y probar la significancia de la regresión.
+\item
+  Calcular \(R^2\) y \(R^2_{adj}\) para este modelo. Compararlas con las \(R^2\) y \(R^2_{adj}\) Ajustado para el modelo de regresión lineal simple, que relaciona las millas con la cilindrada.
+\item
+  Determinar un intervalo de confianza para \(\beta_1\).
+\item
+  Determinar un intervalo de confianza de \(95\%\) para el rendimiento promedio de la gasolina, cuando \(x_1 = 225 pulg^3\) y \(x_6 = 2\) gargantas.
+\item
+  Determinar un intervalo de predicción de \(95\%\) para una nueva observación de rendimiento de gasolina, cuando \(x_1 = 225 pulg^3\) y \(x_6 = 2\) gargantas.
+\item
+  Considerar el modelo de regresión lineal simple, que relaciona las millas con la cilindrada. Construir un intervalo de confianza de \(95\%\) para el rendimiento promedio de la gasolina y un intervalo de predicción para el rendimiento, cuando \(x_1 = 225 pulg^3\). Comparar las longitudes de estos intervalos con los intervalos obtenidos en los dos incisos anteriores. ¿Tiene ventajas agregar \(x_6\) al modelo?
+\item
+  Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?
+\item
+  Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.
+\item
+  Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?
+\end{enumerate}
+
 \chapter{Análisis de Componentes Principales}\label{anuxe1lisis-de-componentes-principales}
 
 \chapter{Análisis Factorial}\label{anuxe1lisis-factorial}
@@ -1127,7 +1597,20 @@ Lo que sigue, es hacer pruebas de hipótesis tanto en las variables como en los 
 
 \section{Introducción a R}\label{introducciuxf3n-a-r}
 
+\begin{itemize}
+\item
+  Tutorial de RMarkdown: \href{https://github.com/HaydeePeruyero/Rmarkdown_and_LaTeX/blob/main/ejemplo.Rmd}{Link}
+\item
+  Tutorial Manejo de Proyectos: \href{https://haydeeperuyero.github.io/Seminario_Estadistica/manejo-de-proyectos.html}{Link}
+\end{itemize}
+
 \section{Git + Github}\label{git-github}
+
+\begin{itemize}
+\tightlist
+\item
+  Conectar R con Git y Github: \href{https://r-ladies-morelia.github.io/blog/conectar/}{Link}
+\end{itemize}
 
 \section{Gráficas Multivariadas}\label{gruxe1ficas-multivariadas}
 

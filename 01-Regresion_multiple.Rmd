@@ -687,7 +687,7 @@ Subir respuesta y explicación de sus resultados a github.
 
 ## Ejercicios 
 
-**Ejercicio 1:** Para los datos de la Liga Nacional de Fútbol
+**Ejercicio 1:** Para los datos de la [Liga Nacional de Fútbol](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Liga_nacional_de_futbol.csv)
 
 a) Ajustar un modelo de regresión lineal múltiple que relacione la cantidad de juegos ganados con las yardas por aire del equipo ($x_2$), el porcentaje de jugadas por tierra ($x_7$) y las yardas por tierra del contrario ($x_8$).  
 
@@ -714,7 +714,7 @@ k) Calcular un intervalo de confianza de $95\%$ para $\beta_7$. También, un int
 l) ¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?  
 
 
-**Ejericio 2:** Véase los datos de rendimiento de gasolina.
+**Ejericio 2:** Véase los datos de [rendimiento de gasolina](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv).
 
 a) Ajustar un modelo de regresión lineal múltiple que relacione el rendimiento de la gasolina *y*, en millas por galón, la cilindrada del motor ($x_1$) y la cantidad de gargantas del carburador ($x_6$).  
 
