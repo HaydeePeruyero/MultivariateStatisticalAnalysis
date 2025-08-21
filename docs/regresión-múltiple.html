@@ -169,8 +169,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2.5" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#intervalos-de-confianza"><i class="fa fa-check"></i><b>2.5</b> Intervalos de confianza</a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#intervalo-de-confianza-de-la-respuesta-media"><i class="fa fa-check"></i><b>2.5.1</b> Intervalo de confianza de la respuesta media</a></li>
+<li class="chapter" data-level="2.5.1" data-path="01-Regresion_multiple.html"><a href="#intervalos-de-confianza-en-los-coeficientes-de-regresi%C3%B3n"><i class="fa fa-check"></i><b>2.5.1</b> Intervalos de confianza en los coeficientes de regresión</a></li>
+<li class="chapter" data-level="2.5.2" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#intervalo-de-confianza-de-la-respuesta-media"><i class="fa fa-check"></i><b>2.5.2</b> Intervalo de confianza de la respuesta media</a></li>
 </ul></li>
+<li class="chapter" data-level="2.6" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-1"><i class="fa fa-check"></i><b>2.6</b> Ejercicios</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-de-componentes-principales"><i class="fa fa-check"></i><b>3</b> Análisis de Componentes Principales</a></li>
 <li class="chapter" data-level="4" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-factorial"><i class="fa fa-check"></i><b>4</b> Análisis Factorial</a></li>
@@ -813,6 +815,8 @@ del diámetro, altura y volumen de madera en 31 cerezos negros talados.</p>
 </div>
 <div id="intervalos-de-confianza" class="section level2 hasAnchor" number="2.5">
 <h2><span class="header-section-number">2.5</span> Intervalos de confianza<a href="regresión-múltiple.html#intervalos-de-confianza" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="intervalos-de-confianza-en-los-coeficientes-de-regresión" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> Intervalos de confianza en los coeficientes de regresión<a href="#intervalos-de-confianza-en-los-coeficientes-de-regresi%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Ejemplo:</strong> Usando los datos del embotellador de bebidas gaseosas, queremos calcular el intervalo de confianza del 95% para <span class="math inline">\(\beta_1\)</span>. Recordemos que el estimador puntual de <span class="math inline">\(\beta_1\)</span> es 1.6159072.</p>
 <details>
 <summary>
@@ -829,8 +833,9 @@ del diámetro, altura y volumen de madera en 31 cerezos negros talados.</p>
 <pre><code>##         [,1]
 ## [1,] 1.96999</code></pre>
 </details>
-<div id="intervalo-de-confianza-de-la-respuesta-media" class="section level3 hasAnchor" number="2.5.1">
-<h3><span class="header-section-number">2.5.1</span> Intervalo de confianza de la respuesta media<a href="regresión-múltiple.html#intervalo-de-confianza-de-la-respuesta-media" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="intervalo-de-confianza-de-la-respuesta-media" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> Intervalo de confianza de la respuesta media<a href="regresión-múltiple.html#intervalo-de-confianza-de-la-respuesta-media" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Ejemplo:</strong> El embotellador de bebidas gaseosas quiere establecer un intervalo de confianza del 95% para el tiempo medio de entrega para una tienda donde se requieren <span class="math inline">\(x_1=8\)</span> cajas y la distancia es de <span class="math inline">\(x_2=275\)</span> pies.</p>
 Nuestro vector <span class="math inline">\(X_0\)</span> está dado por:
 <details>
@@ -962,8 +967,39 @@ Para una tienda con presupuestos:
 (b) Calcula el intervalo de predicción del 95% para una nueva observación de ventas.
 (c) Comenta la diferencia entre ambos intervalos.
 Subir respuesta y explicación de sus resultados a github.</p>
-
 </div>
+</div>
+<div id="ejercicios-1" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Ejercicios<a href="regresión-múltiple.html#ejercicios-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ejercicio 1:</strong> Para los datos de la Liga Nacional de Fútbol</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Ajustar un modelo de regresión lineal múltiple que relacione la cantidad de juegos ganados con las yardas por aire del equipo (<span class="math inline">\(x_2\)</span>), el porcentaje de jugadas por tierra (<span class="math inline">\(x_7\)</span>) y las yardas por tierra del contrario (<span class="math inline">\(x_8\)</span>).</p></li>
+<li><p>Formar la tabla de análisis de varianza y probar la significancia de la regresión.</p></li>
+<li><p>Calcular el estadístico <em>t</em> para probar las hipótesis <span class="math inline">\(H_0 : \beta_2 = 0\)</span>, <span class="math inline">\(H_0 : \beta_7 = 0\)</span> y <span class="math inline">\(H_0 : \beta_8 = 0\)</span>. ¿Qué conclusiones se pueden sacar acerca del papel de las variables <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_7\)</span> y <span class="math inline">\(x_8\)</span> en el modelo?</p></li>
+<li><p>Calcular <span class="math inline">\(R^2\)</span> y <span class="math inline">\(R^2_{adj}\)</span> para este modelo.</p></li>
+<li><p>Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?</p></li>
+<li><p>Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.</p></li>
+<li><p>Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?</p></li>
+<li><p>Calcular un intervalo de confianza de <span class="math inline">\(95\%\)</span> para <span class="math inline">\(\beta_7\)</span> y un intervalo de confianza de <span class="math inline">\(95\%\)</span> para la cantidad media de juegos ganados por un equipo cuando <span class="math inline">\(x_2 = 2300\)</span>, <span class="math inline">\(x_7 = 56\)</span> y <span class="math inline">\(x_8 = 2100\)</span>.</p></li>
+<li><p>Ajustar un modelo a esos datos, usando solo <span class="math inline">\(x_7\)</span> y <span class="math inline">\(x_8\)</span> como regresores y probar la significancia de la regresión.</p></li>
+<li><p>Calcular <span class="math inline">\(R^2\)</span> y <span class="math inline">\(R^2_{adj}\)</span>. Compararlos con los resultados del modelo anterior.</p></li>
+<li><p>Calcular un intervalo de confianza de <span class="math inline">\(95\%\)</span> para <span class="math inline">\(\beta_7\)</span>. También, un intervalo de confianza de <span class="math inline">\(95\%\)</span> para la cantidad media de juegos ganados por un equipo cuando <span class="math inline">\(x_7 = 56\)</span> y <span class="math inline">\(x_8 = 2100\)</span>. Comparar las longitudes de esos intervalos de confianza con las longitudes de los correspondientes al modelo anterior.</p></li>
+<li><p>¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?</p></li>
+</ol>
+<p><strong>Ejericio 2:</strong> Véase los datos de rendimiento de gasolina.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Ajustar un modelo de regresión lineal múltiple que relacione el rendimiento de la gasolina <em>y</em>, en millas por galón, la cilindrada del motor (<span class="math inline">\(x_1\)</span>) y la cantidad de gargantas del carburador (<span class="math inline">\(x_6\)</span>).</p></li>
+<li><p>Formar la tabla de análisis de varianza y probar la significancia de la regresión.</p></li>
+<li><p>Calcular <span class="math inline">\(R^2\)</span> y <span class="math inline">\(R^2_{adj}\)</span> para este modelo. Compararlas con las <span class="math inline">\(R^2\)</span> y <span class="math inline">\(R^2_{adj}\)</span> Ajustado para el modelo de regresión lineal simple, que relaciona las millas con la cilindrada.</p></li>
+<li><p>Determinar un intervalo de confianza para <span class="math inline">\(\beta_1\)</span>.</p></li>
+<li><p>Determinar un intervalo de confianza de <span class="math inline">\(95\%\)</span> para el rendimiento promedio de la gasolina, cuando <span class="math inline">\(x_1 = 225 pulg^3\)</span> y <span class="math inline">\(x_6 = 2\)</span> gargantas.</p></li>
+<li><p>Determinar un intervalo de predicción de <span class="math inline">\(95\%\)</span> para una nueva observación de rendimiento de gasolina, cuando <span class="math inline">\(x_1 = 225 pulg^3\)</span> y <span class="math inline">\(x_6 = 2\)</span> gargantas.</p></li>
+<li><p>Considerar el modelo de regresión lineal simple, que relaciona las millas con la cilindrada. Construir un intervalo de confianza de <span class="math inline">\(95\%\)</span> para el rendimiento promedio de la gasolina y un intervalo de predicción para el rendimiento, cuando <span class="math inline">\(x_1 = 225 pulg^3\)</span>. Comparar las longitudes de estos intervalos con los intervalos obtenidos en los dos incisos anteriores. ¿Tiene ventajas agregar <span class="math inline">\(x_6\)</span> al modelo?</p></li>
+<li><p>Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?</p></li>
+<li><p>Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.</p></li>
+<li><p>Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?</p></li>
+</ol>
+
 </div>
 </div>
             </section>

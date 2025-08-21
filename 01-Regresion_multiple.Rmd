@@ -557,6 +557,8 @@ summary(M1)
 
 ## Intervalos de confianza
 
+### Intervalos de confianza en los coeficientes de regresión
+
 **Ejemplo:** Usando los datos del embotellador de bebidas gaseosas, queremos calcular el intervalo de confianza del 95\% para $\beta_1$. Recordemos que el estimador puntual de $\beta_1$ es `r beta_1`.
 
 <details>
@@ -671,6 +673,9 @@ summary(modelo2)
 
 Lo que sigue, es hacer pruebas de hipótesis tanto en las variables como en los coeficientes de regresión.
 
+
+
+
 **Ejercicio 1:** Realizar las pruebas de hipótesis sobre la significancia de la regresión y sobre los coeficientes. Encontrar los intervalos de confianza respectivos del 95\%. 
 Para una tienda con presupuestos:
 $youtube = 150$, $facebook = 30$, $newspaper=20$ (en miles de USD):
@@ -678,6 +683,58 @@ $youtube = 150$, $facebook = 30$, $newspaper=20$ (en miles de USD):
 (b) Calcula el intervalo de predicción del 95% para una nueva observación de ventas.
 (c) Comenta la diferencia entre ambos intervalos.
 Subir respuesta y explicación de sus resultados a github. 
+
+
+## Ejercicios 
+
+**Ejercicio 1:** Para los datos de la Liga Nacional de Fútbol
+
+a) Ajustar un modelo de regresión lineal múltiple que relacione la cantidad de juegos ganados con las yardas por aire del equipo ($x_2$), el porcentaje de jugadas por tierra ($x_7$) y las yardas por tierra del contrario ($x_8$).  
+
+b) Formar la tabla de análisis de varianza y probar la significancia de la regresión.  
+
+c) Calcular el estadístico *t* para probar las hipótesis $H_0 : \beta_2 = 0$, $H_0 : \beta_7 = 0$ y $H_0 : \beta_8 = 0$. ¿Qué conclusiones se pueden sacar acerca del papel de las variables $x_2$, $x_7$ y $x_8$ en el modelo?  
+
+d) Calcular $R^2$ y $R^2_{adj}$ para este modelo.  
+
+e) Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?  
+
+f) Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.  
+
+g) Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?  
+
+h) Calcular un intervalo de confianza de $95\%$ para $\beta_7$ y un intervalo de confianza de $95\%$ para la cantidad media de juegos ganados por un equipo cuando $x_2 = 2300$, $x_7 = 56$ y $x_8 = 2100$.  
+
+i) Ajustar un modelo a esos datos, usando solo $x_7$ y $x_8$ como regresores y probar la significancia de la regresión.  
+
+j) Calcular $R^2$ y $R^2_{adj}$. Compararlos con los resultados del modelo anterior.  
+
+k) Calcular un intervalo de confianza de $95\%$ para $\beta_7$. También, un intervalo de confianza de $95\%$ para la cantidad media de juegos ganados por un equipo cuando $x_7 = 56$ y $x_8 = 2100$. Comparar las longitudes de esos intervalos de confianza con las longitudes de los correspondientes al modelo anterior.  
+
+l) ¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?  
+
+
+**Ejericio 2:** Véase los datos de rendimiento de gasolina.
+
+a) Ajustar un modelo de regresión lineal múltiple que relacione el rendimiento de la gasolina *y*, en millas por galón, la cilindrada del motor ($x_1$) y la cantidad de gargantas del carburador ($x_6$).  
+
+b) Formar la tabla de análisis de varianza y probar la significancia de la regresión.  
+
+c) Calcular $R^2$ y $R^2_{adj}$ para este modelo. Compararlas con las $R^2$ y $R^2_{adj}$ Ajustado para el modelo de regresión lineal simple, que relaciona las millas con la cilindrada.  
+
+d) Determinar un intervalo de confianza para $\beta_1$.  
+
+e) Determinar un intervalo de confianza de $95\%$ para el rendimiento promedio de la gasolina, cuando $x_1 = 225 pulg^3$ y $x_6 = 2$ gargantas.  
+
+f) Determinar un intervalo de predicción de $95\%$ para una nueva observación de rendimiento de gasolina, cuando $x_1 = 225 pulg^3$ y $x_6 = 2$ gargantas.  
+
+g) Considerar el modelo de regresión lineal simple, que relaciona las millas con la cilindrada. Construir un intervalo de confianza de $95\%$ para el rendimiento promedio de la gasolina y un intervalo de predicción para el rendimiento, cuando $x_1 = 225 pulg^3$. Comparar las longitudes de estos intervalos con los intervalos obtenidos en los dos incisos anteriores. ¿Tiene ventajas agregar $x_6$ al modelo?  
+
+h) Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?  
+
+i) Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.  
+
+j) Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?  
 
 
 

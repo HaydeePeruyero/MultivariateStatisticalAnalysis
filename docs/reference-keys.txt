@@ -27,3 +27,6 @@ prueba-de-la-significancia-de-la-regresión
 pruebas-sobre-coeficientes-individuales-de-regresión
 intervalos-de-confianza
 intervalo-de-confianza-de-la-respuesta-media
+ejercicios-1
+intervalos-de-confianza-en-los-coeficientes-de-regresión
+intervalos-de-confianza-simultáneos-para-coeficientes-de-regresión
