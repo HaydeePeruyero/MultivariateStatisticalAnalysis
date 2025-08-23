@@ -685,9 +685,20 @@ $youtube = 150$, $facebook = 30$, $newspaper=20$ (en miles de USD):
 Subir respuesta y explicación de sus resultados a github. 
 
 
-## Ejercicios 
+## Ejercicios Regresión Lineal Multiple 
 
-**Ejercicio 1:** Para los datos de la [Liga Nacional de Fútbol](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Liga_nacional_de_futbol.csv)
+Realiza los siguientes ejercicios. En cada inciso:
+
+- explica y comenta la solución,
+
+- incluye el código utilizado, y
+
+- añade las gráficas (plots) correspondientes con su interpretación.
+
+Asegúrate de que el código sea reproducible y que las figuras tengan títulos, ejes y leyendas. 
+
+
+**Ejercicio 1:** Para los datos de la [Liga Nacional de Fútbol](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Liga_nacional_de_futbol.csv). Realizar tanto con las funciones de R y Python como con las fórmulas que usan matrices. 
 
 a) Ajustar un modelo de regresión lineal múltiple que relacione la cantidad de juegos ganados con las yardas por aire del equipo ($x_2$), el porcentaje de jugadas por tierra ($x_7$) y las yardas por tierra del contrario ($x_8$).  
 
@@ -714,7 +725,7 @@ k) Calcular un intervalo de confianza de $95\%$ para $\beta_7$. También, un int
 l) ¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?  
 
 
-**Ejericio 2:** Véase los datos de [rendimiento de gasolina](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv).
+**Ejericio 2:** Véase los datos de [rendimiento de gasolina](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv). Realizar el ejercicio en R.
 
 a) Ajustar un modelo de regresión lineal múltiple que relacione el rendimiento de la gasolina *y*, en millas por galón, la cilindrada del motor ($x_1$) y la cantidad de gargantas del carburador ($x_6$).  
 
@@ -737,5 +748,50 @@ i) Trazar e interpretar una gráfica de los residuales en función de la respues
 j) Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?  
 
 
+**Ejercicio 3:** Véase los datos sobre [precios de viviendas](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Precios_de_viviendas). Realizar el ejercicio en Python.
+
+a) Ajustar un modelo de regresión lineal múltiple que relacione el precio de venta con los nueve regresores.
+
+b) Probar la significancia de la regresión.¿Qué conclusiones se pueden sacar?
+
+c) Usar pruebas t para evaluar la contribución de cada regresor al modelo.
+
+d) Calcular $R^2$ y $R^2_{adj}$ para este modelo. 
+
+e) ¿Cuál es la contribución del tamaño del lote y el espacio vital para el modelo, dado que se incluyeron todos los demás regresores?.
+
+f) En este modelo, ¿la colinealidad es un problema potencial?
+
+g) Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?
+
+h) Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.
+
+i) Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?.
+
+**Ejercicio 4:** Explica lo siguiente. 
+
+a) ¿Qué supuestos del modelo de regresión lineal múltiple deben verificarse?
+
+b) ¿Cómo se interpretan los intervalos de confianza? Si construimos un intervalo de confianza del 95% para un coeficiente $\beta_j$, ¿cuál sería la lectura correcta o interpretación correcta sobre este intervalo?
+
+c) Describe los métodos de selección de variables y sus ventajas y desventajas:
+
+i) Selección hacia adelante (forward) 
+
+ii) Selección hacia atrás (backward)
+
+iii) selección por pasos (stepwise) y/o mejor subconjunto (best subset) 
+
+Explica cómo se utilizan para elegir el modelo final.
+
+**Ejercicio 5:** Para los datos del ejercicio 1 de la liga de Futbol. Realizar el ejercicio en R y Python.
+
+a) Usar el algoritmo de selección hacia adelante para seleccionar un modelo de regresión.
+
+b) Usar el algoritmo de selección hacia atrás para seleccionar un modelo de regresión.
+
+c) Usar el algoritmo de regresión por pasos para seleccionar un modelo de regresión.
+
+d) Comenta los modelos finales en cada uno de los casos anteriores. ¿Cuál tiene más sentido? ¿Cuál modelo usarían? 
 
 

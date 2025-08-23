@@ -29,3 +29,4 @@ git-github
 gráficas-multivariadas
 escalas-de-medición
 valores-faltantes
+ejercicios-regresión-lineal-multiple

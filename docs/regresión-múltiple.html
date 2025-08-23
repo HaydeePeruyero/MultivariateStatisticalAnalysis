@@ -172,7 +172,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.1" data-path="01-Regresion_multiple.html"><a href="#intervalos-de-confianza-en-los-coeficientes-de-regresi%C3%B3n"><i class="fa fa-check"></i><b>2.5.1</b> Intervalos de confianza en los coeficientes de regresión</a></li>
 <li class="chapter" data-level="2.5.2" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#intervalo-de-confianza-de-la-respuesta-media"><i class="fa fa-check"></i><b>2.5.2</b> Intervalo de confianza de la respuesta media</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-1"><i class="fa fa-check"></i><b>2.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="2.6" data-path="01-Regresion_multiple.html"><a href="#ejercicios-regresi%C3%B3n-lineal-multiple"><i class="fa fa-check"></i><b>2.6</b> Ejercicios Regresión Lineal Multiple</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-de-componentes-principales"><i class="fa fa-check"></i><b>3</b> Análisis de Componentes Principales</a></li>
 <li class="chapter" data-level="4" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-factorial"><i class="fa fa-check"></i><b>4</b> Análisis Factorial</a></li>
@@ -969,9 +969,16 @@ Para una tienda con presupuestos:
 Subir respuesta y explicación de sus resultados a github.</p>
 </div>
 </div>
-<div id="ejercicios-1" class="section level2 hasAnchor" number="2.6">
-<h2><span class="header-section-number">2.6</span> Ejercicios<a href="regresión-múltiple.html#ejercicios-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Ejercicio 1:</strong> Para los datos de la <a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Liga_nacional_de_futbol.csv">Liga Nacional de Fútbol</a></p>
+<div id="ejercicios-regresión-lineal-multiple" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Ejercicios Regresión Lineal Multiple<a href="#ejercicios-regresi%C3%B3n-lineal-multiple" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Realiza los siguientes ejercicios. En cada inciso:</p>
+<ul>
+<li><p>explica y comenta la solución,</p></li>
+<li><p>incluye el código utilizado, y</p></li>
+<li><p>añade las gráficas (plots) correspondientes con su interpretación.</p></li>
+</ul>
+<p>Asegúrate de que el código sea reproducible y que las figuras tengan títulos, ejes y leyendas.</p>
+<p><strong>Ejercicio 1:</strong> Para los datos de la <a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Liga_nacional_de_futbol.csv">Liga Nacional de Fútbol</a>. Realizar tanto con las funciones de R y Python como con las fórmulas que usan matrices.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Ajustar un modelo de regresión lineal múltiple que relacione la cantidad de juegos ganados con las yardas por aire del equipo (<span class="math inline">\(x_2\)</span>), el porcentaje de jugadas por tierra (<span class="math inline">\(x_7\)</span>) y las yardas por tierra del contrario (<span class="math inline">\(x_8\)</span>).</p></li>
 <li><p>Formar la tabla de análisis de varianza y probar la significancia de la regresión.</p></li>
@@ -986,7 +993,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <li><p>Calcular un intervalo de confianza de <span class="math inline">\(95\%\)</span> para <span class="math inline">\(\beta_7\)</span>. También, un intervalo de confianza de <span class="math inline">\(95\%\)</span> para la cantidad media de juegos ganados por un equipo cuando <span class="math inline">\(x_7 = 56\)</span> y <span class="math inline">\(x_8 = 2100\)</span>. Comparar las longitudes de esos intervalos de confianza con las longitudes de los correspondientes al modelo anterior.</p></li>
 <li><p>¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?</p></li>
 </ol>
-<p><strong>Ejericio 2:</strong> Véase los datos de <a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv">rendimiento de gasolina</a>.</p>
+<p><strong>Ejericio 2:</strong> Véase los datos de <a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv">rendimiento de gasolina</a>. Realizar el ejercicio en R.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Ajustar un modelo de regresión lineal múltiple que relacione el rendimiento de la gasolina <em>y</em>, en millas por galón, la cilindrada del motor (<span class="math inline">\(x_1\)</span>) y la cantidad de gargantas del carburador (<span class="math inline">\(x_6\)</span>).</p></li>
 <li><p>Formar la tabla de análisis de varianza y probar la significancia de la regresión.</p></li>
@@ -998,6 +1005,37 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <li><p>Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?</p></li>
 <li><p>Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.</p></li>
 <li><p>Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?</p></li>
+</ol>
+<p><strong>Ejercicio 3:</strong> Véase los datos sobre <a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Precios_de_viviendas">precios de viviendas</a>. Realizar el ejercicio en Python.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Ajustar un modelo de regresión lineal múltiple que relacione el precio de venta con los nueve regresores.</p></li>
+<li><p>Probar la significancia de la regresión.¿Qué conclusiones se pueden sacar?</p></li>
+<li><p>Usar pruebas t para evaluar la contribución de cada regresor al modelo.</p></li>
+<li><p>Calcular <span class="math inline">\(R^2\)</span> y <span class="math inline">\(R^2_{adj}\)</span> para este modelo.</p></li>
+<li><p>¿Cuál es la contribución del tamaño del lote y el espacio vital para el modelo, dado que se incluyeron todos los demás regresores?.</p></li>
+<li><p>En este modelo, ¿la colinealidad es un problema potencial?</p></li>
+<li><p>Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?</p></li>
+<li><p>Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.</p></li>
+<li><p>Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?.</p></li>
+</ol>
+<p><strong>Ejercicio 4:</strong> Explica lo siguiente.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>¿Qué supuestos del modelo de regresión lineal múltiple deben verificarse?</p></li>
+<li><p>¿Cómo se interpretan los intervalos de confianza? Si construimos un intervalo de confianza del 95% para un coeficiente <span class="math inline">\(\beta_j\)</span>, ¿cuál sería la lectura correcta o interpretación correcta sobre este intervalo?</p></li>
+<li><p>Describe los métodos de selección de variables y sus ventajas y desventajas:</p></li>
+<li><p>Selección hacia adelante (forward)</p></li>
+</ol>
+<ol start="2" style="list-style-type: lower-roman">
+<li><p>Selección hacia atrás (backward)</p></li>
+<li><p>selección por pasos (stepwise) y/o mejor subconjunto (best subset)</p></li>
+</ol>
+<p>Explica cómo se utilizan para elegir el modelo final.</p>
+<p><strong>Ejercicio 5:</strong> Para los datos del ejercicio 1 de la liga de Futbol. Realizar el ejercicio en R y Python.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Usar el algoritmo de selección hacia adelante para seleccionar un modelo de regresión.</p></li>
+<li><p>Usar el algoritmo de selección hacia atrás para seleccionar un modelo de regresión.</p></li>
+<li><p>Usar el algoritmo de regresión por pasos para seleccionar un modelo de regresión.</p></li>
+<li><p>Comenta los modelos finales en cada uno de los casos anteriores. ¿Cuál tiene más sentido? ¿Cuál modelo usarían?</p></li>
 </ol>
 
 </div>
