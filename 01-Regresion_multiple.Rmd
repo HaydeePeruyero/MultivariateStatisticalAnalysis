@@ -7,6 +7,10 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```{r, include=FALSE}
 library(tidyverse)
 library(broom) # para resúmenes ordenados de modelos
+library(knitr)
+library(readr)
+library(ggplot2)
+library(patchwork) # PAra varias gráficos en el mismo renglón
 ```
 
 ## ¿Por qué estadística multivariada?
@@ -794,4 +798,286 @@ c) Usar el algoritmo de regresión por pasos para seleccionar un modelo de regre
 
 d) Comenta los modelos finales en cada uno de los casos anteriores. ¿Cuál tiene más sentido? ¿Cuál modelo usarían? 
 
+
+## Validación de Supuestos
+
+**Ejemplo:** Se llevó a cabo un conjunto de ensayos experimentales con un horno para determinar una forma de predecir el tiempo de cocción, $y$, a diferentes niveles de ancho del horno, $x_1$, y a diferentes temperaturas, $x_2$. Se registraron los siguientes datos:
+
+```{r}
+yp <-c(6.40, 15.05, 18.75, 30.25, 44.85, 48.85, 51.55, 61.50, 100.44, 111.42)
+x1 <-c(1.32, 2.69, 3.56, 4.41, 5.35, 6.20, 7.12, 8.87, 9.80, 10.65)
+x2 <-c(1.15, 3.40, 4.10, 8.75, 14.82, 15.15, 15.32, 18.18, 35.19, 40.40)
+datos<-data.frame(yp, x1, x2)
+kable(datos, caption = "Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas")
+```
+- Variable dependiente $y =$ tiempo de cocción 
+
+- Variable independiente $x_1 =$ ancho del horno 
+
+- Variable independiente $x_2 =$ diferentes temperaturas
+
+Vamos a visualizar los datos:
+
+<details>
+<summary><b>Plot</b></summary>
+```{r}
+g1 <- ggplot(data = datos, mapping = aes(x = x1, y = yp)) +
+  geom_point(color = "forestgreen", size = 2) +
+  labs(title  =  'yp ~ x1', x  =  'x1') +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5)) 
+
+g2 <- ggplot(data = datos, mapping = aes(x = x2, y = yp)) +
+  geom_point(color = "orange", size = 2) +
+  labs(title  =  'yp ~ x2', x  =  'x2') +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+g1+g2
+```
+</details>
+
+Ahora, vamos a analizar algunos de los supuestos.
+
+### Multicolinealidad
+
+<details>
+<summary><b>Multicolinealidad</b></summary>
+```{r}
+variables <- data.frame(x1,x2)
+m_cor <- cor(variables,method = "pearson")
+m_cor
+```
+</details>
+
+<details>
+<summary><b>Plot</b></summary>
+```{r}
+library(corrplot)
+corrplot(m_cor)
+```
+</details>
+
+Hay una fuerte correlación entre las variables, lo cual es un problema dado que las variables deberían ser independientes.
+
+Vamos a construir dos modelos.
+
+<details>
+<summary><b>Modelos</b></summary>
+```{r}
+modelo1 <- lm(formula = yp ~ x1 + x2, data = datos)
+
+summary(modelo1)
+```
+</details>
+
+El intercepto parece no ser significativo. Vamos a construir un segundo modelo usando solo $x_2$ que parece ser más significativa.
+
+<details>
+<summary><b>Modelo 2</b></summary>
+```{r}
+modelo2 <- lm(formula = yp ~ x2, data = datos)
+
+summary(modelo2)
+```
+</details>
+
+El ANOVA nos puede ayudar a ver cual modelo es más significativo. Se usan las hipótesis siguientes:
+
+$H_0:$ Las variables que eliminamos no tienen significancia.
+
+$H_1:$ Las variables son significativas.
+
+Si el nuevo modelo es una mejora del modelo original, entonces no podemos rechazar $H_0$. Si ese no es el caso, significa que esas variables fueron significativas; por lo tanto rechazamos $H_0$.
+
+<details>
+<summary><b>ANOVA</b></summary>
+```{r}
+anova(modelo1, modelo2)
+```
+</details>
+
+Como el p-valor es muy pequeño, menor al valor de significancia 0.05, entonces rechazamos la hipótesis nula, lo que nos dice que el segundo modelo no es una mejora del primero. 
+
+Como desde el inicio vimos que el coeficiente correspondiente a $\beta_0$ no era significativo, vamos a eliminarlo.
+
+<details>
+<summary><b>Modelo 3</b></summary>
+```{r}
+modelo3 <- lm(formula = yp ~ x1 + x2 -1, data = datos)
+
+summary(modelo3)
+```
+</details>
+
+### Normalidad en los residuales
+
+
+Recordemos que los residuos se calculan como la diferencia entre el valor observado $(y)$ y el valor predicho $(\hat{y})$ para cada punto de datos, es decir:
+
+$e = y - \hat{y}$
+
+Vamos a hacer un plot de los residuales.
+
+<details>
+<summary><b>QQ-plot</b></summary>
+```{r}
+residuales = modelo3$residuals
+
+## Q-Q plot
+qqnorm(residuales)
+qqline(residuales)
+```
+</details>
+
+Otra forma de obtener este plot es la siguiente.
+
+<details>
+<summary><b>Plots supuestos</b></summary>
+```{r}
+plot(modelo3)
+```
+</details>
+
+El test de Shapiro-Wilks plantea la hipótesis nula que una muestra proviene de una distribución normal. Eligimos un nivel de significanza, por ejemplo $0.05$, y tenemos una hipótesis alternativa que sostiene que la distribución no es normal. Tenemos entonces lo siguiente:
+
+$H_0:$ La distribución es normal.
+
+$H_1:$ La distribución no es normal.
+
+<details>
+<summary><b>Test Shapiro-Wilks</b></summary>
+```{r}
+shapiro.test(residuales)
+```
+</details>
+
+Como el p-valor es más grande que el valor de significancia, no podemos rechazar la hipótesis nula, por lo tanto los residuales siguen una distribución normal.
+
+
+### Homocedasticidad
+
+Homocedasticidad = varianza constante
+
+- *Correcto:* Si los residuales están dispersos uniformemente a lo largo de todos los valores predichos.
+
+- *Problema:* Si vemos un patrón de embudo (residuales pequeños para predichos bajos y grandes para predichos altos, o viceversa). Esto indica heterocedasticidad.
+
+
+Linealidad y errores independientes: Si se notan curvas, arcos o patrones sistemáticos, podría indicar que:
+
+- La relación no es estrictamente lineal.
+
+- Falta alguna variable importante en el modelo.
+
+- O hay correlación entre errores.
+
+Una forma de verlo es con el plot de residuales vs valores predichos.
+
+<details>
+<summary><b>Plots</b></summary>
+```{r}
+par(mfrow = c(2, 2))
+plot(modelo3)
+```
+
+En R, existe la función `bptest()`, que es el test de Breusch-Pagan para la heterocedasticidad. Esta función toma como entrada un modelo de regresión y devuelve el resultado de la prueba de hipótesis para la homocedasticidad de los residuos.
+
+$H_0:$ los residuos tienen varianza constante (homocedasticidad)
+
+$H_1$: hay heterocedasticidad en los residuos
+
+El resultado incluye el valor del estadístico de prueba (el valor de la prueba de Breusch-Pagan), el p-valor y el número de grados de libertad. Si el p-valor es menor que el nivel de significancia elegido, se rechaza la hipótesis nula de homocedasticidad y se concluye que hay heterocedasticidad en los residuos.
+
+<details>
+<summary><b>Breusch-Pagan</b></summary>
+```{r}
+library(lmtest)
+bptest(modelo3)
+```
+</details>
+
+Entonces como el p-valor es menor al valor de significancia $0.05$, rechazamos la hipótesis nula y podemos decir que existe heterocedasticidad en los residuales.
+
+
+La heterocedasticidad es un problema porque la regresión de mínimos cuadrados ordinarios asume que todos los residuales se extraen de una población que tiene una varianza constante (homocedasticidad).
+
+Una forma de corregirlo es haciendo una transformación de los datos. Vamos a transformar la variable $x_1$. 
+*Nota:* Estas transformaciones deben de justificarse y explicar el porque. 
+
+<details>
+<summary><b>Modelo 4</b></summary>
+```{r}
+modelo4 <- lm(formula = yp ~ log(x1) + x2 -1, data = datos)
+
+summary(modelo4)
+```
+</details>
+
+Si realizamos la prueba de la homocedasticidad.
+
+<details>
+<summary><b>Test</b></summary>
+```{r}
+bptest(modelo4)
+```
+</details>
+
+Vemos que ahora el p-valor es más grande que el valor de significancia, lo cual nos indica que no podemos rechazar $H_0$, es decir ahora si podemos asumir que hay homocedasticidad.
+
+En el modelo final, tendríamos $\beta_0=0$, $\beta_1*=$ `r modelo4$coefficients[1]` y $\beta_2=$ `r modelo4$coefficients[2]`.
+
+<details>
+<summary><b>Plots finales</b></summary>
+```{r}
+par(mfrow = c(2, 2))
+plot(modelo4)
+```
+</details>
+
+Otras dos pruebas que se pueden usar son `fligner.test` y `leveneTest`.
+
+### No autocorrelación
+
+Una forma de revisar este supuesto es con el test de Durbin-Watson. Las hipótesis que se tienen son:
+
+$H_0:$ No hay autocorrelación en los errores (los residuales son independientes).
+
+$H_1:$ Hay autocorrelación en los errores (generalmente, autocorrelación positiva de primer orden).
+
+El estadístico DW toma valores entre 0 y 4:
+
+- $DW$ aproximadamente 2, entonces no hay autocorrelación (se cumple el supuesto).
+
+- $DW < 2$, entonces indica autocorrelación positiva (los errores tienden a repetirse).
+
+- $DW > 2$, entonces indica autocorrelación negativa (los errores tienden a alternar signo).
+
+<details>
+<summary><b>Test D-W</b></summary>
+```{r}
+dwtest(modelo4)
+```
+</details>
+
+### Predicciónes
+
+Vamos a predecir por último un valor. Para $2.10$ de ancho del horno y una temperatura de $3.10$ , ¿cuánto seria el tiempo de cocción?
+
+<details>
+<summary><b>Predicciónes</b></summary>
+```{r}
+nuevo.dato <- data.frame(x1 = 2.10, x2 = 3.10)
+
+prediccion <- predict(modelo4, newdata = nuevo.dato)
+
+paste("La cantidad estimada de tiempo de coccion es:", round(prediccion, 2))
+```
+</details>
+
+### Ejercicios
+
+**Ejercicio 1:** Para los datos de `Datarium marketing`, analiza los supuestos. Explica tus resultados y sube tus respuestas a github.
 

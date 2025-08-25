@@ -224,3 +224,5 @@ summary(modelo1)
 
 modelo2 <- lm(sales ~ youtube + facebook, data = marketing)
 summary(modelo2)
+
+

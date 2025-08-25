@@ -173,6 +173,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.5.2" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#intervalo-de-confianza-de-la-respuesta-media"><i class="fa fa-check"></i><b>2.5.2</b> Intervalo de confianza de la respuesta media</a></li>
 </ul></li>
 <li class="chapter" data-level="2.6" data-path="01-Regresion_multiple.html"><a href="#ejercicios-regresi%C3%B3n-lineal-multiple"><i class="fa fa-check"></i><b>2.6</b> Ejercicios Regresión Lineal Multiple</a></li>
+<li class="chapter" data-level="2.7" data-path="01-Regresion_multiple.html"><a href="#validaci%C3%B3n-de-supuestos"><i class="fa fa-check"></i><b>2.7</b> Validación de Supuestos</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#multicolinealidad"><i class="fa fa-check"></i><b>2.7.1</b> Multicolinealidad</a></li>
+<li class="chapter" data-level="2.7.2" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#normalidad-en-los-residuales"><i class="fa fa-check"></i><b>2.7.2</b> Normalidad en los residuales</a></li>
+<li class="chapter" data-level="2.7.3" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#homocedasticidad"><i class="fa fa-check"></i><b>2.7.3</b> Homocedasticidad</a></li>
+<li class="chapter" data-level="2.7.4" data-path="01-Regresion_multiple.html"><a href="#no-autocorrelaci%C3%B3n"><i class="fa fa-check"></i><b>2.7.4</b> No autocorrelación</a></li>
+<li class="chapter" data-level="2.7.5" data-path="01-Regresion_multiple.html"><a href="#predicci%C3%B3nes"><i class="fa fa-check"></i><b>2.7.5</b> Predicciónes</a></li>
+<li class="chapter" data-level="2.7.6" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-1"><i class="fa fa-check"></i><b>2.7.6</b> Ejercicios</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-de-componentes-principales"><i class="fa fa-check"></i><b>3</b> Análisis de Componentes Principales</a></li>
 <li class="chapter" data-level="4" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-factorial"><i class="fa fa-check"></i><b>4</b> Análisis Factorial</a></li>
@@ -1037,7 +1046,414 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <li><p>Usar el algoritmo de regresión por pasos para seleccionar un modelo de regresión.</p></li>
 <li><p>Comenta los modelos finales en cada uno de los casos anteriores. ¿Cuál tiene más sentido? ¿Cuál modelo usarían?</p></li>
 </ol>
+</div>
+<div id="validación-de-supuestos" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Validación de Supuestos<a href="#validaci%C3%B3n-de-supuestos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ejemplo:</strong> Se llevó a cabo un conjunto de ensayos experimentales con un horno para determinar una forma de predecir el tiempo de cocción, <span class="math inline">\(y\)</span>, a diferentes niveles de ancho del horno, <span class="math inline">\(x_1\)</span>, y a diferentes temperaturas, <span class="math inline">\(x_2\)</span>. Se registraron los siguientes datos:</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="regresión-múltiple.html#cb104-1" tabindex="-1"></a>yp <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">6.40</span>, <span class="fl">15.05</span>, <span class="fl">18.75</span>, <span class="fl">30.25</span>, <span class="fl">44.85</span>, <span class="fl">48.85</span>, <span class="fl">51.55</span>, <span class="fl">61.50</span>, <span class="fl">100.44</span>, <span class="fl">111.42</span>)</span>
+<span id="cb104-2"><a href="regresión-múltiple.html#cb104-2" tabindex="-1"></a>x1 <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">1.32</span>, <span class="fl">2.69</span>, <span class="fl">3.56</span>, <span class="fl">4.41</span>, <span class="fl">5.35</span>, <span class="fl">6.20</span>, <span class="fl">7.12</span>, <span class="fl">8.87</span>, <span class="fl">9.80</span>, <span class="fl">10.65</span>)</span>
+<span id="cb104-3"><a href="regresión-múltiple.html#cb104-3" tabindex="-1"></a>x2 <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">1.15</span>, <span class="fl">3.40</span>, <span class="fl">4.10</span>, <span class="fl">8.75</span>, <span class="fl">14.82</span>, <span class="fl">15.15</span>, <span class="fl">15.32</span>, <span class="fl">18.18</span>, <span class="fl">35.19</span>, <span class="fl">40.40</span>)</span>
+<span id="cb104-4"><a href="regresión-múltiple.html#cb104-4" tabindex="-1"></a>datos<span class="ot">&lt;-</span><span class="fu">data.frame</span>(yp, x1, x2)</span>
+<span id="cb104-5"><a href="regresión-múltiple.html#cb104-5" tabindex="-1"></a><span class="fu">kable</span>(datos, <span class="at">caption =</span> <span class="st">&quot;Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-40">Table 2.1: </span>Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas</caption>
+<thead>
+<tr class="header">
+<th align="right">yp</th>
+<th align="right">x1</th>
+<th align="right">x2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">6.40</td>
+<td align="right">1.32</td>
+<td align="right">1.15</td>
+</tr>
+<tr class="even">
+<td align="right">15.05</td>
+<td align="right">2.69</td>
+<td align="right">3.40</td>
+</tr>
+<tr class="odd">
+<td align="right">18.75</td>
+<td align="right">3.56</td>
+<td align="right">4.10</td>
+</tr>
+<tr class="even">
+<td align="right">30.25</td>
+<td align="right">4.41</td>
+<td align="right">8.75</td>
+</tr>
+<tr class="odd">
+<td align="right">44.85</td>
+<td align="right">5.35</td>
+<td align="right">14.82</td>
+</tr>
+<tr class="even">
+<td align="right">48.85</td>
+<td align="right">6.20</td>
+<td align="right">15.15</td>
+</tr>
+<tr class="odd">
+<td align="right">51.55</td>
+<td align="right">7.12</td>
+<td align="right">15.32</td>
+</tr>
+<tr class="even">
+<td align="right">61.50</td>
+<td align="right">8.87</td>
+<td align="right">18.18</td>
+</tr>
+<tr class="odd">
+<td align="right">100.44</td>
+<td align="right">9.80</td>
+<td align="right">35.19</td>
+</tr>
+<tr class="even">
+<td align="right">111.42</td>
+<td align="right">10.65</td>
+<td align="right">40.40</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Variable dependiente <span class="math inline">\(y =\)</span> tiempo de cocción</p></li>
+<li><p>Variable independiente <span class="math inline">\(x_1 =\)</span> ancho del horno</p></li>
+<li><p>Variable independiente <span class="math inline">\(x_2 =\)</span> diferentes temperaturas</p></li>
+</ul>
+<p>Vamos a visualizar los datos:</p>
+<details>
+<summary>
+<b>Plot</b>
+</summary>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="regresión-múltiple.html#cb105-1" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x1, <span class="at">y =</span> yp)) <span class="sc">+</span></span>
+<span id="cb105-2"><a href="regresión-múltiple.html#cb105-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;forestgreen&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb105-3"><a href="regresión-múltiple.html#cb105-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title  =</span>  <span class="st">&#39;yp ~ x1&#39;</span>, <span class="at">x  =</span>  <span class="st">&#39;x1&#39;</span>) <span class="sc">+</span></span>
+<span id="cb105-4"><a href="regresión-múltiple.html#cb105-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb105-5"><a href="regresión-múltiple.html#cb105-5" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb105-6"><a href="regresión-múltiple.html#cb105-6" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) </span>
+<span id="cb105-7"><a href="regresión-múltiple.html#cb105-7" tabindex="-1"></a></span>
+<span id="cb105-8"><a href="regresión-múltiple.html#cb105-8" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x2, <span class="at">y =</span> yp)) <span class="sc">+</span></span>
+<span id="cb105-9"><a href="regresión-múltiple.html#cb105-9" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb105-10"><a href="regresión-múltiple.html#cb105-10" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title  =</span>  <span class="st">&#39;yp ~ x2&#39;</span>, <span class="at">x  =</span>  <span class="st">&#39;x2&#39;</span>) <span class="sc">+</span></span>
+<span id="cb105-11"><a href="regresión-múltiple.html#cb105-11" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb105-12"><a href="regresión-múltiple.html#cb105-12" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb105-13"><a href="regresión-múltiple.html#cb105-13" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
+<span id="cb105-14"><a href="regresión-múltiple.html#cb105-14" tabindex="-1"></a></span>
+<span id="cb105-15"><a href="regresión-múltiple.html#cb105-15" tabindex="-1"></a>g1<span class="sc">+</span>g2</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;
+## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-41-1.png" width="672" />
+</details>
+<p>Ahora, vamos a analizar algunos de los supuestos.</p>
+<div id="multicolinealidad" class="section level3 hasAnchor" number="2.7.1">
+<h3><span class="header-section-number">2.7.1</span> Multicolinealidad<a href="regresión-múltiple.html#multicolinealidad" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<details>
+<summary>
+<b>Multicolinealidad</b>
+</summary>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="regresión-múltiple.html#cb107-1" tabindex="-1"></a>variables <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x1,x2)</span>
+<span id="cb107-2"><a href="regresión-múltiple.html#cb107-2" tabindex="-1"></a>m_cor <span class="ot">&lt;-</span> <span class="fu">cor</span>(variables,<span class="at">method =</span> <span class="st">&quot;pearson&quot;</span>)</span>
+<span id="cb107-3"><a href="regresión-múltiple.html#cb107-3" tabindex="-1"></a>m_cor</span></code></pre></div>
+<pre><code>##           x1        x2
+## x1 1.0000000 0.9375592
+## x2 0.9375592 1.0000000</code></pre>
+</details>
+<details>
+<summary>
+<b>Plot</b>
+</summary>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="regresión-múltiple.html#cb109-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code></pre></div>
+<pre><code>## corrplot 0.95 loaded</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="regresión-múltiple.html#cb111-1" tabindex="-1"></a><span class="fu">corrplot</span>(m_cor)</span></code></pre></div>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-43-1.png" width="672" />
+</details>
+<p>Hay una fuerte correlación entre las variables, lo cual es un problema dado que las variables deberían ser independientes.</p>
+<p>Vamos a construir dos modelos.</p>
+<details>
+<summary>
+<b>Modelos</b>
+</summary>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="regresión-múltiple.html#cb112-1" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> yp <span class="sc">~</span> x1 <span class="sc">+</span> x2, <span class="at">data =</span> datos)</span>
+<span id="cb112-2"><a href="regresión-múltiple.html#cb112-2" tabindex="-1"></a></span>
+<span id="cb112-3"><a href="regresión-múltiple.html#cb112-3" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yp ~ x1 + x2, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.8475 -0.3438  0.0043  0.2554  1.1578 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.57723    0.59865   0.964    0.367    
+## x1           2.70957    0.19935  13.592 2.75e-06 ***
+## x2           2.05033    0.04743  43.227 9.26e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.6481 on 7 degrees of freedom
+## Multiple R-squared:  0.9997, Adjusted R-squared:  0.9997 
+## F-statistic: 1.304e+04 on 2 and 7 DF,  p-value: 3.166e-13</code></pre>
+</details>
+<p>El intercepto parece no ser significativo. Vamos a construir un segundo modelo usando solo <span class="math inline">\(x_2\)</span> que parece ser más significativa.</p>
+<details>
+<summary>
+<b>Modelo 2</b>
+</summary>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="regresión-múltiple.html#cb114-1" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> yp <span class="sc">~</span> x2, <span class="at">data =</span> datos)</span>
+<span id="cb114-2"><a href="regresión-múltiple.html#cb114-2" tabindex="-1"></a></span>
+<span id="cb114-3"><a href="regresión-múltiple.html#cb114-3" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yp ~ x2, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.0226 -1.7338 -0.3497  1.0695  5.8668 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  7.36967    1.61355   4.567  0.00183 ** 
+## x2           2.65476    0.08077  32.869 8.01e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.173 on 8 degrees of freedom
+## Multiple R-squared:  0.9926, Adjusted R-squared:  0.9917 
+## F-statistic:  1080 on 1 and 8 DF,  p-value: 8.005e-10</code></pre>
+</details>
+<p>El ANOVA nos puede ayudar a ver cual modelo es más significativo. Se usan las hipótesis siguientes:</p>
+<p><span class="math inline">\(H_0:\)</span> Las variables que eliminamos no tienen significancia.</p>
+<p><span class="math inline">\(H_1:\)</span> Las variables son significativas.</p>
+<p>Si el nuevo modelo es una mejora del modelo original, entonces no podemos rechazar <span class="math inline">\(H_0\)</span>. Si ese no es el caso, significa que esas variables fueron significativas; por lo tanto rechazamos <span class="math inline">\(H_0\)</span>.</p>
+<details>
+<summary>
+<b>ANOVA</b>
+</summary>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="regresión-múltiple.html#cb116-1" tabindex="-1"></a><span class="fu">anova</span>(modelo1, modelo2)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Model 1: yp ~ x1 + x2
+## Model 2: yp ~ x2
+##   Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+## 1      7  2.940                                  
+## 2      8 80.532 -1   -77.592 184.74 2.745e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</details>
+<p>Como el p-valor es muy pequeño, menor al valor de significancia 0.05, entonces rechazamos la hipótesis nula, lo que nos dice que el segundo modelo no es una mejora del primero.</p>
+<p>Como desde el inicio vimos que el coeficiente correspondiente a <span class="math inline">\(\beta_0\)</span> no era significativo, vamos a eliminarlo.</p>
+<details>
+<summary>
+<b>Modelo 3</b>
+</summary>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="regresión-múltiple.html#cb118-1" tabindex="-1"></a>modelo3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> yp <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">-</span><span class="dv">1</span>, <span class="at">data =</span> datos)</span>
+<span id="cb118-2"><a href="regresión-múltiple.html#cb118-2" tabindex="-1"></a></span>
+<span id="cb118-3"><a href="regresión-múltiple.html#cb118-3" tabindex="-1"></a><span class="fu">summary</span>(modelo3)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yp ~ x1 + x2 - 1, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.8103 -0.3698  0.1963  0.3955  1.1807 
+## 
+## Coefficients:
+##    Estimate Std. Error t value Pr(&gt;|t|)    
+## x1  2.87003    0.10927   26.27 4.74e-09 ***
+## x2  2.02140    0.03657   55.28 1.27e-11 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.6452 on 8 degrees of freedom
+## Multiple R-squared:  0.9999, Adjusted R-squared:  0.9999 
+## F-statistic: 4.188e+04 on 2 and 8 DF,  p-value: &lt; 2.2e-16</code></pre>
+</details>
+</div>
+<div id="normalidad-en-los-residuales" class="section level3 hasAnchor" number="2.7.2">
+<h3><span class="header-section-number">2.7.2</span> Normalidad en los residuales<a href="regresión-múltiple.html#normalidad-en-los-residuales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Recordemos que los residuos se calculan como la diferencia entre el valor observado <span class="math inline">\((y)\)</span> y el valor predicho <span class="math inline">\((\hat{y})\)</span> para cada punto de datos, es decir:</p>
+<p><span class="math inline">\(e = y - \hat{y}\)</span></p>
+<p>Vamos a hacer un plot de los residuales.</p>
+<details>
+<summary>
+<b>QQ-plot</b>
+</summary>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="regresión-múltiple.html#cb120-1" tabindex="-1"></a>residuales <span class="ot">=</span> modelo3<span class="sc">$</span>residuals</span>
+<span id="cb120-2"><a href="regresión-múltiple.html#cb120-2" tabindex="-1"></a></span>
+<span id="cb120-3"><a href="regresión-múltiple.html#cb120-3" tabindex="-1"></a><span class="do">## Q-Q plot</span></span>
+<span id="cb120-4"><a href="regresión-múltiple.html#cb120-4" tabindex="-1"></a><span class="fu">qqnorm</span>(residuales)</span>
+<span id="cb120-5"><a href="regresión-múltiple.html#cb120-5" tabindex="-1"></a><span class="fu">qqline</span>(residuales)</span></code></pre></div>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-48-1.png" width="672" />
+</details>
+<p>Otra forma de obtener este plot es la siguiente.</p>
+<details>
+<summary>
+<b>Plots supuestos</b>
+</summary>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="regresión-múltiple.html#cb121-1" tabindex="-1"></a><span class="fu">plot</span>(modelo3)</span></code></pre></div>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-49-1.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-49-2.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-49-3.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-49-4.png" width="672" />
+</details>
+<p>El test de Shapiro-Wilks plantea la hipótesis nula que una muestra proviene de una distribución normal. Eligimos un nivel de significanza, por ejemplo <span class="math inline">\(0.05\)</span>, y tenemos una hipótesis alternativa que sostiene que la distribución no es normal. Tenemos entonces lo siguiente:</p>
+<p><span class="math inline">\(H_0:\)</span> La distribución es normal.</p>
+<p><span class="math inline">\(H_1:\)</span> La distribución no es normal.</p>
+<details>
+<summary>
+<b>Test Shapiro-Wilks</b>
+</summary>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="regresión-múltiple.html#cb122-1" tabindex="-1"></a><span class="fu">shapiro.test</span>(residuales)</span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuales
+## W = 0.95058, p-value = 0.6754</code></pre>
+</details>
+<p>Como el p-valor es más grande que el valor de significancia, no podemos rechazar la hipótesis nula, por lo tanto los residuales siguen una distribución normal.</p>
+</div>
+<div id="homocedasticidad" class="section level3 hasAnchor" number="2.7.3">
+<h3><span class="header-section-number">2.7.3</span> Homocedasticidad<a href="regresión-múltiple.html#homocedasticidad" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Homocedasticidad = varianza constante</p>
+<ul>
+<li><p><em>Correcto:</em> Si los residuales están dispersos uniformemente a lo largo de todos los valores predichos.</p></li>
+<li><p><em>Problema:</em> Si vemos un patrón de embudo (residuales pequeños para predichos bajos y grandes para predichos altos, o viceversa). Esto indica heterocedasticidad.</p></li>
+</ul>
+<p>Linealidad y errores independientes: Si se notan curvas, arcos o patrones sistemáticos, podría indicar que:</p>
+<ul>
+<li><p>La relación no es estrictamente lineal.</p></li>
+<li><p>Falta alguna variable importante en el modelo.</p></li>
+<li><p>O hay correlación entre errores.</p></li>
+</ul>
+<p>Una forma de verlo es con el plot de residuales vs valores predichos.</p>
+<details>
+<summary>
+<b>Plots</b>
+</summary>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="regresión-múltiple.html#cb124-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb124-2"><a href="regresión-múltiple.html#cb124-2" tabindex="-1"></a><span class="fu">plot</span>(modelo3)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>En R, existe la función <code>bptest()</code>, que es el test de Breusch-Pagan para la heterocedasticidad. Esta función toma como entrada un modelo de regresión y devuelve el resultado de la prueba de hipótesis para la homocedasticidad de los residuos.</p>
+<p><span class="math inline">\(H_0:\)</span> los residuos tienen varianza constante (homocedasticidad)</p>
+<p><span class="math inline">\(H_1\)</span>: hay heterocedasticidad en los residuos</p>
+<p>El resultado incluye el valor del estadístico de prueba (el valor de la prueba de Breusch-Pagan), el p-valor y el número de grados de libertad. Si el p-valor es menor que el nivel de significancia elegido, se rechaza la hipótesis nula de homocedasticidad y se concluye que hay heterocedasticidad en los residuos.</p>
+<details>
+<summary>
+<b>Breusch-Pagan</b>
+</summary>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="regresión-múltiple.html#cb125-1" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span></code></pre></div>
+<pre><code>## Cargando paquete requerido: zoo</code></pre>
+<pre><code>## 
+## Adjuntando el paquete: &#39;zoo&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     as.Date, as.Date.numeric</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="regresión-múltiple.html#cb129-1" tabindex="-1"></a><span class="fu">bptest</span>(modelo3)</span></code></pre></div>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  modelo3
+## BP = 5.7517, df = 1, p-value = 0.01647</code></pre>
+</details>
+<p>Entonces como el p-valor es menor al valor de significancia <span class="math inline">\(0.05\)</span>, rechazamos la hipótesis nula y podemos decir que existe heterocedasticidad en los residuales.</p>
+<p>La heterocedasticidad es un problema porque la regresión de mínimos cuadrados ordinarios asume que todos los residuales se extraen de una población que tiene una varianza constante (homocedasticidad).</p>
+<p>Una forma de corregirlo es haciendo una transformación de los datos. Vamos a transformar la variable <span class="math inline">\(x_1\)</span>.
+<em>Nota:</em> Estas transformaciones deben de justificarse y explicar el porque.</p>
+<details>
+<summary>
+<b>Modelo 4</b>
+</summary>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="regresión-múltiple.html#cb131-1" tabindex="-1"></a>modelo4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">formula =</span> yp <span class="sc">~</span> <span class="fu">log</span>(x1) <span class="sc">+</span> x2 <span class="sc">-</span><span class="dv">1</span>, <span class="at">data =</span> datos)</span>
+<span id="cb131-2"><a href="regresión-múltiple.html#cb131-2" tabindex="-1"></a></span>
+<span id="cb131-3"><a href="regresión-múltiple.html#cb131-3" tabindex="-1"></a><span class="fu">summary</span>(modelo4)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = yp ~ log(x1) + x2 - 1, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.4546 -0.7961 -0.3458  0.9207  2.5270 
+## 
+## Coefficients:
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## log(x1)  7.52724    0.72213   10.42 6.22e-06 ***
+## x2       2.34013    0.06306   37.11 3.05e-10 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.578 on 8 degrees of freedom
+## Multiple R-squared:  0.9994, Adjusted R-squared:  0.9993 
+## F-statistic:  6997 on 2 and 8 DF,  p-value: 1.065e-13</code></pre>
+</details>
+<p>Si realizamos la prueba de la homocedasticidad.</p>
+<details>
+<summary>
+<b>Test</b>
+</summary>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="regresión-múltiple.html#cb133-1" tabindex="-1"></a><span class="fu">bptest</span>(modelo4)</span></code></pre></div>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  modelo4
+## BP = 0.13878, df = 1, p-value = 0.7095</code></pre>
+</details>
+<p>Vemos que ahora el p-valor es más grande que el valor de significancia, lo cual nos indica que no podemos rechazar <span class="math inline">\(H_0\)</span>, es decir ahora si podemos asumir que hay homocedasticidad.</p>
+<p>En el modelo final, tendríamos <span class="math inline">\(\beta_0=0\)</span>, <span class="math inline">\(\beta_1*=\)</span> 7.5272361 y <span class="math inline">\(\beta_2=\)</span> 2.3401283.</p>
+<details>
+<summary>
+<b>Plots finales</b>
+</summary>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="regresión-múltiple.html#cb135-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb135-2"><a href="regresión-múltiple.html#cb135-2" tabindex="-1"></a><span class="fu">plot</span>(modelo4)</span></code></pre></div>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-55-1.png" width="672" />
+</details>
+<p>Otras dos pruebas que se pueden usar son <code>fligner.test</code> y <code>leveneTest</code>.</p>
+</div>
+<div id="no-autocorrelación" class="section level3 hasAnchor" number="2.7.4">
+<h3><span class="header-section-number">2.7.4</span> No autocorrelación<a href="#no-autocorrelaci%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Una forma de revisar este supuesto es con el test de Durbin-Watson. Las hipótesis que se tienen son:</p>
+<p><span class="math inline">\(H_0:\)</span> No hay autocorrelación en los errores (los residuales son independientes).</p>
+<p><span class="math inline">\(H_1:\)</span> Hay autocorrelación en los errores (generalmente, autocorrelación positiva de primer orden).</p>
+<p>El estadístico DW toma valores entre 0 y 4:</p>
+<ul>
+<li><p><span class="math inline">\(DW\)</span> aproximadamente 2, entonces no hay autocorrelación (se cumple el supuesto).</p></li>
+<li><p><span class="math inline">\(DW &lt; 2\)</span>, entonces indica autocorrelación positiva (los errores tienden a repetirse).</p></li>
+<li><p><span class="math inline">\(DW &gt; 2\)</span>, entonces indica autocorrelación negativa (los errores tienden a alternar signo).</p></li>
+</ul>
+<details>
+<summary>
+<b>Test D-W</b>
+</summary>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="regresión-múltiple.html#cb136-1" tabindex="-1"></a><span class="fu">dwtest</span>(modelo4)</span></code></pre></div>
+<pre><code>## 
+##  Durbin-Watson test
+## 
+## data:  modelo4
+## DW = 1.036, p-value = 0.02046
+## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</details>
+</div>
+<div id="predicciónes" class="section level3 hasAnchor" number="2.7.5">
+<h3><span class="header-section-number">2.7.5</span> Predicciónes<a href="#predicci%C3%B3nes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vamos a predecir por último un valor. Para <span class="math inline">\(2.10\)</span> de ancho del horno y una temperatura de <span class="math inline">\(3.10\)</span> , ¿cuánto seria el tiempo de cocción?</p>
+<details>
+<summary>
+<b>Predicciónes</b>
+</summary>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="regresión-múltiple.html#cb138-1" tabindex="-1"></a>nuevo.dato <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x1 =</span> <span class="fl">2.10</span>, <span class="at">x2 =</span> <span class="fl">3.10</span>)</span>
+<span id="cb138-2"><a href="regresión-múltiple.html#cb138-2" tabindex="-1"></a></span>
+<span id="cb138-3"><a href="regresión-múltiple.html#cb138-3" tabindex="-1"></a>prediccion <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo4, <span class="at">newdata =</span> nuevo.dato)</span>
+<span id="cb138-4"><a href="regresión-múltiple.html#cb138-4" tabindex="-1"></a></span>
+<span id="cb138-5"><a href="regresión-múltiple.html#cb138-5" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">&quot;La cantidad estimada de tiempo de coccion es:&quot;</span>, <span class="fu">round</span>(prediccion, <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;La cantidad estimada de tiempo de coccion es: 12.84&quot;</code></pre>
+</details>
+</div>
+<div id="ejercicios-1" class="section level3 hasAnchor" number="2.7.6">
+<h3><span class="header-section-number">2.7.6</span> Ejercicios<a href="regresión-múltiple.html#ejercicios-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Ejercicio 1:</strong> Para los datos de <code>Datarium marketing</code>, analiza los supuestos. Explica tus resultados y sube tus respuestas a github.</p>
 
+</div>
 </div>
 </div>
             </section>

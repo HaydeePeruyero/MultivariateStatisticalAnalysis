@@ -1527,9 +1527,22 @@ Para una tienda con presupuestos:
 (c) Comenta la diferencia entre ambos intervalos.
 Subir respuesta y explicación de sus resultados a github.
 
-\section{Ejercicios}\label{ejercicios-1}
+\section{Ejercicios Regresión Lineal Multiple}\label{ejercicios-regresiuxf3n-lineal-multiple}
 
-\textbf{Ejercicio 1:} Para los datos de la \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Liga_nacional_de_futbol.csv}{Liga Nacional de Fútbol}
+Realiza los siguientes ejercicios. En cada inciso:
+
+\begin{itemize}
+\item
+  explica y comenta la solución,
+\item
+  incluye el código utilizado, y
+\item
+  añade las gráficas (plots) correspondientes con su interpretación.
+\end{itemize}
+
+Asegúrate de que el código sea reproducible y que las figuras tengan títulos, ejes y leyendas.
+
+\textbf{Ejercicio 1:} Para los datos de la \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Liga_nacional_de_futbol.csv}{Liga Nacional de Fútbol}. Realizar tanto con las funciones de R y Python como con las fórmulas que usan matrices.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -1559,7 +1572,7 @@ Subir respuesta y explicación de sus resultados a github.
   ¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?
 \end{enumerate}
 
-\textbf{Ejericio 2:} Véase los datos de \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv}{rendimiento de gasolina}.
+\textbf{Ejericio 2:} Véase los datos de \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv}{rendimiento de gasolina}. Realizar el ejercicio en R.
 
 \begin{enumerate}
 \def\labelenumi{\alph{enumi})}
@@ -1584,6 +1597,561 @@ Subir respuesta y explicación de sus resultados a github.
 \item
   Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?
 \end{enumerate}
+
+\textbf{Ejercicio 3:} Véase los datos sobre \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Precios_de_viviendas}{precios de viviendas}. Realizar el ejercicio en Python.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  Ajustar un modelo de regresión lineal múltiple que relacione el precio de venta con los nueve regresores.
+\item
+  Probar la significancia de la regresión.¿Qué conclusiones se pueden sacar?
+\item
+  Usar pruebas t para evaluar la contribución de cada regresor al modelo.
+\item
+  Calcular \(R^2\) y \(R^2_{adj}\) para este modelo.
+\item
+  ¿Cuál es la contribución del tamaño del lote y el espacio vital para el modelo, dado que se incluyeron todos los demás regresores?.
+\item
+  En este modelo, ¿la colinealidad es un problema potencial?
+\item
+  Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber algún problema con la hipótesis de normalidad?
+\item
+  Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.
+\item
+  Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?.
+\end{enumerate}
+
+\textbf{Ejercicio 4:} Explica lo siguiente.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  ¿Qué supuestos del modelo de regresión lineal múltiple deben verificarse?
+\item
+  ¿Cómo se interpretan los intervalos de confianza? Si construimos un intervalo de confianza del 95\% para un coeficiente \(\beta_j\), ¿cuál sería la lectura correcta o interpretación correcta sobre este intervalo?
+\item
+  Describe los métodos de selección de variables y sus ventajas y desventajas:
+\item
+  Selección hacia adelante (forward)
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\roman{enumi})}
+\setcounter{enumi}{1}
+\item
+  Selección hacia atrás (backward)
+\item
+  selección por pasos (stepwise) y/o mejor subconjunto (best subset)
+\end{enumerate}
+
+Explica cómo se utilizan para elegir el modelo final.
+
+\textbf{Ejercicio 5:} Para los datos del ejercicio 1 de la liga de Futbol. Realizar el ejercicio en R y Python.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  Usar el algoritmo de selección hacia adelante para seleccionar un modelo de regresión.
+\item
+  Usar el algoritmo de selección hacia atrás para seleccionar un modelo de regresión.
+\item
+  Usar el algoritmo de regresión por pasos para seleccionar un modelo de regresión.
+\item
+  Comenta los modelos finales en cada uno de los casos anteriores. ¿Cuál tiene más sentido? ¿Cuál modelo usarían?
+\end{enumerate}
+
+\section{Validación de Supuestos}\label{validaciuxf3n-de-supuestos}
+
+\textbf{Ejemplo:} Se llevó a cabo un conjunto de ensayos experimentales con un horno para determinar una forma de predecir el tiempo de cocción, \(y\), a diferentes niveles de ancho del horno, \(x_1\), y a diferentes temperaturas, \(x_2\). Se registraron los siguientes datos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{yp }\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\FloatTok{6.40}\NormalTok{, }\FloatTok{15.05}\NormalTok{, }\FloatTok{18.75}\NormalTok{, }\FloatTok{30.25}\NormalTok{, }\FloatTok{44.85}\NormalTok{, }\FloatTok{48.85}\NormalTok{, }\FloatTok{51.55}\NormalTok{, }\FloatTok{61.50}\NormalTok{, }\FloatTok{100.44}\NormalTok{, }\FloatTok{111.42}\NormalTok{)}
+\NormalTok{x1 }\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\FloatTok{1.32}\NormalTok{, }\FloatTok{2.69}\NormalTok{, }\FloatTok{3.56}\NormalTok{, }\FloatTok{4.41}\NormalTok{, }\FloatTok{5.35}\NormalTok{, }\FloatTok{6.20}\NormalTok{, }\FloatTok{7.12}\NormalTok{, }\FloatTok{8.87}\NormalTok{, }\FloatTok{9.80}\NormalTok{, }\FloatTok{10.65}\NormalTok{)}
+\NormalTok{x2 }\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\FloatTok{1.15}\NormalTok{, }\FloatTok{3.40}\NormalTok{, }\FloatTok{4.10}\NormalTok{, }\FloatTok{8.75}\NormalTok{, }\FloatTok{14.82}\NormalTok{, }\FloatTok{15.15}\NormalTok{, }\FloatTok{15.32}\NormalTok{, }\FloatTok{18.18}\NormalTok{, }\FloatTok{35.19}\NormalTok{, }\FloatTok{40.40}\NormalTok{)}
+\NormalTok{datos}\OtherTok{\textless{}{-}}\FunctionTok{data.frame}\NormalTok{(yp, x1, x2)}
+\FunctionTok{kable}\NormalTok{(datos, }\AttributeTok{caption =} \StringTok{"Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:unnamed-chunk-40}Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas}
+\centering
+\begin{tabular}[t]{r|r|r}
+\hline
+yp & x1 & x2\\
+\hline
+6.40 & 1.32 & 1.15\\
+\hline
+15.05 & 2.69 & 3.40\\
+\hline
+18.75 & 3.56 & 4.10\\
+\hline
+30.25 & 4.41 & 8.75\\
+\hline
+44.85 & 5.35 & 14.82\\
+\hline
+48.85 & 6.20 & 15.15\\
+\hline
+51.55 & 7.12 & 15.32\\
+\hline
+61.50 & 8.87 & 18.18\\
+\hline
+100.44 & 9.80 & 35.19\\
+\hline
+111.42 & 10.65 & 40.40\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item
+  Variable dependiente \(y =\) tiempo de cocción
+\item
+  Variable independiente \(x_1 =\) ancho del horno
+\item
+  Variable independiente \(x_2 =\) diferentes temperaturas
+\end{itemize}
+
+Vamos a visualizar los datos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x1, }\AttributeTok{y =}\NormalTok{ yp)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"forestgreen"}\NormalTok{, }\AttributeTok{size =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title  =}  \StringTok{\textquotesingle{}yp \textasciitilde{} x1\textquotesingle{}}\NormalTok{, }\AttributeTok{x  =}  \StringTok{\textquotesingle{}x1\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{)) }
+
+\NormalTok{g2 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x2, }\AttributeTok{y =}\NormalTok{ yp)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{size =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title  =}  \StringTok{\textquotesingle{}yp \textasciitilde{} x2\textquotesingle{}}\NormalTok{, }\AttributeTok{x  =}  \StringTok{\textquotesingle{}x2\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+
+\NormalTok{g1}\SpecialCharTok{+}\NormalTok{g2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-41-1.pdf}}
+
+Ahora, vamos a analizar algunos de los supuestos.
+
+\subsection{Multicolinealidad}\label{multicolinealidad}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{variables }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(x1,x2)}
+\NormalTok{m\_cor }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(variables,}\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{)}
+\NormalTok{m\_cor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           x1        x2
+## x1 1.0000000 0.9375592
+## x2 0.9375592 1.0000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## corrplot 0.95 loaded
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{corrplot}\NormalTok{(m\_cor)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-43-1.pdf}}
+
+Hay una fuerte correlación entre las variables, lo cual es un problema dado que las variables deberían ser independientes.
+
+Vamos a construir dos modelos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ yp }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2, }\AttributeTok{data =}\NormalTok{ datos)}
+
+\FunctionTok{summary}\NormalTok{(modelo1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = yp ~ x1 + x2, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.8475 -0.3438  0.0043  0.2554  1.1578 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  0.57723    0.59865   0.964    0.367    
+## x1           2.70957    0.19935  13.592 2.75e-06 ***
+## x2           2.05033    0.04743  43.227 9.26e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.6481 on 7 degrees of freedom
+## Multiple R-squared:  0.9997, Adjusted R-squared:  0.9997 
+## F-statistic: 1.304e+04 on 2 and 7 DF,  p-value: 3.166e-13
+\end{verbatim}
+
+El intercepto parece no ser significativo. Vamos a construir un segundo modelo usando solo \(x_2\) que parece ser más significativa.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ yp }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x2, }\AttributeTok{data =}\NormalTok{ datos)}
+
+\FunctionTok{summary}\NormalTok{(modelo2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = yp ~ x2, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.0226 -1.7338 -0.3497  1.0695  5.8668 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  7.36967    1.61355   4.567  0.00183 ** 
+## x2           2.65476    0.08077  32.869 8.01e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.173 on 8 degrees of freedom
+## Multiple R-squared:  0.9926, Adjusted R-squared:  0.9917 
+## F-statistic:  1080 on 1 and 8 DF,  p-value: 8.005e-10
+\end{verbatim}
+
+El ANOVA nos puede ayudar a ver cual modelo es más significativo. Se usan las hipótesis siguientes:
+
+\(H_0:\) Las variables que eliminamos no tienen significancia.
+
+\(H_1:\) Las variables son significativas.
+
+Si el nuevo modelo es una mejora del modelo original, entonces no podemos rechazar \(H_0\). Si ese no es el caso, significa que esas variables fueron significativas; por lo tanto rechazamos \(H_0\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(modelo1, modelo2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Model 1: yp ~ x1 + x2
+## Model 2: yp ~ x2
+##   Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
+## 1      7  2.940                                  
+## 2      8 80.532 -1   -77.592 184.74 2.745e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Como el p-valor es muy pequeño, menor al valor de significancia 0.05, entonces rechazamos la hipótesis nula, lo que nos dice que el segundo modelo no es una mejora del primero.
+
+Como desde el inicio vimos que el coeficiente correspondiente a \(\beta_0\) no era significativo, vamos a eliminarlo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ yp }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x1 }\SpecialCharTok{+}\NormalTok{ x2 }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{data =}\NormalTok{ datos)}
+
+\FunctionTok{summary}\NormalTok{(modelo3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = yp ~ x1 + x2 - 1, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -0.8103 -0.3698  0.1963  0.3955  1.1807 
+## 
+## Coefficients:
+##    Estimate Std. Error t value Pr(>|t|)    
+## x1  2.87003    0.10927   26.27 4.74e-09 ***
+## x2  2.02140    0.03657   55.28 1.27e-11 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.6452 on 8 degrees of freedom
+## Multiple R-squared:  0.9999, Adjusted R-squared:  0.9999 
+## F-statistic: 4.188e+04 on 2 and 8 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\subsection{Normalidad en los residuales}\label{normalidad-en-los-residuales}
+
+Recordemos que los residuos se calculan como la diferencia entre el valor observado \((y)\) y el valor predicho \((\hat{y})\) para cada punto de datos, es decir:
+
+\(e = y - \hat{y}\)
+
+Vamos a hacer un plot de los residuales.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{residuales }\OtherTok{=}\NormalTok{ modelo3}\SpecialCharTok{$}\NormalTok{residuals}
+
+\DocumentationTok{\#\# Q{-}Q plot}
+\FunctionTok{qqnorm}\NormalTok{(residuales)}
+\FunctionTok{qqline}\NormalTok{(residuales)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-48-1.pdf}}
+
+Otra forma de obtener este plot es la siguiente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(modelo3)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-49-1.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-49-2.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-49-3.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-49-4.pdf}}
+
+El test de Shapiro-Wilks plantea la hipótesis nula que una muestra proviene de una distribución normal. Eligimos un nivel de significanza, por ejemplo \(0.05\), y tenemos una hipótesis alternativa que sostiene que la distribución no es normal. Tenemos entonces lo siguiente:
+
+\(H_0:\) La distribución es normal.
+
+\(H_1:\) La distribución no es normal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(residuales)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  residuales
+## W = 0.95058, p-value = 0.6754
+\end{verbatim}
+
+Como el p-valor es más grande que el valor de significancia, no podemos rechazar la hipótesis nula, por lo tanto los residuales siguen una distribución normal.
+
+\subsection{Homocedasticidad}\label{homocedasticidad}
+
+Homocedasticidad = varianza constante
+
+\begin{itemize}
+\item
+  \emph{Correcto:} Si los residuales están dispersos uniformemente a lo largo de todos los valores predichos.
+\item
+  \emph{Problema:} Si vemos un patrón de embudo (residuales pequeños para predichos bajos y grandes para predichos altos, o viceversa). Esto indica heterocedasticidad.
+\end{itemize}
+
+Linealidad y errores independientes: Si se notan curvas, arcos o patrones sistemáticos, podría indicar que:
+
+\begin{itemize}
+\item
+  La relación no es estrictamente lineal.
+\item
+  Falta alguna variable importante en el modelo.
+\item
+  O hay correlación entre errores.
+\end{itemize}
+
+Una forma de verlo es con el plot de residuales vs valores predichos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(modelo3)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-51-1.pdf}}
+
+En R, existe la función \texttt{bptest()}, que es el test de Breusch-Pagan para la heterocedasticidad. Esta función toma como entrada un modelo de regresión y devuelve el resultado de la prueba de hipótesis para la homocedasticidad de los residuos.
+
+\(H_O:\) los residuos tienen varianza constante (homocedasticidad)
+
+\(H_1\): hay heterocedasticidad en los residuos
+
+El resultado incluye el valor del estadístico de prueba (el valor de la prueba de Breusch-Pagan), el p-valor y el número de grados de libertad. Si el p-valor es menor que el nivel de significancia elegido, se rechaza la hipótesis nula de homocedasticidad y se concluye que hay heterocedasticidad en los residuos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lmtest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Cargando paquete requerido: zoo
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Adjuntando el paquete: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{bptest}\NormalTok{(modelo3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  studentized Breusch-Pagan test
+## 
+## data:  modelo3
+## BP = 5.7517, df = 1, p-value = 0.01647
+\end{verbatim}
+
+Entonces como el p-valor es menor al valor de significancia \(0.05\), rechazamos la hipótesis nula y podemos decir que existe heterocedasticidad en los residuales.
+
+La heterocedasticidad es un problema porque la regresión de mínimos cuadrados ordinarios asume que todos los residuales se extraen de una población que tiene una varianza constante (homocedasticidad).
+
+Una forma de corregirlo es haciendo una transformación de los datos. Vamos a transformar la variable \(x_1\).
+\emph{Nota:} Estas transformaciones deben de justificarse y explicar el porque.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo4 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ yp }\SpecialCharTok{\textasciitilde{}} \FunctionTok{log}\NormalTok{(x1) }\SpecialCharTok{+}\NormalTok{ x2 }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{data =}\NormalTok{ datos)}
+
+\FunctionTok{summary}\NormalTok{(modelo4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = yp ~ log(x1) + x2 - 1, data = datos)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.4546 -0.7961 -0.3458  0.9207  2.5270 
+## 
+## Coefficients:
+##         Estimate Std. Error t value Pr(>|t|)    
+## log(x1)  7.52724    0.72213   10.42 6.22e-06 ***
+## x2       2.34013    0.06306   37.11 3.05e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.578 on 8 degrees of freedom
+## Multiple R-squared:  0.9994, Adjusted R-squared:  0.9993 
+## F-statistic:  6997 on 2 and 8 DF,  p-value: 1.065e-13
+\end{verbatim}
+
+Si realizamos la prueba de la homocedasticidad.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{bptest}\NormalTok{(modelo4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  studentized Breusch-Pagan test
+## 
+## data:  modelo4
+## BP = 0.13878, df = 1, p-value = 0.7095
+\end{verbatim}
+
+Vemos que ahora el p-valor es más grande que el valor de significancia, lo cual nos indica que no podemos rechazar \(H_0\), es decir ahora si podemos asumir que hay homocedasticidad.
+
+En el modelo final, tendríamos \(\beta_0=0\), \(\beta_1*=\) 7.5272361 y \(\beta_2=\) 2.3401283.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(modelo4)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-55-1.pdf}}
+
+Otras dos pruebas que se pueden usar son \texttt{fligner.test} y \texttt{leveneTest}.
+
+\subsection{No autocorrelación}\label{no-autocorrelaciuxf3n}
+
+Una forma de revisar este supuesto es con el test de Durbin-Watson. Las hipótesis que se tienen son:
+
+\(H_0:\) No hay autocorrelación en los errores (los residuales son independientes).
+
+\(H_1:\) Hay autocorrelación en los errores (generalmente, autocorrelación positiva de primer orden).
+
+El estadístico DW toma valores entre 0 y 4:
+
+\begin{itemize}
+\item
+  \(DW\) aproximadamente 2, entonces no hay autocorrelación (se cumple el supuesto).
+\item
+  \(DW < 2\), entonces indica autocorrelación positiva (los errores tienden a repetirse).
+\item
+  \(DW > 2\), entonces indica autocorrelación negativa (los errores tienden a alternar signo).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dwtest}\NormalTok{(modelo4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Durbin-Watson test
+## 
+## data:  modelo4
+## DW = 1.036, p-value = 0.02046
+## alternative hypothesis: true autocorrelation is greater than 0
+\end{verbatim}
+
+Vamos a predecir por último un valor. Para \(2.10\) de ancho del horno y una temperatura de \(3.10\) , ¿cuánto seria el tiempo de cocción?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nuevo.dato }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x1 =} \FloatTok{2.10}\NormalTok{, }\AttributeTok{x2 =} \FloatTok{3.10}\NormalTok{)}
+
+\NormalTok{prediccion }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(modelo4, }\AttributeTok{newdata =}\NormalTok{ nuevo.dato)}
+
+\FunctionTok{paste}\NormalTok{(}\StringTok{"La cantidad estimada de tiempo de coccion es:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(prediccion, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "La cantidad estimada de tiempo de coccion es: 12.84"
+\end{verbatim}
+
+\subsection{Ejercicios}\label{ejercicios-1}
+
+\textbf{Ejercicio 1:} Para los datos de \texttt{Datarium\ marketing}, analiza los supuestos. Explica tus resultados y sube tus respuestas a github.
 
 \chapter{Análisis de Componentes Principales}\label{anuxe1lisis-de-componentes-principales}
 
