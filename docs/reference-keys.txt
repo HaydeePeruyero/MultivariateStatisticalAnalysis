@@ -37,3 +37,5 @@ gráficas-multivariadas
 escalas-de-medición
 valores-faltantes
 predicciónes
+análisis-de-varianza
+selección-del-modelo

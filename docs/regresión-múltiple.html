@@ -182,6 +182,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.7.5" data-path="01-Regresion_multiple.html"><a href="#predicci%C3%B3nes"><i class="fa fa-check"></i><b>2.7.5</b> Predicciónes</a></li>
 <li class="chapter" data-level="2.7.6" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-1"><i class="fa fa-check"></i><b>2.7.6</b> Ejercicios</a></li>
 </ul></li>
+<li class="chapter" data-level="2.8" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-de-varianza"><i class="fa fa-check"></i><b>2.8</b> Análisis de Varianza</a></li>
+<li class="chapter" data-level="2.9" data-path="01-Regresion_multiple.html"><a href="#selecci%C3%B3n-del-modelo"><i class="fa fa-check"></i><b>2.9</b> Selección del modelo</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-de-componentes-principales"><i class="fa fa-check"></i><b>3</b> Análisis de Componentes Principales</a></li>
 <li class="chapter" data-level="4" data-path="01-Regresion_multiple.html"><a href="#an%C3%A1lisis-factorial"><i class="fa fa-check"></i><b>4</b> Análisis Factorial</a></li>
@@ -1452,8 +1454,222 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <div id="ejercicios-1" class="section level3 hasAnchor" number="2.7.6">
 <h3><span class="header-section-number">2.7.6</span> Ejercicios<a href="regresión-múltiple.html#ejercicios-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Ejercicio 1:</strong> Para los datos de <code>Datarium marketing</code>, analiza los supuestos. Explica tus resultados y sube tus respuestas a github.</p>
-
 </div>
+</div>
+<div id="análisis-de-varianza" class="section level2 hasAnchor" number="2.8">
+<h2><span class="header-section-number">2.8</span> Análisis de Varianza<a href="#an%C3%A1lisis-de-varianza" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ejemplo 1: </strong> Supongamos que un cierto tipo de motor de cohete se fabrica uniendo un propulsor tipo A y un propulsor tipo B. La fuerza del enlace entre los dos propulsores es una característica de importancia y se sospecha que está relacionada con la edad (en semanas) del lote del propulsor tipo B. Se tiene una muestra de tamaño 20 de la fuerza del enlace y la edad del lote del propulsor tipo B que fue utilizado.</p>
+<details>
+<summary>
+<b>Datos</b>
+</summary>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="regresión-múltiple.html#cb140-1" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb140-2"><a href="regresión-múltiple.html#cb140-2" tabindex="-1"></a>  <span class="at">Fuerza_enlace =</span> <span class="fu">c</span>(</span>
+<span id="cb140-3"><a href="regresión-múltiple.html#cb140-3" tabindex="-1"></a>    <span class="fl">2158.70</span>, <span class="fl">1678.15</span>, <span class="fl">2316.00</span>, <span class="fl">2061.30</span>, <span class="fl">2207.50</span>,</span>
+<span id="cb140-4"><a href="regresión-múltiple.html#cb140-4" tabindex="-1"></a>    <span class="fl">1708.30</span>, <span class="fl">1784.70</span>, <span class="fl">2575.00</span>, <span class="fl">2357.90</span>, <span class="fl">2256.70</span>,</span>
+<span id="cb140-5"><a href="regresión-múltiple.html#cb140-5" tabindex="-1"></a>    <span class="fl">2165.20</span>, <span class="fl">2399.55</span>, <span class="fl">1779.80</span>, <span class="fl">2336.75</span>, <span class="fl">1765.30</span>,</span>
+<span id="cb140-6"><a href="regresión-múltiple.html#cb140-6" tabindex="-1"></a>    <span class="fl">2053.50</span>, <span class="fl">2414.40</span>, <span class="fl">2200.50</span>, <span class="fl">2654.20</span>, <span class="fl">1753.70</span></span>
+<span id="cb140-7"><a href="regresión-múltiple.html#cb140-7" tabindex="-1"></a>  ),</span>
+<span id="cb140-8"><a href="regresión-múltiple.html#cb140-8" tabindex="-1"></a>  <span class="at">Edad_lote =</span> <span class="fu">c</span>(</span>
+<span id="cb140-9"><a href="regresión-múltiple.html#cb140-9" tabindex="-1"></a>    <span class="fl">15.50</span>, <span class="fl">23.75</span>, <span class="fl">8.00</span>, <span class="fl">17.00</span>, <span class="fl">5.50</span>,</span>
+<span id="cb140-10"><a href="regresión-múltiple.html#cb140-10" tabindex="-1"></a>    <span class="fl">19.00</span>, <span class="fl">24.00</span>, <span class="fl">2.50</span>, <span class="fl">7.50</span>, <span class="fl">11.00</span>,</span>
+<span id="cb140-11"><a href="regresión-múltiple.html#cb140-11" tabindex="-1"></a>    <span class="fl">13.00</span>, <span class="fl">3.75</span>, <span class="fl">25.00</span>, <span class="fl">9.75</span>, <span class="fl">22.00</span>,</span>
+<span id="cb140-12"><a href="regresión-múltiple.html#cb140-12" tabindex="-1"></a>    <span class="fl">18.00</span>, <span class="fl">6.00</span>, <span class="fl">12.50</span>, <span class="fl">2.00</span>, <span class="fl">21.50</span></span>
+<span id="cb140-13"><a href="regresión-múltiple.html#cb140-13" tabindex="-1"></a>  )</span>
+<span id="cb140-14"><a href="regresión-múltiple.html#cb140-14" tabindex="-1"></a>)</span>
+<span id="cb140-15"><a href="regresión-múltiple.html#cb140-15" tabindex="-1"></a></span>
+<span id="cb140-16"><a href="regresión-múltiple.html#cb140-16" tabindex="-1"></a>datos</span></code></pre></div>
+<pre><code>##    Fuerza_enlace Edad_lote
+## 1        2158.70     15.50
+## 2        1678.15     23.75
+## 3        2316.00      8.00
+## 4        2061.30     17.00
+## 5        2207.50      5.50
+## 6        1708.30     19.00
+## 7        1784.70     24.00
+## 8        2575.00      2.50
+## 9        2357.90      7.50
+## 10       2256.70     11.00
+## 11       2165.20     13.00
+## 12       2399.55      3.75
+## 13       1779.80     25.00
+## 14       2336.75      9.75
+## 15       1765.30     22.00
+## 16       2053.50     18.00
+## 17       2414.40      6.00
+## 18       2200.50     12.50
+## 19       2654.20      2.00
+## 20       1753.70     21.50</code></pre>
+</details>
+<p>Un modelo completo sería <span class="math inline">\(y_i = \beta_0 + \beta_1x_i + \epsilon_i\)</span>, el cual se ve como:</p>
+<details>
+<summary>
+<b>Plot R</b>
+</summary>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="regresión-múltiple.html#cb142-1" tabindex="-1"></a>modelo_completo <span class="ot">&lt;-</span> <span class="fu">lm</span>(Fuerza_enlace <span class="sc">~</span> Edad_lote, <span class="at">data =</span> datos)</span>
+<span id="cb142-2"><a href="regresión-múltiple.html#cb142-2" tabindex="-1"></a></span>
+<span id="cb142-3"><a href="regresión-múltiple.html#cb142-3" tabindex="-1"></a><span class="fu">plot</span>(datos<span class="sc">$</span>Edad_lote, datos<span class="sc">$</span>Fuerza_enlace,</span>
+<span id="cb142-4"><a href="regresión-múltiple.html#cb142-4" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Modelo completo&quot;</span>,</span>
+<span id="cb142-5"><a href="regresión-múltiple.html#cb142-5" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Edad del lote (semanas)&quot;</span>,</span>
+<span id="cb142-6"><a href="regresión-múltiple.html#cb142-6" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;Fuerza del enlace (psi)&quot;</span>,</span>
+<span id="cb142-7"><a href="regresión-múltiple.html#cb142-7" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb142-8"><a href="regresión-múltiple.html#cb142-8" tabindex="-1"></a></span>
+<span id="cb142-9"><a href="regresión-múltiple.html#cb142-9" tabindex="-1"></a><span class="co"># Agregar la recta de regresión</span></span>
+<span id="cb142-10"><a href="regresión-múltiple.html#cb142-10" tabindex="-1"></a><span class="fu">abline</span>(modelo_completo, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-59-1.png" width="672" />
+</details>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-60-1.png" width="672" />
+Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso el modelo con menos parámetros o modelo reducido es el modelo que describirá la hipótesis nula <span class="math inline">\(H_0\)</span>. En regresión lineal simple, es común plantear <span class="math inline">\(H_0:\beta_1=0\)</span>, de manera que el modelo reducido es <span class="math inline">\(y_i=\beta_0+\epsilon_i\)</span>, es decir, cada valor <span class="math inline">\(y_i\)</span> es función de una constante (la media) y un error, este modelo se vería como:</p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p>¿Cuál modelo es mejor? Debemos obtener los estimadores para cada modelo y la suma de cuadrados de los errores.</p>
+<ul>
+<li><p>La suma de los cuadrados de los errores <span class="math inline">\(SSE(C) = \sum(y_i - \hat{y}_i)^2\)</span>, la cual tiene <span class="math inline">\(n-2\)</span> grados de libertad para el modelo completo.</p></li>
+<li><p>La suma de los cuadrados de los errores del modelo reducido <span class="math inline">\(SSE(R) = \sum(y_i - \bar{y}_i)^2\)</span>, la cual tiene <span class="math inline">\(n-1\)</span> grados de libertad para el modelo reducido.</p></li>
+</ul>
+<p>Hay que tener en cuenta que <span class="math inline">\(SSE(R)\)</span> siempre es mayor a <span class="math inline">\(SSE(C)\)</span>, por lo tanto si la diferencia es miu pequeña, entonces tiene sentido utilizar el modelo reducido, pero si la diferencia es muy grande, entonces el parámetro adicional agrega información importante al modelo.</p>
+<p>Se usa la prueba <span class="math inline">\(F\)</span> general:</p>
+<p><span class="math display">\[F_0 = \frac{\left( \frac{SSE(R) - SSE(C)}{ (n-1) - (n-2)}  \right)}{\frac{SSE(C)}{n-2}} = \frac{SCE(C)}{\frac{SSE(C)}{n-2}}   \]</span></p>
+<p>La cantidad <span class="math inline">\(SSE(R) - SSE(C)\)</span> representa la suma de cuadrados explicada por la variable <span class="math inline">\(x\)</span>, a esta cantidad la vamos a denotar por <span class="math inline">\(SCE\)</span>.</p>
+<p>Entonces, rechazar la hipótesis nula <span class="math inline">\(H_0\)</span> implica rechazar el modelo reducido y no rechazar <span class="math inline">\(H_0\)</span> implica rechazar el modelo completo.</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="regresión-múltiple.html#cb144-1" tabindex="-1"></a><span class="fu">anova</span>(modelo_completo)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Fuerza_enlace
+##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Edad_lote  1 1527483 1527483  165.38 1.643e-10 ***
+## Residuals 18  166255    9236                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Como el p-valor es muy pequeño, se rechaza <span class="math inline">\(H_0\)</span> por lo que se concluye que hay pruebas suficientes sobre la existencia de asociación lineal de la edad de lote y la fuerza del enlace.</p>
+<p>Todo esto, se puede llevar al caso de regresión lineal múltiple.</p>
+<p><strong>Ejemplo:</strong> Considere los siguientes datos en los que se tienen mediciones del tamaño de infarto, área de la región en riesgo y dos variables que identifican el tipo de tratamiento utilizado en 32 pacientes. Se busca describir el tamaño del infarto a través de las otras 3-variables. Para este caso, vamos a ajustar un modelo de regresión lineal múltiple completo y después vamos a hacer pruebas sobre quitar algunas variables.</p>
+<pre><code>##    Paciente Infarc Area X2 X3
+## 1         1  0.119 0.34  0  0
+## 2         2  0.190 0.64  0  0
+## 3         3  0.395 0.76  0  0
+## 4         4  0.469 0.83  0  0
+## 5         5  0.130 0.73  0  0
+## 6         6  0.311 0.82  0  0
+## 7         7  0.418 0.95  0  0
+## 8         8  0.480 1.06  0  0
+## 9         9  0.687 1.20  0  0
+## 10       10  0.847 1.47  0  0
+## 11       11  0.062 0.44  1  0
+## 12       12  0.122 0.77  1  0
+## 13       13  0.033 0.90  1  0
+## 14       14  0.102 1.07  1  0
+## 15       15  0.206 1.01  1  0
+## 16       16  0.249 1.03  1  0
+## 17       17  0.220 1.16  1  0
+## 18       18  0.299 1.21  1  0
+## 19       19  0.350 1.20  1  0
+## 20       20  0.350 1.22  1  0
+## 21       21  0.588 0.99  1  0
+## 22       22  0.379 0.77  0  0
+## 23       23  0.149 1.05  0  1
+## 24       24  0.316 1.06  0  1
+## 25       25  0.390 1.02  0  1
+## 26       26  0.429 0.99  0  1
+## 27       27  0.477 0.97  0  1
+## 28       28  0.439 1.12  0  1
+## 29       29  0.446 1.23  0  1
+## 30       30  0.538 1.19  0  1
+## 31       31  0.625 1.22  0  1
+## 32       32  0.974 1.40  0  1</code></pre>
+<p>El modelo completo sería <span class="math inline">\(y_i = \beta_0 + \beta_1x_{1i} +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i\)</span>.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="regresión-múltiple.html#cb147-1" tabindex="-1"></a>modelo_c <span class="ot">&lt;-</span> <span class="fu">lm</span>(Infarc<span class="sc">~</span> Area <span class="sc">+</span> X2 <span class="sc">+</span> X3, <span class="at">data =</span> datos)</span>
+<span id="cb147-2"><a href="regresión-múltiple.html#cb147-2" tabindex="-1"></a><span class="fu">summary</span>(modelo_c)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Infarc ~ Area + X2 + X3, data = datos)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.28175 -0.06704 -0.01658  0.06294  0.35970 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.14927    0.10377  -1.439 0.161376    
+## Area         0.63395    0.10927   5.802 3.12e-06 ***
+## X2          -0.25005    0.06053  -4.131 0.000295 ***
+## X3          -0.08563    0.06641  -1.289 0.207831    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.138 on 28 degrees of freedom
+## Multiple R-squared:  0.6456, Adjusted R-squared:  0.6076 
+## F-statistic:    17 on 3 and 28 DF,  p-value: 1.748e-06</code></pre>
+<p>Con este modelo se obtiene la siguiente tabla de ANOVA.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="regresión-múltiple.html#cb149-1" tabindex="-1"></a>anov <span class="ot">&lt;-</span> <span class="fu">anova</span>(modelo_c)</span>
+<span id="cb149-2"><a href="regresión-múltiple.html#cb149-2" tabindex="-1"></a>anov</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Infarc
+##           Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Area       1 0.62492 0.62492 32.8245 3.801e-06 ***
+## X2         1 0.31453 0.31453 16.5210 0.0003533 ***
+## X3         1 0.03165 0.03165  1.6624 0.2078307    
+## Residuals 28 0.53307 0.01904                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="regresión-múltiple.html#cb151-1" tabindex="-1"></a><span class="do">## los p-valores en la última columna se pueden obtener con: pf(32.8245, df1 = 1, df2 = 28, lower.tail = FALSE)</span></span></code></pre></div>
+<p><strong>1) Pruebas sobre uno de los parámetros:</strong> <span class="math inline">\(H_0:\beta_1=0\)</span>, modelo reducido <span class="math inline">\(y_i = \beta_0  +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i\)</span>. Vamos a denotar a la suma de los cuadrados de los errores asociada a este modelo <span class="math inline">\(SSE(x_1)\)</span>, la cual tiene <span class="math inline">\(n-3\)</span> grados de libertad asociados (tenemos 3 parámetros a estimar <span class="math inline">\(\beta_0,\beta_2,\beta_3\)</span>). Como el p-valor es muy pequeño, se rechaza a <span class="math inline">\(H_0\)</span> y se concluye que hay suficiente evidencia para decir que el tamaño del infarto está significativamente relacionado con el tamaño del área de riesgo.</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="regresión-múltiple.html#cb152-1" tabindex="-1"></a>SCE_X1 <span class="ot">&lt;-</span> anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span>]</span>
+<span id="cb152-2"><a href="regresión-múltiple.html#cb152-2" tabindex="-1"></a>SSE_C <span class="ot">&lt;-</span> anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">4</span>]</span>
+<span id="cb152-3"><a href="regresión-múltiple.html#cb152-3" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> anov<span class="sc">$</span>Df[<span class="dv">4</span>]</span>
+<span id="cb152-4"><a href="regresión-múltiple.html#cb152-4" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos) <span class="sc">-</span> <span class="dv">3</span> <span class="sc">-</span> df2</span>
+<span id="cb152-5"><a href="regresión-múltiple.html#cb152-5" tabindex="-1"></a>F_g <span class="ot">&lt;-</span> (SCE_X1<span class="sc">/</span>df1) <span class="sc">/</span> (SSE_C<span class="sc">/</span>df2) </span>
+<span id="cb152-6"><a href="regresión-múltiple.html#cb152-6" tabindex="-1"></a>F_g</span></code></pre></div>
+<pre><code>## [1] 32.82447</code></pre>
+<p><strong>2) Pruebas sobre todos los parámetros:</strong> En este caso tenemos <span class="math inline">\(H_0:\beta_1=\beta_2=\beta_3=0\)</span> vs <span class="math inline">\(H_1: \beta_j\neq 0\)</span> p.a. <span class="math inline">\(j\)</span>. Es decir, el modelo reducido sería <span class="math inline">\(y_i = \beta_0+\epsilon_i\)</span>. La prueba <span class="math inline">\(F\)</span> general es la misma, pero ahora la suma de cuadrados asociada al modelo reducido <span class="math inline">\(SSE(x_1,x_2,x_3)\)</span> tiene <span class="math inline">\(n-1\)</span> grados de libertad ya que solo debemos estimar <span class="math inline">\(\beta_0\)</span>.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="regresión-múltiple.html#cb154-1" tabindex="-1"></a>SCE_X1X2X3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]) </span>
+<span id="cb154-2"><a href="regresión-múltiple.html#cb154-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos) <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> df2 </span>
+<span id="cb154-3"><a href="regresión-múltiple.html#cb154-3" tabindex="-1"></a></span>
+<span id="cb154-4"><a href="regresión-múltiple.html#cb154-4" tabindex="-1"></a>F_all <span class="ot">&lt;-</span> (SCE_X1X2X3 <span class="sc">/</span> df1) <span class="sc">/</span> (SSE_C <span class="sc">/</span> df2)</span>
+<span id="cb154-5"><a href="regresión-múltiple.html#cb154-5" tabindex="-1"></a>F_all</span></code></pre></div>
+<pre><code>## [1] 17.00263</code></pre>
+<p>El cual tiene un <span class="math inline">\(p-\)</span>valor asociado a una distribución <span class="math inline">\(F\)</span> con 3 y 28 grados de libertad.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="regresión-múltiple.html#cb156-1" tabindex="-1"></a><span class="fu">pf</span>(F_all, <span class="at">df1 =</span> <span class="dv">3</span>, <span class="at">df2 =</span> <span class="dv">28</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 1.747583e-06</code></pre>
+<p>Por lo tanto rechazamos la hipótesis nula. Notemos que este valor coincide con el que nos da el <code>summary</code> del modelo.</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="regresión-múltiple.html#cb158-1" tabindex="-1"></a><span class="fu">summary</span>(modelo_c)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Infarc ~ Area + X2 + X3, data = datos)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.28175 -0.06704 -0.01658  0.06294  0.35970 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -0.14927    0.10377  -1.439 0.161376    
+## Area         0.63395    0.10927   5.802 3.12e-06 ***
+## X2          -0.25005    0.06053  -4.131 0.000295 ***
+## X3          -0.08563    0.06641  -1.289 0.207831    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.138 on 28 degrees of freedom
+## Multiple R-squared:  0.6456, Adjusted R-squared:  0.6076 
+## F-statistic:    17 on 3 and 28 DF,  p-value: 1.748e-06</code></pre>
+<p><strong>3) Pruebas sobre un subconjunto de los parámetros:</strong> Supongamos ahora que <span class="math inline">\(H_0:\beta_2=\beta_3=0\)</span>. Es decir, el modelo reducido sería <span class="math inline">\(y_i = \beta_0+ \beta_1x_{1i}+\epsilon_i\)</span>. La prueba es similar pero solo usamos <span class="math inline">\(x_2\)</span> y <span class="math inline">\(x_3\)</span>.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="regresión-múltiple.html#cb160-1" tabindex="-1"></a>SCE_X2X3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]) </span>
+<span id="cb160-2"><a href="regresión-múltiple.html#cb160-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">-</span> df2 </span>
+<span id="cb160-3"><a href="regresión-múltiple.html#cb160-3" tabindex="-1"></a></span>
+<span id="cb160-4"><a href="regresión-múltiple.html#cb160-4" tabindex="-1"></a>F_dos <span class="ot">&lt;-</span> (SCE_X2X3 <span class="sc">/</span> df1) <span class="sc">/</span> (SSE_C <span class="sc">/</span> df2)</span>
+<span id="cb160-5"><a href="regresión-múltiple.html#cb160-5" tabindex="-1"></a>F_dos</span></code></pre></div>
+<pre><code>## [1] 9.091716</code></pre>
+<p>El <span class="math inline">\(p-\)</span>valor asociado a la prueba <span class="math inline">\(F\)</span> con 2 y 28 grados de libertad es:</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="regresión-múltiple.html#cb162-1" tabindex="-1"></a><span class="fu">pf</span>(F_dos, <span class="at">df1 =</span> <span class="dv">2</span>, <span class="at">df2 =</span> <span class="dv">28</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 0.0009065789</code></pre>
+<p>Por lo que se rechaza de nuevo la hipótesis nula.</p>
+</div>
+<div id="selección-del-modelo" class="section level2 hasAnchor" number="2.9">
+<h2><span class="header-section-number">2.9</span> Selección del modelo<a href="#selecci%C3%B3n-del-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
 </div>
 </div>
             </section>

@@ -1081,3 +1081,212 @@ paste("La cantidad estimada de tiempo de coccion es:", round(prediccion, 2))
 
 **Ejercicio 1:** Para los datos de `Datarium marketing`, analiza los supuestos. Explica tus resultados y sube tus respuestas a github.
 
+
+## Análisis de Varianza
+
+
+**Ejemplo 1: ** Supongamos que un cierto tipo de motor de cohete se fabrica uniendo un propulsor tipo A y un propulsor tipo B. La fuerza del enlace entre los dos propulsores es una característica de importancia y se sospecha que está relacionada con la edad (en semanas) del lote del propulsor tipo B. Se tiene una muestra de tamaño 20 de la fuerza del enlace y la edad del lote del propulsor tipo B que fue utilizado. 
+
+<details>
+<summary><b>Datos</b></summary>
+```{r}
+datos <- data.frame(
+  Fuerza_enlace = c(
+    2158.70, 1678.15, 2316.00, 2061.30, 2207.50,
+    1708.30, 1784.70, 2575.00, 2357.90, 2256.70,
+    2165.20, 2399.55, 1779.80, 2336.75, 1765.30,
+    2053.50, 2414.40, 2200.50, 2654.20, 1753.70
+  ),
+  Edad_lote = c(
+    15.50, 23.75, 8.00, 17.00, 5.50,
+    19.00, 24.00, 2.50, 7.50, 11.00,
+    13.00, 3.75, 25.00, 9.75, 22.00,
+    18.00, 6.00, 12.50, 2.00, 21.50
+  )
+)
+
+datos
+```
+</details>
+
+Un modelo completo sería $y_i = \beta_0 + \beta_1x_i + \epsilon_i$, el cual se ve como:
+
+<details>
+<summary><b>Plot R</b></summary>
+```{r}
+modelo_completo <- lm(Fuerza_enlace ~ Edad_lote, data = datos)
+
+plot(datos$Edad_lote, datos$Fuerza_enlace,
+     main = "Modelo completo",
+     xlab = "Edad del lote (semanas)",
+     ylab = "Fuerza del enlace (psi)",
+     pch = 19, col = "blue")
+
+# Agregar la recta de regresión
+abline(modelo_completo, col = "red", lwd = 2)
+```
+</details>
+
+```{r, echo=FALSE}
+ggplot(datos, aes(x = Edad_lote, y = Fuerza_enlace)) +
+  geom_point(color = "blue", size = 3) +
+  geom_smooth(method = "lm", se = TRUE, color = "red") +
+  labs(
+    title = "Modelo completo",
+    x = "Edad del lote (semanas)",
+    y = "Fuerza del enlace (psi)"
+  ) +
+  theme_minimal()
+```
+Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso el modelo con menos parámetros o modelo reducido es el modelo que describirá la hipótesis nula $H_0$. En regresión lineal simple, es común plantear $H_0:\beta_1=0$, de manera que el modelo reducido es $y_i=\beta_0+\epsilon_i$, es decir, cada valor $y_i$ es función de una constante (la media) y un error, este modelo se vería como:
+
+```{r, echo=FALSE}
+modelo_reducido <- lm(Fuerza_enlace ~ 1, data = datos)
+
+plot(datos$Edad_lote, datos$Fuerza_enlace,
+     main = "Modelo reducido",
+     xlab = "Edad del lote (semanas)",
+     ylab = "Fuerza del enlace (psi)",
+     pch = 19, col = "blue")
+
+# Agregar la recta de regresión
+abline(modelo_reducido, col = "red", lwd = 2)
+```
+
+```{r, echo=FALSE}
+ggplot(datos, aes(x = Edad_lote, y = Fuerza_enlace)) +
+  geom_point() +
+  stat_smooth(method = "lm", formula = y ~ 1, se = TRUE, fullrange = TRUE) +
+  labs(title = "Modelo reducido",
+       x = "Edad del lote (semanas)", y = "Fuerza del enlace (psi)") +
+  theme_minimal()
+```
+
+
+¿Cuál modelo es mejor? Debemos obtener los estimadores para cada modelo y la suma de cuadrados de los errores. 
+
+- La suma de los cuadrados de los errores $SSE(C) = \sum(y_i - \hat{y}_i)^2$, la cual tiene $n-2$ grados de libertad para el modelo completo.
+
+- La suma de los cuadrados de los errores del modelo reducido $SSE(R) = \sum(y_i - \bar{y}_i)^2$, la cual tiene $n-1$ grados de libertad para el modelo reducido.
+
+Hay que tener en cuenta que $SSE(R)$ siempre es mayor a $SSE(C)$, por lo tanto si la diferencia es miu pequeña, entonces tiene sentido utilizar el modelo reducido, pero si la diferencia es muy grande, entonces el parámetro adicional agrega información importante al modelo.
+
+Se usa la prueba $F$ general:
+
+$$F_0 = \frac{\left( \frac{SSE(R) - SSE(C)}{ (n-1) - (n-2)}  \right)}{\frac{SSE(C)}{n-2}} = \frac{SCE(C)}{\frac{SSE(C)}{n-2}}   $$
+
+
+La cantidad $SSE(R) - SSE(C)$ representa la suma de cuadrados explicada por la variable $x$, a esta cantidad la vamos a denotar por $SCE$.
+
+Entonces, rechazar la hipótesis nula $H_0$ implica rechazar el modelo reducido y no rechazar $H_0$ implica rechazar el modelo completo. 
+
+```{r}
+anova(modelo_completo)
+```
+
+
+Como el p-valor es muy pequeño, se rechaza $H_0$ por lo que se concluye que hay pruebas suficientes sobre la existencia de asociación lineal de la edad de lote y la fuerza del enlace.
+
+
+Todo esto, se puede llevar al caso de regresión lineal múltiple.
+
+**Ejemplo:** Considere los siguientes datos en los que se tienen mediciones del tamaño de infarto, área de la región en riesgo y dos variables que identifican el tipo de tratamiento utilizado en 32 pacientes. Se busca describir el tamaño del infarto a través de las otras 3-variables. Para este caso, vamos a ajustar un modelo de regresión lineal múltiple completo y después vamos a hacer pruebas sobre quitar algunas variables.
+
+```{r,  echo=FALSE}
+datos <- data.frame(
+  Paciente = 1:32,
+  Infarc = c(
+    0.119, 0.190, 0.395, 0.469, 0.130, 0.311, 0.418, 0.480,
+    0.687, 0.847, 0.062, 0.122, 0.033, 0.102, 0.206, 0.249,
+    0.220, 0.299, 0.350, 0.350, 0.588, 0.379, 0.149, 0.316,
+    0.390, 0.429, 0.477, 0.439, 0.446, 0.538, 0.625, 0.974
+  ),
+  Area = c(
+    0.34, 0.64, 0.76, 0.83, 0.73, 0.82, 0.95, 1.06,
+    1.20, 1.47, 0.44, 0.77, 0.90, 1.07, 1.01, 1.03,
+    1.16, 1.21, 1.20, 1.22, 0.99, 0.77, 1.05, 1.06,
+    1.02, 0.99, 0.97, 1.12, 1.23, 1.19, 1.22, 1.40
+  ),
+  X2 = c(
+    0,0,0,0,0,0,0,0,
+    0,0,1,1,1,1,1,1,
+    1,1,1,1,1,0,0,0,
+    0,0,0,0,0,0,0,0
+  ),
+  X3 = c(
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,1,1,
+    1,1,1,1,1,1,1,1
+  )
+)
+datos
+```
+
+
+El modelo completo sería $y_i = \beta_0 + \beta_1x_{1i} +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i$. 
+```{r}
+modelo_c <- lm(Infarc~ Area + X2 + X3, data = datos)
+summary(modelo_c)
+```
+
+Con este modelo se obtiene la siguiente tabla de ANOVA.
+
+```{r}
+anov <- anova(modelo_c)
+anov
+## los p-valores en la última columna se pueden obtener con: pf(32.8245, df1 = 1, df2 = 28, lower.tail = FALSE)
+```
+
+**1) Pruebas sobre uno de los parámetros:** $H_0:\beta_1=0$, modelo reducido $y_i = \beta_0  +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i$. Vamos a denotar a la suma de los cuadrados de los errores asociada a este modelo $SSE(x_1)$, la cual tiene $n-3$ grados de libertad asociados (tenemos 3 parámetros a estimar $\beta_0,\beta_2,\beta_3$).  Como el p-valor es muy pequeño, se rechaza a $H_0$ y se concluye que hay suficiente evidencia para decir que el tamaño del infarto está significativamente relacionado con el tamaño del área de riesgo.
+
+```{r}
+SCE_X1 <- anov$`Sum Sq`[1]
+SSE_C <- anov$`Sum Sq`[4]
+df2 <- anov$Df[4]
+df1 <- nrow(datos) - 3 - df2
+F_g <- (SCE_X1/df1) / (SSE_C/df2) 
+F_g
+```
+
+**2) Pruebas sobre todos los parámetros:** En este caso tenemos $H_0:\beta_1=\beta_2=\beta_3=0$ vs $H_1: \beta_j\neq 0$ p.a. $j$. Es decir, el modelo reducido sería $y_i = \beta_0+\epsilon_i$. La prueba $F$ general es la misma, pero ahora la suma de cuadrados asociada al modelo reducido $SSE(x_1,x_2,x_3)$ tiene $n-1$ grados de libertad ya que solo debemos estimar $\beta_0$.
+
+```{r}
+SCE_X1X2X3 <- sum(anov$`Sum Sq`[1:3]) 
+df1 <- nrow(datos) -1 - df2 
+
+F_all <- (SCE_X1X2X3 / df1) / (SSE_C / df2)
+F_all
+```
+
+El cual tiene un $p-$valor asociado a una distribución $F$ con 3 y 28 grados de libertad.
+
+```{r}
+pf(F_all, df1 = 3, df2 = 28, lower.tail = FALSE)
+```
+Por lo tanto rechazamos la hipótesis nula. Notemos que este valor coincide con el que nos da el `summary` del modelo.
+
+```{r}
+summary(modelo_c)
+```
+
+**3) Pruebas sobre un subconjunto de los parámetros:** Supongamos ahora que $H_0:\beta_2=\beta_3=0$. Es decir, el modelo reducido sería $y_i = \beta_0+ \beta_1x_{1i}+\epsilon_i$. La prueba es similar pero solo usamos $x_2$ y $x_3$.
+
+```{r}
+SCE_X2X3 <- sum(anov$`Sum Sq`[2:3]) 
+df1 <- nrow(datos) - 2 - df2 
+
+F_dos <- (SCE_X2X3 / df1) / (SSE_C / df2)
+F_dos
+```
+
+El $p-$valor asociado a la prueba $F$ con 2 y 28 grados de libertad es:
+```{r}
+pf(F_dos, df1 = 2, df2 = 28, lower.tail = FALSE)
+```
+
+Por lo que se rechaza de nuevo la hipótesis nula.
+
+
+## Selección del modelo
+

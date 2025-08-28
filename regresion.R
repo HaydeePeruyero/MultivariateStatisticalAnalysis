@@ -226,3 +226,73 @@ modelo2 <- lm(sales ~ youtube + facebook, data = marketing)
 summary(modelo2)
 
 
+## Validación de Supuestos
+
+yp <-c(6.40, 15.05, 18.75, 30.25, 44.85, 48.85, 51.55, 61.50, 100.44, 111.42)
+x1 <-c(1.32, 2.69, 3.56, 4.41, 5.35, 6.20, 7.12, 8.87, 9.80, 10.65)
+x2 <-c(1.15, 3.40, 4.10, 8.75, 14.82, 15.15, 15.32, 18.18, 35.19, 40.40)
+datos<-data.frame(yp, x1, x2)
+
+
+plot(datos)
+
+library(ggplot2)
+
+g1 <- ggplot(data = datos, mapping=aes(x=x1, y=yp) )+
+  geom_point(color="blue", size=2)+
+  labs(title = 'yp~x1', x='x1')+
+  geom_smooth(method = "lm", se= FALSE, color="black") +
+  theme_bw()+
+  theme(plot.title = element_text(hjust=0.5))
+g1
+
+
+## Multicolinealidad
+
+variables <- data.frame(x1,x2)
+m_cor <- cor(variables,method = "pearson" )
+m_cor
+
+
+library(corrplot)
+
+corrplot(m_cor)
+
+modelo1 <- lm(formula = yp~x1+x2, data = datos)
+summary(modelo1)
+
+
+modelo2 <- lm(formula = yp ~ x2, data = datos)
+summary(modelo2)
+
+
+#ANOVA
+
+# H_0: las variables que eliminamos no tienen significancia
+# H_1: las variables son significativas
+
+# \alpha = 0.05
+anova(modelo1, modelo2)
+
+
+modelo3 <- lm(formula = yp ~ x1 + x2 -1, data = datos)
+summary(modelo3)
+
+## Normalidad
+
+residuales <- modelo3$residuals
+
+qqnorm(residuales)
+qqline(residuales)
+
+
+plot(modelo3)
+
+# H_0: la distribución normal
+# H_1: la distribución no es normal
+
+shapiro.test(residuales)
+# alpha = 0.05
+
+
+# Homocedasticidad
