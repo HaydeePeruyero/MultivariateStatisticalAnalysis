@@ -678,7 +678,7 @@ summary(modelo2)
 Lo que sigue, es hacer pruebas de hipótesis tanto en las variables como en los coeficientes de regresión.
 
 
-
+### Ejercicios
 
 **Ejercicio 1:** Realizar las pruebas de hipótesis sobre la significancia de la regresión y sobre los coeficientes. Encontrar los intervalos de confianza respectivos del 95\%. 
 Para una tienda con presupuestos:
@@ -1062,7 +1062,7 @@ dwtest(modelo4)
 ```
 </details>
 
-### Predicciónes
+### Predicciones
 
 Vamos a predecir por último un valor. Para $2.10$ de ancho del horno y una temperatura de $3.10$ , ¿cuánto seria el tiempo de cocción?
 
@@ -1087,8 +1087,7 @@ paste("La cantidad estimada de tiempo de coccion es:", round(prediccion, 2))
 
 **Ejemplo 1: ** Supongamos que un cierto tipo de motor de cohete se fabrica uniendo un propulsor tipo A y un propulsor tipo B. La fuerza del enlace entre los dos propulsores es una característica de importancia y se sospecha que está relacionada con la edad (en semanas) del lote del propulsor tipo B. Se tiene una muestra de tamaño 20 de la fuerza del enlace y la edad del lote del propulsor tipo B que fue utilizado. 
 
-<details>
-<summary><b>Datos</b></summary>
+
 ```{r}
 datos <- data.frame(
   Fuerza_enlace = c(
@@ -1107,12 +1106,11 @@ datos <- data.frame(
 
 datos
 ```
-</details>
+
 
 Un modelo completo sería $y_i = \beta_0 + \beta_1x_i + \epsilon_i$, el cual se ve como:
 
-<details>
-<summary><b>Plot R</b></summary>
+
 ```{r}
 modelo_completo <- lm(Fuerza_enlace ~ Edad_lote, data = datos)
 
@@ -1125,9 +1123,9 @@ plot(datos$Edad_lote, datos$Fuerza_enlace,
 # Agregar la recta de regresión
 abline(modelo_completo, col = "red", lwd = 2)
 ```
-</details>
 
-```{r, echo=FALSE}
+
+```{r}
 ggplot(datos, aes(x = Edad_lote, y = Fuerza_enlace)) +
   geom_point(color = "blue", size = 3) +
   geom_smooth(method = "lm", se = TRUE, color = "red") +
@@ -1140,7 +1138,7 @@ ggplot(datos, aes(x = Edad_lote, y = Fuerza_enlace)) +
 ```
 Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso el modelo con menos parámetros o modelo reducido es el modelo que describirá la hipótesis nula $H_0$. En regresión lineal simple, es común plantear $H_0:\beta_1=0$, de manera que el modelo reducido es $y_i=\beta_0+\epsilon_i$, es decir, cada valor $y_i$ es función de una constante (la media) y un error, este modelo se vería como:
 
-```{r, echo=FALSE}
+```{r}
 modelo_reducido <- lm(Fuerza_enlace ~ 1, data = datos)
 
 plot(datos$Edad_lote, datos$Fuerza_enlace,
@@ -1153,7 +1151,7 @@ plot(datos$Edad_lote, datos$Fuerza_enlace,
 abline(modelo_reducido, col = "red", lwd = 2)
 ```
 
-```{r, echo=FALSE}
+```{r}
 ggplot(datos, aes(x = Edad_lote, y = Fuerza_enlace)) +
   geom_point() +
   stat_smooth(method = "lm", formula = y ~ 1, se = TRUE, fullrange = TRUE) +
@@ -1235,7 +1233,8 @@ Con este modelo se obtiene la siguiente tabla de ANOVA.
 ```{r}
 anov <- anova(modelo_c)
 anov
-## los p-valores en la última columna se pueden obtener con: pf(32.8245, df1 = 1, df2 = 28, lower.tail = FALSE)
+## los p-valores en la última columna se pueden obtener con: 
+#pf(F_0, df1, df2, lower.tail = FALSE)
 ```
 
 **1) Pruebas sobre uno de los parámetros:** $H_0:\beta_1=0$, modelo reducido $y_i = \beta_0  +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i$. Vamos a denotar a la suma de los cuadrados de los errores asociada a este modelo $SSE(x_1)$, la cual tiene $n-3$ grados de libertad asociados (tenemos 3 parámetros a estimar $\beta_0,\beta_2,\beta_3$).  Como el p-valor es muy pequeño, se rechaza a $H_0$ y se concluye que hay suficiente evidencia para decir que el tamaño del infarto está significativamente relacionado con el tamaño del área de riesgo.
@@ -1287,6 +1286,221 @@ pf(F_dos, df1 = 2, df2 = 28, lower.tail = FALSE)
 
 Por lo que se rechaza de nuevo la hipótesis nula.
 
+### Ejercicios
+
+**Ejercicio 1(R):** Para el datasets `datasets::trees`, realice las pruebas de hipótesis para determinar si:
+1) El modelo solo con la variable `Girth` es mejor que el modelo completo.
+2) El modelo sin `Girth` y `Height` es mejor que el completo.
+Usar la tabla de ANOVA para calcular el estadístico $F_0$ y encontrar el p-valor asociado usando `pf(F_0, df1, df2, lower.tail = FALSE)`. Justifique su respuesta y suba su código en R a github.
+
+
+**Ejercicio 2(Python):** Para el dataset de `marketing`, realice las pruebas de hipótesis utilizando la tabla de ANOVA sobre:
+1) Uno de los parámetros, justificar cual.
+2) Todos los parámetros.
+3)Un subconjunto de parámetros, justificar cual.
+Usar la tabla de ANOVA para calcular el estadístico $F_0$ y encontrar el p-valor asociado usando `pf(F_0, df1, df2, lower.tail = FALSE)`. Justifique su respuesta y suba su código en Python a github. 
+
 
 ## Selección del modelo
+
+Suponga que se busca una ecuación de regresión lineal entre la variable respuesta $y$ y las variables predictoras $x_1,...,x_p$. Suponga que se tiene el conjunto de todas las posibles variables a incluir en el modelo $z_1,...z_k$ que son funciones de las $x$'s. Se busca entonces un modelo que incluya la mayor cantidad de variables $z$ posible para que el error sea pequeño. Pero, considerando la varianza y el costo de obtener más datos, también se busca incluir el menor número de posibles variables $z$ en el modelo.
+
+No existe un solo método de selección de modelos y no todos conducen a la misma solución. Vamos a analizar tres métodos:
+
+1) Todos los modelos posibles y el mejor subconjunto de modelos.
+2) Selección paso a paso.
+3) Eliminación hacia atrás.
+
+
+### Todos los modelos posibles
+
+Si el número de variables $z$ es grande, esto puede ser un problema. Supongamos que tenemos $k$ variables, donde cada variable puede o no estar en el modelo, entonces tenemos un total de $2^k$ posibles modelos de los cuales se debe elegir el mejor a partir de criterios como $R^2$, $R^2_{adj}$, etc. Vamos a ver algunos de estos criterios.
+
+**Estadística $C_p$ de Mallows**
+
+Supongamos que tenemos $k+1$ variables regresoras incluyendo el intercepto, de las cuales vamos a elegir $p$. Denotemos por $SSE_p$ la suma de cuadrados de la regresión respectiva de tomar $p$ variables, la estadística $C_p$ de Mallows está dada por
+
+$$C_p = \frac{SSE_p}{\hat{\sigma}^2} - (n-2p)  $$
+donde $\hat{\sigma}^2$ corresponde al modelo con todas las variables y se supone que es un estimador insesgado para la varianza $\sigma^2$. Si el modelo ajusta bien, esperaríamos que $\mathbb{E}(SSE_p)=(n-p)\sigma^2$, de manera que:
+
+$$\mathbb{E}(C_p)\approx p,$$
+
+en consecuencia, si graficamos $C_p$ en función de $p$, los modelos adecuados arrojarán puntos cerca de la recta $C_p=p$.
+
+**Criterio de información de Akaike (CIA)**
+
+Se define como 
+
+$$CIA = e^{\frac{2p}{n}}\frac{SSE}{n},$$
+
+donde $p$ es el número de variables regresoras incluyendo el intercepto. Esta función incluye una penalización por imponer regresoras. Al comparar modelos, se busca el que tenga menor $CIA$. Muchas veces esta estadística se define como $\log(CIA)$, es decir:
+
+$$\frac{2p}{n}+\log(\frac{SSE}{n})$$
+
+con el cual las conclusiones son las mismas.
+
+
+**Criterio de información de Schwars (CIS)**
+
+Similar al CIA, el CIS se define como
+
+$$CIS = n^{\frac{p}{n}}\frac{SSE}{n},$$
+
+cuyo logaritmo es 
+
+$$\frac{p}{n}\log{n} + \log{\frac{SSE}{n}}.$$
+
+Este criterio impone mayor penalización por agregar variables. Al comparar modelos, se busca el que tenga menor CIS.
+
+#### Mejor subconjunto
+
+
+Una alternativa a la comparación de todos los modelos posibles es la búsqueda del mejor subconjunto de modelos que se pueden hacer en distintos programas y compararlos. En R, existe la función `regsubsets`, la cual incluye los criterios de comparación $R^2, C_p,$ BIC (Bayesian Information Criterion). Esta función utiliza los métodos *forward and backward stepwise*.
+
+
+### Selección paso a paso
+
+Las técnicas de selección paso a paso consisten en elaborar un modelo inicial a partir del cual se agrega o se elimina una variable para comparar hasta encontrar el mejor modelo.
+
+#### Selección paso a paso hacia adelante
+
+Conocido como *forward regression*, consiste en comenzar con el modelo en el que la única variable regresora es la que mejor describe el comportamiento de $y$ y a partir de ahí ir agregando variables regresoras una por una. 
+
+El orden en el que se agregan puede variar y se pueden usar diferentes estadísticas o criterios para decidir cual agregar. Se calculan las estadísticas del modelo actual al agregar variable y elegir el modelo con la mejor estadística, siempre que sea un mejor modelo.
+
+#### Selección paso a paso hacia atrás
+
+Conocido como *backward regression*, consiste en comenzar con el modelo que incluye todas las variables e ir eliminando una a una de acuerdo a algún criterio. 
+
+
+Ambas técnicas se pueden mezclar, de manera que en cada paso se evalúa la estadística correspondiente al quitar o agregar alguna de las variables y se elige la mejor opción.
+
+### Ejemplos
+
+#### Todos los modelos posibles
+
+En este ejemplo veremos cómo aplicar el método de seleccion de modelos que implica el análisis de todos los modelos posibles. Primero, necesitaremos varios paquetes.
+
+```{r}
+library(ggplot2)
+library(olsrr)
+library(leaps)
+library(GGally)
+```
+
+
+**Ejemplo 1:** Cargamos los datos de `cemento.txt` y hacemos un rápido análisis con el diagrama de dispersión:
+
+```{r, warning=FALSE, message=FALSE}
+cemento<-read.table("D:/Users/hayde/Documents/R_sites/MultivariateStatisticalAnalysis/data/cement.txt", header = T, skip=5)
+ggpairs(cemento)
+```
+
+
+A continuación ajustamos el modelo con TODAS las variables independientes y calculamos la estadística $C_p$. Para facilitar la interpretación graficamos la $C_p$ para cada modelo:
+
+```{r}
+modelo.full<-lm(y~., cemento, x=T, y=T)
+## calcula el AIC, CIS, etc sobre todos los subconjuntos posibles
+outs<-leaps(modelo.full$x, cemento$y, int=FALSE)
+plot(outs$size,outs$Cp, log="y",cex=0.3)
+lines(outs$size,outs$size)
+text(outs$size, outs$Cp, labels=row(outs$which), cex=0.5, pos=4)
+```
+
+```{r}
+#Mejor modelo por la regla Cp ≈ p  (p = número de predictores)
+
+idx_best_rule <- which.min(abs(outs$Cp - outs$size))
+
+#Variables que entran en cada mejor modelo
+noms_x <- colnames(modelo.full$x)            # nombres de los predictores
+vars_rule  <- noms_x[ outs$which[idx_best_rule, ] ]
+
+vars_rule
+```
+
+
+Recordemos que nos interesan los modelos en los que  $C_p=p$.
+
+**Ejemplo 2:** Vamos a usar la base de datos `mtcars`. Otra manera de analizar todos los modelos posibles:
+
+```{r}
+library(olsrr)
+modelo.full.cars<-lm(mpg~., mtcars)
+ejemplo<-ols_step_all_possible(modelo.full.cars)
+plot(ejemplo)
+```
+
+Observe que en los triángulos rojos aparecen los mejores modelos para cada $p$ en función de la estadística correspondiente.
+
+
+**Ejemplo 3:** R tiene una función que nos muestra el mejor modelo para cada número de variables. Vamos a regresar al conjunto de datos `cemento`.
+
+```{r}
+mejor<-regsubsets(y~., cemento)
+summary(mejor)
+plot(mejor,scale="Cp") 
+```
+
+La gráfica muestra los cuatro modelos y su $C_p$, por ejemplo, el modelo que incluye al intercepto, a $x_1$ y a $x_2$ tiene una $C_p$ cercana a 2.7.
+
+
+### Selección paso a paso
+
+**Ejemplo 1:** Para analizar el método de selección paso a paso usaremos los datos *swiss* del paquete *MASS*. Para ello, el primer paso es ajustar el modelo con TODAS las variables independientes
+
+```{r}
+library(MASS)
+modelo_completo<-lm(Fertility~., swiss)
+```
+
+Podemos usar la función *step* en las tres direcciones (*forward, backward o both*)
+
+```{r}
+paso_a_paso<-stepAIC(modelo_completo, direction="both", trace=T)
+summary(paso_a_paso)
+```
+
+
+**Ejemplo 2:** O podemos usar el paquete *olsrr*. Base de datos `surgical`.
+
+```{r}
+modelo_completo_sur<-lm(y~., surgical)
+ols_step_forward_aic(modelo_completo_sur, details = T)
+ols_step_backward_aic(modelo_completo_sur)
+ols_step_forward_aic(modelo_completo_sur)
+```
+
+Ojo: el parámetro *details=T* nos dará en detalle el proceso con el que se llegó al modelo correspondiente. También hay que tener en cuenta que podríamos llegar a modelos diferentes si usamos métodos diferentes. 
+
+
+Si podemos llegar a resultados diferentes, ¿cómo sabemos cuál es el mejor modelo?. 
+
+Recordemos que estos métodos se basan en UNA SOLA estadística para ir mejorando el modelo, de manera que, aunque tengamos el modelo con el AIC menor, este podría no ser el mejor en términos del cumplimiento de los supuestos.
+
+**Ejemplo 3** Veamos con mas detalle el modelo de *cement.txt*.
+```{r}
+#Modelo elegido por el algoritmo
+modelo.bueno<-lm(y~.-x3, cemento)
+summary(modelo.bueno)
+
+#Modelo sin x3 y x4
+modelo.12<-lm(y~x1+x2, cemento)
+summary(modelo.12)
+
+#Modelo sin x3 y x2
+modelo.14<-lm(y~x1+x4, cemento)
+summary(modelo.14)
+```
+
+Observamos que en el modelo que elige el algoritmo, la variable X4 no es significativa, y por el diagrama de disperisón vemos que está correlacionada con X2, por ello decidimos analizar el modelo eliminando X2 y X4. En ambos modelos las variables son significativas y $R^2$ es alta. 
+
+Comparemos su AIC
+
+```{r}
+AIC(modelo.bueno, modelo.12, modelo.14)
+```
+
+Entre los tres, preferimos al *modelo.12* ya que es el segundo en *R^2*, todas las variables son significativas y, aunque no tiene el mínimo AIC, sí es muy parecido y es menor que el AIC del *modelo.14*. Es decir, en conjunto es el *modelo.12* es el que mejor cumple los supuestos y tiene buenas estadísticas. 
 

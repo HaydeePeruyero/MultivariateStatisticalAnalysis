@@ -39,3 +39,14 @@ valores-faltantes
 predicciónes
 análisis-de-varianza
 selección-del-modelo
+ejercicios-2
+predicciones
+ejercicios-3
+todos-los-modelos-posibles
+mejor-subconjunto
+selección-paso-a-paso
+selección-paso-a-paso-hacia-adelante
+selección-paso-a-paso-hacia-atrás
+ejemplos
+todos-los-modelos-posibles-1
+selección-paso-a-paso-1
