@@ -728,6 +728,28 @@ k) Calcular un intervalo de confianza de $95\%$ para $\beta_7$. También, un int
 
 l) ¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?  
 
+*Descripción de las variables:*
+
+$y$: Juegos ganados (por temporada de 14 juegos)
+
+$x_{1}$: Yardas por tierra (temporada)
+
+$x_{2}$: Yardas por aire (temporada)
+
+$x_{3}$: Promedio de pateo (yardas/patada)
+
+$x_{4}$: Porcentaje de goles de campo (GC hechos/GC intentados, temporada)
+
+$x_{5}$: Diferencia de pérdidas de balón (pérdidas ganadas/pérdidas perdidas)
+
+$x_{6}$: Yardas de castigo (temporada)
+
+$x_{7}$: Porcentaje de carreras (jugadas por tierra/jugadas totales)
+
+$x_{8}$: Yardas por tierra del contrario (temporada)
+
+$x_{9}$: Yardas por aire del contrario (temporada)
+
 
 **Ejericio 2:** Véase los datos de [rendimiento de gasolina](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv). Realizar el ejercicio en R.
 
@@ -752,6 +774,32 @@ i) Trazar e interpretar una gráfica de los residuales en función de la respues
 j) Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?  
 
 
+*Descripción de variables:* Variables (Fuente: Motor Trend, 1975)
+
+$y:$ Millas/galón
+
+$x_1:$ Cilindrada (pulgadas cúbicas)
+
+$x_2:$ Potencia (Hp)
+
+$x_3:$ Par de torsión (pies-lb)
+
+$x_4:$ Relación de compresión
+
+$x_5:$ Relación de eje trasero
+
+$x_6:$ Carburador (gargantas)
+
+$x_7:$ Número de velocidades en la transmisión
+
+$x_8:$ Longitud total (pulgadas)
+
+$x_9:$ Ancho (pulgadas)
+
+$x_{10}:$ Peso (lb)
+
+$x_{11}:$ Tipo de transmisión (1 = automática, 0 = manual)
+
 **Ejercicio 3:** Véase los datos sobre [precios de viviendas](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Precios_de_viviendas). Realizar el ejercicio en Python.
 
 a) Ajustar un modelo de regresión lineal múltiple que relacione el precio de venta con los nueve regresores.
@@ -771,6 +819,29 @@ g) Trazar una gráfica de probabilidad normal de los residuales. ¿Parece haber 
 h) Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.
 
 i) Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?.
+
+*Descripción de las variables:*
+
+$y$: Precio de venta de la casa / 1000
+
+$x_{1}$: Impuestos (locales, escuela, municipal) / 1000
+
+$x_{2}$: Cantidad de baños
+
+$x_{3}$: Tamaño del terreno (pies cuadrados $\times$ 1000)
+
+$x_{4}$: Superficie construida (pies cuadrados $\times$ 1000)
+
+$x_{5}$: Cantidad de cajones en cochera
+
+$x_{6}$: Cantidad de habitaciones
+
+$x_{7}$: Cantidad de recámaras
+
+$x_{8}$: Edad de la casa (años)
+
+$x_{9}$: Cantidad de chimeneas
+
 
 **Ejercicio 4:** Explica lo siguiente. 
 
@@ -1504,3 +1575,7 @@ AIC(modelo.bueno, modelo.12, modelo.14)
 
 Entre los tres, preferimos al *modelo.12* ya que es el segundo en *R^2*, todas las variables son significativas y, aunque no tiene el mínimo AIC, sí es muy parecido y es menor que el AIC del *modelo.14*. Es decir, en conjunto es el *modelo.12* es el que mejor cumple los supuestos y tiene buenas estadísticas. 
 
+
+#### Ejercicios
+
+**Ejercicio 1:** Para los datos de rendimiento de gasolina. Aplica los tres métodos vistos de selección de modelos. Compara los resultados y especifica cual sería el mejor modelo con cuales estadísticas.

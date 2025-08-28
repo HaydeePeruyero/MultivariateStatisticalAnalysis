@@ -1017,6 +1017,17 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <li><p>Calcular un intervalo de confianza de <span class="math inline">\(95\%\)</span> para <span class="math inline">\(\beta_7\)</span>. También, un intervalo de confianza de <span class="math inline">\(95\%\)</span> para la cantidad media de juegos ganados por un equipo cuando <span class="math inline">\(x_7 = 56\)</span> y <span class="math inline">\(x_8 = 2100\)</span>. Comparar las longitudes de esos intervalos de confianza con las longitudes de los correspondientes al modelo anterior.</p></li>
 <li><p>¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?</p></li>
 </ol>
+<p><em>Descripción de las variables:</em></p>
+<p><span class="math inline">\(y\)</span>: Juegos ganados (por temporada de 14 juegos)</p>
+<p><span class="math inline">\(x_{1}\)</span>: Yardas por tierra (temporada)</p>
+<p><span class="math inline">\(x_{2}\)</span>: Yardas por aire (temporada)</p>
+<p><span class="math inline">\(x_{3}\)</span>: Promedio de pateo (yardas/patada)</p>
+<p><span class="math inline">\(x_{4}\)</span>: Porcentaje de goles de campo (GC hechos/GC intentados, temporada)</p>
+<p><span class="math inline">\(x_{5}\)</span>: Diferencia de pérdidas de balón (pérdidas ganadas/pérdidas perdidas)</p>
+<p><span class="math inline">\(x_{6}\)</span>: Yardas de castigo (temporada)</p>
+<p><span class="math inline">\(x_{7}\)</span>: Porcentaje de carreras (jugadas por tierra/jugadas totales)</p>
+<p><span class="math inline">\(x_{8}\)</span>: Yardas por tierra del contrario (temporada)</p>
+<p><span class="math inline">\(x_{9}\)</span>: Yardas por aire del contrario (temporada)</p>
 <p><strong>Ejericio 2:</strong> Véase los datos de <a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv">rendimiento de gasolina</a>. Realizar el ejercicio en R.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Ajustar un modelo de regresión lineal múltiple que relacione el rendimiento de la gasolina <em>y</em>, en millas por galón, la cilindrada del motor (<span class="math inline">\(x_1\)</span>) y la cantidad de gargantas del carburador (<span class="math inline">\(x_6\)</span>).</p></li>
@@ -1030,6 +1041,19 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <li><p>Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.</p></li>
 <li><p>Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?</p></li>
 </ol>
+<p><em>Descripción de variables:</em> Variables (Fuente: Motor Trend, 1975)</p>
+<p><span class="math inline">\(y:\)</span> Millas/galón</p>
+<p><span class="math inline">\(x_1:\)</span> Cilindrada (pulgadas cúbicas)</p>
+<p><span class="math inline">\(x_2:\)</span> Potencia (Hp)</p>
+<p><span class="math inline">\(x_3:\)</span> Par de torsión (pies-lb)</p>
+<p><span class="math inline">\(x_4:\)</span> Relación de compresión</p>
+<p><span class="math inline">\(x_5:\)</span> Relación de eje trasero</p>
+<p><span class="math inline">\(x_6:\)</span> Carburador (gargantas)</p>
+<p><span class="math inline">\(x_7:\)</span> Número de velocidades en la transmisión</p>
+<p><span class="math inline">\(x_8:\)</span> Longitud total (pulgadas)</p>
+<p><span class="math inline">\(x_9:\)</span> Ancho (pulgadas)</p>
+<p><span class="math inline">\(x_{10}:\)</span> Peso (lb)</p>
+<p><span class="math inline">\(x_{11}:\)</span> Tipo de transmisión (1 = automática, 0 = manual)</p>
 <p><strong>Ejercicio 3:</strong> Véase los datos sobre <a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Precios_de_viviendas">precios de viviendas</a>. Realizar el ejercicio en Python.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>Ajustar un modelo de regresión lineal múltiple que relacione el precio de venta con los nueve regresores.</p></li>
@@ -1042,6 +1066,17 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <li><p>Trazar e interpretar una gráfica de los residuales en función de la respuesta predicha.</p></li>
 <li><p>Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?.</p></li>
 </ol>
+<p><em>Descripción de las variables:</em></p>
+<p><span class="math inline">\(y\)</span>: Precio de venta de la casa / 1000</p>
+<p><span class="math inline">\(x_{1}\)</span>: Impuestos (locales, escuela, municipal) / 1000</p>
+<p><span class="math inline">\(x_{2}\)</span>: Cantidad de baños</p>
+<p><span class="math inline">\(x_{3}\)</span>: Tamaño del terreno (pies cuadrados <span class="math inline">\(\times\)</span> 1000)</p>
+<p><span class="math inline">\(x_{4}\)</span>: Superficie construida (pies cuadrados <span class="math inline">\(\times\)</span> 1000)</p>
+<p><span class="math inline">\(x_{5}\)</span>: Cantidad de cajones en cochera</p>
+<p><span class="math inline">\(x_{6}\)</span>: Cantidad de habitaciones</p>
+<p><span class="math inline">\(x_{7}\)</span>: Cantidad de recámaras</p>
+<p><span class="math inline">\(x_{8}\)</span>: Edad de la casa (años)</p>
+<p><span class="math inline">\(x_{9}\)</span>: Cantidad de chimeneas</p>
 <p><strong>Ejercicio 4:</strong> Explica lo siguiente.</p>
 <ol style="list-style-type: lower-alpha">
 <li><p>¿Qué supuestos del modelo de regresión lineal múltiple deben verificarse?</p></li>
@@ -2250,7 +2285,11 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ## modelo.12     4 64.31239
 ## modelo.14     4 67.63411</code></pre>
 <p>Entre los tres, preferimos al <em>modelo.12</em> ya que es el segundo en <em>R^2</em>, todas las variables son significativas y, aunque no tiene el mínimo AIC, sí es muy parecido y es menor que el AIC del <em>modelo.14</em>. Es decir, en conjunto es el <em>modelo.12</em> es el que mejor cumple los supuestos y tiene buenas estadísticas.</p>
+<div id="ejercicios-4" class="section level4 hasAnchor" number="2.9.4.1">
+<h4><span class="header-section-number">2.9.4.1</span> Ejercicios<a href="regresión-múltiple.html#ejercicios-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>Ejercicio 1:</strong> Para los datos de rendimiento de gasolina. Aplica los tres métodos vistos de selección de modelos. Compara los resultados y especifica cual sería el mejor modelo con cuales estadísticas.</p>
 
+</div>
 </div>
 </div>
 </div>
