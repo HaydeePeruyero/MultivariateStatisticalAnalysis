@@ -1608,6 +1608,34 @@ Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso 
 <p>Como el p-valor es muy pequeño, se rechaza <span class="math inline">\(H_0\)</span> por lo que se concluye que hay pruebas suficientes sobre la existencia de asociación lineal de la edad de lote y la fuerza del enlace.</p>
 <p>Todo esto, se puede llevar al caso de regresión lineal múltiple.</p>
 <p><strong>Ejemplo:</strong> Considere los siguientes datos en los que se tienen mediciones del tamaño de infarto, área de la región en riesgo y dos variables que identifican el tipo de tratamiento utilizado en 32 pacientes. Se busca describir el tamaño del infarto a través de las otras 3-variables. Para este caso, vamos a ajustar un modelo de regresión lineal múltiple completo y después vamos a hacer pruebas sobre quitar algunas variables.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="regresión-múltiple.html#cb149-1" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb149-2"><a href="regresión-múltiple.html#cb149-2" tabindex="-1"></a>  <span class="at">Paciente =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">32</span>,</span>
+<span id="cb149-3"><a href="regresión-múltiple.html#cb149-3" tabindex="-1"></a>  <span class="at">Infarc =</span> <span class="fu">c</span>(</span>
+<span id="cb149-4"><a href="regresión-múltiple.html#cb149-4" tabindex="-1"></a>    <span class="fl">0.119</span>, <span class="fl">0.190</span>, <span class="fl">0.395</span>, <span class="fl">0.469</span>, <span class="fl">0.130</span>, <span class="fl">0.311</span>, <span class="fl">0.418</span>, <span class="fl">0.480</span>,</span>
+<span id="cb149-5"><a href="regresión-múltiple.html#cb149-5" tabindex="-1"></a>    <span class="fl">0.687</span>, <span class="fl">0.847</span>, <span class="fl">0.062</span>, <span class="fl">0.122</span>, <span class="fl">0.033</span>, <span class="fl">0.102</span>, <span class="fl">0.206</span>, <span class="fl">0.249</span>,</span>
+<span id="cb149-6"><a href="regresión-múltiple.html#cb149-6" tabindex="-1"></a>    <span class="fl">0.220</span>, <span class="fl">0.299</span>, <span class="fl">0.350</span>, <span class="fl">0.350</span>, <span class="fl">0.588</span>, <span class="fl">0.379</span>, <span class="fl">0.149</span>, <span class="fl">0.316</span>,</span>
+<span id="cb149-7"><a href="regresión-múltiple.html#cb149-7" tabindex="-1"></a>    <span class="fl">0.390</span>, <span class="fl">0.429</span>, <span class="fl">0.477</span>, <span class="fl">0.439</span>, <span class="fl">0.446</span>, <span class="fl">0.538</span>, <span class="fl">0.625</span>, <span class="fl">0.974</span></span>
+<span id="cb149-8"><a href="regresión-múltiple.html#cb149-8" tabindex="-1"></a>  ),</span>
+<span id="cb149-9"><a href="regresión-múltiple.html#cb149-9" tabindex="-1"></a>  <span class="at">Area =</span> <span class="fu">c</span>(</span>
+<span id="cb149-10"><a href="regresión-múltiple.html#cb149-10" tabindex="-1"></a>    <span class="fl">0.34</span>, <span class="fl">0.64</span>, <span class="fl">0.76</span>, <span class="fl">0.83</span>, <span class="fl">0.73</span>, <span class="fl">0.82</span>, <span class="fl">0.95</span>, <span class="fl">1.06</span>,</span>
+<span id="cb149-11"><a href="regresión-múltiple.html#cb149-11" tabindex="-1"></a>    <span class="fl">1.20</span>, <span class="fl">1.47</span>, <span class="fl">0.44</span>, <span class="fl">0.77</span>, <span class="fl">0.90</span>, <span class="fl">1.07</span>, <span class="fl">1.01</span>, <span class="fl">1.03</span>,</span>
+<span id="cb149-12"><a href="regresión-múltiple.html#cb149-12" tabindex="-1"></a>    <span class="fl">1.16</span>, <span class="fl">1.21</span>, <span class="fl">1.20</span>, <span class="fl">1.22</span>, <span class="fl">0.99</span>, <span class="fl">0.77</span>, <span class="fl">1.05</span>, <span class="fl">1.06</span>,</span>
+<span id="cb149-13"><a href="regresión-múltiple.html#cb149-13" tabindex="-1"></a>    <span class="fl">1.02</span>, <span class="fl">0.99</span>, <span class="fl">0.97</span>, <span class="fl">1.12</span>, <span class="fl">1.23</span>, <span class="fl">1.19</span>, <span class="fl">1.22</span>, <span class="fl">1.40</span></span>
+<span id="cb149-14"><a href="regresión-múltiple.html#cb149-14" tabindex="-1"></a>  ),</span>
+<span id="cb149-15"><a href="regresión-múltiple.html#cb149-15" tabindex="-1"></a>  <span class="at">X2 =</span> <span class="fu">c</span>(</span>
+<span id="cb149-16"><a href="regresión-múltiple.html#cb149-16" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb149-17"><a href="regresión-múltiple.html#cb149-17" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb149-18"><a href="regresión-múltiple.html#cb149-18" tabindex="-1"></a>    <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb149-19"><a href="regresión-múltiple.html#cb149-19" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span></span>
+<span id="cb149-20"><a href="regresión-múltiple.html#cb149-20" tabindex="-1"></a>  ),</span>
+<span id="cb149-21"><a href="regresión-múltiple.html#cb149-21" tabindex="-1"></a>  <span class="at">X3 =</span> <span class="fu">c</span>(</span>
+<span id="cb149-22"><a href="regresión-múltiple.html#cb149-22" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb149-23"><a href="regresión-múltiple.html#cb149-23" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,</span>
+<span id="cb149-24"><a href="regresión-múltiple.html#cb149-24" tabindex="-1"></a>    <span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">1</span>,</span>
+<span id="cb149-25"><a href="regresión-múltiple.html#cb149-25" tabindex="-1"></a>    <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span></span>
+<span id="cb149-26"><a href="regresión-múltiple.html#cb149-26" tabindex="-1"></a>  )</span>
+<span id="cb149-27"><a href="regresión-múltiple.html#cb149-27" tabindex="-1"></a>)</span>
+<span id="cb149-28"><a href="regresión-múltiple.html#cb149-28" tabindex="-1"></a>datos</span></code></pre></div>
 <pre><code>##    Paciente Infarc Area X2 X3
 ## 1         1  0.119 0.34  0  0
 ## 2         2  0.190 0.64  0  0
@@ -1642,8 +1670,8 @@ Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso 
 ## 31       31  0.625 1.22  0  1
 ## 32       32  0.974 1.40  0  1</code></pre>
 <p>El modelo completo sería <span class="math inline">\(y_i = \beta_0 + \beta_1x_{1i} +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i\)</span>.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="regresión-múltiple.html#cb150-1" tabindex="-1"></a>modelo_c <span class="ot">&lt;-</span> <span class="fu">lm</span>(Infarc<span class="sc">~</span> Area <span class="sc">+</span> X2 <span class="sc">+</span> X3, <span class="at">data =</span> datos)</span>
-<span id="cb150-2"><a href="regresión-múltiple.html#cb150-2" tabindex="-1"></a><span class="fu">summary</span>(modelo_c)</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="regresión-múltiple.html#cb151-1" tabindex="-1"></a>modelo_c <span class="ot">&lt;-</span> <span class="fu">lm</span>(Infarc<span class="sc">~</span> Area <span class="sc">+</span> X2 <span class="sc">+</span> X3, <span class="at">data =</span> datos)</span>
+<span id="cb151-2"><a href="regresión-múltiple.html#cb151-2" tabindex="-1"></a><span class="fu">summary</span>(modelo_c)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Infarc ~ Area + X2 + X3, data = datos)
@@ -1665,8 +1693,8 @@ Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso 
 ## Multiple R-squared:  0.6456, Adjusted R-squared:  0.6076 
 ## F-statistic:    17 on 3 and 28 DF,  p-value: 1.748e-06</code></pre>
 <p>Con este modelo se obtiene la siguiente tabla de ANOVA.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="regresión-múltiple.html#cb152-1" tabindex="-1"></a>anov <span class="ot">&lt;-</span> <span class="fu">anova</span>(modelo_c)</span>
-<span id="cb152-2"><a href="regresión-múltiple.html#cb152-2" tabindex="-1"></a>anov</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="regresión-múltiple.html#cb153-1" tabindex="-1"></a>anov <span class="ot">&lt;-</span> <span class="fu">anova</span>(modelo_c)</span>
+<span id="cb153-2"><a href="regresión-múltiple.html#cb153-2" tabindex="-1"></a>anov</span></code></pre></div>
 <pre><code>## Analysis of Variance Table
 ## 
 ## Response: Infarc
@@ -1677,28 +1705,28 @@ Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso 
 ## Residuals 28 0.53307 0.01904                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="regresión-múltiple.html#cb154-1" tabindex="-1"></a><span class="do">## los p-valores en la última columna se pueden obtener con: </span></span>
-<span id="cb154-2"><a href="regresión-múltiple.html#cb154-2" tabindex="-1"></a><span class="co">#pf(F_0, df1, df2, lower.tail = FALSE)</span></span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="regresión-múltiple.html#cb155-1" tabindex="-1"></a><span class="do">## los p-valores en la última columna se pueden obtener con: </span></span>
+<span id="cb155-2"><a href="regresión-múltiple.html#cb155-2" tabindex="-1"></a><span class="co">#pf(F_0, df1, df2, lower.tail = FALSE)</span></span></code></pre></div>
 <p><strong>1) Pruebas sobre uno de los parámetros:</strong> <span class="math inline">\(H_0:\beta_1=0\)</span>, modelo reducido <span class="math inline">\(y_i = \beta_0  +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i\)</span>. Vamos a denotar a la suma de los cuadrados de los errores asociada a este modelo <span class="math inline">\(SSE(x_1)\)</span>, la cual tiene <span class="math inline">\(n-3\)</span> grados de libertad asociados (tenemos 3 parámetros a estimar <span class="math inline">\(\beta_0,\beta_2,\beta_3\)</span>). Como el p-valor es muy pequeño, se rechaza a <span class="math inline">\(H_0\)</span> y se concluye que hay suficiente evidencia para decir que el tamaño del infarto está significativamente relacionado con el tamaño del área de riesgo.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="regresión-múltiple.html#cb155-1" tabindex="-1"></a>SCE_X1 <span class="ot">&lt;-</span> anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span>]</span>
-<span id="cb155-2"><a href="regresión-múltiple.html#cb155-2" tabindex="-1"></a>SSE_C <span class="ot">&lt;-</span> anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">4</span>]</span>
-<span id="cb155-3"><a href="regresión-múltiple.html#cb155-3" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> anov<span class="sc">$</span>Df[<span class="dv">4</span>]</span>
-<span id="cb155-4"><a href="regresión-múltiple.html#cb155-4" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos) <span class="sc">-</span> <span class="dv">3</span> <span class="sc">-</span> df2</span>
-<span id="cb155-5"><a href="regresión-múltiple.html#cb155-5" tabindex="-1"></a>F_g <span class="ot">&lt;-</span> (SCE_X1<span class="sc">/</span>df1) <span class="sc">/</span> (SSE_C<span class="sc">/</span>df2) </span>
-<span id="cb155-6"><a href="regresión-múltiple.html#cb155-6" tabindex="-1"></a>F_g</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="regresión-múltiple.html#cb156-1" tabindex="-1"></a>SCE_X1 <span class="ot">&lt;-</span> anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span>]</span>
+<span id="cb156-2"><a href="regresión-múltiple.html#cb156-2" tabindex="-1"></a>SSE_C <span class="ot">&lt;-</span> anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">4</span>]</span>
+<span id="cb156-3"><a href="regresión-múltiple.html#cb156-3" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> anov<span class="sc">$</span>Df[<span class="dv">4</span>]</span>
+<span id="cb156-4"><a href="regresión-múltiple.html#cb156-4" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos) <span class="sc">-</span> <span class="dv">3</span> <span class="sc">-</span> df2</span>
+<span id="cb156-5"><a href="regresión-múltiple.html#cb156-5" tabindex="-1"></a>F_g <span class="ot">&lt;-</span> (SCE_X1<span class="sc">/</span>df1) <span class="sc">/</span> (SSE_C<span class="sc">/</span>df2) </span>
+<span id="cb156-6"><a href="regresión-múltiple.html#cb156-6" tabindex="-1"></a>F_g</span></code></pre></div>
 <pre><code>## [1] 32.82447</code></pre>
 <p><strong>2) Pruebas sobre todos los parámetros:</strong> En este caso tenemos <span class="math inline">\(H_0:\beta_1=\beta_2=\beta_3=0\)</span> vs <span class="math inline">\(H_1: \beta_j\neq 0\)</span> p.a. <span class="math inline">\(j\)</span>. Es decir, el modelo reducido sería <span class="math inline">\(y_i = \beta_0+\epsilon_i\)</span>. La prueba <span class="math inline">\(F\)</span> general es la misma, pero ahora la suma de cuadrados asociada al modelo reducido <span class="math inline">\(SSE(x_1,x_2,x_3)\)</span> tiene <span class="math inline">\(n-1\)</span> grados de libertad ya que solo debemos estimar <span class="math inline">\(\beta_0\)</span>.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="regresión-múltiple.html#cb157-1" tabindex="-1"></a>SCE_X1X2X3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]) </span>
-<span id="cb157-2"><a href="regresión-múltiple.html#cb157-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos) <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> df2 </span>
-<span id="cb157-3"><a href="regresión-múltiple.html#cb157-3" tabindex="-1"></a></span>
-<span id="cb157-4"><a href="regresión-múltiple.html#cb157-4" tabindex="-1"></a>F_all <span class="ot">&lt;-</span> (SCE_X1X2X3 <span class="sc">/</span> df1) <span class="sc">/</span> (SSE_C <span class="sc">/</span> df2)</span>
-<span id="cb157-5"><a href="regresión-múltiple.html#cb157-5" tabindex="-1"></a>F_all</span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="regresión-múltiple.html#cb158-1" tabindex="-1"></a>SCE_X1X2X3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]) </span>
+<span id="cb158-2"><a href="regresión-múltiple.html#cb158-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos) <span class="sc">-</span><span class="dv">1</span> <span class="sc">-</span> df2 </span>
+<span id="cb158-3"><a href="regresión-múltiple.html#cb158-3" tabindex="-1"></a></span>
+<span id="cb158-4"><a href="regresión-múltiple.html#cb158-4" tabindex="-1"></a>F_all <span class="ot">&lt;-</span> (SCE_X1X2X3 <span class="sc">/</span> df1) <span class="sc">/</span> (SSE_C <span class="sc">/</span> df2)</span>
+<span id="cb158-5"><a href="regresión-múltiple.html#cb158-5" tabindex="-1"></a>F_all</span></code></pre></div>
 <pre><code>## [1] 17.00263</code></pre>
 <p>El cual tiene un <span class="math inline">\(p-\)</span>valor asociado a una distribución <span class="math inline">\(F\)</span> con 3 y 28 grados de libertad.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="regresión-múltiple.html#cb159-1" tabindex="-1"></a><span class="fu">pf</span>(F_all, <span class="at">df1 =</span> <span class="dv">3</span>, <span class="at">df2 =</span> <span class="dv">28</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="regresión-múltiple.html#cb160-1" tabindex="-1"></a><span class="fu">pf</span>(F_all, <span class="at">df1 =</span> <span class="dv">3</span>, <span class="at">df2 =</span> <span class="dv">28</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 1.747583e-06</code></pre>
 <p>Por lo tanto rechazamos la hipótesis nula. Notemos que este valor coincide con el que nos da el <code>summary</code> del modelo.</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="regresión-múltiple.html#cb161-1" tabindex="-1"></a><span class="fu">summary</span>(modelo_c)</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="regresión-múltiple.html#cb162-1" tabindex="-1"></a><span class="fu">summary</span>(modelo_c)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Infarc ~ Area + X2 + X3, data = datos)
@@ -1720,14 +1748,14 @@ Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso 
 ## Multiple R-squared:  0.6456, Adjusted R-squared:  0.6076 
 ## F-statistic:    17 on 3 and 28 DF,  p-value: 1.748e-06</code></pre>
 <p><strong>3) Pruebas sobre un subconjunto de los parámetros:</strong> Supongamos ahora que <span class="math inline">\(H_0:\beta_2=\beta_3=0\)</span>. Es decir, el modelo reducido sería <span class="math inline">\(y_i = \beta_0+ \beta_1x_{1i}+\epsilon_i\)</span>. La prueba es similar pero solo usamos <span class="math inline">\(x_2\)</span> y <span class="math inline">\(x_3\)</span>.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="regresión-múltiple.html#cb163-1" tabindex="-1"></a>SCE_X2X3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]) </span>
-<span id="cb163-2"><a href="regresión-múltiple.html#cb163-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">-</span> df2 </span>
-<span id="cb163-3"><a href="regresión-múltiple.html#cb163-3" tabindex="-1"></a></span>
-<span id="cb163-4"><a href="regresión-múltiple.html#cb163-4" tabindex="-1"></a>F_dos <span class="ot">&lt;-</span> (SCE_X2X3 <span class="sc">/</span> df1) <span class="sc">/</span> (SSE_C <span class="sc">/</span> df2)</span>
-<span id="cb163-5"><a href="regresión-múltiple.html#cb163-5" tabindex="-1"></a>F_dos</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="regresión-múltiple.html#cb164-1" tabindex="-1"></a>SCE_X2X3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(anov<span class="sc">$</span><span class="st">`</span><span class="at">Sum Sq</span><span class="st">`</span>[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]) </span>
+<span id="cb164-2"><a href="regresión-múltiple.html#cb164-2" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">nrow</span>(datos) <span class="sc">-</span> <span class="dv">2</span> <span class="sc">-</span> df2 </span>
+<span id="cb164-3"><a href="regresión-múltiple.html#cb164-3" tabindex="-1"></a></span>
+<span id="cb164-4"><a href="regresión-múltiple.html#cb164-4" tabindex="-1"></a>F_dos <span class="ot">&lt;-</span> (SCE_X2X3 <span class="sc">/</span> df1) <span class="sc">/</span> (SSE_C <span class="sc">/</span> df2)</span>
+<span id="cb164-5"><a href="regresión-múltiple.html#cb164-5" tabindex="-1"></a>F_dos</span></code></pre></div>
 <pre><code>## [1] 9.091716</code></pre>
 <p>El <span class="math inline">\(p-\)</span>valor asociado a la prueba <span class="math inline">\(F\)</span> con 2 y 28 grados de libertad es:</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="regresión-múltiple.html#cb165-1" tabindex="-1"></a><span class="fu">pf</span>(F_dos, <span class="at">df1 =</span> <span class="dv">2</span>, <span class="at">df2 =</span> <span class="dv">28</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="regresión-múltiple.html#cb166-1" tabindex="-1"></a><span class="fu">pf</span>(F_dos, <span class="at">df1 =</span> <span class="dv">2</span>, <span class="at">df2 =</span> <span class="dv">28</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] 0.0009065789</code></pre>
 <p>Por lo que se rechaza de nuevo la hipótesis nula.</p>
 <div id="ejercicios-3" class="section level3 hasAnchor" number="2.8.1">
@@ -1797,48 +1825,48 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 <div id="todos-los-modelos-posibles-1" class="section level4 hasAnchor" number="2.9.3.1">
 <h4><span class="header-section-number">2.9.3.1</span> Todos los modelos posibles<a href="regresión-múltiple.html#todos-los-modelos-posibles-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>En este ejemplo veremos cómo aplicar el método de seleccion de modelos que implica el análisis de todos los modelos posibles. Primero, necesitaremos varios paquetes.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="regresión-múltiple.html#cb167-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb167-2"><a href="regresión-múltiple.html#cb167-2" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="regresión-múltiple.html#cb168-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb168-2"><a href="regresión-múltiple.html#cb168-2" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span></code></pre></div>
 <pre><code>## 
 ## Adjuntando el paquete: &#39;olsrr&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:datasets&#39;:
 ## 
 ##     rivers</code></pre>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="regresión-múltiple.html#cb170-1" tabindex="-1"></a><span class="fu">library</span>(leaps)</span>
-<span id="cb170-2"><a href="regresión-múltiple.html#cb170-2" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="regresión-múltiple.html#cb171-1" tabindex="-1"></a><span class="fu">library</span>(leaps)</span>
+<span id="cb171-2"><a href="regresión-múltiple.html#cb171-2" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code></pre></div>
 <p><strong>Ejemplo 1:</strong> Cargamos los datos de <code>cemento.txt</code> y hacemos un rápido análisis con el diagrama de dispersión:</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="regresión-múltiple.html#cb171-1" tabindex="-1"></a>cemento<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">&quot;D:/Users/hayde/Documents/R_sites/MultivariateStatisticalAnalysis/data/cement.txt&quot;</span>, <span class="at">header =</span> T, <span class="at">skip=</span><span class="dv">5</span>)</span>
-<span id="cb171-2"><a href="regresión-múltiple.html#cb171-2" tabindex="-1"></a><span class="fu">ggpairs</span>(cemento)</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="regresión-múltiple.html#cb172-1" tabindex="-1"></a>cemento<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">&quot;D:/Users/hayde/Documents/R_sites/MultivariateStatisticalAnalysis/data/cement.txt&quot;</span>, <span class="at">header =</span> T, <span class="at">skip=</span><span class="dv">5</span>)</span>
+<span id="cb172-2"><a href="regresión-múltiple.html#cb172-2" tabindex="-1"></a><span class="fu">ggpairs</span>(cemento)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
 <p>A continuación ajustamos el modelo con TODAS las variables independientes y calculamos la estadística <span class="math inline">\(C_p\)</span>. Para facilitar la interpretación graficamos la <span class="math inline">\(C_p\)</span> para cada modelo:</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="regresión-múltiple.html#cb172-1" tabindex="-1"></a>modelo.full<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>., cemento, <span class="at">x=</span>T, <span class="at">y=</span>T)</span>
-<span id="cb172-2"><a href="regresión-múltiple.html#cb172-2" tabindex="-1"></a><span class="do">## calcula el AIC, CIS, etc sobre todos los subconjuntos posibles</span></span>
-<span id="cb172-3"><a href="regresión-múltiple.html#cb172-3" tabindex="-1"></a>outs<span class="ot">&lt;-</span><span class="fu">leaps</span>(modelo.full<span class="sc">$</span>x, cemento<span class="sc">$</span>y, <span class="at">int=</span><span class="cn">FALSE</span>)</span>
-<span id="cb172-4"><a href="regresión-múltiple.html#cb172-4" tabindex="-1"></a><span class="fu">plot</span>(outs<span class="sc">$</span>size,outs<span class="sc">$</span>Cp, <span class="at">log=</span><span class="st">&quot;y&quot;</span>,<span class="at">cex=</span><span class="fl">0.3</span>)</span>
-<span id="cb172-5"><a href="regresión-múltiple.html#cb172-5" tabindex="-1"></a><span class="fu">lines</span>(outs<span class="sc">$</span>size,outs<span class="sc">$</span>size)</span>
-<span id="cb172-6"><a href="regresión-múltiple.html#cb172-6" tabindex="-1"></a><span class="fu">text</span>(outs<span class="sc">$</span>size, outs<span class="sc">$</span>Cp, <span class="at">labels=</span><span class="fu">row</span>(outs<span class="sc">$</span>which), <span class="at">cex=</span><span class="fl">0.5</span>, <span class="at">pos=</span><span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="regresión-múltiple.html#cb173-1" tabindex="-1"></a>modelo.full<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>., cemento, <span class="at">x=</span>T, <span class="at">y=</span>T)</span>
+<span id="cb173-2"><a href="regresión-múltiple.html#cb173-2" tabindex="-1"></a><span class="do">## calcula el AIC, CIS, etc sobre todos los subconjuntos posibles</span></span>
+<span id="cb173-3"><a href="regresión-múltiple.html#cb173-3" tabindex="-1"></a>outs<span class="ot">&lt;-</span><span class="fu">leaps</span>(modelo.full<span class="sc">$</span>x, cemento<span class="sc">$</span>y, <span class="at">int=</span><span class="cn">FALSE</span>)</span>
+<span id="cb173-4"><a href="regresión-múltiple.html#cb173-4" tabindex="-1"></a><span class="fu">plot</span>(outs<span class="sc">$</span>size,outs<span class="sc">$</span>Cp, <span class="at">log=</span><span class="st">&quot;y&quot;</span>,<span class="at">cex=</span><span class="fl">0.3</span>)</span>
+<span id="cb173-5"><a href="regresión-múltiple.html#cb173-5" tabindex="-1"></a><span class="fu">lines</span>(outs<span class="sc">$</span>size,outs<span class="sc">$</span>size)</span>
+<span id="cb173-6"><a href="regresión-múltiple.html#cb173-6" tabindex="-1"></a><span class="fu">text</span>(outs<span class="sc">$</span>size, outs<span class="sc">$</span>Cp, <span class="at">labels=</span><span class="fu">row</span>(outs<span class="sc">$</span>which), <span class="at">cex=</span><span class="fl">0.5</span>, <span class="at">pos=</span><span class="dv">4</span>)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="regresión-múltiple.html#cb173-1" tabindex="-1"></a><span class="co">#Mejor modelo por la regla Cp ≈ p  (p = número de predictores)</span></span>
-<span id="cb173-2"><a href="regresión-múltiple.html#cb173-2" tabindex="-1"></a></span>
-<span id="cb173-3"><a href="regresión-múltiple.html#cb173-3" tabindex="-1"></a>idx_best_rule <span class="ot">&lt;-</span> <span class="fu">which.min</span>(<span class="fu">abs</span>(outs<span class="sc">$</span>Cp <span class="sc">-</span> outs<span class="sc">$</span>size))</span>
-<span id="cb173-4"><a href="regresión-múltiple.html#cb173-4" tabindex="-1"></a></span>
-<span id="cb173-5"><a href="regresión-múltiple.html#cb173-5" tabindex="-1"></a><span class="co">#Variables que entran en cada mejor modelo</span></span>
-<span id="cb173-6"><a href="regresión-múltiple.html#cb173-6" tabindex="-1"></a>noms_x <span class="ot">&lt;-</span> <span class="fu">colnames</span>(modelo.full<span class="sc">$</span>x)            <span class="co"># nombres de los predictores</span></span>
-<span id="cb173-7"><a href="regresión-múltiple.html#cb173-7" tabindex="-1"></a>vars_rule  <span class="ot">&lt;-</span> noms_x[ outs<span class="sc">$</span>which[idx_best_rule, ] ]</span>
-<span id="cb173-8"><a href="regresión-múltiple.html#cb173-8" tabindex="-1"></a></span>
-<span id="cb173-9"><a href="regresión-múltiple.html#cb173-9" tabindex="-1"></a>vars_rule</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="regresión-múltiple.html#cb174-1" tabindex="-1"></a><span class="co">#Mejor modelo por la regla Cp ≈ p  (p = número de predictores)</span></span>
+<span id="cb174-2"><a href="regresión-múltiple.html#cb174-2" tabindex="-1"></a></span>
+<span id="cb174-3"><a href="regresión-múltiple.html#cb174-3" tabindex="-1"></a>idx_best_rule <span class="ot">&lt;-</span> <span class="fu">which.min</span>(<span class="fu">abs</span>(outs<span class="sc">$</span>Cp <span class="sc">-</span> outs<span class="sc">$</span>size))</span>
+<span id="cb174-4"><a href="regresión-múltiple.html#cb174-4" tabindex="-1"></a></span>
+<span id="cb174-5"><a href="regresión-múltiple.html#cb174-5" tabindex="-1"></a><span class="co">#Variables que entran en cada mejor modelo</span></span>
+<span id="cb174-6"><a href="regresión-múltiple.html#cb174-6" tabindex="-1"></a>noms_x <span class="ot">&lt;-</span> <span class="fu">colnames</span>(modelo.full<span class="sc">$</span>x)            <span class="co"># nombres de los predictores</span></span>
+<span id="cb174-7"><a href="regresión-múltiple.html#cb174-7" tabindex="-1"></a>vars_rule  <span class="ot">&lt;-</span> noms_x[ outs<span class="sc">$</span>which[idx_best_rule, ] ]</span>
+<span id="cb174-8"><a href="regresión-múltiple.html#cb174-8" tabindex="-1"></a></span>
+<span id="cb174-9"><a href="regresión-múltiple.html#cb174-9" tabindex="-1"></a>vars_rule</span></code></pre></div>
 <pre><code>## [1] &quot;(Intercept)&quot; &quot;x1&quot;          &quot;x2&quot;          &quot;x3&quot;          &quot;x4&quot;</code></pre>
 <p>Recordemos que nos interesan los modelos en los que <span class="math inline">\(C_p=p\)</span>.</p>
 <p><strong>Ejemplo 2:</strong> Vamos a usar la base de datos <code>mtcars</code>. Otra manera de analizar todos los modelos posibles:</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="regresión-múltiple.html#cb175-1" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span>
-<span id="cb175-2"><a href="regresión-múltiple.html#cb175-2" tabindex="-1"></a>modelo.full.cars<span class="ot">&lt;-</span><span class="fu">lm</span>(mpg<span class="sc">~</span>., mtcars)</span>
-<span id="cb175-3"><a href="regresión-múltiple.html#cb175-3" tabindex="-1"></a>ejemplo<span class="ot">&lt;-</span><span class="fu">ols_step_all_possible</span>(modelo.full.cars)</span>
-<span id="cb175-4"><a href="regresión-múltiple.html#cb175-4" tabindex="-1"></a><span class="fu">plot</span>(ejemplo)</span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="regresión-múltiple.html#cb176-1" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span>
+<span id="cb176-2"><a href="regresión-múltiple.html#cb176-2" tabindex="-1"></a>modelo.full.cars<span class="ot">&lt;-</span><span class="fu">lm</span>(mpg<span class="sc">~</span>., mtcars)</span>
+<span id="cb176-3"><a href="regresión-múltiple.html#cb176-3" tabindex="-1"></a>ejemplo<span class="ot">&lt;-</span><span class="fu">ols_step_all_possible</span>(modelo.full.cars)</span>
+<span id="cb176-4"><a href="regresión-múltiple.html#cb176-4" tabindex="-1"></a><span class="fu">plot</span>(ejemplo)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-77-1.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-77-2.png" width="672" /></p>
 <p>Observe que en los triángulos rojos aparecen los mejores modelos para cada <span class="math inline">\(p\)</span> en función de la estadística correspondiente.</p>
 <p><strong>Ejemplo 3:</strong> R tiene una función que nos muestra el mejor modelo para cada número de variables. Vamos a regresar al conjunto de datos <code>cemento</code>.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="regresión-múltiple.html#cb176-1" tabindex="-1"></a>mejor<span class="ot">&lt;-</span><span class="fu">regsubsets</span>(y<span class="sc">~</span>., cemento)</span>
-<span id="cb176-2"><a href="regresión-múltiple.html#cb176-2" tabindex="-1"></a><span class="fu">summary</span>(mejor)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="regresión-múltiple.html#cb177-1" tabindex="-1"></a>mejor<span class="ot">&lt;-</span><span class="fu">regsubsets</span>(y<span class="sc">~</span>., cemento)</span>
+<span id="cb177-2"><a href="regresión-múltiple.html#cb177-2" tabindex="-1"></a><span class="fu">summary</span>(mejor)</span></code></pre></div>
 <pre><code>## Subset selection object
 ## Call: regsubsets.formula(y ~ ., cemento)
 ## 4 Variables  (and intercept)
@@ -1854,7 +1882,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ## 2  ( 1 ) &quot;*&quot; &quot;*&quot; &quot; &quot; &quot; &quot;
 ## 3  ( 1 ) &quot;*&quot; &quot;*&quot; &quot; &quot; &quot;*&quot;
 ## 4  ( 1 ) &quot;*&quot; &quot;*&quot; &quot;*&quot; &quot;*&quot;</code></pre>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="regresión-múltiple.html#cb178-1" tabindex="-1"></a><span class="fu">plot</span>(mejor,<span class="at">scale=</span><span class="st">&quot;Cp&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="regresión-múltiple.html#cb179-1" tabindex="-1"></a><span class="fu">plot</span>(mejor,<span class="at">scale=</span><span class="st">&quot;Cp&quot;</span>) </span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
 <p>La gráfica muestra los cuatro modelos y su <span class="math inline">\(C_p\)</span>, por ejemplo, el modelo que incluye al intercepto, a <span class="math inline">\(x_1\)</span> y a <span class="math inline">\(x_2\)</span> tiene una <span class="math inline">\(C_p\)</span> cercana a 2.7.</p>
 </div>
@@ -1862,7 +1890,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 <div id="selección-paso-a-paso-1" class="section level3 hasAnchor" number="2.9.4">
 <h3><span class="header-section-number">2.9.4</span> Selección paso a paso<a href="#selecci%C3%B3n-paso-a-paso-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>Ejemplo 1:</strong> Para analizar el método de selección paso a paso usaremos los datos <em>swiss</em> del paquete <em>MASS</em>. Para ello, el primer paso es ajustar el modelo con TODAS las variables independientes</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="regresión-múltiple.html#cb179-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="regresión-múltiple.html#cb180-1" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div>
 <pre><code>## 
 ## Adjuntando el paquete: &#39;MASS&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:olsrr&#39;:
@@ -1874,9 +1902,9 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     select</code></pre>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="regresión-múltiple.html#cb184-1" tabindex="-1"></a>modelo_completo<span class="ot">&lt;-</span><span class="fu">lm</span>(Fertility<span class="sc">~</span>., swiss)</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="regresión-múltiple.html#cb185-1" tabindex="-1"></a>modelo_completo<span class="ot">&lt;-</span><span class="fu">lm</span>(Fertility<span class="sc">~</span>., swiss)</span></code></pre></div>
 <p>Podemos usar la función <em>step</em> en las tres direcciones (<em>forward, backward o both</em>)</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="regresión-múltiple.html#cb185-1" tabindex="-1"></a>paso_a_paso<span class="ot">&lt;-</span><span class="fu">stepAIC</span>(modelo_completo, <span class="at">direction=</span><span class="st">&quot;both&quot;</span>, <span class="at">trace=</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="regresión-múltiple.html#cb186-1" tabindex="-1"></a>paso_a_paso<span class="ot">&lt;-</span><span class="fu">stepAIC</span>(modelo_completo, <span class="at">direction=</span><span class="st">&quot;both&quot;</span>, <span class="at">trace=</span>T)</span></code></pre></div>
 <pre><code>## Start:  AIC=190.69
 ## Fertility ~ Agriculture + Examination + Education + Catholic + 
 ##     Infant.Mortality
@@ -1899,7 +1927,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ## - Infant.Mortality  1    409.81 2567.9 196.03
 ## - Catholic          1    956.57 3114.6 205.10
 ## - Education         1   2249.97 4408.0 221.43</code></pre>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="regresión-múltiple.html#cb187-1" tabindex="-1"></a><span class="fu">summary</span>(paso_a_paso)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="regresión-múltiple.html#cb188-1" tabindex="-1"></a><span class="fu">summary</span>(paso_a_paso)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Fertility ~ Agriculture + Education + Catholic + 
@@ -1923,8 +1951,8 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ## Multiple R-squared:  0.6993, Adjusted R-squared:  0.6707 
 ## F-statistic: 24.42 on 4 and 42 DF,  p-value: 1.717e-10</code></pre>
 <p><strong>Ejemplo 2:</strong> O podemos usar el paquete <em>olsrr</em>. Base de datos <code>surgical</code>.</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="regresión-múltiple.html#cb189-1" tabindex="-1"></a>modelo_completo_sur<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>., surgical)</span>
-<span id="cb189-2"><a href="regresión-múltiple.html#cb189-2" tabindex="-1"></a><span class="fu">ols_step_forward_aic</span>(modelo_completo_sur, <span class="at">details =</span> T)</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="regresión-múltiple.html#cb190-1" tabindex="-1"></a>modelo_completo_sur<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>., surgical)</span>
+<span id="cb190-2"><a href="regresión-múltiple.html#cb190-2" tabindex="-1"></a><span class="fu">ols_step_forward_aic</span>(modelo_completo_sur, <span class="at">details =</span> T)</span></code></pre></div>
 <pre><code>## Forward Selection Method 
 ## ------------------------
 ## 
@@ -2102,7 +2130,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ##      pindex        8.924         1.808        0.380     4.935    0.000        5.288      12.559 
 ##         bcs       59.864        23.060        0.241     2.596    0.012       13.498     106.230 
 ## ------------------------------------------------------------------------------------------------</code></pre>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="regresión-múltiple.html#cb192-1" tabindex="-1"></a><span class="fu">ols_step_backward_aic</span>(modelo_completo_sur)</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="regresión-múltiple.html#cb193-1" tabindex="-1"></a><span class="fu">ols_step_backward_aic</span>(modelo_completo_sur)</span></code></pre></div>
 <pre><code>## 
 ## 
 ##                              Stepwise Summary                              
@@ -2153,7 +2181,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ##  liver_test       58.064        40.144        0.156     1.446    0.155      -22.652     138.779 
 ##   alc_heavy      317.848        71.634        0.314     4.437    0.000      173.818     461.878 
 ## ------------------------------------------------------------------------------------------------</code></pre>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="regresión-múltiple.html#cb194-1" tabindex="-1"></a><span class="fu">ols_step_forward_aic</span>(modelo_completo_sur)</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="regresión-múltiple.html#cb195-1" tabindex="-1"></a><span class="fu">ols_step_forward_aic</span>(modelo_completo_sur)</span></code></pre></div>
 <pre><code>## 
 ## 
 ##                               Stepwise Summary                              
@@ -2210,9 +2238,9 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 <p>Si podemos llegar a resultados diferentes, ¿cómo sabemos cuál es el mejor modelo?.</p>
 <p>Recordemos que estos métodos se basan en UNA SOLA estadística para ir mejorando el modelo, de manera que, aunque tengamos el modelo con el AIC menor, este podría no ser el mejor en términos del cumplimiento de los supuestos.</p>
 <p><strong>Ejemplo 3</strong> Veamos con mas detalle el modelo de <em>cement.txt</em>.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="regresión-múltiple.html#cb196-1" tabindex="-1"></a><span class="co">#Modelo elegido por el algoritmo</span></span>
-<span id="cb196-2"><a href="regresión-múltiple.html#cb196-2" tabindex="-1"></a>modelo.bueno<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>.<span class="sc">-</span>x3, cemento)</span>
-<span id="cb196-3"><a href="regresión-múltiple.html#cb196-3" tabindex="-1"></a><span class="fu">summary</span>(modelo.bueno)</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="regresión-múltiple.html#cb197-1" tabindex="-1"></a><span class="co">#Modelo elegido por el algoritmo</span></span>
+<span id="cb197-2"><a href="regresión-múltiple.html#cb197-2" tabindex="-1"></a>modelo.bueno<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>.<span class="sc">-</span>x3, cemento)</span>
+<span id="cb197-3"><a href="regresión-múltiple.html#cb197-3" tabindex="-1"></a><span class="fu">summary</span>(modelo.bueno)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ . - x3, data = cemento)
@@ -2233,9 +2261,9 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ## Residual standard error: 2.309 on 9 degrees of freedom
 ## Multiple R-squared:  0.9823, Adjusted R-squared:  0.9764 
 ## F-statistic: 166.8 on 3 and 9 DF,  p-value: 3.323e-08</code></pre>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="regresión-múltiple.html#cb198-1" tabindex="-1"></a><span class="co">#Modelo sin x3 y x4</span></span>
-<span id="cb198-2"><a href="regresión-múltiple.html#cb198-2" tabindex="-1"></a>modelo<span class="fl">.12</span><span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">+</span>x2, cemento)</span>
-<span id="cb198-3"><a href="regresión-múltiple.html#cb198-3" tabindex="-1"></a><span class="fu">summary</span>(modelo<span class="fl">.12</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="regresión-múltiple.html#cb199-1" tabindex="-1"></a><span class="co">#Modelo sin x3 y x4</span></span>
+<span id="cb199-2"><a href="regresión-múltiple.html#cb199-2" tabindex="-1"></a>modelo<span class="fl">.12</span><span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">+</span>x2, cemento)</span>
+<span id="cb199-3"><a href="regresión-múltiple.html#cb199-3" tabindex="-1"></a><span class="fu">summary</span>(modelo<span class="fl">.12</span>)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x1 + x2, data = cemento)
@@ -2255,9 +2283,9 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ## Residual standard error: 2.406 on 10 degrees of freedom
 ## Multiple R-squared:  0.9787, Adjusted R-squared:  0.9744 
 ## F-statistic: 229.5 on 2 and 10 DF,  p-value: 4.407e-09</code></pre>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="regresión-múltiple.html#cb200-1" tabindex="-1"></a><span class="co">#Modelo sin x3 y x2</span></span>
-<span id="cb200-2"><a href="regresión-múltiple.html#cb200-2" tabindex="-1"></a>modelo<span class="fl">.14</span><span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">+</span>x4, cemento)</span>
-<span id="cb200-3"><a href="regresión-múltiple.html#cb200-3" tabindex="-1"></a><span class="fu">summary</span>(modelo<span class="fl">.14</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="regresión-múltiple.html#cb201-1" tabindex="-1"></a><span class="co">#Modelo sin x3 y x2</span></span>
+<span id="cb201-2"><a href="regresión-múltiple.html#cb201-2" tabindex="-1"></a>modelo<span class="fl">.14</span><span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>x1<span class="sc">+</span>x4, cemento)</span>
+<span id="cb201-3"><a href="regresión-múltiple.html#cb201-3" tabindex="-1"></a><span class="fu">summary</span>(modelo<span class="fl">.14</span>)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = y ~ x1 + x4, data = cemento)
@@ -2279,7 +2307,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ## F-statistic: 176.6 on 2 and 10 DF,  p-value: 1.581e-08</code></pre>
 <p>Observamos que en el modelo que elige el algoritmo, la variable X4 no es significativa, y por el diagrama de disperisón vemos que está correlacionada con X2, por ello decidimos analizar el modelo eliminando X2 y X4. En ambos modelos las variables son significativas y <span class="math inline">\(R^2\)</span> es alta.</p>
 <p>Comparemos su AIC</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="regresión-múltiple.html#cb202-1" tabindex="-1"></a><span class="fu">AIC</span>(modelo.bueno, modelo<span class="fl">.12</span>, modelo<span class="fl">.14</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="regresión-múltiple.html#cb203-1" tabindex="-1"></a><span class="fu">AIC</span>(modelo.bueno, modelo<span class="fl">.12</span>, modelo<span class="fl">.14</span>)</span></code></pre></div>
 <pre><code>##              df      AIC
 ## modelo.bueno  5 63.86629
 ## modelo.12     4 64.31239

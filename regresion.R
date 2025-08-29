@@ -296,3 +296,149 @@ shapiro.test(residuales)
 
 
 # Homocedasticidad
+
+par(mfrow=c(1,1))
+plot(modelo3)
+
+# H_0: los residuos tienen varianza constante (homocedasticidad)
+# H_1: Hay heterocedasticidad en los residuos
+
+library(lmtest)
+
+# Breusch-Pagan
+# alpha=0.05
+bptest(modelo3)
+
+modelo4 <- lm(formula = yp ~ log(x1) + x2 - 1, data = datos)
+summary(modelo4)
+
+
+bptest(modelo4)
+
+plot(modelo4)
+
+
+
+## No autocorrelación
+
+# Durbin-Watson
+
+# H_0: No hay autocorrelación en los errores
+# H_1: Hay autocorrelación
+
+# alpha = 0.05
+dwtest(modelo4)
+
+
+## Predicción 
+
+# ancho del horno = 2.10
+# temperatura = 3.10
+
+# ¿Cuál sería el tiempo de cocción?
+
+nuevo.dato <- data.frame(x1= 2.10, x2= 3.10)
+
+modelo4$coefficients
+
+prediccion <- predict(modelo4, newdata = nuevo.dato)
+prediccion
+
+
+### Análisis de Varianza
+
+datos <- data.frame(
+  Fuerza_enlace = c(
+    2158.70, 1678.15, 2316.00, 2061.30, 2207.50,
+    1708.30, 1784.70, 2575.00, 2357.90, 2256.70,
+    2165.20, 2399.55, 1779.80, 2336.75, 1765.30,
+    2053.50, 2414.40, 2200.50, 2654.20, 1753.70
+  ),
+  Edad_lote = c(
+    15.50, 23.75, 8.00, 17.00, 5.50,
+    19.00, 24.00, 2.50, 7.50, 11.00,
+    13.00, 3.75, 25.00, 9.75, 22.00,
+    18.00, 6.00, 12.50, 2.00, 21.50
+  )
+)
+
+datos
+
+modelo_completo <- lm(Fuerza_enlace~ Edad_lote, data = datos)
+plot(datos$Edad_lote, datos$Fuerza_enlace)
+
+abline(modelo_completo, col="red", lwd=2)
+
+
+modelo_reducido <- lm(Fuerza_enlace ~ 1, data= datos)
+plot(datos$Edad_lote, datos$Fuerza_enlace)
+abline(modelo_reducido, col="red", lwd=2)
+
+anova(modelo_completo)
+
+
+datos <- data.frame(
+  Paciente = 1:32,
+  Infarc = c(
+    0.119, 0.190, 0.395, 0.469, 0.130, 0.311, 0.418, 0.480,
+    0.687, 0.847, 0.062, 0.122, 0.033, 0.102, 0.206, 0.249,
+    0.220, 0.299, 0.350, 0.350, 0.588, 0.379, 0.149, 0.316,
+    0.390, 0.429, 0.477, 0.439, 0.446, 0.538, 0.625, 0.974
+  ),
+  Area = c(
+    0.34, 0.64, 0.76, 0.83, 0.73, 0.82, 0.95, 1.06,
+    1.20, 1.47, 0.44, 0.77, 0.90, 1.07, 1.01, 1.03,
+    1.16, 1.21, 1.20, 1.22, 0.99, 0.77, 1.05, 1.06,
+    1.02, 0.99, 0.97, 1.12, 1.23, 1.19, 1.22, 1.40
+  ),
+  X2 = c(
+    0,0,0,0,0,0,0,0,
+    0,0,1,1,1,1,1,1,
+    1,1,1,1,1,0,0,0,
+    0,0,0,0,0,0,0,0
+  ),
+  X3 = c(
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,1,1,
+    1,1,1,1,1,1,1,1
+  )
+)
+datos
+
+
+modelo_completo <- lm(Infarc ~ Area + X2 + X3, data = datos)
+summary(modelo_completo)
+
+
+anov <- anova(modelo_completo)
+
+SCE_X1 <- anov$`Sum Sq`[1]
+SSE_C <- anov$`Sum Sq`[4]
+df2 <- anov$Df[4]
+df1 <- nrow(datos) - 3 - df2
+F_g <- (SCE_X1 / df1) / (SSE_C / df2)
+F_g 
+
+
+SCE_X1X2X3 <- sum(anov$`Sum Sq`[1:3])
+df1 <- nrow(datos) - 1 - df2
+
+F_all <- (SCE_X1X2X3 /df1) / (SSE_C / df2)
+F_all
+
+
+pf(F_all, df= 3, df2 = 28, lower.tail = FALSE)
+summary(modelo_completo)
+anov
+
+SCE_X2X3 <- sum(anov$`Sum Sq`[2:3])
+df1 <- nrow(datos) - 2 -df2
+
+F_dos <-(SCE_X2X3 / df1) / (SSE_C / df2)
+F_dos
+
+pf(F_dos, df= 2, df2 = 28, lower.tail = FALSE)
+anov
+
+summary(modelo_completo)

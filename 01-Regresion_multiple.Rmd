@@ -1261,7 +1261,7 @@ Todo esto, se puede llevar al caso de regresión lineal múltiple.
 
 **Ejemplo:** Considere los siguientes datos en los que se tienen mediciones del tamaño de infarto, área de la región en riesgo y dos variables que identifican el tipo de tratamiento utilizado en 32 pacientes. Se busca describir el tamaño del infarto a través de las otras 3-variables. Para este caso, vamos a ajustar un modelo de regresión lineal múltiple completo y después vamos a hacer pruebas sobre quitar algunas variables.
 
-```{r,  echo=FALSE}
+```{r}
 datos <- data.frame(
   Paciente = 1:32,
   Infarc = c(

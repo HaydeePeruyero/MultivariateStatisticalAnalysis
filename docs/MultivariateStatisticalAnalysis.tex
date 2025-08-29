@@ -1519,6 +1519,8 @@ Modelo marketing 2
 
 Lo que sigue, es hacer pruebas de hipótesis tanto en las variables como en los coeficientes de regresión.
 
+\subsection{Ejercicios}\label{ejercicios-1}
+
 \textbf{Ejercicio 1:} Realizar las pruebas de hipótesis sobre la significancia de la regresión y sobre los coeficientes. Encontrar los intervalos de confianza respectivos del 95\%.
 Para una tienda con presupuestos:
 \(youtube = 150\), \(facebook = 30\), \(newspaper=20\) (en miles de USD):
@@ -1572,6 +1574,28 @@ Asegúrate de que el código sea reproducible y que las figuras tengan títulos,
   ¿Qué conclusiones se pueden sacar de este problema, acerca de las consecuencias de omitir un regresor importante de un modelo?
 \end{enumerate}
 
+\emph{Descripción de las variables:}
+
+\(y\): Juegos ganados (por temporada de 14 juegos)
+
+\(x_{1}\): Yardas por tierra (temporada)
+
+\(x_{2}\): Yardas por aire (temporada)
+
+\(x_{3}\): Promedio de pateo (yardas/patada)
+
+\(x_{4}\): Porcentaje de goles de campo (GC hechos/GC intentados, temporada)
+
+\(x_{5}\): Diferencia de pérdidas de balón (pérdidas ganadas/pérdidas perdidas)
+
+\(x_{6}\): Yardas de castigo (temporada)
+
+\(x_{7}\): Porcentaje de carreras (jugadas por tierra/jugadas totales)
+
+\(x_{8}\): Yardas por tierra del contrario (temporada)
+
+\(x_{9}\): Yardas por aire del contrario (temporada)
+
 \textbf{Ejericio 2:} Véase los datos de \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Rendimiento_de_gasolina.csv}{rendimiento de gasolina}. Realizar el ejercicio en R.
 
 \begin{enumerate}
@@ -1598,6 +1622,32 @@ Asegúrate de que el código sea reproducible y que las figuras tengan títulos,
   Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?
 \end{enumerate}
 
+\emph{Descripción de variables:} Variables (Fuente: Motor Trend, 1975)
+
+\(y:\) Millas/galón
+
+\(x_1:\) Cilindrada (pulgadas cúbicas)
+
+\(x_2:\) Potencia (Hp)
+
+\(x_3:\) Par de torsión (pies-lb)
+
+\(x_4:\) Relación de compresión
+
+\(x_5:\) Relación de eje trasero
+
+\(x_6:\) Carburador (gargantas)
+
+\(x_7:\) Número de velocidades en la transmisión
+
+\(x_8:\) Longitud total (pulgadas)
+
+\(x_9:\) Ancho (pulgadas)
+
+\(x_{10}:\) Peso (lb)
+
+\(x_{11}:\) Tipo de transmisión (1 = automática, 0 = manual)
+
 \textbf{Ejercicio 3:} Véase los datos sobre \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/Precios_de_viviendas}{precios de viviendas}. Realizar el ejercicio en Python.
 
 \begin{enumerate}
@@ -1621,6 +1671,28 @@ Asegúrate de que el código sea reproducible y que las figuras tengan títulos,
 \item
   Trazar las gráficas de los residuales en función de cada una de las variables regresoras. ¿Implican esas gráficas que se especificó en forma correcta el regresor?.
 \end{enumerate}
+
+\emph{Descripción de las variables:}
+
+\(y\): Precio de venta de la casa / 1000
+
+\(x_{1}\): Impuestos (locales, escuela, municipal) / 1000
+
+\(x_{2}\): Cantidad de baños
+
+\(x_{3}\): Tamaño del terreno (pies cuadrados \(\times\) 1000)
+
+\(x_{4}\): Superficie construida (pies cuadrados \(\times\) 1000)
+
+\(x_{5}\): Cantidad de cajones en cochera
+
+\(x_{6}\): Cantidad de habitaciones
+
+\(x_{7}\): Cantidad de recámaras
+
+\(x_{8}\): Edad de la casa (años)
+
+\(x_{9}\): Cantidad de chimeneas
 
 \textbf{Ejercicio 4:} Explica lo siguiente.
 
@@ -1717,6 +1789,8 @@ yp & x1 & x2\\
 
 Vamos a visualizar los datos:
 
+Plot
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{g1 }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ datos, }\AttributeTok{mapping =} \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x1, }\AttributeTok{y =}\NormalTok{ yp)) }\SpecialCharTok{+}
@@ -1748,6 +1822,8 @@ Ahora, vamos a analizar algunos de los supuestos.
 
 \subsection{Multicolinealidad}\label{multicolinealidad}
 
+Multicolinealidad
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{variables }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(x1,x2)}
@@ -1761,6 +1837,8 @@ Ahora, vamos a analizar algunos de los supuestos.
 ## x1 1.0000000 0.9375592
 ## x2 0.9375592 1.0000000
 \end{verbatim}
+
+Plot
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1783,6 +1861,8 @@ Ahora, vamos a analizar algunos de los supuestos.
 Hay una fuerte correlación entre las variables, lo cual es un problema dado que las variables deberían ser independientes.
 
 Vamos a construir dos modelos.
+
+Modelos
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1815,6 +1895,8 @@ Vamos a construir dos modelos.
 \end{verbatim}
 
 El intercepto parece no ser significativo. Vamos a construir un segundo modelo usando solo \(x_2\) que parece ser más significativa.
+
+Modelo 2
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1853,6 +1935,8 @@ El ANOVA nos puede ayudar a ver cual modelo es más significativo. Se usan las h
 
 Si el nuevo modelo es una mejora del modelo original, entonces no podemos rechazar \(H_0\). Si ese no es el caso, significa que esas variables fueron significativas; por lo tanto rechazamos \(H_0\).
 
+ANOVA
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{anova}\NormalTok{(modelo1, modelo2)}
@@ -1874,6 +1958,8 @@ Si el nuevo modelo es una mejora del modelo original, entonces no podemos rechaz
 Como el p-valor es muy pequeño, menor al valor de significancia 0.05, entonces rechazamos la hipótesis nula, lo que nos dice que el segundo modelo no es una mejora del primero.
 
 Como desde el inicio vimos que el coeficiente correspondiente a \(\beta_0\) no era significativo, vamos a eliminarlo.
+
+Modelo 3
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1912,6 +1998,8 @@ Recordemos que los residuos se calculan como la diferencia entre el valor observ
 
 Vamos a hacer un plot de los residuales.
 
+QQ-plot
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{residuales }\OtherTok{=}\NormalTok{ modelo3}\SpecialCharTok{$}\NormalTok{residuals}
@@ -1926,6 +2014,8 @@ Vamos a hacer un plot de los residuales.
 
 Otra forma de obtener este plot es la siguiente.
 
+Plots supuestos
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{plot}\NormalTok{(modelo3)}
@@ -1939,6 +2029,8 @@ El test de Shapiro-Wilks plantea la hipótesis nula que una muestra proviene de 
 \(H_0:\) La distribución es normal.
 
 \(H_1:\) La distribución no es normal.
+
+Test Shapiro-Wilks
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1980,6 +2072,8 @@ Linealidad y errores independientes: Si se notan curvas, arcos o patrones sistem
 
 Una forma de verlo es con el plot de residuales vs valores predichos.
 
+Plots
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
@@ -1991,11 +2085,13 @@ Una forma de verlo es con el plot de residuales vs valores predichos.
 
 En R, existe la función \texttt{bptest()}, que es el test de Breusch-Pagan para la heterocedasticidad. Esta función toma como entrada un modelo de regresión y devuelve el resultado de la prueba de hipótesis para la homocedasticidad de los residuos.
 
-\(H_O:\) los residuos tienen varianza constante (homocedasticidad)
+\(H_0:\) los residuos tienen varianza constante (homocedasticidad)
 
 \(H_1\): hay heterocedasticidad en los residuos
 
 El resultado incluye el valor del estadístico de prueba (el valor de la prueba de Breusch-Pagan), el p-valor y el número de grados de libertad. Si el p-valor es menor que el nivel de significancia elegido, se rechaza la hipótesis nula de homocedasticidad y se concluye que hay heterocedasticidad en los residuos.
+
+Breusch-Pagan
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2039,6 +2135,8 @@ La heterocedasticidad es un problema porque la regresión de mínimos cuadrados 
 Una forma de corregirlo es haciendo una transformación de los datos. Vamos a transformar la variable \(x_1\).
 \emph{Nota:} Estas transformaciones deben de justificarse y explicar el porque.
 
+Modelo 4
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{modelo4 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\AttributeTok{formula =}\NormalTok{ yp }\SpecialCharTok{\textasciitilde{}} \FunctionTok{log}\NormalTok{(x1) }\SpecialCharTok{+}\NormalTok{ x2 }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{data =}\NormalTok{ datos)}
@@ -2070,6 +2168,8 @@ Una forma de corregirlo es haciendo una transformación de los datos. Vamos a tr
 
 Si realizamos la prueba de la homocedasticidad.
 
+Test
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{bptest}\NormalTok{(modelo4)}
@@ -2087,6 +2187,8 @@ Si realizamos la prueba de la homocedasticidad.
 Vemos que ahora el p-valor es más grande que el valor de significancia, lo cual nos indica que no podemos rechazar \(H_0\), es decir ahora si podemos asumir que hay homocedasticidad.
 
 En el modelo final, tendríamos \(\beta_0=0\), \(\beta_1*=\) 7.5272361 y \(\beta_2=\) 2.3401283.
+
+Plots finales
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2118,6 +2220,8 @@ El estadístico DW toma valores entre 0 y 4:
   \(DW > 2\), entonces indica autocorrelación negativa (los errores tienden a alternar signo).
 \end{itemize}
 
+Test D-W
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{dwtest}\NormalTok{(modelo4)}
@@ -2133,7 +2237,11 @@ El estadístico DW toma valores entre 0 y 4:
 ## alternative hypothesis: true autocorrelation is greater than 0
 \end{verbatim}
 
+\subsection{Predicciones}\label{predicciones}
+
 Vamos a predecir por último un valor. Para \(2.10\) de ancho del horno y una temperatura de \(3.10\) , ¿cuánto seria el tiempo de cocción?
+
+Predicciónes
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2149,9 +2257,1161 @@ Vamos a predecir por último un valor. Para \(2.10\) de ancho del horno y una te
 ## [1] "La cantidad estimada de tiempo de coccion es: 12.84"
 \end{verbatim}
 
-\subsection{Ejercicios}\label{ejercicios-1}
+\subsection{Ejercicios}\label{ejercicios-2}
 
 \textbf{Ejercicio 1:} Para los datos de \texttt{Datarium\ marketing}, analiza los supuestos. Explica tus resultados y sube tus respuestas a github.
+
+\section{Análisis de Varianza}\label{anuxe1lisis-de-varianza}
+
+\textbf{Ejemplo 1: } Supongamos que un cierto tipo de motor de cohete se fabrica uniendo un propulsor tipo A y un propulsor tipo B. La fuerza del enlace entre los dos propulsores es una característica de importancia y se sospecha que está relacionada con la edad (en semanas) del lote del propulsor tipo B. Se tiene una muestra de tamaño 20 de la fuerza del enlace y la edad del lote del propulsor tipo B que fue utilizado.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Fuerza\_enlace =} \FunctionTok{c}\NormalTok{(}
+    \FloatTok{2158.70}\NormalTok{, }\FloatTok{1678.15}\NormalTok{, }\FloatTok{2316.00}\NormalTok{, }\FloatTok{2061.30}\NormalTok{, }\FloatTok{2207.50}\NormalTok{,}
+    \FloatTok{1708.30}\NormalTok{, }\FloatTok{1784.70}\NormalTok{, }\FloatTok{2575.00}\NormalTok{, }\FloatTok{2357.90}\NormalTok{, }\FloatTok{2256.70}\NormalTok{,}
+    \FloatTok{2165.20}\NormalTok{, }\FloatTok{2399.55}\NormalTok{, }\FloatTok{1779.80}\NormalTok{, }\FloatTok{2336.75}\NormalTok{, }\FloatTok{1765.30}\NormalTok{,}
+    \FloatTok{2053.50}\NormalTok{, }\FloatTok{2414.40}\NormalTok{, }\FloatTok{2200.50}\NormalTok{, }\FloatTok{2654.20}\NormalTok{, }\FloatTok{1753.70}
+\NormalTok{  ),}
+  \AttributeTok{Edad\_lote =} \FunctionTok{c}\NormalTok{(}
+    \FloatTok{15.50}\NormalTok{, }\FloatTok{23.75}\NormalTok{, }\FloatTok{8.00}\NormalTok{, }\FloatTok{17.00}\NormalTok{, }\FloatTok{5.50}\NormalTok{,}
+    \FloatTok{19.00}\NormalTok{, }\FloatTok{24.00}\NormalTok{, }\FloatTok{2.50}\NormalTok{, }\FloatTok{7.50}\NormalTok{, }\FloatTok{11.00}\NormalTok{,}
+    \FloatTok{13.00}\NormalTok{, }\FloatTok{3.75}\NormalTok{, }\FloatTok{25.00}\NormalTok{, }\FloatTok{9.75}\NormalTok{, }\FloatTok{22.00}\NormalTok{,}
+    \FloatTok{18.00}\NormalTok{, }\FloatTok{6.00}\NormalTok{, }\FloatTok{12.50}\NormalTok{, }\FloatTok{2.00}\NormalTok{, }\FloatTok{21.50}
+\NormalTok{  )}
+\NormalTok{)}
+
+\NormalTok{datos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Fuerza_enlace Edad_lote
+## 1        2158.70     15.50
+## 2        1678.15     23.75
+## 3        2316.00      8.00
+## 4        2061.30     17.00
+## 5        2207.50      5.50
+## 6        1708.30     19.00
+## 7        1784.70     24.00
+## 8        2575.00      2.50
+## 9        2357.90      7.50
+## 10       2256.70     11.00
+## 11       2165.20     13.00
+## 12       2399.55      3.75
+## 13       1779.80     25.00
+## 14       2336.75      9.75
+## 15       1765.30     22.00
+## 16       2053.50     18.00
+## 17       2414.40      6.00
+## 18       2200.50     12.50
+## 19       2654.20      2.00
+## 20       1753.70     21.50
+\end{verbatim}
+
+Un modelo completo sería \(y_i = \beta_0 + \beta_1x_i + \epsilon_i\), el cual se ve como:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo\_completo }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Fuerza\_enlace }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Edad\_lote, }\AttributeTok{data =}\NormalTok{ datos)}
+
+\FunctionTok{plot}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{Edad\_lote, datos}\SpecialCharTok{$}\NormalTok{Fuerza\_enlace,}
+     \AttributeTok{main =} \StringTok{"Modelo completo"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Edad del lote (semanas)"}\NormalTok{,}
+     \AttributeTok{ylab =} \StringTok{"Fuerza del enlace (psi)"}\NormalTok{,}
+     \AttributeTok{pch =} \DecValTok{19}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+
+\CommentTok{\# Agregar la recta de regresión}
+\FunctionTok{abline}\NormalTok{(modelo\_completo, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-59-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Edad\_lote, }\AttributeTok{y =}\NormalTok{ Fuerza\_enlace)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"Modelo completo"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Edad del lote (semanas)"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Fuerza del enlace (psi)"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-60-1.pdf}}
+Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso el modelo con menos parámetros o modelo reducido es el modelo que describirá la hipótesis nula \(H_0\). En regresión lineal simple, es común plantear \(H_0:\beta_1=0\), de manera que el modelo reducido es \(y_i=\beta_0+\epsilon_i\), es decir, cada valor \(y_i\) es función de una constante (la media) y un error, este modelo se vería como:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo\_reducido }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Fuerza\_enlace }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }\AttributeTok{data =}\NormalTok{ datos)}
+
+\FunctionTok{plot}\NormalTok{(datos}\SpecialCharTok{$}\NormalTok{Edad\_lote, datos}\SpecialCharTok{$}\NormalTok{Fuerza\_enlace,}
+     \AttributeTok{main =} \StringTok{"Modelo reducido"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Edad del lote (semanas)"}\NormalTok{,}
+     \AttributeTok{ylab =} \StringTok{"Fuerza del enlace (psi)"}\NormalTok{,}
+     \AttributeTok{pch =} \DecValTok{19}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+
+\CommentTok{\# Agregar la recta de regresión}
+\FunctionTok{abline}\NormalTok{(modelo\_reducido, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-61-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(datos, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Edad\_lote, }\AttributeTok{y =}\NormalTok{ Fuerza\_enlace)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{stat\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }\AttributeTok{se =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{fullrange =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Modelo reducido"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Edad del lote (semanas)"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Fuerza del enlace (psi)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-62-1.pdf}}
+
+¿Cuál modelo es mejor? Debemos obtener los estimadores para cada modelo y la suma de cuadrados de los errores.
+
+\begin{itemize}
+\item
+  La suma de los cuadrados de los errores \(SSE(C) = \sum(y_i - \hat{y}_i)^2\), la cual tiene \(n-2\) grados de libertad para el modelo completo.
+\item
+  La suma de los cuadrados de los errores del modelo reducido \(SSE(R) = \sum(y_i - \bar{y}_i)^2\), la cual tiene \(n-1\) grados de libertad para el modelo reducido.
+\end{itemize}
+
+Hay que tener en cuenta que \(SSE(R)\) siempre es mayor a \(SSE(C)\), por lo tanto si la diferencia es miu pequeña, entonces tiene sentido utilizar el modelo reducido, pero si la diferencia es muy grande, entonces el parámetro adicional agrega información importante al modelo.
+
+Se usa la prueba \(F\) general:
+
+\[F_0 = \frac{\left( \frac{SSE(R) - SSE(C)}{ (n-1) - (n-2)}  \right)}{\frac{SSE(C)}{n-2}} = \frac{SCE(C)}{\frac{SSE(C)}{n-2}}   \]
+
+La cantidad \(SSE(R) - SSE(C)\) representa la suma de cuadrados explicada por la variable \(x\), a esta cantidad la vamos a denotar por \(SCE\).
+
+Entonces, rechazar la hipótesis nula \(H_0\) implica rechazar el modelo reducido y no rechazar \(H_0\) implica rechazar el modelo completo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{anova}\NormalTok{(modelo\_completo)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Fuerza_enlace
+##           Df  Sum Sq Mean Sq F value    Pr(>F)    
+## Edad_lote  1 1527483 1527483  165.38 1.643e-10 ***
+## Residuals 18  166255    9236                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+Como el p-valor es muy pequeño, se rechaza \(H_0\) por lo que se concluye que hay pruebas suficientes sobre la existencia de asociación lineal de la edad de lote y la fuerza del enlace.
+
+Todo esto, se puede llevar al caso de regresión lineal múltiple.
+
+\textbf{Ejemplo:} Considere los siguientes datos en los que se tienen mediciones del tamaño de infarto, área de la región en riesgo y dos variables que identifican el tipo de tratamiento utilizado en 32 pacientes. Se busca describir el tamaño del infarto a través de las otras 3-variables. Para este caso, vamos a ajustar un modelo de regresión lineal múltiple completo y después vamos a hacer pruebas sobre quitar algunas variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Paciente =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{32}\NormalTok{,}
+  \AttributeTok{Infarc =} \FunctionTok{c}\NormalTok{(}
+    \FloatTok{0.119}\NormalTok{, }\FloatTok{0.190}\NormalTok{, }\FloatTok{0.395}\NormalTok{, }\FloatTok{0.469}\NormalTok{, }\FloatTok{0.130}\NormalTok{, }\FloatTok{0.311}\NormalTok{, }\FloatTok{0.418}\NormalTok{, }\FloatTok{0.480}\NormalTok{,}
+    \FloatTok{0.687}\NormalTok{, }\FloatTok{0.847}\NormalTok{, }\FloatTok{0.062}\NormalTok{, }\FloatTok{0.122}\NormalTok{, }\FloatTok{0.033}\NormalTok{, }\FloatTok{0.102}\NormalTok{, }\FloatTok{0.206}\NormalTok{, }\FloatTok{0.249}\NormalTok{,}
+    \FloatTok{0.220}\NormalTok{, }\FloatTok{0.299}\NormalTok{, }\FloatTok{0.350}\NormalTok{, }\FloatTok{0.350}\NormalTok{, }\FloatTok{0.588}\NormalTok{, }\FloatTok{0.379}\NormalTok{, }\FloatTok{0.149}\NormalTok{, }\FloatTok{0.316}\NormalTok{,}
+    \FloatTok{0.390}\NormalTok{, }\FloatTok{0.429}\NormalTok{, }\FloatTok{0.477}\NormalTok{, }\FloatTok{0.439}\NormalTok{, }\FloatTok{0.446}\NormalTok{, }\FloatTok{0.538}\NormalTok{, }\FloatTok{0.625}\NormalTok{, }\FloatTok{0.974}
+\NormalTok{  ),}
+  \AttributeTok{Area =} \FunctionTok{c}\NormalTok{(}
+    \FloatTok{0.34}\NormalTok{, }\FloatTok{0.64}\NormalTok{, }\FloatTok{0.76}\NormalTok{, }\FloatTok{0.83}\NormalTok{, }\FloatTok{0.73}\NormalTok{, }\FloatTok{0.82}\NormalTok{, }\FloatTok{0.95}\NormalTok{, }\FloatTok{1.06}\NormalTok{,}
+    \FloatTok{1.20}\NormalTok{, }\FloatTok{1.47}\NormalTok{, }\FloatTok{0.44}\NormalTok{, }\FloatTok{0.77}\NormalTok{, }\FloatTok{0.90}\NormalTok{, }\FloatTok{1.07}\NormalTok{, }\FloatTok{1.01}\NormalTok{, }\FloatTok{1.03}\NormalTok{,}
+    \FloatTok{1.16}\NormalTok{, }\FloatTok{1.21}\NormalTok{, }\FloatTok{1.20}\NormalTok{, }\FloatTok{1.22}\NormalTok{, }\FloatTok{0.99}\NormalTok{, }\FloatTok{0.77}\NormalTok{, }\FloatTok{1.05}\NormalTok{, }\FloatTok{1.06}\NormalTok{,}
+    \FloatTok{1.02}\NormalTok{, }\FloatTok{0.99}\NormalTok{, }\FloatTok{0.97}\NormalTok{, }\FloatTok{1.12}\NormalTok{, }\FloatTok{1.23}\NormalTok{, }\FloatTok{1.19}\NormalTok{, }\FloatTok{1.22}\NormalTok{, }\FloatTok{1.40}
+\NormalTok{  ),}
+  \AttributeTok{X2 =} \FunctionTok{c}\NormalTok{(}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}
+    \DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}
+\NormalTok{  ),}
+  \AttributeTok{X3 =} \FunctionTok{c}\NormalTok{(}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}
+    \DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}
+    \DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}
+\NormalTok{  )}
+\NormalTok{)}
+\NormalTok{datos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Paciente Infarc Area X2 X3
+## 1         1  0.119 0.34  0  0
+## 2         2  0.190 0.64  0  0
+## 3         3  0.395 0.76  0  0
+## 4         4  0.469 0.83  0  0
+## 5         5  0.130 0.73  0  0
+## 6         6  0.311 0.82  0  0
+## 7         7  0.418 0.95  0  0
+## 8         8  0.480 1.06  0  0
+## 9         9  0.687 1.20  0  0
+## 10       10  0.847 1.47  0  0
+## 11       11  0.062 0.44  1  0
+## 12       12  0.122 0.77  1  0
+## 13       13  0.033 0.90  1  0
+## 14       14  0.102 1.07  1  0
+## 15       15  0.206 1.01  1  0
+## 16       16  0.249 1.03  1  0
+## 17       17  0.220 1.16  1  0
+## 18       18  0.299 1.21  1  0
+## 19       19  0.350 1.20  1  0
+## 20       20  0.350 1.22  1  0
+## 21       21  0.588 0.99  1  0
+## 22       22  0.379 0.77  0  0
+## 23       23  0.149 1.05  0  1
+## 24       24  0.316 1.06  0  1
+## 25       25  0.390 1.02  0  1
+## 26       26  0.429 0.99  0  1
+## 27       27  0.477 0.97  0  1
+## 28       28  0.439 1.12  0  1
+## 29       29  0.446 1.23  0  1
+## 30       30  0.538 1.19  0  1
+## 31       31  0.625 1.22  0  1
+## 32       32  0.974 1.40  0  1
+\end{verbatim}
+
+El modelo completo sería \(y_i = \beta_0 + \beta_1x_{1i} +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo\_c }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Infarc}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Area }\SpecialCharTok{+}\NormalTok{ X2 }\SpecialCharTok{+}\NormalTok{ X3, }\AttributeTok{data =}\NormalTok{ datos)}
+\FunctionTok{summary}\NormalTok{(modelo\_c)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Infarc ~ Area + X2 + X3, data = datos)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.28175 -0.06704 -0.01658  0.06294  0.35970 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.14927    0.10377  -1.439 0.161376    
+## Area         0.63395    0.10927   5.802 3.12e-06 ***
+## X2          -0.25005    0.06053  -4.131 0.000295 ***
+## X3          -0.08563    0.06641  -1.289 0.207831    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.138 on 28 degrees of freedom
+## Multiple R-squared:  0.6456, Adjusted R-squared:  0.6076 
+## F-statistic:    17 on 3 and 28 DF,  p-value: 1.748e-06
+\end{verbatim}
+
+Con este modelo se obtiene la siguiente tabla de ANOVA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{anov }\OtherTok{\textless{}{-}} \FunctionTok{anova}\NormalTok{(modelo\_c)}
+\NormalTok{anov}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Analysis of Variance Table
+## 
+## Response: Infarc
+##           Df  Sum Sq Mean Sq F value    Pr(>F)    
+## Area       1 0.62492 0.62492 32.8245 3.801e-06 ***
+## X2         1 0.31453 0.31453 16.5210 0.0003533 ***
+## X3         1 0.03165 0.03165  1.6624 0.2078307    
+## Residuals 28 0.53307 0.01904                      
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# los p{-}valores en la última columna se pueden obtener con: }
+\CommentTok{\#pf(F\_0, df1, df2, lower.tail = FALSE)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{1) Pruebas sobre uno de los parámetros:} \(H_0:\beta_1=0\), modelo reducido \(y_i = \beta_0  +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i\). Vamos a denotar a la suma de los cuadrados de los errores asociada a este modelo \(SSE(x_1)\), la cual tiene \(n-3\) grados de libertad asociados (tenemos 3 parámetros a estimar \(\beta_0,\beta_2,\beta_3\)). Como el p-valor es muy pequeño, se rechaza a \(H_0\) y se concluye que hay suficiente evidencia para decir que el tamaño del infarto está significativamente relacionado con el tamaño del área de riesgo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SCE\_X1 }\OtherTok{\textless{}{-}}\NormalTok{ anov}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Sum Sq}\StringTok{\textasciigrave{}}\NormalTok{[}\DecValTok{1}\NormalTok{]}
+\NormalTok{SSE\_C }\OtherTok{\textless{}{-}}\NormalTok{ anov}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Sum Sq}\StringTok{\textasciigrave{}}\NormalTok{[}\DecValTok{4}\NormalTok{]}
+\NormalTok{df2 }\OtherTok{\textless{}{-}}\NormalTok{ anov}\SpecialCharTok{$}\NormalTok{Df[}\DecValTok{4}\NormalTok{]}
+\NormalTok{df1 }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(datos) }\SpecialCharTok{{-}} \DecValTok{3} \SpecialCharTok{{-}}\NormalTok{ df2}
+\NormalTok{F\_g }\OtherTok{\textless{}{-}}\NormalTok{ (SCE\_X1}\SpecialCharTok{/}\NormalTok{df1) }\SpecialCharTok{/}\NormalTok{ (SSE\_C}\SpecialCharTok{/}\NormalTok{df2) }
+\NormalTok{F\_g}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 32.82447
+\end{verbatim}
+
+\textbf{2) Pruebas sobre todos los parámetros:} En este caso tenemos \(H_0:\beta_1=\beta_2=\beta_3=0\) vs \(H_1: \beta_j\neq 0\) p.a. \(j\). Es decir, el modelo reducido sería \(y_i = \beta_0+\epsilon_i\). La prueba \(F\) general es la misma, pero ahora la suma de cuadrados asociada al modelo reducido \(SSE(x_1,x_2,x_3)\) tiene \(n-1\) grados de libertad ya que solo debemos estimar \(\beta_0\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SCE\_X1X2X3 }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(anov}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Sum Sq}\StringTok{\textasciigrave{}}\NormalTok{[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]) }
+\NormalTok{df1 }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(datos) }\SpecialCharTok{{-}}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ df2 }
+
+\NormalTok{F\_all }\OtherTok{\textless{}{-}}\NormalTok{ (SCE\_X1X2X3 }\SpecialCharTok{/}\NormalTok{ df1) }\SpecialCharTok{/}\NormalTok{ (SSE\_C }\SpecialCharTok{/}\NormalTok{ df2)}
+\NormalTok{F\_all}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 17.00263
+\end{verbatim}
+
+El cual tiene un \(p-\)valor asociado a una distribución \(F\) con 3 y 28 grados de libertad.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pf}\NormalTok{(F\_all, }\AttributeTok{df1 =} \DecValTok{3}\NormalTok{, }\AttributeTok{df2 =} \DecValTok{28}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.747583e-06
+\end{verbatim}
+
+Por lo tanto rechazamos la hipótesis nula. Notemos que este valor coincide con el que nos da el \texttt{summary} del modelo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(modelo\_c)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Infarc ~ Area + X2 + X3, data = datos)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.28175 -0.06704 -0.01658  0.06294  0.35970 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -0.14927    0.10377  -1.439 0.161376    
+## Area         0.63395    0.10927   5.802 3.12e-06 ***
+## X2          -0.25005    0.06053  -4.131 0.000295 ***
+## X3          -0.08563    0.06641  -1.289 0.207831    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.138 on 28 degrees of freedom
+## Multiple R-squared:  0.6456, Adjusted R-squared:  0.6076 
+## F-statistic:    17 on 3 and 28 DF,  p-value: 1.748e-06
+\end{verbatim}
+
+\textbf{3) Pruebas sobre un subconjunto de los parámetros:} Supongamos ahora que \(H_0:\beta_2=\beta_3=0\). Es decir, el modelo reducido sería \(y_i = \beta_0+ \beta_1x_{1i}+\epsilon_i\). La prueba es similar pero solo usamos \(x_2\) y \(x_3\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SCE\_X2X3 }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(anov}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{Sum Sq}\StringTok{\textasciigrave{}}\NormalTok{[}\DecValTok{2}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]) }
+\NormalTok{df1 }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(datos) }\SpecialCharTok{{-}} \DecValTok{2} \SpecialCharTok{{-}}\NormalTok{ df2 }
+
+\NormalTok{F\_dos }\OtherTok{\textless{}{-}}\NormalTok{ (SCE\_X2X3 }\SpecialCharTok{/}\NormalTok{ df1) }\SpecialCharTok{/}\NormalTok{ (SSE\_C }\SpecialCharTok{/}\NormalTok{ df2)}
+\NormalTok{F\_dos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 9.091716
+\end{verbatim}
+
+El \(p-\)valor asociado a la prueba \(F\) con 2 y 28 grados de libertad es:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pf}\NormalTok{(F\_dos, }\AttributeTok{df1 =} \DecValTok{2}\NormalTok{, }\AttributeTok{df2 =} \DecValTok{28}\NormalTok{, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.0009065789
+\end{verbatim}
+
+Por lo que se rechaza de nuevo la hipótesis nula.
+
+\subsection{Ejercicios}\label{ejercicios-3}
+
+\textbf{Ejercicio 1(R):} Para el datasets \texttt{datasets::trees}, realice las pruebas de hipótesis para determinar si:
+1) El modelo solo con la variable \texttt{Girth} es mejor que el modelo completo.
+2) El modelo sin \texttt{Girth} y \texttt{Height} es mejor que el completo.
+Usar la tabla de ANOVA para calcular el estadístico \(F_0\) y encontrar el p-valor asociado usando \texttt{pf(F\_0,\ df1,\ df2,\ lower.tail\ =\ FALSE)}. Justifique su respuesta y suba su código en R a github.
+
+\textbf{Ejercicio 2(Python):} Para el dataset de \texttt{marketing}, realice las pruebas de hipótesis utilizando la tabla de ANOVA sobre:
+1) Uno de los parámetros, justificar cual.
+2) Todos los parámetros.
+3)Un subconjunto de parámetros, justificar cual.
+Usar la tabla de ANOVA para calcular el estadístico \(F_0\) y encontrar el p-valor asociado usando \texttt{pf(F\_0,\ df1,\ df2,\ lower.tail\ =\ FALSE)}. Justifique su respuesta y suba su código en Python a github.
+
+\section{Selección del modelo}\label{selecciuxf3n-del-modelo}
+
+Suponga que se busca una ecuación de regresión lineal entre la variable respuesta \(y\) y las variables predictoras \(x_1,...,x_p\). Suponga que se tiene el conjunto de todas las posibles variables a incluir en el modelo \(z_1,...z_k\) que son funciones de las \(x\)'s. Se busca entonces un modelo que incluya la mayor cantidad de variables \(z\) posible para que el error sea pequeño. Pero, considerando la varianza y el costo de obtener más datos, también se busca incluir el menor número de posibles variables \(z\) en el modelo.
+
+No existe un solo método de selección de modelos y no todos conducen a la misma solución. Vamos a analizar tres métodos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  Todos los modelos posibles y el mejor subconjunto de modelos.
+\item
+  Selección paso a paso.
+\item
+  Eliminación hacia atrás.
+\end{enumerate}
+
+\subsection{Todos los modelos posibles}\label{todos-los-modelos-posibles}
+
+Si el número de variables \(z\) es grande, esto puede ser un problema. Supongamos que tenemos \(k\) variables, donde cada variable puede o no estar en el modelo, entonces tenemos un total de \(2^k\) posibles modelos de los cuales se debe elegir el mejor a partir de criterios como \(R^2\), \(R^2_{adj}\), etc. Vamos a ver algunos de estos criterios.
+
+\textbf{Estadística \(C_p\) de Mallows}
+
+Supongamos que tenemos \(k+1\) variables regresoras incluyendo el intercepto, de las cuales vamos a elegir \(p\). Denotemos por \(SSE_p\) la suma de cuadrados de la regresión respectiva de tomar \(p\) variables, la estadística \(C_p\) de Mallows está dada por
+
+\[C_p = \frac{SSE_p}{\hat{\sigma}^2} - (n-2p)  \]
+donde \(\hat{\sigma}^2\) corresponde al modelo con todas las variables y se supone que es un estimador insesgado para la varianza \(\sigma^2\). Si el modelo ajusta bien, esperaríamos que \(\mathbb{E}(SSE_p)=(n-p)\sigma^2\), de manera que:
+
+\[\mathbb{E}(C_p)\approx p,\]
+
+en consecuencia, si graficamos \(C_p\) en función de \(p\), los modelos adecuados arrojarán puntos cerca de la recta \(C_p=p\).
+
+\textbf{Criterio de información de Akaike (CIA)}
+
+Se define como
+
+\[CIA = e^{\frac{2p}{n}}\frac{SSE}{n},\]
+
+donde \(p\) es el número de variables regresoras incluyendo el intercepto. Esta función incluye una penalización por imponer regresoras. Al comparar modelos, se busca el que tenga menor \(CIA\). Muchas veces esta estadística se define como \(\log(CIA)\), es decir:
+
+\[\frac{2p}{n}+\log(\frac{SSE}{n})\]
+
+con el cual las conclusiones son las mismas.
+
+\textbf{Criterio de información de Schwars (CIS)}
+
+Similar al CIA, el CIS se define como
+
+\[CIS = n^{\frac{p}{n}}\frac{SSE}{n},\]
+
+cuyo logaritmo es
+
+\[\frac{p}{n}\log{n} + \log{\frac{SSE}{n}}.\]
+
+Este criterio impone mayor penalización por agregar variables. Al comparar modelos, se busca el que tenga menor CIS.
+
+\subsubsection{Mejor subconjunto}\label{mejor-subconjunto}
+
+Una alternativa a la comparación de todos los modelos posibles es la búsqueda del mejor subconjunto de modelos que se pueden hacer en distintos programas y compararlos. En R, existe la función \texttt{regsubsets}, la cual incluye los criterios de comparación \(R^2, C_p,\) BIC (Bayesian Information Criterion). Esta función utiliza los métodos \emph{forward and backward stepwise}.
+
+\subsection{Selección paso a paso}\label{selecciuxf3n-paso-a-paso}
+
+Las técnicas de selección paso a paso consisten en elaborar un modelo inicial a partir del cual se agrega o se elimina una variable para comparar hasta encontrar el mejor modelo.
+
+\subsubsection{Selección paso a paso hacia adelante}\label{selecciuxf3n-paso-a-paso-hacia-adelante}
+
+Conocido como \emph{forward regression}, consiste en comenzar con el modelo en el que la única variable regresora es la que mejor describe el comportamiento de \(y\) y a partir de ahí ir agregando variables regresoras una por una.
+
+El orden en el que se agregan puede variar y se pueden usar diferentes estadísticas o criterios para decidir cual agregar. Se calculan las estadísticas del modelo actual al agregar variable y elegir el modelo con la mejor estadística, siempre que sea un mejor modelo.
+
+\subsubsection{Selección paso a paso hacia atrás}\label{selecciuxf3n-paso-a-paso-hacia-atruxe1s}
+
+Conocido como \emph{backward regression}, consiste en comenzar con el modelo que incluye todas las variables e ir eliminando una a una de acuerdo a algún criterio.
+
+Ambas técnicas se pueden mezclar, de manera que en cada paso se evalúa la estadística correspondiente al quitar o agregar alguna de las variables y se elige la mejor opción.
+
+\subsection{Ejemplos}\label{ejemplos}
+
+\subsubsection{Todos los modelos posibles}\label{todos-los-modelos-posibles-1}
+
+En este ejemplo veremos cómo aplicar el método de seleccion de modelos que implica el análisis de todos los modelos posibles. Primero, necesitaremos varios paquetes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(olsrr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Adjuntando el paquete: 'olsrr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:datasets':
+## 
+##     rivers
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(leaps)}
+\FunctionTok{library}\NormalTok{(GGally)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Ejemplo 1:} Cargamos los datos de \texttt{cemento.txt} y hacemos un rápido análisis con el diagrama de dispersión:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cemento}\OtherTok{\textless{}{-}}\FunctionTok{read.table}\NormalTok{(}\StringTok{"D:/Users/hayde/Documents/R\_sites/MultivariateStatisticalAnalysis/data/cement.txt"}\NormalTok{, }\AttributeTok{header =}\NormalTok{ T, }\AttributeTok{skip=}\DecValTok{5}\NormalTok{)}
+\FunctionTok{ggpairs}\NormalTok{(cemento)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-74-1.pdf}}
+
+A continuación ajustamos el modelo con TODAS las variables independientes y calculamos la estadística \(C_p\). Para facilitar la interpretación graficamos la \(C_p\) para cada modelo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo.full}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{., cemento, }\AttributeTok{x=}\NormalTok{T, }\AttributeTok{y=}\NormalTok{T)}
+\DocumentationTok{\#\# calcula el AIC, CIS, etc sobre todos los subconjuntos posibles}
+\NormalTok{outs}\OtherTok{\textless{}{-}}\FunctionTok{leaps}\NormalTok{(modelo.full}\SpecialCharTok{$}\NormalTok{x, cemento}\SpecialCharTok{$}\NormalTok{y, }\AttributeTok{int=}\ConstantTok{FALSE}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(outs}\SpecialCharTok{$}\NormalTok{size,outs}\SpecialCharTok{$}\NormalTok{Cp, }\AttributeTok{log=}\StringTok{"y"}\NormalTok{,}\AttributeTok{cex=}\FloatTok{0.3}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(outs}\SpecialCharTok{$}\NormalTok{size,outs}\SpecialCharTok{$}\NormalTok{size)}
+\FunctionTok{text}\NormalTok{(outs}\SpecialCharTok{$}\NormalTok{size, outs}\SpecialCharTok{$}\NormalTok{Cp, }\AttributeTok{labels=}\FunctionTok{row}\NormalTok{(outs}\SpecialCharTok{$}\NormalTok{which), }\AttributeTok{cex=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{pos=}\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-75-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Mejor modelo por la regla Cp ≈ p  (p = número de predictores)}
+
+\NormalTok{idx\_best\_rule }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(}\FunctionTok{abs}\NormalTok{(outs}\SpecialCharTok{$}\NormalTok{Cp }\SpecialCharTok{{-}}\NormalTok{ outs}\SpecialCharTok{$}\NormalTok{size))}
+
+\CommentTok{\#Variables que entran en cada mejor modelo}
+\NormalTok{noms\_x }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(modelo.full}\SpecialCharTok{$}\NormalTok{x)            }\CommentTok{\# nombres de los predictores}
+\NormalTok{vars\_rule  }\OtherTok{\textless{}{-}}\NormalTok{ noms\_x[ outs}\SpecialCharTok{$}\NormalTok{which[idx\_best\_rule, ] ]}
+
+\NormalTok{vars\_rule}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "(Intercept)" "x1"          "x2"          "x3"          "x4"
+\end{verbatim}
+
+Recordemos que nos interesan los modelos en los que \(C_p=p\).
+
+\textbf{Ejemplo 2:} Vamos a usar la base de datos \texttt{mtcars}. Otra manera de analizar todos los modelos posibles:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(olsrr)}
+\NormalTok{modelo.full.cars}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(mpg}\SpecialCharTok{\textasciitilde{}}\NormalTok{., mtcars)}
+\NormalTok{ejemplo}\OtherTok{\textless{}{-}}\FunctionTok{ols\_step\_all\_possible}\NormalTok{(modelo.full.cars)}
+\FunctionTok{plot}\NormalTok{(ejemplo)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-77-1.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-77-2.pdf}}
+
+Observe que en los triángulos rojos aparecen los mejores modelos para cada \(p\) en función de la estadística correspondiente.
+
+\textbf{Ejemplo 3:} R tiene una función que nos muestra el mejor modelo para cada número de variables. Vamos a regresar al conjunto de datos \texttt{cemento}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mejor}\OtherTok{\textless{}{-}}\FunctionTok{regsubsets}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{., cemento)}
+\FunctionTok{summary}\NormalTok{(mejor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Subset selection object
+## Call: regsubsets.formula(y ~ ., cemento)
+## 4 Variables  (and intercept)
+##    Forced in Forced out
+## x1     FALSE      FALSE
+## x2     FALSE      FALSE
+## x3     FALSE      FALSE
+## x4     FALSE      FALSE
+## 1 subsets of each size up to 4
+## Selection Algorithm: exhaustive
+##          x1  x2  x3  x4 
+## 1  ( 1 ) " " " " " " "*"
+## 2  ( 1 ) "*" "*" " " " "
+## 3  ( 1 ) "*" "*" " " "*"
+## 4  ( 1 ) "*" "*" "*" "*"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(mejor,}\AttributeTok{scale=}\StringTok{"Cp"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-78-1.pdf}}
+
+La gráfica muestra los cuatro modelos y su \(C_p\), por ejemplo, el modelo que incluye al intercepto, a \(x_1\) y a \(x_2\) tiene una \(C_p\) cercana a 2.7.
+
+\subsection{Selección paso a paso}\label{selecciuxf3n-paso-a-paso-1}
+
+\textbf{Ejemplo 1:} Para analizar el método de selección paso a paso usaremos los datos \emph{swiss} del paquete \emph{MASS}. Para ello, el primer paso es ajustar el modelo con TODAS las variables independientes
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(MASS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Adjuntando el paquete: 'MASS'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:olsrr':
+## 
+##     cement
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:patchwork':
+## 
+##     area
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     select
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo\_completo}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(Fertility}\SpecialCharTok{\textasciitilde{}}\NormalTok{., swiss)}
+\end{Highlighting}
+\end{Shaded}
+
+Podemos usar la función \emph{step} en las tres direcciones (\emph{forward, backward o both})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{paso\_a\_paso}\OtherTok{\textless{}{-}}\FunctionTok{stepAIC}\NormalTok{(modelo\_completo, }\AttributeTok{direction=}\StringTok{"both"}\NormalTok{, }\AttributeTok{trace=}\NormalTok{T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Start:  AIC=190.69
+## Fertility ~ Agriculture + Examination + Education + Catholic + 
+##     Infant.Mortality
+## 
+##                    Df Sum of Sq    RSS    AIC
+## - Examination       1     53.03 2158.1 189.86
+## <none>                          2105.0 190.69
+## - Agriculture       1    307.72 2412.8 195.10
+## - Infant.Mortality  1    408.75 2513.8 197.03
+## - Catholic          1    447.71 2552.8 197.75
+## - Education         1   1162.56 3267.6 209.36
+## 
+## Step:  AIC=189.86
+## Fertility ~ Agriculture + Education + Catholic + Infant.Mortality
+## 
+##                    Df Sum of Sq    RSS    AIC
+## <none>                          2158.1 189.86
+## + Examination       1     53.03 2105.0 190.69
+## - Agriculture       1    264.18 2422.2 193.29
+## - Infant.Mortality  1    409.81 2567.9 196.03
+## - Catholic          1    956.57 3114.6 205.10
+## - Education         1   2249.97 4408.0 221.43
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(paso\_a\_paso)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Fertility ~ Agriculture + Education + Catholic + 
+##     Infant.Mortality, data = swiss)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -14.6765  -6.0522   0.7514   3.1664  16.1422 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)      62.10131    9.60489   6.466 8.49e-08 ***
+## Agriculture      -0.15462    0.06819  -2.267  0.02857 *  
+## Education        -0.98026    0.14814  -6.617 5.14e-08 ***
+## Catholic          0.12467    0.02889   4.315 9.50e-05 ***
+## Infant.Mortality  1.07844    0.38187   2.824  0.00722 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 7.168 on 42 degrees of freedom
+## Multiple R-squared:  0.6993, Adjusted R-squared:  0.6707 
+## F-statistic: 24.42 on 4 and 42 DF,  p-value: 1.717e-10
+\end{verbatim}
+
+\textbf{Ejemplo 2:} O podemos usar el paquete \emph{olsrr}. Base de datos \texttt{surgical}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modelo\_completo\_sur}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{., surgical)}
+\FunctionTok{ols\_step\_forward\_aic}\NormalTok{(modelo\_completo\_sur, }\AttributeTok{details =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Forward Selection Method 
+## ------------------------
+## 
+## Candidate Terms: 
+## 
+## 1. bcs 
+## 2. pindex 
+## 3. enzyme_test 
+## 4. liver_test 
+## 5. age 
+## 6. gender 
+## 7. alc_mod 
+## 8. alc_heavy 
+## 
+## 
+## Step     => 0 
+## Model    => y ~ 1 
+## AIC      => 802.606 
+## 
+## Initiating stepwise selection... 
+## 
+##                        Table: Adding New Variables                        
+## -------------------------------------------------------------------------
+## Predictor      DF      AIC        SBC       SBIC        R2       Adj. R2  
+## -------------------------------------------------------------------------
+## liver_test      1    771.875    777.842    616.009    0.45454     0.44405 
+## enzyme_test     1    782.629    788.596    626.220    0.33435     0.32154 
+## pindex          1    794.100    800.067    637.196    0.17680     0.16097 
+## alc_heavy       1    794.301    800.268    637.389    0.17373     0.15784 
+## bcs             1    797.697    803.664    640.655    0.12010     0.10318 
+## alc_mod         1    802.828    808.795    645.601    0.03239     0.01378 
+## gender          1    802.956    808.923    645.725    0.03009     0.01143 
+## age             1    803.834    809.801    646.572    0.01420    -0.00476 
+## -------------------------------------------------------------------------
+## 
+## Step     => 1 
+## Added    => liver_test 
+## Model    => y ~ liver_test 
+## AIC      => 771.8753 
+## 
+##                       Table: Adding New Variables                        
+## ------------------------------------------------------------------------
+## Predictor      DF      AIC        SBC       SBIC        R2       Adj. R2 
+## ------------------------------------------------------------------------
+## alc_heavy       1    761.439    769.395    605.506    0.56674    0.54975 
+## enzyme_test     1    762.077    770.033    606.090    0.56159    0.54440 
+## pindex          1    770.387    778.343    613.737    0.48866    0.46861 
+## alc_mod         1    771.141    779.097    614.435    0.48147    0.46113 
+## gender          1    773.802    781.758    616.901    0.45528    0.43391 
+## age             1    773.831    781.787    616.928    0.45498    0.43361 
+## bcs             1    773.867    781.823    616.961    0.45462    0.43323 
+## ------------------------------------------------------------------------
+## 
+## Step     => 2 
+## Added    => alc_heavy 
+## Model    => y ~ liver_test + alc_heavy 
+## AIC      => 761.4394 
+## 
+##                       Table: Adding New Variables                        
+## ------------------------------------------------------------------------
+## Predictor      DF      AIC        SBC       SBIC        R2       Adj. R2 
+## ------------------------------------------------------------------------
+## enzyme_test     1    750.509    760.454    595.297    0.65900    0.63854 
+## pindex          1    756.125    766.070    600.225    0.62163    0.59892 
+## bcs             1    763.063    773.008    606.379    0.56975    0.54394 
+## age             1    763.110    773.055    606.421    0.56938    0.54354 
+## alc_mod         1    763.428    773.373    606.704    0.56683    0.54084 
+## gender          1    763.433    773.378    606.709    0.56679    0.54080 
+## ------------------------------------------------------------------------
+## 
+## Step     => 3 
+## Added    => enzyme_test 
+## Model    => y ~ liver_test + alc_heavy + enzyme_test 
+## AIC      => 750.5089 
+## 
+##                      Table: Adding New Variables                       
+## ----------------------------------------------------------------------
+## Predictor    DF      AIC        SBC       SBIC        R2       Adj. R2 
+## ----------------------------------------------------------------------
+## pindex        1    735.715    747.649    582.943    0.75015    0.72975 
+## bcs           1    750.782    762.716    595.377    0.66973    0.64277 
+## alc_mod       1    752.403    764.337    596.743    0.65967    0.63189 
+## age           1    752.416    764.350    596.755    0.65959    0.63180 
+## gender        1    752.509    764.443    596.833    0.65900    0.63116 
+## ----------------------------------------------------------------------
+## 
+## Step     => 4 
+## Added    => pindex 
+## Model    => y ~ liver_test + alc_heavy + enzyme_test + pindex 
+## AIC      => 735.7146 
+## 
+##                      Table: Adding New Variables                       
+## ----------------------------------------------------------------------
+## Predictor    DF      AIC        SBC       SBIC        R2       Adj. R2 
+## ----------------------------------------------------------------------
+## bcs           1    730.620    744.543    579.638    0.78091    0.75808 
+## age           1    737.680    751.603    585.012    0.75030    0.72429 
+## gender        1    737.712    751.635    585.036    0.75016    0.72413 
+## alc_mod       1    737.713    751.636    585.037    0.75015    0.72413 
+## ----------------------------------------------------------------------
+## 
+## Step     => 5 
+## Added    => bcs 
+## Model    => y ~ liver_test + alc_heavy + enzyme_test + pindex + bcs 
+## AIC      => 730.6204 
+## 
+##                      Table: Adding New Variables                       
+## ----------------------------------------------------------------------
+## Predictor    DF      AIC        SBC       SBIC        R2       Adj. R2 
+## ----------------------------------------------------------------------
+## age           1    732.494    748.406    581.938    0.78142    0.75351 
+## gender        1    732.551    748.463    581.978    0.78119    0.75325 
+## alc_mod       1    732.614    748.526    582.023    0.78093    0.75297 
+## ----------------------------------------------------------------------
+## 
+## 
+## No more variables to be added.
+## 
+## Variables Selected: 
+## 
+## => liver_test 
+## => alc_heavy 
+## => enzyme_test 
+## => pindex 
+## => bcs
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## 
+##                               Stepwise Summary                              
+## --------------------------------------------------------------------------
+## Step    Variable         AIC        SBC       SBIC        R2       Adj. R2 
+## --------------------------------------------------------------------------
+##  0      Base Model     802.606    806.584    646.794    0.00000    0.00000 
+##  1      liver_test     771.875    777.842    616.009    0.45454    0.44405 
+##  2      alc_heavy      761.439    769.395    605.506    0.56674    0.54975 
+##  3      enzyme_test    750.509    760.454    595.297    0.65900    0.63854 
+##  4      pindex         735.715    747.649    582.943    0.75015    0.72975 
+##  5      bcs            730.620    744.543    579.638    0.78091    0.75808 
+## --------------------------------------------------------------------------
+## 
+## Final Model Output 
+## ------------------
+## 
+##                            Model Summary                            
+## -------------------------------------------------------------------
+## R                         0.884       RMSE                 184.276 
+## R-Squared                 0.781       MSE                33957.712 
+## Adj. R-Squared            0.758       Coef. Var             27.839 
+## Pred R-Squared            0.700       AIC                  730.620 
+## MAE                     137.656       SBC                  744.543 
+## -------------------------------------------------------------------
+##  RMSE: Root Mean Square Error 
+##  MSE: Mean Square Error 
+##  MAE: Mean Absolute Error 
+##  AIC: Akaike Information Criteria 
+##  SBC: Schwarz Bayesian Criteria 
+## 
+##                                  ANOVA                                  
+## -----------------------------------------------------------------------
+##                    Sum of                                              
+##                   Squares        DF    Mean Square      F         Sig. 
+## -----------------------------------------------------------------------
+## Regression    6535804.090         5    1307160.818    34.217    0.0000 
+## Residual      1833716.447        48      38202.426                     
+## Total         8369520.537        53                                    
+## -----------------------------------------------------------------------
+## 
+##                                       Parameter Estimates                                        
+## ------------------------------------------------------------------------------------------------
+##       model         Beta    Std. Error    Std. Beta      t        Sig         lower       upper 
+## ------------------------------------------------------------------------------------------------
+## (Intercept)    -1178.330       208.682                 -5.647    0.000    -1597.914    -758.746 
+##  liver_test       58.064        40.144        0.156     1.446    0.155      -22.652     138.779 
+##   alc_heavy      317.848        71.634        0.314     4.437    0.000      173.818     461.878 
+## enzyme_test        9.748         1.656        0.521     5.887    0.000        6.419      13.077 
+##      pindex        8.924         1.808        0.380     4.935    0.000        5.288      12.559 
+##         bcs       59.864        23.060        0.241     2.596    0.012       13.498     106.230 
+## ------------------------------------------------------------------------------------------------
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ols\_step\_backward\_aic}\NormalTok{(modelo\_completo\_sur)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 
+##                              Stepwise Summary                              
+## -------------------------------------------------------------------------
+## Step    Variable        AIC        SBC       SBIC        R2       Adj. R2 
+## -------------------------------------------------------------------------
+##  0      Full Model    736.390    756.280    586.665    0.78184    0.74305 
+##  1      alc_mod       734.407    752.308    583.884    0.78177    0.74856 
+##  2      gender        732.494    748.406    581.290    0.78142    0.75351 
+##  3      age           730.620    744.543    578.844    0.78091    0.75808 
+## -------------------------------------------------------------------------
+## 
+## Final Model Output 
+## ------------------
+## 
+##                            Model Summary                            
+## -------------------------------------------------------------------
+## R                         0.884       RMSE                 184.276 
+## R-Squared                 0.781       MSE                33957.712 
+## Adj. R-Squared            0.758       Coef. Var             27.839 
+## Pred R-Squared            0.700       AIC                  730.620 
+## MAE                     137.656       SBC                  744.543 
+## -------------------------------------------------------------------
+##  RMSE: Root Mean Square Error 
+##  MSE: Mean Square Error 
+##  MAE: Mean Absolute Error 
+##  AIC: Akaike Information Criteria 
+##  SBC: Schwarz Bayesian Criteria 
+## 
+##                                  ANOVA                                  
+## -----------------------------------------------------------------------
+##                    Sum of                                              
+##                   Squares        DF    Mean Square      F         Sig. 
+## -----------------------------------------------------------------------
+## Regression    6535804.090         5    1307160.818    34.217    0.0000 
+## Residual      1833716.447        48      38202.426                     
+## Total         8369520.537        53                                    
+## -----------------------------------------------------------------------
+## 
+##                                       Parameter Estimates                                        
+## ------------------------------------------------------------------------------------------------
+##       model         Beta    Std. Error    Std. Beta      t        Sig         lower       upper 
+## ------------------------------------------------------------------------------------------------
+## (Intercept)    -1178.330       208.682                 -5.647    0.000    -1597.914    -758.746 
+##         bcs       59.864        23.060        0.241     2.596    0.012       13.498     106.230 
+##      pindex        8.924         1.808        0.380     4.935    0.000        5.288      12.559 
+## enzyme_test        9.748         1.656        0.521     5.887    0.000        6.419      13.077 
+##  liver_test       58.064        40.144        0.156     1.446    0.155      -22.652     138.779 
+##   alc_heavy      317.848        71.634        0.314     4.437    0.000      173.818     461.878 
+## ------------------------------------------------------------------------------------------------
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ols\_step\_forward\_aic}\NormalTok{(modelo\_completo\_sur)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 
+##                               Stepwise Summary                              
+## --------------------------------------------------------------------------
+## Step    Variable         AIC        SBC       SBIC        R2       Adj. R2 
+## --------------------------------------------------------------------------
+##  0      Base Model     802.606    806.584    646.794    0.00000    0.00000 
+##  1      liver_test     771.875    777.842    616.009    0.45454    0.44405 
+##  2      alc_heavy      761.439    769.395    605.506    0.56674    0.54975 
+##  3      enzyme_test    750.509    760.454    595.297    0.65900    0.63854 
+##  4      pindex         735.715    747.649    582.943    0.75015    0.72975 
+##  5      bcs            730.620    744.543    579.638    0.78091    0.75808 
+## --------------------------------------------------------------------------
+## 
+## Final Model Output 
+## ------------------
+## 
+##                            Model Summary                            
+## -------------------------------------------------------------------
+## R                         0.884       RMSE                 184.276 
+## R-Squared                 0.781       MSE                33957.712 
+## Adj. R-Squared            0.758       Coef. Var             27.839 
+## Pred R-Squared            0.700       AIC                  730.620 
+## MAE                     137.656       SBC                  744.543 
+## -------------------------------------------------------------------
+##  RMSE: Root Mean Square Error 
+##  MSE: Mean Square Error 
+##  MAE: Mean Absolute Error 
+##  AIC: Akaike Information Criteria 
+##  SBC: Schwarz Bayesian Criteria 
+## 
+##                                  ANOVA                                  
+## -----------------------------------------------------------------------
+##                    Sum of                                              
+##                   Squares        DF    Mean Square      F         Sig. 
+## -----------------------------------------------------------------------
+## Regression    6535804.090         5    1307160.818    34.217    0.0000 
+## Residual      1833716.447        48      38202.426                     
+## Total         8369520.537        53                                    
+## -----------------------------------------------------------------------
+## 
+##                                       Parameter Estimates                                        
+## ------------------------------------------------------------------------------------------------
+##       model         Beta    Std. Error    Std. Beta      t        Sig         lower       upper 
+## ------------------------------------------------------------------------------------------------
+## (Intercept)    -1178.330       208.682                 -5.647    0.000    -1597.914    -758.746 
+##  liver_test       58.064        40.144        0.156     1.446    0.155      -22.652     138.779 
+##   alc_heavy      317.848        71.634        0.314     4.437    0.000      173.818     461.878 
+## enzyme_test        9.748         1.656        0.521     5.887    0.000        6.419      13.077 
+##      pindex        8.924         1.808        0.380     4.935    0.000        5.288      12.559 
+##         bcs       59.864        23.060        0.241     2.596    0.012       13.498     106.230 
+## ------------------------------------------------------------------------------------------------
+\end{verbatim}
+
+Ojo: el parámetro \emph{details=T} nos dará en detalle el proceso con el que se llegó al modelo correspondiente. También hay que tener en cuenta que podríamos llegar a modelos diferentes si usamos métodos diferentes.
+
+Si podemos llegar a resultados diferentes, ¿cómo sabemos cuál es el mejor modelo?.
+
+Recordemos que estos métodos se basan en UNA SOLA estadística para ir mejorando el modelo, de manera que, aunque tengamos el modelo con el AIC menor, este podría no ser el mejor en términos del cumplimiento de los supuestos.
+
+\textbf{Ejemplo 3} Veamos con mas detalle el modelo de \emph{cement.txt}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Modelo elegido por el algoritmo}
+\NormalTok{modelo.bueno}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{.}\SpecialCharTok{{-}}\NormalTok{x3, cemento)}
+\FunctionTok{summary}\NormalTok{(modelo.bueno)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ . - x3, data = cemento)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.0919 -1.8016  0.2562  1.2818  3.8982 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  71.6483    14.1424   5.066 0.000675 ***
+## x1            1.4519     0.1170  12.410 5.78e-07 ***
+## x2            0.4161     0.1856   2.242 0.051687 .  
+## x4           -0.2365     0.1733  -1.365 0.205395    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.309 on 9 degrees of freedom
+## Multiple R-squared:  0.9823, Adjusted R-squared:  0.9764 
+## F-statistic: 166.8 on 3 and 9 DF,  p-value: 3.323e-08
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Modelo sin x3 y x4}
+\NormalTok{modelo}\FloatTok{.12}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{x1}\SpecialCharTok{+}\NormalTok{x2, cemento)}
+\FunctionTok{summary}\NormalTok{(modelo}\FloatTok{.12}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = cemento)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -2.893 -1.574 -1.302  1.363  4.048 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 52.57735    2.28617   23.00 5.46e-10 ***
+## x1           1.46831    0.12130   12.11 2.69e-07 ***
+## x2           0.66225    0.04585   14.44 5.03e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.406 on 10 degrees of freedom
+## Multiple R-squared:  0.9787, Adjusted R-squared:  0.9744 
+## F-statistic: 229.5 on 2 and 10 DF,  p-value: 4.407e-09
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Modelo sin x3 y x2}
+\NormalTok{modelo}\FloatTok{.14}\OtherTok{\textless{}{-}}\FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{x1}\SpecialCharTok{+}\NormalTok{x4, cemento)}
+\FunctionTok{summary}\NormalTok{(modelo}\FloatTok{.14}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = y ~ x1 + x4, data = cemento)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -5.0234 -1.4737  0.1371  1.7305  3.7701 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 103.09738    2.12398   48.54 3.32e-13 ***
+## x1            1.43996    0.13842   10.40 1.11e-06 ***
+## x4           -0.61395    0.04864  -12.62 1.81e-07 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.734 on 10 degrees of freedom
+## Multiple R-squared:  0.9725, Adjusted R-squared:  0.967 
+## F-statistic: 176.6 on 2 and 10 DF,  p-value: 1.581e-08
+\end{verbatim}
+
+Observamos que en el modelo que elige el algoritmo, la variable X4 no es significativa, y por el diagrama de disperisón vemos que está correlacionada con X2, por ello decidimos analizar el modelo eliminando X2 y X4. En ambos modelos las variables son significativas y \(R^2\) es alta.
+
+Comparemos su AIC
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{AIC}\NormalTok{(modelo.bueno, modelo}\FloatTok{.12}\NormalTok{, modelo}\FloatTok{.14}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              df      AIC
+## modelo.bueno  5 63.86629
+## modelo.12     4 64.31239
+## modelo.14     4 67.63411
+\end{verbatim}
+
+Entre los tres, preferimos al \emph{modelo.12} ya que es el segundo en \emph{R\^{}2}, todas las variables son significativas y, aunque no tiene el mínimo AIC, sí es muy parecido y es menor que el AIC del \emph{modelo.14}. Es decir, en conjunto es el \emph{modelo.12} es el que mejor cumple los supuestos y tiene buenas estadísticas.
+
+\subsubsection{Ejercicios}\label{ejercicios-4}
+
+\textbf{Ejercicio 1:} Para los datos de rendimiento de gasolina. Aplica los tres métodos vistos de selección de modelos. Compara los resultados y especifica cual sería el mejor modelo con cuales estadísticas.
 
 \chapter{Análisis de Componentes Principales}\label{anuxe1lisis-de-componentes-principales}
 
