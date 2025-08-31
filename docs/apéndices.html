@@ -53,6 +53,70 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -139,9 +203,16 @@
 <ul>
 <li class="chapter" data-level="7.1" data-path="06-Apendices.html"><a href="#introducci%C3%B3n-a-r"><i class="fa fa-check"></i><b>7.1</b> Introducción a R</a></li>
 <li class="chapter" data-level="7.2" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>7.2</b> Git + Github</a></li>
-<li class="chapter" data-level="7.3" data-path="06-Apendices.html"><a href="#gr%C3%A1ficas-multivariadas"><i class="fa fa-check"></i><b>7.3</b> Gráficas Multivariadas</a></li>
-<li class="chapter" data-level="7.4" data-path="06-Apendices.html"><a href="#escalas-de-medici%C3%B3n"><i class="fa fa-check"></i><b>7.4</b> Escalas de Medición</a></li>
-<li class="chapter" data-level="7.5" data-path="apéndices.html"><a href="apéndices.html#valores-faltantes"><i class="fa fa-check"></i><b>7.5</b> Valores Faltantes</a></li>
+<li class="chapter" data-level="7.3" data-path="apéndices.html"><a href="apéndices.html#correlaciones-y-distancias"><i class="fa fa-check"></i><b>7.3</b> Correlaciones y distancias</a></li>
+<li class="chapter" data-level="7.4" data-path="apéndices.html"><a href="apéndices.html#plots-multivariados"><i class="fa fa-check"></i><b>7.4</b> Plots Multivariados</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="apéndices.html"><a href="apéndices.html#caritas-de-chernoff"><i class="fa fa-check"></i><b>7.4.1</b> Caritas de Chernoff</a></li>
+<li class="chapter" data-level="7.4.2" data-path="apéndices.html"><a href="apéndices.html#curvas-de-andrew"><i class="fa fa-check"></i><b>7.4.2</b> Curvas de Andrew</a></li>
+<li class="chapter" data-level="7.4.3" data-path="06-Apendices.html"><a href="#gr%C3%A1ficos-de-paralelas"><i class="fa fa-check"></i><b>7.4.3</b> Gráficos de Paralelas</a></li>
+<li class="chapter" data-level="7.4.4" data-path="apéndices.html"><a href="apéndices.html#estrellas"><i class="fa fa-check"></i><b>7.4.4</b> Estrellas</a></li>
+<li class="chapter" data-level="7.4.5" data-path="apéndices.html"><a href="apéndices.html#plots-3d"><i class="fa fa-check"></i><b>7.4.5</b> Plots 3D</a></li>
+<li class="chapter" data-level="7.4.6" data-path="apéndices.html"><a href="apéndices.html#ejercicios-5"><i class="fa fa-check"></i><b>7.4.6</b> Ejercicios</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/" target="blank">Published with bookdown</a></li>
@@ -178,15 +249,159 @@
 <li>Conectar R con Git y Github: <a href="https://r-ladies-morelia.github.io/blog/conectar/">Link</a></li>
 </ul>
 </div>
-<div id="gráficas-multivariadas" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> Gráficas Multivariadas<a href="#gr%C3%A1ficas-multivariadas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="correlaciones-y-distancias" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Correlaciones y distancias<a href="apéndices.html#correlaciones-y-distancias" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Con los siguientes dos paquetes se pueden realizar los plots de las matrices de correlaciones y distancias.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="apéndices.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb1-2"><a href="apéndices.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="apéndices.html#cb2-1" tabindex="-1"></a>cor.mat_all <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">data.matrix</span>(iris[,<span class="sc">-</span><span class="dv">5</span>]), <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span>
+<span id="cb2-2"><a href="apéndices.html#cb2-2" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="apéndices.html#cb2-3" tabindex="-1"></a>corplot_all <span class="ot">&lt;-</span> <span class="fu">corrplot</span>(cor.mat_all, <span class="at">method=</span><span class="st">&quot;shade&quot;</span>, <span class="at">tl.col =</span> <span class="st">&quot;black&quot;</span>, <span class="at">tl.srt =</span> <span class="dv">45</span>, </span>
+<span id="cb2-4"><a href="apéndices.html#cb2-4" tabindex="-1"></a>                        <span class="at">number.cex =</span> <span class="fl">0.4</span>, <span class="at">addCoef.col =</span> <span class="st">&quot;black&quot;</span>,<span class="at">order =</span> <span class="st">&quot;AOE&quot;</span>,<span class="at">type =</span> <span class="st">&quot;upper&quot;</span>,<span class="at">addshade =</span> <span class="st">&quot;all&quot;</span>, <span class="at">diag =</span> F)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
-<div id="escalas-de-medición" class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Escalas de Medición<a href="#escalas-de-medici%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="plots-multivariados" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Plots Multivariados<a href="apéndices.html#plots-multivariados" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="caritas-de-chernoff" class="section level3 hasAnchor" number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> Caritas de Chernoff<a href="apéndices.html#caritas-de-chernoff" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Instala el paquete <code>aplpack</code> y carga la base de datos <code>iris</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="apéndices.html#cb3-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;aplpack&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="apéndices.html#cb4-1" tabindex="-1"></a><span class="fu">library</span>(aplpack)</span>
+<span id="cb4-2"><a href="apéndices.html#cb4-2" tabindex="-1"></a><span class="fu">data</span>(iris)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="apéndices.html#cb5-1" tabindex="-1"></a><span class="fu">faces</span>(iris[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">51</span>,<span class="dv">101</span>),<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],</span>
+<span id="cb5-2"><a href="apéndices.html#cb5-2" tabindex="-1"></a>      <span class="at">nrow.plot =</span> <span class="dv">1</span>, </span>
+<span id="cb5-3"><a href="apéndices.html#cb5-3" tabindex="-1"></a>      <span class="at">ncol.plot =</span> <span class="dv">3</span>, </span>
+<span id="cb5-4"><a href="apéndices.html#cb5-4" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;La primer flor de cada especie&quot;</span>, <span class="at">print.info =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre><code>## effect of variables:
+##  modified item       Var           
+##  &quot;height of face   &quot; &quot;Sepal.Length&quot;
+##  &quot;width of face    &quot; &quot;Sepal.Width&quot; 
+##  &quot;structure of face&quot; &quot;Petal.Length&quot;
+##  &quot;height of mouth  &quot; &quot;Petal.Width&quot; 
+##  &quot;width of mouth   &quot; &quot;Sepal.Length&quot;
+##  &quot;smiling          &quot; &quot;Sepal.Width&quot; 
+##  &quot;height of eyes   &quot; &quot;Petal.Length&quot;
+##  &quot;width of eyes    &quot; &quot;Petal.Width&quot; 
+##  &quot;height of hair   &quot; &quot;Sepal.Length&quot;
+##  &quot;width of hair   &quot;  &quot;Sepal.Width&quot; 
+##  &quot;style of hair   &quot;  &quot;Petal.Length&quot;
+##  &quot;height of nose  &quot;  &quot;Petal.Width&quot; 
+##  &quot;width of nose   &quot;  &quot;Sepal.Length&quot;
+##  &quot;width of ear    &quot;  &quot;Sepal.Width&quot; 
+##  &quot;height of ear   &quot;  &quot;Petal.Length&quot;</code></pre>
+<p>Para los elementos de color de las caras, los colores son encontrados al promediar los conjuntos de variables: (7,8)-eyes:iris, (1,2,3)-lips, (14,15)-ears, (12,13)-nose, (9,10,11)-hair, (1,2)-face (From <code>?faces</code>).</p>
+<p>Grafiquemos las primeras 10 flores de cada especie:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="apéndices.html#cb7-1" tabindex="-1"></a><span class="fu">faces</span>(iris[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">51</span><span class="sc">:</span><span class="dv">60</span>,<span class="dv">101</span><span class="sc">:</span><span class="dv">110</span>),<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],</span>
+<span id="cb7-2"><a href="apéndices.html#cb7-2" tabindex="-1"></a>      <span class="at">nrow.plot =</span> <span class="dv">3</span>, </span>
+<span id="cb7-3"><a href="apéndices.html#cb7-3" tabindex="-1"></a>      <span class="at">ncol.plot =</span> <span class="dv">10</span>, </span>
+<span id="cb7-4"><a href="apéndices.html#cb7-4" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;Las primeras 10 flores de cada especie&quot;</span>, <span class="at">print.info =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Ahora grafiquemos las primeras 5:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="apéndices.html#cb8-1" tabindex="-1"></a><span class="fu">faces</span>(iris[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">51</span><span class="sc">:</span><span class="dv">55</span>,<span class="dv">101</span><span class="sc">:</span><span class="dv">105</span>),<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],</span>
+<span id="cb8-2"><a href="apéndices.html#cb8-2" tabindex="-1"></a>      <span class="at">nrow.plot =</span> <span class="dv">3</span>, </span>
+<span id="cb8-3"><a href="apéndices.html#cb8-3" tabindex="-1"></a>      <span class="at">ncol.plot =</span> <span class="dv">5</span>, </span>
+<span id="cb8-4"><a href="apéndices.html#cb8-4" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;Las primeras 5 flores de cada especie&quot;</span>, <span class="at">print.info =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Aquí podemos notar que la carita 54 es muy diferente a las demás de su especie- La carita 102 se parece más a la de la especie 55 que a las suyas. El pelo de la primera especie es muy diferente a los de las otras especies.</p>
+<p>Es muy “fácil” hacer grupos a ojo.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="apéndices.html#cb9-1" tabindex="-1"></a><span class="fu">apply</span>(iris[ ,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],<span class="dv">2</span>,max)</span></code></pre></div>
+<pre><code>## Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+##          7.9          4.4          6.9          2.5</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="apéndices.html#cb11-1" tabindex="-1"></a><span class="fu">apply</span>(iris[ ,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],<span class="dv">2</span>,min)</span></code></pre></div>
+<pre><code>## Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+##          4.3          2.0          1.0          0.1</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="apéndices.html#cb13-1" tabindex="-1"></a>chico<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>,.<span class="dv">05</span>) <span class="co"># Valores más chicos de las 4 variables.</span></span>
+<span id="cb13-2"><a href="apéndices.html#cb13-2" tabindex="-1"></a>grande<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">3</span>) <span class="co"># Valores más grandes de las 4 variables.</span></span>
+<span id="cb13-3"><a href="apéndices.html#cb13-3" tabindex="-1"></a><span class="fu">faces</span>(<span class="fu">rbind</span>(iris[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">51</span><span class="sc">:</span><span class="dv">60</span>,<span class="dv">101</span><span class="sc">:</span><span class="dv">110</span>),<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],chico,grande), <span class="at">nrow.plot=</span><span class="dv">5</span>, <span class="at">ncol.plot=</span><span class="dv">10</span>,<span class="at">main=</span><span class="st">&quot;Primeros 10 de cada especie + chico + grande&quot;</span> )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre><code>## effect of variables:
+##  modified item       Var           
+##  &quot;height of face   &quot; &quot;Sepal.Length&quot;
+##  &quot;width of face    &quot; &quot;Sepal.Width&quot; 
+##  &quot;structure of face&quot; &quot;Petal.Length&quot;
+##  &quot;height of mouth  &quot; &quot;Petal.Width&quot; 
+##  &quot;width of mouth   &quot; &quot;Sepal.Length&quot;
+##  &quot;smiling          &quot; &quot;Sepal.Width&quot; 
+##  &quot;height of eyes   &quot; &quot;Petal.Length&quot;
+##  &quot;width of eyes    &quot; &quot;Petal.Width&quot; 
+##  &quot;height of hair   &quot; &quot;Sepal.Length&quot;
+##  &quot;width of hair   &quot;  &quot;Sepal.Width&quot; 
+##  &quot;style of hair   &quot;  &quot;Petal.Length&quot;
+##  &quot;height of nose  &quot;  &quot;Petal.Width&quot; 
+##  &quot;width of nose   &quot;  &quot;Sepal.Length&quot;
+##  &quot;width of ear    &quot;  &quot;Sepal.Width&quot; 
+##  &quot;height of ear   &quot;  &quot;Petal.Length&quot;</code></pre>
+<p><strong>Ejercicio:</strong> Explora el siguiente plot, ¿porqué sonrisas?.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="apéndices.html#cb15-1" tabindex="-1"></a><span class="fu">faces</span>(<span class="fu">cbind</span>(iris[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>],<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="fu">rep</span>(<span class="dv">3</span>,<span class="dv">1</span>)), <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>),<span class="fu">rep</span>(<span class="dv">5</span>,<span class="dv">3</span>))),</span>
+<span id="cb15-2"><a href="apéndices.html#cb15-2" tabindex="-1"></a>      <span class="at">nrow.plot =</span> <span class="dv">3</span>, </span>
+<span id="cb15-3"><a href="apéndices.html#cb15-3" tabindex="-1"></a>      <span class="at">ncol.plot =</span> <span class="dv">5</span>, </span>
+<span id="cb15-4"><a href="apéndices.html#cb15-4" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;¿Sonrisas?&quot;</span>, <span class="at">print.info =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Con las caritas de Chernoff es mejor la representación o visualización si se tienen pocos datos y se pueden representar hasta 15 variables.</p>
 </div>
-<div id="valores-faltantes" class="section level2 hasAnchor" number="7.5">
-<h2><span class="header-section-number">7.5</span> Valores Faltantes<a href="apéndices.html#valores-faltantes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="curvas-de-andrew" class="section level3 hasAnchor" number="7.4.2">
+<h3><span class="header-section-number">7.4.2</span> Curvas de Andrew<a href="apéndices.html#curvas-de-andrew" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Instala y carga el paquete <code>Andrews</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="apéndices.html#cb16-1" tabindex="-1"></a><span class="fu">install.packages</span>(andrews)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="apéndices.html#cb17-1" tabindex="-1"></a><span class="fu">library</span>(andrews)</span></code></pre></div>
+<pre><code>## See the package vignette with `vignette(&quot;andrews&quot;)`</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="apéndices.html#cb19-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb19-2"><a href="apéndices.html#cb19-2" tabindex="-1"></a><span class="fu">andrews</span>(iris, <span class="at">type =</span> <span class="dv">1</span>, <span class="at">clr =</span> <span class="dv">5</span>, <span class="at">ymax =</span> <span class="dv">3</span>, <span class="at">main =</span> <span class="st">&quot;Curva tipo 1&quot;</span>)</span>
+<span id="cb19-3"><a href="apéndices.html#cb19-3" tabindex="-1"></a><span class="fu">andrews</span>(iris, <span class="at">type =</span> <span class="dv">2</span>, <span class="at">clr =</span> <span class="dv">5</span>, <span class="at">ymax =</span> <span class="dv">3</span>, <span class="at">main =</span> <span class="st">&quot;Curva tipo 2&quot;</span>)</span>
+<span id="cb19-4"><a href="apéndices.html#cb19-4" tabindex="-1"></a><span class="fu">andrews</span>(iris, <span class="at">type =</span> <span class="dv">3</span>, <span class="at">clr =</span> <span class="dv">5</span>, <span class="at">ymax =</span> <span class="dv">3</span>, <span class="at">main =</span> <span class="st">&quot;Curva tipo 3&quot;</span>)</span>
+<span id="cb19-5"><a href="apéndices.html#cb19-5" tabindex="-1"></a><span class="fu">andrews</span>(iris, <span class="at">type =</span> <span class="dv">4</span>, <span class="at">clr =</span> <span class="dv">5</span>, <span class="at">ymax =</span> <span class="dv">3</span>, <span class="at">main =</span> <span class="st">&quot;Curva tipo 4&quot;</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Podemos observar que las especies de color rojo se separan más de las otras dos en casi todos los casos. Hay intersecciones en las curvas.</p>
+<p><strong>Ejercicio:</strong> Carga las bases de datos <code>mtcars</code> y <code>ChickWeight</code> y explora sus curvas de Andrews.</p>
+</div>
+<div id="gráficos-de-paralelas" class="section level3 hasAnchor" number="7.4.3">
+<h3><span class="header-section-number">7.4.3</span> Gráficos de Paralelas<a href="#gr%C3%A1ficos-de-paralelas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="apéndices.html#cb20-1" tabindex="-1"></a><span class="fu">library</span>(lattice)</span>
+<span id="cb20-2"><a href="apéndices.html#cb20-2" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb20-3"><a href="apéndices.html#cb20-3" tabindex="-1"></a><span class="fu">parallelplot</span>(<span class="sc">~</span>mtcars<span class="sc">|</span>mtcars<span class="sc">$</span>cyl, <span class="at">main=</span><span class="st">&quot;Plot de paralelas por Cilindros&quot;</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>En el eje Y podemos ver todas las variables. Los cruces reflejan correlaciones negativas entre las variables.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="apéndices.html#cb21-1" tabindex="-1"></a><span class="fu">parallelplot</span>(<span class="sc">~</span>mtcars[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)],<span class="at">col=</span><span class="fu">as.numeric</span>(mtcars<span class="sc">$</span>cyl)<span class="sc">-</span><span class="dv">3</span>,<span class="at">main=</span><span class="st">&quot;Plot de paralelas por Cilindros&quot;</span> )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>En este plot se pueden ver los grupos por colores, los que pesan poco tienen un mayor rendimiento. Cuando no hay cruces reflejan correlación positiva.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="apéndices.html#cb22-1" tabindex="-1"></a><span class="fu">parallelplot</span>(<span class="sc">~</span>mtcars[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)],<span class="at">col=</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Si calculamos la matriz de correlaciones, podemos ver que las variables con correlación negativa se reflejan aqui también.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="apéndices.html#cb23-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">cor</span>(mtcars[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)]),<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##        mpg  disp    hp  drat
+## mpg   1.00 -0.85 -0.78  0.68
+## disp -0.85  1.00  0.79 -0.71
+## hp   -0.78  0.79  1.00 -0.45
+## drat  0.68 -0.71 -0.45  1.00</code></pre>
+<p>Estos gráficos también dependen del orden de las variables.</p>
+<p><strong>Ejercicio:</strong> realiza dos plots de paralelas de la base de datos iris, uno divido por especie y otro donde el color vaya a la variable especie. ¿Qué puedes decir al respecto?</p>
+</div>
+<div id="estrellas" class="section level3 hasAnchor" number="7.4.4">
+<h3><span class="header-section-number">7.4.4</span> Estrellas<a href="apéndices.html#estrellas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="apéndices.html#cb25-1" tabindex="-1"></a><span class="fu">palette</span>(<span class="fu">rainbow</span>(<span class="dv">12</span>, <span class="at">s =</span> <span class="fl">0.6</span>, <span class="at">v =</span> <span class="fl">0.75</span>))</span>
+<span id="cb25-2"><a href="apéndices.html#cb25-2" tabindex="-1"></a><span class="fu">stars</span>(mtcars[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], <span class="at">len =</span> <span class="fl">0.8</span>, <span class="at">key.loc =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="fl">1.5</span>),</span>
+<span id="cb25-3"><a href="apéndices.html#cb25-3" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">&quot;Motor Trend Cars&quot;</span>, <span class="at">draw.segments =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>También se puede realizar un plot de radar.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="apéndices.html#cb26-1" tabindex="-1"></a><span class="fu">stars</span>(mtcars[, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], <span class="at">locations =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">radius =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb26-2"><a href="apéndices.html#cb26-2" tabindex="-1"></a>      <span class="at">key.loc =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">main =</span> <span class="st">&quot;Motor Trend Cars&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><strong>Ejercicio:</strong> Crea los plots de estrellas de la base de datos iris. ¿Qué puedes inferir de ellos?</p>
+</div>
+<div id="plots-3d" class="section level3 hasAnchor" number="7.4.5">
+<h3><span class="header-section-number">7.4.5</span> Plots 3D<a href="apéndices.html#plots-3d" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="apéndices.html#cb27-1" tabindex="-1"></a><span class="fu">attach</span>(iris)</span>
+<span id="cb27-2"><a href="apéndices.html#cb27-2" tabindex="-1"></a><span class="fu">cloud</span>(Sepal.Length<span class="sc">~</span>Sepal.Width<span class="sc">*</span>Petal.Length<span class="sc">|</span>Species,<span class="at">main=</span><span class="st">&quot;3D Scatterplot IRIS por Especie&quot;</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+</div>
+<div id="ejercicios-5" class="section level3 hasAnchor" number="7.4.6">
+<h3><span class="header-section-number">7.4.6</span> Ejercicios<a href="apéndices.html#ejercicios-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li>Carga la base de datos de marketing. Explora los plots multivariados y describe tus observaciones sobre las variables.</li>
+</ol>
 
+</div>
 </div>
 </div>
             </section>

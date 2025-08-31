@@ -50,3 +50,11 @@ git-github
 gráficas-multivariadas
 escalas-de-medición
 valores-faltantes
+correlaciones-y-distancias
+plots-multivariados
+caritas-de-chernoff
+curvas-de-andrew
+gráficos-de-paralelas
+estrellas
+plots-3d
+ejercicios-5
