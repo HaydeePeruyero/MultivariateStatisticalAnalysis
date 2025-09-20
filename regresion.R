@@ -436,9 +436,151 @@ SCE_X2X3 <- sum(anov$`Sum Sq`[2:3])
 df1 <- nrow(datos) - 2 -df2
 
 F_dos <-(SCE_X2X3 / df1) / (SSE_C / df2)
+
+
+
+
+## 
 F_dos
 
 pf(F_dos, df= 2, df2 = 28, lower.tail = FALSE)
 anov
 
 summary(modelo_completo)
+
+
+## H_0: \beta_3=0
+
+SCE_X3 <- anov$`Sum Sq`[3]
+SSE_C <- anov$`Sum Sq`[4]
+df2 <- anov$Df[4]
+df1 <- nrow(datos) - 3 - df2
+F_g <- (SCE_X3 / df1) / (SSE_C / df2)
+F_g 
+
+pf(F_g, df= df1, df2 = df2, lower.tail = FALSE)
+
+
+### Selección de modelos
+
+library(ggplot2)
+library(olsrr)
+library(leaps)
+library(GGally)
+
+
+cemento<-read.table("D:/Users/hayde/Documents/R_sites/MultivariateStatisticalAnalysis/data/cement.txt", 
+                    header = T, skip=5)
+ggpairs(cemento)
+
+modelo_completo <- lm(y ~ ., cemento, x= TRUE, y = TRUE)
+summary(modelo_completo)
+
+
+## AIC, CIS, C_p
+
+outs <- leaps(modelo_completo$x, cemento$y, int=FALSE)
+
+plot(outs$size, outs$Cp, log = "y", cex=0.3)
+lines(outs$size, outs$size)
+text(outs$size, outs$Cp, labels = row(outs$which), cex=0.5, pos=4)
+
+
+idx_best_rule <- which.min(abs(outs$Cp - outs$size))
+
+noms_x <- colnames(modelo_completo$x)
+
+vars_rule <- noms_x[ outs$which[idx_best_rule,]]
+vars_rule
+
+## 
+
+ejemplo <- ols_step_all_possible(modelo_completo)
+plot(ejemplo)
+
+
+
+### Selección paso a paso
+
+library(MASS)
+
+swiss
+
+modelo_completo <- lm(Fertility ~ . , swiss)
+
+summary(modelo_completo)
+paso_a_paso <- stepAIC(modelo_completo, direction = "both", trace=TRUE)
+
+summary(paso_a_paso)
+
+ols_step_forward_aic(modelo_completo, details = TRUE)
+
+
+### surgical
+
+
+modelo_completo_sur <- lm(y ~ ., surgical)
+summary(modelo_completo_sur)
+
+ols_step_forward_aic(modelo_completo_sur, details = TRUE)
+
+ols_step_backward_aic(modelo_completo_sur, details = TRUE)
+
+### Usar base de datos de cemento
+modelo_completo <- lm(y~., cemento)
+summary(modelo_completo)
+
+modelo.bueno <- lm(y ~ . -x3, cemento)
+summary(modelo.bueno)
+
+modelo.12 <- lm(y~x1+x2, cemento)
+
+summary(modelo.12)
+
+modelo.14 <- lm(y~x1+x4, cemento)
+summary(modelo.14)
+
+
+AIC(modelo.bueno, modelo.12, modelo.14)
+
+
+### Plots multivariados
+
+
+library(aplpack)
+
+data(iris)
+
+faces(iris[c(1,51,101),1:4],
+      nrow.plot = 1,
+      ncol.plot = 3,
+      main = "La primer flor de cada especie",
+      print.info = TRUE)
+
+faces(iris[c(1:10,51:60, 101:110), 1:4],
+      nrow.plot = 3,
+      ncol.plot = 10)
+
+
+## Curvas de Andrew
+
+library(andrews)
+
+andrews(iris, type=2, clr = 5, ymax = 3, 
+        main= "Curva tipo 1")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

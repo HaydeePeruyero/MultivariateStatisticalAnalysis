@@ -1,4 +1,4 @@
-tab:unnamed-chunk-40
+tab:rm41
 estadística-multivariada
 temario
 evaluación
@@ -47,9 +47,6 @@ análisis-de-discriminante
 apéndices
 introducción-a-r
 git-github
-gráficas-multivariadas
-escalas-de-medición
-valores-faltantes
 correlaciones-y-distancias
 plots-multivariados
 caritas-de-chernoff

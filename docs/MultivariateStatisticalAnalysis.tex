@@ -1,10 +1,11 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-%
 \documentclass[
 ]{book}
+\usepackage{xcolor}
 \usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
 \usepackage{iftex}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
@@ -35,7 +36,6 @@
 }{% if KOMA class
   \KOMAoptions{parskip=half}}
 \makeatother
-\usepackage{xcolor}
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -104,7 +104,8 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{5}
+\usepackage[]{natbib}
+\bibliographystyle{apalike}
 \usepackage{booktabs}
 \usepackage{amsthm}
 \makeatletter
@@ -113,8 +114,6 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
-\usepackage[]{natbib}
-\bibliographystyle{apalike}
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -409,7 +408,7 @@ Plot hotas de estudio vs puntaje sugerida
 ## `geom_smooth()` using formula = 'y ~ x'
 \end{verbatim}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-3-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm2-1.pdf}}
 
 ¿Se ajusta un modelo lineal? ¿Porqué?
 
@@ -577,7 +576,7 @@ Supuestos
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-7-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm6-1.pdf}}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
@@ -687,7 +686,7 @@ Solución
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-9-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm8-1.pdf}}
 
 \section{Estimación de parámetros}\label{estimaciuxf3n-de-paruxe1metros}
 
@@ -768,7 +767,7 @@ Veamos un gráfico de dispersión de los datos. ¿Qué observamos?
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-11-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm12-1.pdf}}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -1749,7 +1748,7 @@ Explica cómo se utilizan para elegir el modelo final.
 
 \begin{table}
 
-\caption{\label{tab:unnamed-chunk-40}Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas}
+\caption{\label{tab:rm41}Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas}
 \centering
 \begin{tabular}[t]{r|r|r}
 \hline
@@ -1816,7 +1815,7 @@ Plot
 ## `geom_smooth()` using formula = 'y ~ x'
 \end{verbatim}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-41-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm42-1.pdf}}
 
 Ahora, vamos a analizar algunos de los supuestos.
 
@@ -1856,7 +1855,7 @@ Plot
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-43-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm43-1-1.pdf}}
 
 Hay una fuerte correlación entre las variables, lo cual es un problema dado que las variables deberían ser independientes.
 
@@ -2010,7 +2009,7 @@ QQ-plot
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-48-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm48-1.pdf}}
 
 Otra forma de obtener este plot es la siguiente.
 
@@ -2022,7 +2021,7 @@ Plots supuestos
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-49-1.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-49-2.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-49-3.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-49-4.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm49-1.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm49-2.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm49-3.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm49-4.pdf}}
 
 El test de Shapiro-Wilks plantea la hipótesis nula que una muestra proviene de una distribución normal. Eligimos un nivel de significanza, por ejemplo \(0.05\), y tenemos una hipótesis alternativa que sostiene que la distribución no es normal. Tenemos entonces lo siguiente:
 
@@ -2081,7 +2080,7 @@ Plots
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-51-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm51-1.pdf}}
 
 En R, existe la función \texttt{bptest()}, que es el test de Breusch-Pagan para la heterocedasticidad. Esta función toma como entrada un modelo de regresión y devuelve el resultado de la prueba de hipótesis para la homocedasticidad de los residuos.
 
@@ -2197,7 +2196,7 @@ Plots finales
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-55-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm55-1.pdf}}
 
 Otras dos pruebas que se pueden usar son \texttt{fligner.test} y \texttt{leveneTest}.
 
@@ -2327,7 +2326,7 @@ Un modelo completo sería \(y_i = \beta_0 + \beta_1x_i + \epsilon_i\), el cual s
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-59-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm59-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2347,7 +2346,7 @@ Un modelo completo sería \(y_i = \beta_0 + \beta_1x_i + \epsilon_i\), el cual s
 ## `geom_smooth()` using formula = 'y ~ x'
 \end{verbatim}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-60-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm60-1.pdf}}
 Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso el modelo con menos parámetros o modelo reducido es el modelo que describirá la hipótesis nula \(H_0\). En regresión lineal simple, es común plantear \(H_0:\beta_1=0\), de manera que el modelo reducido es \(y_i=\beta_0+\epsilon_i\), es decir, cada valor \(y_i\) es función de una constante (la media) y un error, este modelo se vería como:
 
 \begin{Shaded}
@@ -2365,7 +2364,7 @@ Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso 
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-61-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm61-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2378,7 +2377,7 @@ Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso 
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-62-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm62-1.pdf}}
 
 ¿Cuál modelo es mejor? Debemos obtener los estimadores para cada modelo y la suma de cuadrados de los errores.
 
@@ -2787,7 +2786,7 @@ En este ejemplo veremos cómo aplicar el método de seleccion de modelos que imp
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-74-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm74-1.pdf}}
 
 A continuación ajustamos el modelo con TODAS las variables independientes y calculamos la estadística \(C_p\). Para facilitar la interpretación graficamos la \(C_p\) para cada modelo:
 
@@ -2802,7 +2801,7 @@ A continuación ajustamos el modelo con TODAS las variables independientes y cal
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-75-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm75-1.pdf}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2835,7 +2834,7 @@ Recordemos que nos interesan los modelos en los que \(C_p=p\).
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-77-1.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-77-2.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm77-1.pdf}} \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm77-2.pdf}}
 
 Observe que en los triángulos rojos aparecen los mejores modelos para cada \(p\) en función de la estadística correspondiente.
 
@@ -2872,7 +2871,7 @@ Observe que en los triángulos rojos aparecen los mejores modelos para cada \(p\
 \end{Highlighting}
 \end{Shaded}
 
-\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/unnamed-chunk-78-1.pdf}}
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/rm78-1.pdf}}
 
 La gráfica muestra los cuatro modelos y su \(C_p\), por ejemplo, el modelo que incluye al intercepto, a \(x_1\) y a \(x_2\) tiene una \(C_p\) cercana a 2.7.
 
@@ -3440,12 +3439,310 @@ Entre los tres, preferimos al \emph{modelo.12} ya que es el segundo en \emph{R\^
   Conectar R con Git y Github: \href{https://r-ladies-morelia.github.io/blog/conectar/}{Link}
 \end{itemize}
 
-\section{Gráficas Multivariadas}\label{gruxe1ficas-multivariadas}
+\section{Correlaciones y distancias}\label{correlaciones-y-distancias}
 
-\section{Escalas de Medición}\label{escalas-de-mediciuxf3n}
+Con los siguientes dos paquetes se pueden realizar los plots de las matrices de correlaciones y distancias.
 
-\section{Valores Faltantes}\label{valores-faltantes}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggcorrplot)}
+\FunctionTok{library}\NormalTok{(corrplot)}
+\end{Highlighting}
+\end{Shaded}
 
-  \bibliography{book.bib,packages.bib}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cor.mat\_all }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(}\FunctionTok{data.matrix}\NormalTok{(iris[,}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{]), }\AttributeTok{use=}\StringTok{"complete.obs"}\NormalTok{)}
+
+\NormalTok{corplot\_all }\OtherTok{\textless{}{-}} \FunctionTok{corrplot}\NormalTok{(cor.mat\_all, }\AttributeTok{method=}\StringTok{"shade"}\NormalTok{, }\AttributeTok{tl.col =} \StringTok{"black"}\NormalTok{, }\AttributeTok{tl.srt =} \DecValTok{45}\NormalTok{, }
+                        \AttributeTok{number.cex =} \FloatTok{0.4}\NormalTok{, }\AttributeTok{addCoef.col =} \StringTok{"black"}\NormalTok{,}\AttributeTok{order =} \StringTok{"AOE"}\NormalTok{,}\AttributeTok{type =} \StringTok{"upper"}\NormalTok{,}\AttributeTok{addshade =} \StringTok{"all"}\NormalTok{, }\AttributeTok{diag =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a2-1.pdf}}
+
+\section{Plots Multivariados}\label{plots-multivariados}
+
+\subsection{Caritas de Chernoff}\label{caritas-de-chernoff}
+
+Instala el paquete \texttt{aplpack} y carga la base de datos \texttt{iris}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"aplpack"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(aplpack)}
+\FunctionTok{data}\NormalTok{(iris)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{faces}\NormalTok{(iris[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{51}\NormalTok{,}\DecValTok{101}\NormalTok{),}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{],}
+      \AttributeTok{nrow.plot =} \DecValTok{1}\NormalTok{, }
+      \AttributeTok{ncol.plot =} \DecValTok{3}\NormalTok{, }
+      \AttributeTok{main =} \StringTok{"La primer flor de cada especie"}\NormalTok{, }\AttributeTok{print.info =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a5-1.pdf}}
+
+\begin{verbatim}
+## effect of variables:
+##  modified item       Var           
+##  "height of face   " "Sepal.Length"
+##  "width of face    " "Sepal.Width" 
+##  "structure of face" "Petal.Length"
+##  "height of mouth  " "Petal.Width" 
+##  "width of mouth   " "Sepal.Length"
+##  "smiling          " "Sepal.Width" 
+##  "height of eyes   " "Petal.Length"
+##  "width of eyes    " "Petal.Width" 
+##  "height of hair   " "Sepal.Length"
+##  "width of hair   "  "Sepal.Width" 
+##  "style of hair   "  "Petal.Length"
+##  "height of nose  "  "Petal.Width" 
+##  "width of nose   "  "Sepal.Length"
+##  "width of ear    "  "Sepal.Width" 
+##  "height of ear   "  "Petal.Length"
+\end{verbatim}
+
+Para los elementos de color de las caras, los colores son encontrados al promediar los conjuntos de variables: (7,8)-eyes:iris, (1,2,3)-lips, (14,15)-ears, (12,13)-nose, (9,10,11)-hair, (1,2)-face (From \texttt{?faces}).
+
+Grafiquemos las primeras 10 flores de cada especie:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{faces}\NormalTok{(iris[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{51}\SpecialCharTok{:}\DecValTok{60}\NormalTok{,}\DecValTok{101}\SpecialCharTok{:}\DecValTok{110}\NormalTok{),}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{],}
+      \AttributeTok{nrow.plot =} \DecValTok{3}\NormalTok{, }
+      \AttributeTok{ncol.plot =} \DecValTok{10}\NormalTok{, }
+      \AttributeTok{main =} \StringTok{"Las primeras 10 flores de cada especie"}\NormalTok{, }\AttributeTok{print.info =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a6-1.pdf}}
+
+Ahora grafiquemos las primeras 5:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{faces}\NormalTok{(iris[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,}\DecValTok{51}\SpecialCharTok{:}\DecValTok{55}\NormalTok{,}\DecValTok{101}\SpecialCharTok{:}\DecValTok{105}\NormalTok{),}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{],}
+      \AttributeTok{nrow.plot =} \DecValTok{3}\NormalTok{, }
+      \AttributeTok{ncol.plot =} \DecValTok{5}\NormalTok{, }
+      \AttributeTok{main =} \StringTok{"Las primeras 5 flores de cada especie"}\NormalTok{, }\AttributeTok{print.info =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a7-1.pdf}}
+
+Aquí podemos notar que la carita 54 es muy diferente a las demás de su especie- La carita 102 se parece más a la de la especie 55 que a las suyas. El pelo de la primera especie es muy diferente a los de las otras especies.
+
+Es muy ``fácil'' hacer grupos a ojo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{apply}\NormalTok{(iris[ ,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{],}\DecValTok{2}\NormalTok{,max)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+##          7.9          4.4          6.9          2.5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{apply}\NormalTok{(iris[ ,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{],}\DecValTok{2}\NormalTok{,min)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+##          4.3          2.0          1.0          0.1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{chico}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,.}\DecValTok{05}\NormalTok{) }\CommentTok{\# Valores más chicos de las 4 variables.}
+\NormalTok{grande}\OtherTok{\textless{}{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{3}\NormalTok{) }\CommentTok{\# Valores más grandes de las 4 variables.}
+\FunctionTok{faces}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(iris[}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{,}\DecValTok{51}\SpecialCharTok{:}\DecValTok{60}\NormalTok{,}\DecValTok{101}\SpecialCharTok{:}\DecValTok{110}\NormalTok{),}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{],chico,grande), }\AttributeTok{nrow.plot=}\DecValTok{5}\NormalTok{, }\AttributeTok{ncol.plot=}\DecValTok{10}\NormalTok{,}\AttributeTok{main=}\StringTok{"Primeros 10 de cada especie + chico + grande"}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a8-1.pdf}}
+
+\begin{verbatim}
+## effect of variables:
+##  modified item       Var           
+##  "height of face   " "Sepal.Length"
+##  "width of face    " "Sepal.Width" 
+##  "structure of face" "Petal.Length"
+##  "height of mouth  " "Petal.Width" 
+##  "width of mouth   " "Sepal.Length"
+##  "smiling          " "Sepal.Width" 
+##  "height of eyes   " "Petal.Length"
+##  "width of eyes    " "Petal.Width" 
+##  "height of hair   " "Sepal.Length"
+##  "width of hair   "  "Sepal.Width" 
+##  "style of hair   "  "Petal.Length"
+##  "height of nose  "  "Petal.Width" 
+##  "width of nose   "  "Sepal.Length"
+##  "width of ear    "  "Sepal.Width" 
+##  "height of ear   "  "Petal.Length"
+\end{verbatim}
+
+\textbf{Ejercicio:} Explora el siguiente plot, ¿porqué sonrisas?.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{faces}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(iris[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{,}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{],}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{,}\FunctionTok{rep}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{)), }\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{),}\FunctionTok{rep}\NormalTok{(}\DecValTok{5}\NormalTok{,}\DecValTok{3}\NormalTok{))),}
+      \AttributeTok{nrow.plot =} \DecValTok{3}\NormalTok{, }
+      \AttributeTok{ncol.plot =} \DecValTok{5}\NormalTok{, }
+      \AttributeTok{main =} \StringTok{"¿Sonrisas?"}\NormalTok{, }\AttributeTok{print.info =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a9-1.pdf}}
+
+Con las caritas de Chernoff es mejor la representación o visualización si se tienen pocos datos y se pueden representar hasta 15 variables.
+
+\subsection{Curvas de Andrew}\label{curvas-de-andrew}
+
+Instala y carga el paquete \texttt{Andrews}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(andrews)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(andrews)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## See the package vignette with `vignette("andrews")`
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{andrews}\NormalTok{(iris, }\AttributeTok{type =} \DecValTok{1}\NormalTok{, }\AttributeTok{clr =} \DecValTok{5}\NormalTok{, }\AttributeTok{ymax =} \DecValTok{3}\NormalTok{, }\AttributeTok{main =} \StringTok{"Curva tipo 1"}\NormalTok{)}
+\FunctionTok{andrews}\NormalTok{(iris, }\AttributeTok{type =} \DecValTok{2}\NormalTok{, }\AttributeTok{clr =} \DecValTok{5}\NormalTok{, }\AttributeTok{ymax =} \DecValTok{3}\NormalTok{, }\AttributeTok{main =} \StringTok{"Curva tipo 2"}\NormalTok{)}
+\FunctionTok{andrews}\NormalTok{(iris, }\AttributeTok{type =} \DecValTok{3}\NormalTok{, }\AttributeTok{clr =} \DecValTok{5}\NormalTok{, }\AttributeTok{ymax =} \DecValTok{3}\NormalTok{, }\AttributeTok{main =} \StringTok{"Curva tipo 3"}\NormalTok{)}
+\FunctionTok{andrews}\NormalTok{(iris, }\AttributeTok{type =} \DecValTok{4}\NormalTok{, }\AttributeTok{clr =} \DecValTok{5}\NormalTok{, }\AttributeTok{ymax =} \DecValTok{3}\NormalTok{, }\AttributeTok{main =} \StringTok{"Curva tipo 4"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a11-1.pdf}}
+
+Podemos observar que las especies de color rojo se separan más de las otras dos en casi todos los casos. Hay intersecciones en las curvas.
+
+\textbf{Ejercicio:} Carga las bases de datos \texttt{mtcars} y \texttt{ChickWeight} y explora sus curvas de Andrews.
+
+\subsection{Gráficos de Paralelas}\label{gruxe1ficos-de-paralelas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(lattice)}
+\FunctionTok{data}\NormalTok{(mtcars)}
+\FunctionTok{parallelplot}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{mtcars}\SpecialCharTok{|}\NormalTok{mtcars}\SpecialCharTok{$}\NormalTok{cyl, }\AttributeTok{main=}\StringTok{"Plot de paralelas por Cilindros"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a12-1.pdf}}
+
+En el eje Y podemos ver todas las variables. Los cruces reflejan correlaciones negativas entre las variables.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parallelplot}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{mtcars[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{)],}\AttributeTok{col=}\FunctionTok{as.numeric}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{cyl)}\SpecialCharTok{{-}}\DecValTok{3}\NormalTok{,}\AttributeTok{main=}\StringTok{"Plot de paralelas por Cilindros"}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a13-1.pdf}}
+
+En este plot se pueden ver los grupos por colores, los que pesan poco tienen un mayor rendimiento. Cuando no hay cruces reflejan correlación positiva.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{parallelplot}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{mtcars[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{)],}\AttributeTok{col=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a14-1.pdf}}
+
+Si calculamos la matriz de correlaciones, podemos ver que las variables con correlación negativa se reflejan aqui también.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(}\FunctionTok{cor}\NormalTok{(mtcars[,}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{)]),}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        mpg  disp    hp  drat
+## mpg   1.00 -0.85 -0.78  0.68
+## disp -0.85  1.00  0.79 -0.71
+## hp   -0.78  0.79  1.00 -0.45
+## drat  0.68 -0.71 -0.45  1.00
+\end{verbatim}
+
+Estos gráficos también dependen del orden de las variables.
+
+\textbf{Ejercicio:} realiza dos plots de paralelas de la base de datos iris, uno divido por especie y otro donde el color vaya a la variable especie. ¿Qué puedes decir al respecto?
+
+\subsection{Estrellas}\label{estrellas}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{palette}\NormalTok{(}\FunctionTok{rainbow}\NormalTok{(}\DecValTok{12}\NormalTok{, }\AttributeTok{s =} \FloatTok{0.6}\NormalTok{, }\AttributeTok{v =} \FloatTok{0.75}\NormalTok{))}
+\FunctionTok{stars}\NormalTok{(mtcars[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{7}\NormalTok{], }\AttributeTok{len =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{key.loc =} \FunctionTok{c}\NormalTok{(}\DecValTok{12}\NormalTok{, }\FloatTok{1.5}\NormalTok{),}
+      \AttributeTok{main =} \StringTok{"Motor Trend Cars"}\NormalTok{, }\AttributeTok{draw.segments =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a16-1.pdf}}
+
+También se puede realizar un plot de radar.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{stars}\NormalTok{(mtcars[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{7}\NormalTok{], }\AttributeTok{locations =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\AttributeTok{radius =} \ConstantTok{FALSE}\NormalTok{,}
+      \AttributeTok{key.loc =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{), }\AttributeTok{main =} \StringTok{"Motor Trend Cars"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a17-1.pdf}}
+
+\textbf{Ejercicio:} Crea los plots de estrellas de la base de datos iris. ¿Qué puedes inferir de ellos?
+
+\subsection{Plots 3D}\label{plots-3d}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{attach}\NormalTok{(iris)}
+\FunctionTok{cloud}\NormalTok{(Sepal.Length}\SpecialCharTok{\textasciitilde{}}\NormalTok{Sepal.Width}\SpecialCharTok{*}\NormalTok{Petal.Length}\SpecialCharTok{|}\NormalTok{Species,}\AttributeTok{main=}\StringTok{"3D Scatterplot IRIS por Especie"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a18-1.pdf}}
+
+\subsection{Ejercicios}\label{ejercicios-5}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Carga la base de datos de marketing. Explora los plots multivariados y describe tus observaciones sobre las variables.
+\end{enumerate}
+
+\bibliography{book.bib,packages.bib}
 
 \end{document}

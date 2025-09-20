@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -203,9 +204,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="7.1" data-path="01-Regresion_multiple.html"><a href="#introducci%C3%B3n-a-r"><i class="fa fa-check"></i><b>7.1</b> Introducción a R</a></li>
 <li class="chapter" data-level="7.2" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>7.2</b> Git + Github</a></li>
-<li class="chapter" data-level="7.3" data-path="01-Regresion_multiple.html"><a href="#gr%C3%A1ficas-multivariadas"><i class="fa fa-check"></i><b>7.3</b> Gráficas Multivariadas</a></li>
-<li class="chapter" data-level="7.4" data-path="01-Regresion_multiple.html"><a href="#escalas-de-medici%C3%B3n"><i class="fa fa-check"></i><b>7.4</b> Escalas de Medición</a></li>
-<li class="chapter" data-level="7.5" data-path="apéndices.html"><a href="apéndices.html#valores-faltantes"><i class="fa fa-check"></i><b>7.5</b> Valores Faltantes</a></li>
+<li class="chapter" data-level="7.3" data-path="apéndices.html"><a href="apéndices.html#correlaciones-y-distancias"><i class="fa fa-check"></i><b>7.3</b> Correlaciones y distancias</a></li>
+<li class="chapter" data-level="7.4" data-path="apéndices.html"><a href="apéndices.html#plots-multivariados"><i class="fa fa-check"></i><b>7.4</b> Plots Multivariados</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="apéndices.html"><a href="apéndices.html#caritas-de-chernoff"><i class="fa fa-check"></i><b>7.4.1</b> Caritas de Chernoff</a></li>
+<li class="chapter" data-level="7.4.2" data-path="apéndices.html"><a href="apéndices.html#curvas-de-andrew"><i class="fa fa-check"></i><b>7.4.2</b> Curvas de Andrew</a></li>
+<li class="chapter" data-level="7.4.3" data-path="01-Regresion_multiple.html"><a href="#gr%C3%A1ficos-de-paralelas"><i class="fa fa-check"></i><b>7.4.3</b> Gráficos de Paralelas</a></li>
+<li class="chapter" data-level="7.4.4" data-path="apéndices.html"><a href="apéndices.html#estrellas"><i class="fa fa-check"></i><b>7.4.4</b> Estrellas</a></li>
+<li class="chapter" data-level="7.4.5" data-path="apéndices.html"><a href="apéndices.html#plots-3d"><i class="fa fa-check"></i><b>7.4.5</b> Plots 3D</a></li>
+<li class="chapter" data-level="7.4.6" data-path="apéndices.html"><a href="apéndices.html#ejercicios-5"><i class="fa fa-check"></i><b>7.4.6</b> Ejercicios</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/" target="blank">Published with bookdown</a></li>
@@ -286,7 +294,7 @@ Donde <span class="math inline">\(\beta_0\)</span> es la ordenada al origen y <s
 <span id="cb3-4"><a href="regresión-múltiple.html#cb3-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb3-5"><a href="regresión-múltiple.html#cb3-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;¿Solo horas de estudio explican el puntaje?&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm2-1.png" width="672" /></p>
 </details>
 <p>¿Se ajusta un modelo lineal? ¿Porqué?</p>
 <div id="qué-es-multivariado-y-por-qué-lo-necesitamos" class="section level3 hasAnchor" number="2.1.1">
@@ -381,7 +389,7 @@ una relación lineal entre <span class="math inline">\(x_i\)</span> y <span clas
 <span id="cb13-2"><a href="regresión-múltiple.html#cb13-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb13-3"><a href="regresión-múltiple.html#cb13-3" tabindex="-1"></a><span class="fu">plot</span>(m2, <span class="at">which=</span><span class="dv">1</span>)  <span class="co"># Residuales vs ajustados</span></span>
 <span id="cb13-4"><a href="regresión-múltiple.html#cb13-4" tabindex="-1"></a><span class="fu">plot</span>(m2, <span class="at">which=</span><span class="dv">2</span>)  <span class="co"># QQ-plot</span></span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm6-1.png" width="672" /></p>
 </details>
 <hr />
 <p><strong>Ejercicio</strong>: Supongamos que tenemos los siguientes datos: precio de vivienda según metros, habitaciones y distancia al centro.</p>
@@ -453,7 +461,7 @@ una relación lineal entre <span class="math inline">\(x_i\)</span> y <span clas
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="regresión-múltiple.html#cb22-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb22-2"><a href="regresión-múltiple.html#cb22-2" tabindex="-1"></a><span class="fu">plot</span>(m_m, <span class="at">which=</span><span class="dv">1</span>)</span>
 <span id="cb22-3"><a href="regresión-múltiple.html#cb22-3" tabindex="-1"></a><span class="fu">plot</span>(m_m, <span class="at">which=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm8-1.png" width="672" /></p>
 </details>
 </div>
 </div>
@@ -520,7 +528,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 +  \varepsilon
 </details>
 <p>Veamos un gráfico de dispersión de los datos. ¿Qué observamos?</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="regresión-múltiple.html#cb25-1" tabindex="-1"></a><span class="fu">pairs</span>(datos[<span class="sc">-</span><span class="dv">1</span>])</span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm12-1.png" width="672" /></p>
 <ol style="list-style-type: decimal">
 <li>Estimar <span class="math inline">\(\beta\)</span></li>
 </ol>
@@ -1106,7 +1114,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <span id="cb104-4"><a href="regresión-múltiple.html#cb104-4" tabindex="-1"></a>datos<span class="ot">&lt;-</span><span class="fu">data.frame</span>(yp, x1, x2)</span>
 <span id="cb104-5"><a href="regresión-múltiple.html#cb104-5" tabindex="-1"></a><span class="fu">kable</span>(datos, <span class="at">caption =</span> <span class="st">&quot;Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas&quot;</span>)</span></code></pre></div>
 <table>
-<caption><span id="tab:unnamed-chunk-40">Table 2.1: </span>Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas</caption>
+<caption><span id="tab:rm41">Table 2.1: </span>Factores que influyen en el tiempo de coccion segun diferentes niveles de ancho del horno y diferentes temperaturas</caption>
 <thead>
 <tr class="header">
 <th align="right">yp</th>
@@ -1194,7 +1202,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <span id="cb105-15"><a href="regresión-múltiple.html#cb105-15" tabindex="-1"></a>g1<span class="sc">+</span>g2</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;
 ## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-41-1.png" width="672" />
+<img src="MultivariateStatisticalAnalysis_files/figure-html/rm42-1.png" width="672" />
 </details>
 <p>Ahora, vamos a analizar algunos de los supuestos.</p>
 <div id="multicolinealidad" class="section level3 hasAnchor" number="2.7.1">
@@ -1217,7 +1225,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="regresión-múltiple.html#cb109-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code></pre></div>
 <pre><code>## corrplot 0.95 loaded</code></pre>
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="regresión-múltiple.html#cb111-1" tabindex="-1"></a><span class="fu">corrplot</span>(m_cor)</span></code></pre></div>
-<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-43-1.png" width="672" />
+<img src="MultivariateStatisticalAnalysis_files/figure-html/rm43-1-1.png" width="672" />
 </details>
 <p>Hay una fuerte correlación entre las variables, lo cual es un problema dado que las variables deberían ser independientes.</p>
 <p>Vamos a construir dos modelos.</p>
@@ -1337,7 +1345,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <span id="cb120-3"><a href="regresión-múltiple.html#cb120-3" tabindex="-1"></a><span class="do">## Q-Q plot</span></span>
 <span id="cb120-4"><a href="regresión-múltiple.html#cb120-4" tabindex="-1"></a><span class="fu">qqnorm</span>(residuales)</span>
 <span id="cb120-5"><a href="regresión-múltiple.html#cb120-5" tabindex="-1"></a><span class="fu">qqline</span>(residuales)</span></code></pre></div>
-<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-48-1.png" width="672" />
+<img src="MultivariateStatisticalAnalysis_files/figure-html/rm48-1.png" width="672" />
 </details>
 <p>Otra forma de obtener este plot es la siguiente.</p>
 <details>
@@ -1345,7 +1353,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <b>Plots supuestos</b>
 </summary>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="regresión-múltiple.html#cb121-1" tabindex="-1"></a><span class="fu">plot</span>(modelo3)</span></code></pre></div>
-<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-49-1.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-49-2.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-49-3.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-49-4.png" width="672" />
+<img src="MultivariateStatisticalAnalysis_files/figure-html/rm49-1.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/rm49-2.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/rm49-3.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/rm49-4.png" width="672" />
 </details>
 <p>El test de Shapiro-Wilks plantea la hipótesis nula que una muestra proviene de una distribución normal. Eligimos un nivel de significanza, por ejemplo <span class="math inline">\(0.05\)</span>, y tenemos una hipótesis alternativa que sostiene que la distribución no es normal. Tenemos entonces lo siguiente:</p>
 <p><span class="math inline">\(H_0:\)</span> La distribución es normal.</p>
@@ -1383,7 +1391,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 </summary>
 <div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="regresión-múltiple.html#cb124-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb124-2"><a href="regresión-múltiple.html#cb124-2" tabindex="-1"></a><span class="fu">plot</span>(modelo3)</span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm51-1.png" width="672" /></p>
 <p>En R, existe la función <code>bptest()</code>, que es el test de Breusch-Pagan para la heterocedasticidad. Esta función toma como entrada un modelo de regresión y devuelve el resultado de la prueba de hipótesis para la homocedasticidad de los residuos.</p>
 <p><span class="math inline">\(H_0:\)</span> los residuos tienen varianza constante (homocedasticidad)</p>
 <p><span class="math inline">\(H_1\)</span>: hay heterocedasticidad en los residuos</p>
@@ -1456,7 +1464,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 </summary>
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="regresión-múltiple.html#cb135-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb135-2"><a href="regresión-múltiple.html#cb135-2" tabindex="-1"></a><span class="fu">plot</span>(modelo4)</span></code></pre></div>
-<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-55-1.png" width="672" />
+<img src="MultivariateStatisticalAnalysis_files/figure-html/rm55-1.png" width="672" />
 </details>
 <p>Otras dos pruebas que se pueden usar son <code>fligner.test</code> y <code>leveneTest</code>.</p>
 </div>
@@ -1555,7 +1563,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <span id="cb142-8"><a href="regresión-múltiple.html#cb142-8" tabindex="-1"></a></span>
 <span id="cb142-9"><a href="regresión-múltiple.html#cb142-9" tabindex="-1"></a><span class="co"># Agregar la recta de regresión</span></span>
 <span id="cb142-10"><a href="regresión-múltiple.html#cb142-10" tabindex="-1"></a><span class="fu">abline</span>(modelo_completo, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm59-1.png" width="672" /></p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="regresión-múltiple.html#cb143-1" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> Edad_lote, <span class="at">y =</span> Fuerza_enlace)) <span class="sc">+</span></span>
 <span id="cb143-2"><a href="regresión-múltiple.html#cb143-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb143-3"><a href="regresión-múltiple.html#cb143-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
@@ -1566,7 +1574,7 @@ Subir respuesta y explicación de sus resultados a github.</p>
 <span id="cb143-8"><a href="regresión-múltiple.html#cb143-8" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb143-9"><a href="regresión-múltiple.html#cb143-9" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-60-1.png" width="672" />
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm60-1.png" width="672" />
 Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso el modelo con menos parámetros o modelo reducido es el modelo que describirá la hipótesis nula <span class="math inline">\(H_0\)</span>. En regresión lineal simple, es común plantear <span class="math inline">\(H_0:\beta_1=0\)</span>, de manera que el modelo reducido es <span class="math inline">\(y_i=\beta_0+\epsilon_i\)</span>, es decir, cada valor <span class="math inline">\(y_i\)</span> es función de una constante (la media) y un error, este modelo se vería como:</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="regresión-múltiple.html#cb145-1" tabindex="-1"></a>modelo_reducido <span class="ot">&lt;-</span> <span class="fu">lm</span>(Fuerza_enlace <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> datos)</span>
 <span id="cb145-2"><a href="regresión-múltiple.html#cb145-2" tabindex="-1"></a></span>
@@ -1578,14 +1586,14 @@ Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso 
 <span id="cb145-8"><a href="regresión-múltiple.html#cb145-8" tabindex="-1"></a></span>
 <span id="cb145-9"><a href="regresión-múltiple.html#cb145-9" tabindex="-1"></a><span class="co"># Agregar la recta de regresión</span></span>
 <span id="cb145-10"><a href="regresión-múltiple.html#cb145-10" tabindex="-1"></a><span class="fu">abline</span>(modelo_reducido, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm61-1.png" width="672" /></p>
 <div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="regresión-múltiple.html#cb146-1" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> Edad_lote, <span class="at">y =</span> Fuerza_enlace)) <span class="sc">+</span></span>
 <span id="cb146-2"><a href="regresión-múltiple.html#cb146-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb146-3"><a href="regresión-múltiple.html#cb146-3" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="dv">1</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">fullrange =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
 <span id="cb146-4"><a href="regresión-múltiple.html#cb146-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Modelo reducido&quot;</span>,</span>
 <span id="cb146-5"><a href="regresión-múltiple.html#cb146-5" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Edad del lote (semanas)&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Fuerza del enlace (psi)&quot;</span>) <span class="sc">+</span></span>
 <span id="cb146-6"><a href="regresión-múltiple.html#cb146-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm62-1.png" width="672" /></p>
 <p>¿Cuál modelo es mejor? Debemos obtener los estimadores para cada modelo y la suma de cuadrados de los errores.</p>
 <ul>
 <li><p>La suma de los cuadrados de los errores <span class="math inline">\(SSE(C) = \sum(y_i - \hat{y}_i)^2\)</span>, la cual tiene <span class="math inline">\(n-2\)</span> grados de libertad para el modelo completo.</p></li>
@@ -1837,7 +1845,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 <p><strong>Ejemplo 1:</strong> Cargamos los datos de <code>cemento.txt</code> y hacemos un rápido análisis con el diagrama de dispersión:</p>
 <div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="regresión-múltiple.html#cb172-1" tabindex="-1"></a>cemento<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">&quot;D:/Users/hayde/Documents/R_sites/MultivariateStatisticalAnalysis/data/cement.txt&quot;</span>, <span class="at">header =</span> T, <span class="at">skip=</span><span class="dv">5</span>)</span>
 <span id="cb172-2"><a href="regresión-múltiple.html#cb172-2" tabindex="-1"></a><span class="fu">ggpairs</span>(cemento)</span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm74-1.png" width="672" /></p>
 <p>A continuación ajustamos el modelo con TODAS las variables independientes y calculamos la estadística <span class="math inline">\(C_p\)</span>. Para facilitar la interpretación graficamos la <span class="math inline">\(C_p\)</span> para cada modelo:</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="regresión-múltiple.html#cb173-1" tabindex="-1"></a>modelo.full<span class="ot">&lt;-</span><span class="fu">lm</span>(y<span class="sc">~</span>., cemento, <span class="at">x=</span>T, <span class="at">y=</span>T)</span>
 <span id="cb173-2"><a href="regresión-múltiple.html#cb173-2" tabindex="-1"></a><span class="do">## calcula el AIC, CIS, etc sobre todos los subconjuntos posibles</span></span>
@@ -1845,7 +1853,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 <span id="cb173-4"><a href="regresión-múltiple.html#cb173-4" tabindex="-1"></a><span class="fu">plot</span>(outs<span class="sc">$</span>size,outs<span class="sc">$</span>Cp, <span class="at">log=</span><span class="st">&quot;y&quot;</span>,<span class="at">cex=</span><span class="fl">0.3</span>)</span>
 <span id="cb173-5"><a href="regresión-múltiple.html#cb173-5" tabindex="-1"></a><span class="fu">lines</span>(outs<span class="sc">$</span>size,outs<span class="sc">$</span>size)</span>
 <span id="cb173-6"><a href="regresión-múltiple.html#cb173-6" tabindex="-1"></a><span class="fu">text</span>(outs<span class="sc">$</span>size, outs<span class="sc">$</span>Cp, <span class="at">labels=</span><span class="fu">row</span>(outs<span class="sc">$</span>which), <span class="at">cex=</span><span class="fl">0.5</span>, <span class="at">pos=</span><span class="dv">4</span>)</span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-75-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm75-1.png" width="672" /></p>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="regresión-múltiple.html#cb174-1" tabindex="-1"></a><span class="co">#Mejor modelo por la regla Cp ≈ p  (p = número de predictores)</span></span>
 <span id="cb174-2"><a href="regresión-múltiple.html#cb174-2" tabindex="-1"></a></span>
 <span id="cb174-3"><a href="regresión-múltiple.html#cb174-3" tabindex="-1"></a>idx_best_rule <span class="ot">&lt;-</span> <span class="fu">which.min</span>(<span class="fu">abs</span>(outs<span class="sc">$</span>Cp <span class="sc">-</span> outs<span class="sc">$</span>size))</span>
@@ -1862,7 +1870,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 <span id="cb176-2"><a href="regresión-múltiple.html#cb176-2" tabindex="-1"></a>modelo.full.cars<span class="ot">&lt;-</span><span class="fu">lm</span>(mpg<span class="sc">~</span>., mtcars)</span>
 <span id="cb176-3"><a href="regresión-múltiple.html#cb176-3" tabindex="-1"></a>ejemplo<span class="ot">&lt;-</span><span class="fu">ols_step_all_possible</span>(modelo.full.cars)</span>
 <span id="cb176-4"><a href="regresión-múltiple.html#cb176-4" tabindex="-1"></a><span class="fu">plot</span>(ejemplo)</span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-77-1.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-77-2.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm77-1.png" width="672" /><img src="MultivariateStatisticalAnalysis_files/figure-html/rm77-2.png" width="672" /></p>
 <p>Observe que en los triángulos rojos aparecen los mejores modelos para cada <span class="math inline">\(p\)</span> en función de la estadística correspondiente.</p>
 <p><strong>Ejemplo 3:</strong> R tiene una función que nos muestra el mejor modelo para cada número de variables. Vamos a regresar al conjunto de datos <code>cemento</code>.</p>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="regresión-múltiple.html#cb177-1" tabindex="-1"></a>mejor<span class="ot">&lt;-</span><span class="fu">regsubsets</span>(y<span class="sc">~</span>., cemento)</span>
@@ -1883,7 +1891,7 @@ donde <span class="math inline">\(\hat{\sigma}^2\)</span> corresponde al modelo 
 ## 3  ( 1 ) &quot;*&quot; &quot;*&quot; &quot; &quot; &quot;*&quot;
 ## 4  ( 1 ) &quot;*&quot; &quot;*&quot; &quot;*&quot; &quot;*&quot;</code></pre>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="regresión-múltiple.html#cb179-1" tabindex="-1"></a><span class="fu">plot</span>(mejor,<span class="at">scale=</span><span class="st">&quot;Cp&quot;</span>) </span></code></pre></div>
-<p><img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-78-1.png" width="672" /></p>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/rm78-1.png" width="672" /></p>
 <p>La gráfica muestra los cuatro modelos y su <span class="math inline">\(C_p\)</span>, por ejemplo, el modelo que incluye al intercepto, a <span class="math inline">\(x_1\)</span> y a <span class="math inline">\(x_2\)</span> tiene una <span class="math inline">\(C_p\)</span> cercana a 2.7.</p>
 </div>
 </div>

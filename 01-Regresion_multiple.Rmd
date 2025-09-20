@@ -4,7 +4,7 @@
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
-```{r, include=FALSE}
+```{r librerias, include=FALSE}
 library(tidyverse)
 library(broom) # para resúmenes ordenados de modelos
 library(knitr)
@@ -46,7 +46,7 @@ Ejemplos:
 **Ejemplo:** Si queremos predecir el rendimiento académico de un estudiante, ¿solo necesitamos las horas que estudia? ¿qué otras variables podrían influir en el puntaje de un examen?
 
 <details> <summary><b> Rendimiento escolar </b></summary>
-```{r}
+```{r rm1}
 set.seed(123)
 n <- 10
 data_intro <- tibble(
@@ -64,7 +64,7 @@ data_intro
 ¿Qué pasa si solo graficamos horas de estudio vs puntaje?
 
 <details> <summary><b> Plot hotas de estudio vs puntaje sugerida</b></summary>
-```{r}
+```{r rm2}
 library(ggplot2)
 ggplot(data_intro, aes(horas_estudio, puntaje)) +
   geom_point(size=3) +
@@ -93,7 +93,7 @@ ggplot(data_intro, aes(horas_estudio, puntaje)) +
 <details>
 <summary><b>Código (modelos + comparaciones)</b></summary>
 
-```{r}
+```{r rm3}
 # Modelo simple
 m1 <- lm(puntaje ~ horas_estudio, data = data_intro)
 
@@ -129,7 +129,7 @@ $$y_i=\beta_0+\beta_1x_{i1}+\beta_2x_{i2} + \beta_px_{ip}+\epsilon_i.$$
 
 Se suele asumir que los errores $\epsilon_i$ son i.i.d. con distribución normal de media 0 y varianza $\sigma^2$ desconocida. Los coeficientes $\beta_i$ son constantes desconocidas y son los parámetros del modelo. Cada $\beta_j$ representa el cambio esperado en la respuesta $y$ por el cambio unitario en $x_i$ cuando todas las demás variables independientes $x_i(i\neq j)$ se mantienen constantes. 
 
-```{r, eval=FALSE}
+```{r rm4, eval=FALSE}
 # Forma general
 ajuste <- lm(y ~ x1 + x2 + ... + xp, data = datos)
 # summary(ajuste)
@@ -148,7 +148,7 @@ En los modelos de regreción lineal, solemos usar las siguientes medidas de bond
 - **$R^2$ ajustado**: penaliza por número de predictores (mejor para comparar modelos con distinto número de x).
 - **RMSE ($\sigma$)**: error típico de predicción en unidades de $y$.
 
-```{r}
+```{r rm5}
 comp <- dplyr::bind_rows(
   glance(m1) %>% mutate(modelo="simple"),
   glance(m2) %>% mutate(modelo="multiple")
@@ -177,7 +177,7 @@ una relación lineal entre $x_i$ y $x_j$ (es decir, las variables son linealment
 <details>
 <summary><b>Supuestos</b></summary>
 
-```{r}
+```{r rm6}
 # Modelo m2
 par(mfrow=c(1,2))
 plot(m2, which=1)  # Residuales vs ajustados
@@ -193,7 +193,7 @@ plot(m2, which=2)  # QQ-plot
 <details>
 <summary><b>Dataset</b></summary>
 
-```{r}
+```{r rm7}
 set.seed(42)
 n <- 14
 casas <- tibble::tibble(
@@ -216,7 +216,7 @@ casas
 <details>
 <summary><b>Solución</b></summary>
 
-```{r}
+```{r rm8}
 m_s <- lm(precio ~ metros, data=casas)
 m_m <- lm(precio ~ metros + habitaciones + distancia_centro, data=casas)
 
@@ -249,7 +249,7 @@ y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 +  \varepsilon
 
 <details>
 <summary><b>Base de datos</b></summary>
-```{r}
+```{r rm10}
 # 
 datos <- data.frame(
   Observacion = 1:25,
@@ -277,7 +277,7 @@ datos
 
 Veamos un gráfico de dispersión de los datos. ¿Qué observamos?
 
-```{r}
+```{r rm12}
 pairs(datos[-1])
 ```
 
@@ -288,7 +288,7 @@ Primero, vamos a crear la matriz $X$ y el vector $y$.
 
 <details>
 <summary><b>Matrices</b></summary>
-```{r}
+```{r rm13}
 # Columna de 1 para el intercepto
 idv <- rep(1, nrow(datos))
 # Creamos matriz X
@@ -308,7 +308,7 @@ Entonces podemos encontrar el estimador.
 
 <details>
 <summary><b>Estimador beta</b></summary>
-```{r}
+```{r rm14}
 beta <- solve(t(X) %*% X) %*% t(X) %*% y
 beta
 ```
@@ -323,7 +323,7 @@ Esto lo podemos hacer más rápido usando la función de `lm`. Construimos el mo
 
 <details>
 <summary><b>Modelo en R</b></summary>
-```{r}
+```{r rm15}
 M1 <- lm(y ~ x1 + x2, datos)
 M1 
 ```
@@ -334,7 +334,7 @@ M1
 
 <details>
 <summary><b>Coeficientes</b></summary>
-```{r}
+```{r rm16}
 beta_0 <- M1$coefficients[1]
 beta_1 <- M1$coefficients[2]
 beta_2 <- M1$coefficients[3]
@@ -354,7 +354,7 @@ Sustituimos los valores que tenemos y obtemos el SSE.
 
 <details>
 <summary><b>SSE</b></summary>
-```{r}
+```{r rm17}
 SSE <- t(y)%*% y - t(beta) %*% t(X) %*% y
 SSE
 ```
@@ -364,7 +364,7 @@ Y de está forma, podemos encontrar el estimador de $\sigma^2$.
 
 <details>
 <summary><b>Estimador</b></summary>
-```{r}
+```{r rm18}
 varest <- SSE / (nrow(y) - nrow(beta))
 varest
 ```
@@ -374,7 +374,7 @@ Directo con las funciones de R, podemos acceder a los parámetros que se guardar
 
 <details>
 <summary><b>Resumen del modelo</b></summary>
-```{r}
+```{r rm19}
 summary(M1)
 ```
 </details>
@@ -383,7 +383,7 @@ Algunos de los parámetros almacenados en el modelo nos permiten obtener tambié
 
 <details>
 <summary><b>Estimador</b></summary>
-```{r}
+```{r rm20}
 sum(residuals(M1)^2) / df.residual(M1)
 ```
 </details>
@@ -397,7 +397,7 @@ sum(residuals(M1)^2) / df.residual(M1)
 
 <details>
 <summary><b>Datos Ejercicio 1</b></summary>
-```{r}
+```{r rm21}
 datos2 <- data.frame(
   Experimento = 1:17,
   x1 = c(41.9, 43.4, 43.9, 44.5, 47.3, 47.5, 47.9, 50.2, 52.8, 53.2, 56.7, 57.0, 63.5, 64.3, 71.1, 77.0, 77.8),
@@ -427,7 +427,7 @@ Cuando revisamos el `summary` del modelo, nos arroja si son significativas o no 
 
 <details>
 <summary><b>Sumas de Cuadrados</b></summary>
-```{r}
+```{r rm22}
 SCT <- t(y) %*% y -  sum(y)**2 / nrow(datos)
 SCT
 
@@ -448,7 +448,7 @@ se calcula el estadístico:
 
 <details>
 <summary><b>Estadístico F</b></summary>
-```{r}
+```{r rm23}
 F0 <- (SCE / (ncol(X) - 1)) / (SSE / (nrow(X) - (ncol(X) -1) - 1))
 F0
 ```
@@ -461,7 +461,7 @@ Ahora, usando los modelos que ya calculamos.
 
 <details>
 <summary><b>Sumas de cuadrados</b></summary>
-```{r}
+```{r rm24}
 SCT.m<-sum((datos$y-mean(datos$y))^2)
 SCT.m
 
@@ -476,7 +476,7 @@ SSE.m
 
 <details>
 <summary><b>Grados de libertad</b></summary>
-```{r}
+```{r rm25}
 n<-nrow(y)
 n
 
@@ -494,7 +494,7 @@ GLR
 
 <details>
 <summary><b>Cuadrados medios</b></summary>
-```{r}
+```{r rm26}
 CMR <- SCE /GLR
 CMR
 
@@ -505,7 +505,7 @@ CMRes
 
 <details>
 <summary><b>Estadístico F_0</b></summary>
-```{r}
+```{r rm27}
 F0 <- CMR/CMRes
 F0
 ```
@@ -513,7 +513,7 @@ F0
 
 <details>
 <summary><b>p-valor</b></summary>
-```{r}
+```{r rm28}
 pv <- 1 - pf(F0, GLR,GLRes)
 pv
 ```
@@ -521,7 +521,7 @@ pv
 
 <details>
 <summary><b>Valor tabulado de F</b></summary>
-```{r}
+```{r rm29}
 alpha <- 0.05; df1 <- 2; df2 <- 22
 F_crit <- qf(1 - alpha, df1, df2)
 F_crit
@@ -536,7 +536,7 @@ F_crit
 
 <details>
 <summary><b>Estadístico t_0</b></summary>
-```{r}
+```{r rm30}
 C22 <- solve(t(X) %*% X)[3,3]
 C22
 
@@ -554,7 +554,7 @@ Usando el modelo que ya tenemos calculado `M1` podemos obtener estos mismos resu
 
 <details>
 <summary><b>Prueba sobre coeficientes</b></summary>
-```{r}
+```{r rm31}
 summary(M1)
 ```
 </details>
@@ -567,7 +567,7 @@ summary(M1)
 
 <details>
 <summary><b>Intervalo de confianza</b></summary>
-```{r}
+```{r rm32}
 C11 <- solve(t(X) %*% X)[2,2]
 
 izq <- beta_1 - tt * sqrt(varest*C11)
@@ -587,7 +587,7 @@ der
 Nuestro vector $X_0$ está dado por:
 <details>
 <summary><b>X0</b></summary>
-```{r}
+```{r rm33}
 X0 <- matrix(c(1, 8, 275), nrow = 3)
 X0
 ```
@@ -599,7 +599,7 @@ El valor ajustado en ese punto es:
 
 <details>
 <summary><b>Valor ajustado</b></summary>
-```{r}
+```{r rm34}
 y0 <- t(X0) %*% beta
 y0
 ```
@@ -609,7 +609,7 @@ La varianza de $\hat{y_0}$
 
 <details>
 <summary><b>Varianza</b></summary>
-```{r}
+```{r rm35}
 var_y0 <- varest * t(X0) %*% solve(t(X) %*% X) %*% X0
 var_y0
 ```
@@ -619,7 +619,7 @@ Entonces el intervalo de confianza en este punto es:
 
 <details>
 <summary><b>Intervalo de confianza</b></summary>
-```{r}
+```{r rm36}
 l_izq <- y0 - tt * sqrt(var_y0) 
 l_izq
 
@@ -640,13 +640,13 @@ Variables:
 
 Cargamos los datos:
 
-```{r}
+```{r rm37}
 library(datarium)
 data("marketing")
 ```
 
 Exploramos rápidamente la base para ver qué variables contiene y la dimensión:
-```{r}
+```{r rm38}
 str(marketing)
 #?marketing
 ```
@@ -657,7 +657,7 @@ $sales=\beta_0+\beta_1 youtube+\beta_2 facebook+ \beta_3 newspaper+\epsilon$
 
 <details>
 <summary><b>Modelo marketing</b></summary>
-```{r}
+```{r rm39}
 modelo1<-lm(sales~youtube+facebook+newspaper,data=marketing)
 summary(modelo1)
 ```
@@ -669,7 +669,7 @@ Veamos qué ocurre con el modelo al eliminar la variable $newspaper$
 
 <details>
 <summary><b>Modelo marketing 2</b></summary>
-```{r}
+```{r rm40}
 modelo2<-lm(sales~facebook+youtube,data=marketing)
 summary(modelo2)
 ``` 
@@ -874,7 +874,7 @@ d) Comenta los modelos finales en cada uno de los casos anteriores. ¿Cuál tien
 
 **Ejemplo:** Se llevó a cabo un conjunto de ensayos experimentales con un horno para determinar una forma de predecir el tiempo de cocción, $y$, a diferentes niveles de ancho del horno, $x_1$, y a diferentes temperaturas, $x_2$. Se registraron los siguientes datos:
 
-```{r}
+```{r rm41}
 yp <-c(6.40, 15.05, 18.75, 30.25, 44.85, 48.85, 51.55, 61.50, 100.44, 111.42)
 x1 <-c(1.32, 2.69, 3.56, 4.41, 5.35, 6.20, 7.12, 8.87, 9.80, 10.65)
 x2 <-c(1.15, 3.40, 4.10, 8.75, 14.82, 15.15, 15.32, 18.18, 35.19, 40.40)
@@ -891,7 +891,7 @@ Vamos a visualizar los datos:
 
 <details>
 <summary><b>Plot</b></summary>
-```{r}
+```{r rm42}
 g1 <- ggplot(data = datos, mapping = aes(x = x1, y = yp)) +
   geom_point(color = "forestgreen", size = 2) +
   labs(title  =  'yp ~ x1', x  =  'x1') +
@@ -916,7 +916,7 @@ Ahora, vamos a analizar algunos de los supuestos.
 
 <details>
 <summary><b>Multicolinealidad</b></summary>
-```{r}
+```{r rm43}
 variables <- data.frame(x1,x2)
 m_cor <- cor(variables,method = "pearson")
 m_cor
@@ -925,7 +925,7 @@ m_cor
 
 <details>
 <summary><b>Plot</b></summary>
-```{r}
+```{r rm43-1}
 library(corrplot)
 corrplot(m_cor)
 ```
@@ -937,7 +937,7 @@ Vamos a construir dos modelos.
 
 <details>
 <summary><b>Modelos</b></summary>
-```{r}
+```{r rm44}
 modelo1 <- lm(formula = yp ~ x1 + x2, data = datos)
 
 summary(modelo1)
@@ -948,7 +948,7 @@ El intercepto parece no ser significativo. Vamos a construir un segundo modelo u
 
 <details>
 <summary><b>Modelo 2</b></summary>
-```{r}
+```{r rm45}
 modelo2 <- lm(formula = yp ~ x2, data = datos)
 
 summary(modelo2)
@@ -965,7 +965,7 @@ Si el nuevo modelo es una mejora del modelo original, entonces no podemos rechaz
 
 <details>
 <summary><b>ANOVA</b></summary>
-```{r}
+```{r rm46}
 anova(modelo1, modelo2)
 ```
 </details>
@@ -976,7 +976,7 @@ Como desde el inicio vimos que el coeficiente correspondiente a $\beta_0$ no era
 
 <details>
 <summary><b>Modelo 3</b></summary>
-```{r}
+```{r rm47}
 modelo3 <- lm(formula = yp ~ x1 + x2 -1, data = datos)
 
 summary(modelo3)
@@ -994,7 +994,7 @@ Vamos a hacer un plot de los residuales.
 
 <details>
 <summary><b>QQ-plot</b></summary>
-```{r}
+```{r rm48}
 residuales = modelo3$residuals
 
 ## Q-Q plot
@@ -1007,7 +1007,7 @@ Otra forma de obtener este plot es la siguiente.
 
 <details>
 <summary><b>Plots supuestos</b></summary>
-```{r}
+```{r rm49}
 plot(modelo3)
 ```
 </details>
@@ -1020,7 +1020,7 @@ $H_1:$ La distribución no es normal.
 
 <details>
 <summary><b>Test Shapiro-Wilks</b></summary>
-```{r}
+```{r rm50}
 shapiro.test(residuales)
 ```
 </details>
@@ -1049,7 +1049,7 @@ Una forma de verlo es con el plot de residuales vs valores predichos.
 
 <details>
 <summary><b>Plots</b></summary>
-```{r}
+```{r rm51}
 par(mfrow = c(2, 2))
 plot(modelo3)
 ```
@@ -1064,7 +1064,7 @@ El resultado incluye el valor del estadístico de prueba (el valor de la prueba 
 
 <details>
 <summary><b>Breusch-Pagan</b></summary>
-```{r}
+```{r rm52}
 library(lmtest)
 bptest(modelo3)
 ```
@@ -1080,7 +1080,7 @@ Una forma de corregirlo es haciendo una transformación de los datos. Vamos a tr
 
 <details>
 <summary><b>Modelo 4</b></summary>
-```{r}
+```{r rm53}
 modelo4 <- lm(formula = yp ~ log(x1) + x2 -1, data = datos)
 
 summary(modelo4)
@@ -1091,7 +1091,7 @@ Si realizamos la prueba de la homocedasticidad.
 
 <details>
 <summary><b>Test</b></summary>
-```{r}
+```{r rm54}
 bptest(modelo4)
 ```
 </details>
@@ -1102,7 +1102,7 @@ En el modelo final, tendríamos $\beta_0=0$, $\beta_1*=$ `r modelo4$coefficients
 
 <details>
 <summary><b>Plots finales</b></summary>
-```{r}
+```{r rm55}
 par(mfrow = c(2, 2))
 plot(modelo4)
 ```
@@ -1128,7 +1128,7 @@ El estadístico DW toma valores entre 0 y 4:
 
 <details>
 <summary><b>Test D-W</b></summary>
-```{r}
+```{r rm56}
 dwtest(modelo4)
 ```
 </details>
@@ -1139,7 +1139,7 @@ Vamos a predecir por último un valor. Para $2.10$ de ancho del horno y una temp
 
 <details>
 <summary><b>Predicciónes</b></summary>
-```{r}
+```{r rm57}
 nuevo.dato <- data.frame(x1 = 2.10, x2 = 3.10)
 
 prediccion <- predict(modelo4, newdata = nuevo.dato)
@@ -1159,7 +1159,7 @@ paste("La cantidad estimada de tiempo de coccion es:", round(prediccion, 2))
 **Ejemplo 1: ** Supongamos que un cierto tipo de motor de cohete se fabrica uniendo un propulsor tipo A y un propulsor tipo B. La fuerza del enlace entre los dos propulsores es una característica de importancia y se sospecha que está relacionada con la edad (en semanas) del lote del propulsor tipo B. Se tiene una muestra de tamaño 20 de la fuerza del enlace y la edad del lote del propulsor tipo B que fue utilizado. 
 
 
-```{r}
+```{r rm58}
 datos <- data.frame(
   Fuerza_enlace = c(
     2158.70, 1678.15, 2316.00, 2061.30, 2207.50,
@@ -1182,7 +1182,7 @@ datos
 Un modelo completo sería $y_i = \beta_0 + \beta_1x_i + \epsilon_i$, el cual se ve como:
 
 
-```{r}
+```{r rm59}
 modelo_completo <- lm(Fuerza_enlace ~ Edad_lote, data = datos)
 
 plot(datos$Edad_lote, datos$Fuerza_enlace,
@@ -1196,7 +1196,7 @@ abline(modelo_completo, col = "red", lwd = 2)
 ```
 
 
-```{r}
+```{r rm60}
 ggplot(datos, aes(x = Edad_lote, y = Fuerza_enlace)) +
   geom_point(color = "blue", size = 3) +
   geom_smooth(method = "lm", se = TRUE, color = "red") +
@@ -1209,7 +1209,7 @@ ggplot(datos, aes(x = Edad_lote, y = Fuerza_enlace)) +
 ```
 Queremos ver si un modelo reducido explica mejor o no a los datos. En este caso el modelo con menos parámetros o modelo reducido es el modelo que describirá la hipótesis nula $H_0$. En regresión lineal simple, es común plantear $H_0:\beta_1=0$, de manera que el modelo reducido es $y_i=\beta_0+\epsilon_i$, es decir, cada valor $y_i$ es función de una constante (la media) y un error, este modelo se vería como:
 
-```{r}
+```{r rm61}
 modelo_reducido <- lm(Fuerza_enlace ~ 1, data = datos)
 
 plot(datos$Edad_lote, datos$Fuerza_enlace,
@@ -1222,7 +1222,7 @@ plot(datos$Edad_lote, datos$Fuerza_enlace,
 abline(modelo_reducido, col = "red", lwd = 2)
 ```
 
-```{r}
+```{r rm62}
 ggplot(datos, aes(x = Edad_lote, y = Fuerza_enlace)) +
   geom_point() +
   stat_smooth(method = "lm", formula = y ~ 1, se = TRUE, fullrange = TRUE) +
@@ -1249,7 +1249,7 @@ La cantidad $SSE(R) - SSE(C)$ representa la suma de cuadrados explicada por la v
 
 Entonces, rechazar la hipótesis nula $H_0$ implica rechazar el modelo reducido y no rechazar $H_0$ implica rechazar el modelo completo. 
 
-```{r}
+```{r rm63}
 anova(modelo_completo)
 ```
 
@@ -1261,7 +1261,7 @@ Todo esto, se puede llevar al caso de regresión lineal múltiple.
 
 **Ejemplo:** Considere los siguientes datos en los que se tienen mediciones del tamaño de infarto, área de la región en riesgo y dos variables que identifican el tipo de tratamiento utilizado en 32 pacientes. Se busca describir el tamaño del infarto a través de las otras 3-variables. Para este caso, vamos a ajustar un modelo de regresión lineal múltiple completo y después vamos a hacer pruebas sobre quitar algunas variables.
 
-```{r}
+```{r rm64}
 datos <- data.frame(
   Paciente = 1:32,
   Infarc = c(
@@ -1294,14 +1294,14 @@ datos
 
 
 El modelo completo sería $y_i = \beta_0 + \beta_1x_{1i} +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i$. 
-```{r}
+```{r rm65}
 modelo_c <- lm(Infarc~ Area + X2 + X3, data = datos)
 summary(modelo_c)
 ```
 
 Con este modelo se obtiene la siguiente tabla de ANOVA.
 
-```{r}
+```{r rm66}
 anov <- anova(modelo_c)
 anov
 ## los p-valores en la última columna se pueden obtener con: 
@@ -1310,7 +1310,7 @@ anov
 
 **1) Pruebas sobre uno de los parámetros:** $H_0:\beta_1=0$, modelo reducido $y_i = \beta_0  +\beta_2x_{2i} + \beta_3x_{3i}+\epsilon_i$. Vamos a denotar a la suma de los cuadrados de los errores asociada a este modelo $SSE(x_1)$, la cual tiene $n-3$ grados de libertad asociados (tenemos 3 parámetros a estimar $\beta_0,\beta_2,\beta_3$).  Como el p-valor es muy pequeño, se rechaza a $H_0$ y se concluye que hay suficiente evidencia para decir que el tamaño del infarto está significativamente relacionado con el tamaño del área de riesgo.
 
-```{r}
+```{r rm67}
 SCE_X1 <- anov$`Sum Sq`[1]
 SSE_C <- anov$`Sum Sq`[4]
 df2 <- anov$Df[4]
@@ -1321,7 +1321,7 @@ F_g
 
 **2) Pruebas sobre todos los parámetros:** En este caso tenemos $H_0:\beta_1=\beta_2=\beta_3=0$ vs $H_1: \beta_j\neq 0$ p.a. $j$. Es decir, el modelo reducido sería $y_i = \beta_0+\epsilon_i$. La prueba $F$ general es la misma, pero ahora la suma de cuadrados asociada al modelo reducido $SSE(x_1,x_2,x_3)$ tiene $n-1$ grados de libertad ya que solo debemos estimar $\beta_0$.
 
-```{r}
+```{r rm68}
 SCE_X1X2X3 <- sum(anov$`Sum Sq`[1:3]) 
 df1 <- nrow(datos) -1 - df2 
 
@@ -1331,18 +1331,18 @@ F_all
 
 El cual tiene un $p-$valor asociado a una distribución $F$ con 3 y 28 grados de libertad.
 
-```{r}
+```{r rm69}
 pf(F_all, df1 = 3, df2 = 28, lower.tail = FALSE)
 ```
 Por lo tanto rechazamos la hipótesis nula. Notemos que este valor coincide con el que nos da el `summary` del modelo.
 
-```{r}
+```{r rm70}
 summary(modelo_c)
 ```
 
 **3) Pruebas sobre un subconjunto de los parámetros:** Supongamos ahora que $H_0:\beta_2=\beta_3=0$. Es decir, el modelo reducido sería $y_i = \beta_0+ \beta_1x_{1i}+\epsilon_i$. La prueba es similar pero solo usamos $x_2$ y $x_3$.
 
-```{r}
+```{r rm71}
 SCE_X2X3 <- sum(anov$`Sum Sq`[2:3]) 
 df1 <- nrow(datos) - 2 - df2 
 
@@ -1351,7 +1351,7 @@ F_dos
 ```
 
 El $p-$valor asociado a la prueba $F$ con 2 y 28 grados de libertad es:
-```{r}
+```{r rm72}
 pf(F_dos, df1 = 2, df2 = 28, lower.tail = FALSE)
 ```
 
@@ -1452,7 +1452,7 @@ Ambas técnicas se pueden mezclar, de manera que en cada paso se evalúa la esta
 
 En este ejemplo veremos cómo aplicar el método de seleccion de modelos que implica el análisis de todos los modelos posibles. Primero, necesitaremos varios paquetes.
 
-```{r}
+```{r rm73}
 library(ggplot2)
 library(olsrr)
 library(leaps)
@@ -1462,7 +1462,7 @@ library(GGally)
 
 **Ejemplo 1:** Cargamos los datos de `cemento.txt` y hacemos un rápido análisis con el diagrama de dispersión:
 
-```{r, warning=FALSE, message=FALSE}
+```{r rm74, warning=FALSE, message=FALSE}
 cemento<-read.table("D:/Users/hayde/Documents/R_sites/MultivariateStatisticalAnalysis/data/cement.txt", header = T, skip=5)
 ggpairs(cemento)
 ```
@@ -1470,7 +1470,7 @@ ggpairs(cemento)
 
 A continuación ajustamos el modelo con TODAS las variables independientes y calculamos la estadística $C_p$. Para facilitar la interpretación graficamos la $C_p$ para cada modelo:
 
-```{r}
+```{r rm75}
 modelo.full<-lm(y~., cemento, x=T, y=T)
 ## calcula el AIC, CIS, etc sobre todos los subconjuntos posibles
 outs<-leaps(modelo.full$x, cemento$y, int=FALSE)
@@ -1479,7 +1479,7 @@ lines(outs$size,outs$size)
 text(outs$size, outs$Cp, labels=row(outs$which), cex=0.5, pos=4)
 ```
 
-```{r}
+```{r rm76}
 #Mejor modelo por la regla Cp ≈ p  (p = número de predictores)
 
 idx_best_rule <- which.min(abs(outs$Cp - outs$size))
@@ -1496,7 +1496,7 @@ Recordemos que nos interesan los modelos en los que  $C_p=p$.
 
 **Ejemplo 2:** Vamos a usar la base de datos `mtcars`. Otra manera de analizar todos los modelos posibles:
 
-```{r}
+```{r rm77}
 library(olsrr)
 modelo.full.cars<-lm(mpg~., mtcars)
 ejemplo<-ols_step_all_possible(modelo.full.cars)
@@ -1508,7 +1508,7 @@ Observe que en los triángulos rojos aparecen los mejores modelos para cada $p$ 
 
 **Ejemplo 3:** R tiene una función que nos muestra el mejor modelo para cada número de variables. Vamos a regresar al conjunto de datos `cemento`.
 
-```{r}
+```{r rm78}
 mejor<-regsubsets(y~., cemento)
 summary(mejor)
 plot(mejor,scale="Cp") 
@@ -1521,14 +1521,14 @@ La gráfica muestra los cuatro modelos y su $C_p$, por ejemplo, el modelo que in
 
 **Ejemplo 1:** Para analizar el método de selección paso a paso usaremos los datos *swiss* del paquete *MASS*. Para ello, el primer paso es ajustar el modelo con TODAS las variables independientes
 
-```{r}
+```{r rm79}
 library(MASS)
 modelo_completo<-lm(Fertility~., swiss)
 ```
 
 Podemos usar la función *step* en las tres direcciones (*forward, backward o both*)
 
-```{r}
+```{r rm80}
 paso_a_paso<-stepAIC(modelo_completo, direction="both", trace=T)
 summary(paso_a_paso)
 ```
@@ -1536,7 +1536,7 @@ summary(paso_a_paso)
 
 **Ejemplo 2:** O podemos usar el paquete *olsrr*. Base de datos `surgical`.
 
-```{r}
+```{r rm81}
 modelo_completo_sur<-lm(y~., surgical)
 ols_step_forward_aic(modelo_completo_sur, details = T)
 ols_step_backward_aic(modelo_completo_sur)
@@ -1551,7 +1551,7 @@ Si podemos llegar a resultados diferentes, ¿cómo sabemos cuál es el mejor mod
 Recordemos que estos métodos se basan en UNA SOLA estadística para ir mejorando el modelo, de manera que, aunque tengamos el modelo con el AIC menor, este podría no ser el mejor en términos del cumplimiento de los supuestos.
 
 **Ejemplo 3** Veamos con mas detalle el modelo de *cement.txt*.
-```{r}
+```{r rm82}
 #Modelo elegido por el algoritmo
 modelo.bueno<-lm(y~.-x3, cemento)
 summary(modelo.bueno)
@@ -1569,7 +1569,7 @@ Observamos que en el modelo que elige el algoritmo, la variable X4 no es signifi
 
 Comparemos su AIC
 
-```{r}
+```{r rm83}
 AIC(modelo.bueno, modelo.12, modelo.14)
 ```
 
