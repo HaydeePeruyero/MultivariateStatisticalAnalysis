@@ -4,3 +4,657 @@
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
+
+El análisis de componenetes principales tiene como objetivo reducir la dimensión y
+conservar en lo posible su estructura, es decir la **forma** de la nube de datos para esto el primer paro es obtener la matriz de correlaciones y la matriz de covarianzas.
+
+Cuando se trabaja con distintas unidades de medición, conviene hacer el análisis de componentes principales haciendo los cálculos con la matriz R de correlaciones.
+
+
+## Componentes principales para matriz de covarianza
+
+**Ejemplo 1:** Calcular los componentes principales. Supongamos que las variables aleatorias $X_1, X_2, X_3$ tienen matriz de covarianza:
+
+```{r cp1}
+Sigma <- matrix(c(1, -2, 0,
+                  -2, 5, 0,
+                  0,  0, 2),
+                nrow = 3, byrow = TRUE)
+
+Sigma
+```
+
+Descomposición en valores y vectores propios:
+
+```{r cp2}
+eig <- eigen(Sigma)   
+# por defecto para matrices simétricas devuelve autovalores en orden decreciente
+
+lambda <- eig$values    # autovalores (orden descendente)
+lambda
+
+P <- eig$vectors        # autovectores (columnas)
+P
+```
+
+Vamos a ordenarlos:
+
+```{r cp3}
+autovalores <- eig$values
+autovectores <- eig$vectors
+
+cat("Autovalores:\n"); print(round(autovalores, 6))
+cat("Autovectores (columnas):\n"); print(round(autovectores, 6))
+```
+
+Verifiquemos que $P' \Sigma P$ debe ser diagonal con los autovalores en la diagonal.
+
+```{r cp4}
+P <- autovectores
+D <- t(P) %*% Sigma %*% P
+cat("P' Sigma P (debe ser diagonal con los autovalores):\n")
+print(round(D, 8))
+```
+
+Comprobación directa: lam varianza de cada componente principal y covarianzas entre ellas
+
+$Y_i = t(a_i) * X \rightarrow var(Y_i) = t(a_i) * \Sigma * a_i$
+
+$Y_i = t(P[,i]) * X \rightarrow var(Y_i) = t(P[,i]) * \Sigma * P[,i]$
+
+
+```{r cp5}
+vars_pc <- sapply(1:3, function(i) as.numeric(t(P[,i]) %*% Sigma %*% P[,i]))
+covs_pc <- matrix(0, 3, 3)
+for(i in 1:3) for(j in 1:3) covs_pc[i,j] <- as.numeric(t(P[,i]) %*% Sigma %*% P[,j])
+
+cat("Varianzas de las CP (deben ser los autovalores):\n"); print(round(vars_pc, 8))
+cat("Matriz de covarianzas entre CP (debe ser prácticamente 0 fuera de la diagonal):\n"); print(round(covs_pc,8))
+```
+
+Verificamos que la traza de $\Sigma$ sea la suma de los autovalores.
+
+```{r cp6}
+traza_sigma <- sum(diag(Sigma))
+suma_autovalores <- sum(autovalores)
+cat("Traza(Sigma) = ", traza_sigma, "\n")
+cat("Suma de autovalores = ", round(suma_autovalores, 8), "\n")
+```
+
+Las fórmulas explícitas de cada componente principal (coeficientes) son:
+
+```{r cp7}
+cat("\nFormas lineales (cada componente principal Yi = ai1 * X1 + ai2 * X2 + ai3 * X3):\n")
+for(i in 1:3){
+  coeffs <- round(P[,i], 6)
+  cat(sprintf("Y%d = %6.6f * X1 + %6.6f * X2 + %6.6f * X3\n", i, coeffs[1], coeffs[2], coeffs[3]))
+}
+```
+
+Proporción de varianza explicada por cada componente
+
+```{r cp8}
+total_var <- sum(diag(Sigma))
+prop_explained <- lambda / total_var
+cum_prop <- cumsum(prop_explained)
+cat("\nProporción de varianza explicada por componente:\n")
+for(i in 1:length(lambda)){
+  cat(sprintf("PC%d: lambda=%.6f  prop=%.4f  cumul=%.4f\n",
+              i, lambda[i], prop_explained[i], cum_prop[i]))
+}
+```
+
+
+Correlaciones entre CPs $(Y_i)$ y variables originales $(X_j)$
+
+$$\rho_{_{Y_i, X_j}} = e_{j,i} * \sqrt{\lambda_i} / \sqrt{\sigma_{jj}}$$
+
+
+```{r cp9}
+sigma_diag <- diag(Sigma)
+ncomp <- length(lambda)
+rho <- matrix(NA, nrow = ncomp, ncol = ncol(P),
+              dimnames = list(paste0("Y",1:ncomp), paste0("X",1:ncol(P))))
+
+for(i in 1:ncomp){
+  for(j in 1:ncol(P)){
+    rho[i,j] <- P[j,i] * sqrt(lambda[i]) / sqrt(sigma_diag[j])
+  }
+}
+
+cat("\nCorrelaciones rho_{Yi, Xj} (filas = Yi, columnas = Xj):\n")
+print(round(rho, 6))
+```
+
+La variable $X_2$, con coeficiente $0.924$ recibe el mayor peso en la componente $Y_1$. Tiene la mayor correlación con $Y_1$. La correlaciónde $X_1$ con $Y_1$ también es alta, casi como la de $X_2$, esto indica que las variables son casi igual de importantes en la primer componente. Los tamaños delos coeficientes $X_1$ y $X_2$ sugieren que $X_2$ contribuye más a la determinación de $Y_1$ que $X_1$. Como ambos coeficientes son grandes y tienen signos opuestos, podemos argumentar que ambas variables son importantes para la interpretación de $Y_1$.
+
+Comprobaciones adicionales
+
+1) $Var(Y_i) = \lambda_i$
+
+```{r cp10}
+cat("\nVarianzas de Yi (por construccion, deben ser los autovalores):\n")
+print(round(lambda, 6))
+```
+
+2) $Cov(Y_i, Y_j)=0$ para $i\neq j$.
+
+```{r cp11}
+cov_Y <- t(P) %*% Sigma %*% P
+cat("\nCovarianzas entre Yi (t(P) %*% Sigma %*% P) (debe ser diagonal):\n")
+print(round(cov_Y, 8))
+```
+
+3) Traza
+
+```{r cp12}
+cat("\nTraza(Sigma) = ", sum(diag(Sigma)), "  Suma autovalores = ", round(sum(lambda),8), "\n")
+```
+
+
+## Componentes principales para matriz de correlación
+
+**Ejemplo 2:** Consideremos la siguiente matriz de covarianza
+
+```{r cp13}
+Sigma <- matrix(c(1, 4,
+                  4, 100), nrow = 2, byrow = TRUE)
+
+Sigma
+```
+
+y la siguiente matriz de correlaciones
+
+```{r cp14}
+# Matriz de correlacion (estandarizando Sigma)
+sd_vec <- sqrt(diag(Sigma))
+R_mat <- diag(1/ sd_vec) %*% Sigma %*% diag(1/ sd_vec)
+round(R_mat, 6)
+```
+
+Descomposición en valores/vectores propios de $\Sigma$:
+
+```{r cp15}
+eig_Sigma <- eigen(Sigma)
+lambda_S <- eig_Sigma$values
+P_S <- eig_Sigma$vectors
+
+cat("Eigen Sigma:\n"); print(round(lambda_S,6))
+cat("Autovectores Sigma (columnas):\n"); print(round(P_S,6))
+```
+ 
+Componentes principales (formas lineales) - para $\Sigma$:
+
+```{r cp16}
+cat("\nFormas lineales (Sigma): Yi = a1 * X1 + a2 * X2  (autovectores col)\n")
+for(i in 1:2){
+  coefs <- round(P_S[,i], 6)
+  cat(sprintf("Y%d = %6.6f * X1 + %6.6f * X2\n", i, coefs[1], coefs[2]))
+}
+```
+
+Descomposición en valores/vectores propios de $R$:
+
+```{r cp17}
+eig_R <- eigen(R_mat)
+lambda_r <- eig_R$values
+P_r <- eig_R$vectors
+
+cat("\nEigen R:\n"); print(round(lambda_r,6))
+cat("Autovectores R (columnas):\n"); print(round(P_r,6))
+```
+
+Componentes principales $R$, equivalente a trabajar con $Z$ estandarizadas:
+
+```{r cp18}
+cat("\nFormas lineales (R, sobre Z estandarizadas): Yi = b1 * Z1 + b2 * Z2\n")
+for(i in 1:2){
+  coefs <- round(P_r[,i], 6)
+  cat(sprintf("Y%d = %6.6f * Z1 + %6.6f * Z2\n", i, coefs[1], coefs[2]))
+}
+```
+
+Que es lo mismo que:
+
+$Y_1 = e_{11}\left( \frac{X_1-\mu_1}{\sqrt{\sigma_{_{11}}}} \right) + e_{12}\left( \frac{X_2-\mu_2}{\sqrt{\sigma_{_{22}}}} \right) = 0.707\left( \frac{X_1-\mu_1}{1} \right) + 0.707\left( \frac{X_2-\mu_2}{10} \right)$
+
+y
+
+$Y_2 = e_{21}\left( \frac{X_1-\mu_1}{\sqrt{\sigma_{_{11}}}} \right) + e_{22}\left( \frac{X_2-\mu_2}{\sqrt{\sigma_{_{22}}}} \right) = - 0.707\left( \frac{X_1-\mu_1}{1} \right) + 0.707\left( \frac{X_2-\mu_2}{10} \right)$
+
+Debido a su gran varianza, $X_2$ domina por completo la primer componente principal determinada por $\Sigma$.
+
+Proporciones de varianza explicada ($\Sigma$):
+
+```{r cp19}
+total_var_S <- sum(diag(Sigma))
+prop_S <- lambda_S / total_var_S
+cat("\nProporciones (Sigma):\n")
+for(i in 1:2) cat(sprintf("PC%d: lambda=%.6f prop=%.4f cumul=%.4f\n",
+                          i, lambda_S[i], prop_S[i], cumsum(prop_S)[i]))
+```
+
+Proporciones de varianza explicada ($R$, variables estandarizadas):
+
+```{r cp20}
+total_var_r <- sum(diag(R_mat))  # = 2
+prop_r <- lambda_r / total_var_r
+cat("\nProporciones (R - variables estandarizadas):\n")
+for(i in 1:2) cat(sprintf("PC%d: lambda=%.6f prop=%.4f cumul=%.4f\n",
+                          i, lambda_r[i], prop_r[i], cumsum(prop_r)[i]))
+
+```
+
+Correlaciones $R_{Y_i, X_j}$ usando la formula:
+
+$R_{Y_i, X_j} = e_{j,i} * \sqrt{\lambda_i} / \sqrt{\sigma_{jj}}$
+
+```{r cp21}
+sigma_diag <- diag(Sigma)
+rho_YX_Sigma <- matrix(NA, 2, 2, dimnames=list(paste0("Y",1:2), paste0("X",1:2)))
+for(i in 1:2) for(j in 1:2){
+  rho_YX_Sigma[i,j] <- P_S[j,i] * sqrt(lambda_S[i]) / sqrt(sigma_diag[j])
+}
+cat("\nCorrelaciones entre Yi (de Sigma) y Xj:\n")
+print(round(rho_YX_Sigma,6))
+```
+
+Correlaciones para las variables estandarizadas $Z$, se deben usar autovectores y autovalores de $R$:
+
+En ese caso $\sigma_{jj}= 1$, y la formula reduce a $e_{j,i} * \sqrt{\lambda_i}$
+
+```{r cp22}
+R_YZ_R <- matrix(NA, 2, 2, dimnames=list(paste0("Y",1:2), paste0("Z",1:2)))
+for(i in 1:2) for(j in 1:2){
+  R_YZ_R[i,j] <- P_r[j,i] * sqrt(lambda_r[i])    # / sqrt(1) = 1
+}
+cat("\nCorrelaciones entre Yi (de R) y Zj (variables estandarizadas):\n")
+print(round(R_YZ_R,6))
+```
+
+Comprobación: reconstruir $t(P) * \Sigma * P$, debe ser diagonal con las $\lambda$ de $\Sigma$:
+```{r cp23}
+cat("\nP_S' Sigma P_S  (debe ser diagonal = autovalores de Sigma)\n")
+print(round(t(P_S) %*% Sigma %*% P_S, 8))
+```
+
+Comprobación para $R$: $t(P_r) * R * P_r$
+
+```{r cp24}
+cat("\nP_r' R P_r (debe ser diagonal = autovalores de R)\n")
+print(round(t(P_r) %*% R_mat %*% P_r, 8))
+```
+
+## Ejemplos con Bases de datos
+
+
+En R existen varios paquetes que nos permiten realizar análisis de componentes principales. Algunas de las funciones son `prcomp()`, `princomp()`, `PCA()`.
+
+Los argumentos de la función `prcomp()` son:
+
+  - `x`: una matriz numérica o dataframe.
+  - `scale`: un valor lógico indicando si las variables deberían ser escaladas para tener varianza unitaria antes de realizar el análisis.
+  
+Los argumentos de `princomp()` son los siguientes:
+
+  - `x`: una matrix numérica o dataframe.
+  - `cor`: un valor lógico indicando si los datos se centraran y escalaran antes de realizar el análisis.
+  - `scores`: un valor lógico indicando si se calcularan las coordenadas de cada componente principal.
+  
+Ambas funciones nos regresan los siguientes valores:
+
+  - `sdev`: las desviaciones estándar de las componentes principales.
+  - `rotation`, `loadings`: la matriz de las cargas donde las columnas son los eigenvectores.
+  - `center`: las medias de las variables, las que fueron restadas.
+  - `scale`: las desviaciones estandar de las variables.
+  - `x`, `scores`: las coordenadas de las observaciones/individuos de las componentes principales.
+
+Vamos a usar el paquete `factoextra` para visualizar los resultados.
+
+```{r cp25-0, message=FALSE, warning=FALSE}
+library(factoextra)
+```
+
+
+**Ejemplo 1:** Vamos a cargar la base de datos siguiente:
+
+[NationalTrackRecords](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/blob/main/data/NationalTrackRecords2.xlsx)
+
+
+```{r cp25}
+library(readxl)
+records <- read_excel("data/NationalTrackRecords2.xlsx")
+head(records)
+```
+
+¿Necesitamos escalar los datos? ¿Cómo son las varianzas y covarianzas? ¿Es conveniente trabajar con la matriz de correlación en vez de con la de varianzas y covarianzas?
+
+
+```{r cp26, warning=FALSE, message=FALSE}
+records2 <- records[,2:8]
+rownames(records2) <- records$...1
+```
+
+```{r cp27, eval=FALSE}
+var(records2)
+cor(records2)
+```
+
+
+¿Es apropiado hacer un análisis de componentes principales? ¿por qué? Si lo es, ya que hay muchas correlaciones altas, entonces se podría disminuir la dimensión.
+
+```{r cp28}
+library(corrplot)
+res1 <- cor.mtest(records2, conf.level= .95)
+res2 <- cor.mtest(records2, conf.level= .99)
+cor.mat <- cor(records2, use="complete.obs")
+
+corrplot(cor.mat)
+```
+
+
+Vamos a calcular los componentes principales primero con la función `princomp`.
+
+```{r cp29}
+cp1 <- princomp(records2, cor = TRUE)
+summary(cp1)
+```
+
+Con la instrucción `loadings` lo que obtenemos son las cargas de los componentes principales. Es decir, lo que obtenemos son los coeficientes que se usarán en las combinaciones lineales para calcular cada componente principal. Por ejemplo, para un conjunto de datos $X_1, X_2,..., X_p$ la primera columna que está denotada por `Comp.1` tiene los coeficientes $\phi_{11}, \phi_{21},... ,\phi_{p1}$ de la combinación lineal con la que se obtiene la primera componente principal:
+
+$$Z_1=\phi_{11}X_1+\phi_{21}X_2+... +\phi_{p1}X_p$$ 
+
+Esta primera componente principal será la que refleje la mayor variabilidad de los datos. Las cargas son las entradas de cada eigenvector son las siguientes:
+
+```{r cp30-0}
+cp1$loadings
+```
+
+Usando estos valores, la fórmula de la primer componente principal se escribiría como:
+
+$$(0.368, 0.365, 0.382,0.385,0.389, 0.389.0.367)(100m-mean(100m), 200m-mean(200m),...,Marathon-mean(Marathon))$$
+
+Las desviaciones estándar son las raíces de las lambdas.
+
+```{r cp30}
+cp1$sdev
+```
+
+Para calcular la varianza debemos elevar al cuadrado cada una de las entradas. 
+
+```{r cp31}
+varianza.cp1 <- (cp1$sdev)^2
+varianza.cp1
+```
+
+Para obtener la proporción de la varianza que explica cada componente lo que tenemos que hacer es dividir el valor de la varianza de la componente $j$ entre la suma de las varianzas de todas las componentes. 
+El siguiente código muestra como realizarlo. Además, en la instrucción `summary` vemos que estos valores coinciden con los de la segunda fila.
+
+
+```{r cp32}
+proporcion.varianza.cp1 <- (cp1$sdev)^2/sum((cp1$sdev)^2)
+proporcion.varianza.cp1
+```
+
+Si lo que queremos es el porcentaje, entonces solo hay que multiplicar por 100
+
+```{r cp33}
+porcentaje_varianza <- (cp1$sdev)^2*100/sum((cp1$sdev)^2)
+porcentaje_varianza
+```
+
+Para encontrar la proporción de varianza acumulada, lo que tenemos que hacer es dividir la suma de los primeros $j-$ésimos eigenvalores entre entre la suma de todos los eigenvalores. 
+
+```{r cp34}
+proporcion_acumulada_varianza <- cumsum(proporcion.varianza.cp1)
+proporcion_acumulada_varianza
+```
+
+Cálculamos los eigenvalores de la matriz cuadrada de correlación.
+
+```{r cp35}
+eigen_base <- (eigen(cor.mat))
+eigen_base
+```
+
+La varianza de las Componentes Principales, es igual a los eigenvalores. Es decir, la desviación estándar de las componentes, es igual a la raíz de los valores propios.
+
+```{r cp36}
+desv_base <- cp1$sdev
+desv_base
+desv_rounded_base <- round(cp1$sdev, 1)
+desv_rounded_base
+```
+
+```{r cp37}
+round(sqrt(eigen_base$values),1) == desv_rounded_base
+```
+
+Por otra parte, se puede afirmar que la traza de la matriz lambda es igual a la suma de la varianza de cada valor observado.
+
+```{r cp38}
+lambda_matriz <- round(diag(eigen_base$values), 2)
+lambda_matriz
+
+traza_lambda <- sum(diag(lambda_matriz))
+traza_lambda
+```
+
+Además, el porcentaje de la varianza generalizada que es explicado por la componente $j$-ésima es igual a la relación que hay entre los  eigenvalores divididos por la suma de la diagonal de eigenvalores. Es decir, esto es igual al porcentaje de varianza acumulada por la función `summary`, y hecho a mano con la suma acumulada de los valores propios.
+
+```{r cp39}
+cumsum(eigen_base$values/traza_lambda) 
+```
+
+
+Esta matriz es la diagonal con los eigenvalores.
+
+```{r cp40}
+lambda_matriz <- round(diag(eigen_base$values), 2)
+lambda_matriz
+```
+
+La traza de la matriz $\Lambda$ es igual a la suma de las varianzas acumuladas por los Componentes.
+
+```{r cp41}
+traza_lambda <- sum(diag(lambda_matriz))
+traza_lambda
+```
+
+
+Una forma de ver con cuantos componentes nos conviene trabajar es con el gráfico de codo.
+
+```{r cp42}
+screeplot(cp1, type="lines")
+```
+
+¿Con cuántas componentes nos conviene quedarnos?
+
+El biplot es una forma de representar los resultados de PCA.
+
+```{r cp43}
+biplot(cp1)
+```
+
+Vamos a analizar el biplot a detalle.
+
+¿Qué mide la primera componente? o ¿Cómo la interpretas?
+
+La interpretación no se hace en función delos individuos sino de las variables que explica cada componente. Como en esta primer componente, todas las cargas son positivas y muy similares para todas las variables, podríamos nombrar a esta variable "velocidad en las carreras" por ejemplo.
+
+En el biplot, los países que quedan a la derecha del cero, ¿qué tipo de corredores tienen? Los lentos.
+
+En el biplot, los países que quedan con puntajes altos en la segunda componente, tienen velocistas rápidos y fondistas lentos o viceversa?
+
+Los pesos positivos están en las carreras de velocidad y los pesos negativos en las de fondo. Es decir, un país con valores altos (tiempos grandes) en las carreras X100, X200, X400, tendrá valores positivos y grandes al multiplicar por las cargas de componente 2, y sí tiene tiempos bajos en las carreras de fondo, al multiplicar por las cargas negativas de la componente 2, el score para ese país en el componente 2 será positivo. Caso contrario pasaría con un país con tiempos cortos en las carreras de 100 a 200 m, y tiempos largos en las carreras de fondo.
+
+¿En qué cuadrante se encuentran los países que tienen a los
+velocistas más rápidos? Sería III, pues es el cuadrante opuesto a la dirección de los vectores de las variables X100, X200, X400 ( cuadrante I, en donde se ubican los velocistas más lentos).
+
+¿En qué cuadrante se encuentran los países que tienen a los fondistas
+más rápidos? Sería el cuadrante II, opuesto a la dirección de los vectores de marathon, X800, X1500 (ubicados en cuadrante IV, en donde están los fondistas mas lentos).
+
+¿Qué país tiene los velocistas más lentos?
+Sí observas el biplot CP1 vs CP2, Cookis está hacia donde están apuntando los vectores
+positivos de las carreras de velocidad, lo cual quiere decir que ese país tiene tiempos
+largos en esas carreras de velocidad y en consecuencia, su score en componente 2
+resulta muy positiva.
+
+¿Qué país tiene los fondistas más lentos?
+
+Sí observas el biplot CP1 vs CP2, wsamoa está hacia donde están apuntando los vectores
+de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese país tiene tiempos largos en esas carreras de fondo y en consecuencia, su score en componente 2 resulta muy negativa.
+
+**Ejemplo 2:** Vamos a cargar la base de datos `decathlon2` del paquete `factoextra` y vamos a extraer los individuos del `1:23` y las variables `1:10`.
+
+```{r cp44}
+data("decathlon2")
+decathlon2_activos <- decathlon2[1:23,1:10]
+head(decathlon2_activos[,1:6])
+```
+
+¿Necesitamos escalar los datos? ¿Cómo son las varianzas y covarianzas?
+
+```{r cp45, eval=FALSE}
+var(decathlon2_activos)
+cor(decathlon2_activos)
+```
+
+Vamos a calcular la matriz de correlaciones.
+
+```{r cp46}
+library(corrplot)
+res1 <- cor.mtest(decathlon2_activos, conf.level= .95)
+res2 <- cor.mtest(decathlon2_activos, conf.level= .99)
+cor.mat <- cor(decathlon2_activos, use="complete.obs")
+
+corrplot(cor.mat)
+```
+
+
+
+Removemos algunas de las variables correlacionadas. 
+
+```{r cp47}
+library(tidyverse)
+base.cp1 <- decathlon2_activos
+base.cp1 <- base.cp1 %>%
+    dplyr::select(-Pole.vault)
+
+```
+
+```{r cp48}
+cor.mat.aj <- cor(base.cp1, use = "complete.obs")
+corrplot(cor.mat.aj)
+```
+
+Usaremos la función `prcomp()` y primero realizaremos el análisis sin quitar la variable anterior.
+
+```{r cp49}
+res.pca <- prcomp(decathlon2_activos, scale = TRUE )
+```
+
+Visualizamos lo eigenvalores.
+
+```{r cp50}
+fviz_eig(res.pca)
+```
+
+```{r cp51}
+summary(res.pca)
+```
+
+¿Cuál es la proporción de la varianza explicada de las componentes?
+
+¿Con cuántas componentes nos conviene quedarnos? ¿Porqué?
+
+Vamos a graficar a los individuos y corolearlos por perfiles similares.
+
+```{r cp52}
+fviz_pca_ind(res.pca,
+             col.ind = "cos2", # color por la calidad de representación
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE     # evitar que se sobrelape el texto
+             )
+```
+
+Para graficar las variables y ver sus correlaciones realizamos lo siguiente. Variables correlacionadas negativamente apuntan a lados opuestos.
+
+```{r cp53}
+fviz_pca_var(res.pca,
+             col.var = "contrib", # Color por contribución al PCA
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE    
+             )
+```
+
+Un objeto importante en estos análisis de PCA son los biplots.
+
+```{r cp54}
+fviz_pca_biplot(res.pca, repel = TRUE,
+                col.var = "#2E9FDF", # Variables 
+                col.ind = "#696969"  # Individuos
+                )
+```
+
+
+```{r cp55}
+fviz_pca_biplot(res.pca, repel = TRUE, axes = c(1,3),
+                col.var = "#2E9FDF", # Variables 
+                col.ind = "#696969"  # Individuos
+                )
+```
+
+Vamos a acceder a los resultados del PCA.
+
+```{r cp56}
+# Eigenvalores
+eig.val <- get_eigenvalue(res.pca)
+eig.val
+  
+# Resulados para las variables
+res.var <- get_pca_var(res.pca)
+res.var$coord          # Coordenadas
+res.var$contrib        # Contribuciones a las componentes
+res.var$cos2           # Calidad de la representación
+
+# Resultados para individuos
+res.ind <- get_pca_ind(res.pca)
+res.ind$coord          
+res.ind$contrib        
+res.ind$cos2            
+```
+
+El conjunto de datos tiene unas variables categóricas en la columna 13 que se quitó al inicio que corresponde al tipo de competición. Vamos a usar esa variable para agrupar los individuos.
+
+```{r cp57}
+groups <- as.factor(decathlon2$Competition[1:23])
+fviz_pca_ind(res.pca,
+             col.ind = groups, # color by groups
+             palette = c("#00AFBB",  "#FC4E07"),
+             addEllipses = TRUE, # Concentration ellipses
+             ellipse.level=0.7,
+             legend.title = "Groups",
+             repel = TRUE
+             )
+```
+
+Explica las componentes. ¿Cómo podrías llamar a las componentes 1 y 2? 
+
+
+## Ejercicios PCA
+
+**Ejercicio 1:** Carga la base de datos siguiente y realiza el análisis de componentes principales. Decide y justifica que matriz usaras, la de varianzas y covarianzas o la de correlaciones. ¿Con cuántas componentes te quedarías? ¿por qué? ¿Qué explica cada componente de las que te quedaste? ¿Cuál es la varianza total explicada por esas componentes? ¿Qué tortuga es la más grande? ¿Qué variable tiene la mayor varianza? ¿Las variables están correlacionadas positivamente? ¿Porqué? 
+
+[Tortugas](https://drive.google.com/file/d/1gSi65s_Nm0jj2Poo2MtXYN82bYRAErPa/view?usp=share_link)
+
+
+```{r cp58}
+library(readr)
+turtledata <- read_delim("data/turtledata.csv", 
+    delim = ";", escape_double = FALSE, trim_ws = TRUE)
+```
+
+
+**Ejercicio 2:**
+

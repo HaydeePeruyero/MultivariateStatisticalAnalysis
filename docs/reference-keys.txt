@@ -41,6 +41,10 @@ todos-los-modelos-posibles-1
 selección-paso-a-paso-1
 ejercicios-4
 análisis-de-componentes-principales
+componentes-principales-para-matriz-de-covarianza
+componentes-principales-para-matriz-de-correlación
+ejemplos-con-bases-de-datos
+ejercicios-pca
 análisis-factorial
 análisis-de-conglomerados
 análisis-de-discriminante
