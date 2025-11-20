@@ -285,6 +285,417 @@ cat("\nP_r' R P_r (debe ser diagonal = autovalores de R)\n")
 print(round(t(P_r) %*% R_mat %*% P_r, 8))
 ```
 
+## El número de Componentes Principales
+
+Uno de los pasos fundamentales en el análisis de componentes principales (PCA) consiste en determinar cuántos componentes deben retenerse para describir adecuadamente la estructura de los datos. No existe un criterio único y universal, por lo que en la práctica se suelen combinar varias estrategias complementarias. A continuación se describen tres de los métodos más utilizados: el scree plot, la regla de Kaiser y el procedimiento de Horn.
+
+### Scree plot
+
+El *scree plot* es una herramienta gráfica propuesta por Cattell (1966), en la que se representan los valores propios (varianzas explicadas) en función del número de componente. La idea es identificar el punto a partir del cual los valores propios dejan de decrecer de manera pronunciada y se estabilizan. Esta “zona de estabilización” se conoce como codo (elbow).
+Los componentes anteriores al codo explican la mayor parte de la variabilidad estructural, mientras que los posteriores suelen corresponderse con ruido. Aunque el criterio del codo es visual y puede ser subjetivo, es una aproximación muy útil como primera guía.
+
+En R, el scree plot se puede obtener con funciones como `screeplot(obj_pca)` o haciendo un plot usual de los eigenvalores.
+
+**Ejemplo:** Vamos a cargar la base de datos `USArrests`. Calculamos los componentes principales con la función `prcomp` y guardaresmos los eigenvalores en una variable.
+
+```{r cp59}
+data("USArrests")
+datos <- na.omit(USArrests)
+pca_obj <- prcomp(datos, scale. = TRUE)
+eigenvalues <- pca_obj$sdev^2
+eigenvalues
+```
+
+Tenemos tres formas de realizar este plot, unos usando los valores de los eigenvalores y el segundo usando la función de `screeplot` o usando la función `fviz_eig` de `factoextra`.
+
+```{r cp60}
+plot(eigenvalues, type = "b", xlab = "Componente principal", ylab = "Eigenvalor", 
+     main = "Scree plot")
+abline(h = 1, lty = 2) # línea de referencia en 1 (útil para Kaiser)
+```
+
+```{r cp61}
+screeplot(pca_obj, type="lines")
+```
+
+Si utilizamos el paquete factoextra, el scree plot también puede mostrar directamente la proporción de varianza explicada:
+
+```{r cp62}
+library(factoextra)
+fviz_eig(pca_obj, addlabels = TRUE, ylim = c(0, 100))
+```
+
+
+La interpretación consiste en buscar el “codo” en la gráfica: el punto a partir del cual la pendiente deja de ser pronunciada y los eigenvalores se estabilizan. En los tres plots, podemos ver que en la componente dos, se forma el "codo", además de que las primeras dos componentes tienen una mayor variabilidad. Este método nos sugiere quedarnos con las primeras dos componentes principales.
+
+### Regla de Kaiser
+
+La regla de , fue propuesta por Kaiser en 1959. Propone retener únicamente los componentes cuyos eigenvalores sean mayores que 1 (cuando el PCA se realiza sobre la **matriz de correlaciones**).
+La justificación es que cada componente debe explicar al menos tanta variabilidad como una variable original estandarizada.
+Este criterio es sencillo de aplicar, pero puede sobrestimar el número de componentes cuando el número de variables es grande o cuando la estructura de los datos es débil.
+
+Una forma de hacer esto es la siguiente:
+
+```{r cp63}
+componentes_kaiser <- which(eigenvalues > 1)
+componentes_kaiser
+
+length(componentes_kaiser) 
+```
+
+Podríamos resumir también esto en una tabla:
+
+```{r cp64}
+prop_var <- eigenvalues / sum(eigenvalues)
+tabla_pca <- data.frame(
+Componente = paste0("PC", seq_along(eigenvalues)),
+Eigenvalor = eigenvalues,
+PropVar    = prop_var,
+PropVarAcum = cumsum(prop_var),
+Kaiser     = eigenvalues > 1
+)
+tabla_pca
+```
+
+Aunque la componente 2 es menor a 1, si podría considerarse.
+
+
+### Procedimiento de Horn (parallel analysis)
+
+El procedimiento de Horn, propuesto por Horn en 1965, también llamado análisis paralelo, es uno de los métodos más robustos para decidir el número de componentes. 
+Consiste en comparar los eigenvalores obtenidos a partir de los datos reales con los eigenvalores obtenidos de matrices aleatorias generadas bajo ausencia de estructura (ruido). En lugar de tomar todos los eigenvalores mayores a 1, propone tomar otro corte dependiendo de los valores obtenidos de matrices aleatoias.
+Se retienen únicamente aquellos componentes cuyo eigenvalor sea mayor al correspondiente eigenvalor promedio de las matrices aleatorias.
+
+Este procedimiento reduce los riesgos tanto de incluir componentes irrelevantes como de descartar componentes importantes. En R se puede implementar con el paquete `psych` mediante la función `fa.parallel()` o con funciones específicas de análisis paralelo para PCA.
+
+```{r cp65}
+library(psych)
+
+set.seed(123) # para reproducibilidad
+
+fa.parallel(datos, 
+            fa = "pc", # especifica que queremos análisis de componentes principales
+            n.iter = 100, # número de matrices aleatorias
+            show.legend = TRUE,
+            main = "Análisis paralelo (Procedimiento de Horn)"
+            )
+```
+
+Además de los criterios clásicos, como el scree plot o la regla de Kaiser, el paquete nFactors ofrece una forma integrada de comparar varios métodos para decidir cuántos componentes principales deben retenerse. Este enfoque combina:
+
+- Los eigenvalores reales obtenidos del PCA;
+
+- Los eigenvalores simulados mediante análisis paralelo (procedimiento de Horn);
+
+- Criterios gráficos, como el scree plot refinado (Cattell);
+
+- La regla de Kaiser (eigenvalores mayores que 1 cuando se usa una matriz de correlaciones).
+
+A continuación se describe el procedimiento y el significado de cada paso.
+
+**Eigenvalores reales:** El primer paso consiste en obtener los eigenvalores de la matriz de correlaciones. Si los datos han sido estandarizados o se usa directamente la matriz de correlaciones, cada variable tiene varianza igual a 1 y la regla de Kaiser puede aplicarse de manera directa.
+
+```{r cp66}
+cor_mat <- cor(datos, use = "pairwise.complete.obs")
+# Eigenvalores de la matriz de correlaciones
+ev_cor <- eigen(cor_mat)
+```
+
+**Análisis paralelo (Procedimiento de Horn):** El análisis paralelo compara los eigenvalores reales con eigenvalores obtenidos a partir de matrices aleatorias sin estructura (ruido). Los componentes se retienen únicamente si su eigenvalor es mayor que el correspondiente eigenvalor simulado bajo el escenario nulo.
+
+En `nFactors`, esto se realiza con:
+
+```{r cp67}
+library(nFactors)
+ap <- parallel(
+  subject = nrow(datos),   # número de observaciones
+  var     = ncol(datos),   # número de variables
+  rep     = 100,                 # número de simulaciones
+  cent    = .05                  # percentil usado para ajustar los eigenvalores simulados
+)
+```
+
+La salida `ap$eigen$qevpea` contiene los eigenvalores simulados promediados y ajustados, que se usarán más adelante para la comparación.
+
+**Función `nScree()`:** Kaiser + Scree + Análisis paralelo en una sola función. El paquete `nFactors` permite integrar todos los criterios anteriores usando la función `nScree()`. Esta función toma:
+
+- los eigenvalores reales
+
+- los eigenvalores simulados del análisis paralelo
+
+- información adicional si se trabaja con la matriz de correlaciones `(cor = TRUE)`
+
+y produce una recomendación conjunta.
+
+```{r cp68}
+num_cp <- nScree(x = ev_cor$values,           # eigenvalores reales
+                 aparallel = ap$eigen$qevpea, # eigenvalores simulados
+                 cor       = TRUE       # indica que provienen de una matriz de correlaciones
+                 )
+num_cp
+
+```
+
+La salida `num_cp` resume cuántos componentes recomienda cada criterio:
+
+- *Regla de Kaiser*: componentes con eigenvalor > 1.
+
+- *Scree Test (Cattell)*: número de componentes hasta el “codo”.
+
+- *Parallel analysis*: eigenvalores observados mayores que los simulados.
+
+- *nScree solution*: recomendación final combinada.
+
+Puede visualizarse con:
+
+```{r cp69}
+plotnScree(num_cp)
+```
+
+Esta gráfica muestra simultáneamente los eigenvalores reales y los simulados, así como las líneas marcando los puntos de corte según cada método.
+
+**Interpretación**
+
+Usar `nScree()` tiene la ventaja de ofrecer una visión amplia e integradora:
+
+- La regla de Kaiser es rápida pero puede sobreestimar componentes.
+
+- El scree plot puede ser subjetivo.
+
+- El análisis paralelo es el más estable y recomendado en literatura moderna.
+
+- La solución nScree combina los tres, ofreciendo un punto de vista equilibrado.
+
+La recomendación final debe tomarse considerando la interpretación sustantiva del problema, la proporción de varianza explicada y la finalidad del PCA.
+
+## Visualización de los componentes principales
+
+
+Una vez seleccionado el número adecuado de componentes principales, es fundamental apoyarse en diversas visualizaciones para interpretar la estructura de los datos y la contribución de las variables. En PCA, los gráficos más comunes son:
+
+- el score plot (individuos en el espacio de los componentes),
+
+- el loading plot (contribución de variables),
+
+- el biplot o bibiplot, que combina ambos.
+
+### Score plot: individuos en el espacio PCA
+
+El score plot muestra las observaciones proyectadas en los ejes principales (típicamente PC1 y PC2). Permite identificar:
+
+- agrupamientos naturales,
+
+- valores atípicos,
+
+- diferencias entre grupos (si se colorean por una variable categórica).
+
+Veamos un ejemplo en `Factoextra`
+
+```{r cp70}
+library(factoextra)
+
+# PCA
+pca_obj <- prcomp(datos, scale. = TRUE)
+
+# Score plot PC1 vs PC2
+fviz_pca_ind(pca_obj,
+             geom = "point",
+             pointsize = 2,
+             col.ind = "steelblue",
+             addEllipses = FALSE,
+             title = "Score plot: individuos en el espacio PC1-PC2"
+             )
+```
+
+### Loading plot: contribución de las variables
+
+Los loadings representan cuánto contribuye cada variable a los componentes principales. 
+
+Un loading alto (positivo o negativo) indica que la variable influye fuertemente en ese componente.
+
+Las variables agrupadas en el gráfico suelen estar correlacionadas. 
+En el plano definido por los componentes principales, el ángulo entre dos vectores (flechas) refleja el signo y la fuerza de la correlación entre las variables:
+
+- Ángulos menores a 90°: correlación positiva.
+
+- Ángulo aproximadamente de 90°: variables prácticamente no correlacionadas en el plano PC1–PC2.
+
+- Ángulos mayores a 90°: correlación negativa.
+
+- Ángulo cercano a 180°: correlación negativa muy fuerte.
+
+
+```{r cp71}
+fviz_pca_var(pca_obj,
+             col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE, # evita que las etiquetas se traslapen
+             title = "Loading plot: contribución de variables"
+)
+```
+
+### Biplot y Bibiplot
+
+El biplot es una visualización conjunta de:
+
+- scores (puntos = observaciones)
+
+- loadings (flechas = variables)
+
+Esto permite ver simultáneamente:
+
+- cómo se distribuyen las observaciones en el espacio PCA,
+
+- qué variables explican esa distribución.
+
+**Interpretación esencial del biplot**
+
+- Flechas largas: variables con mayor contribución.
+
+- Flechas cercanas: variables correlacionadas.
+
+- Observaciones proyectadas en dirección de una flecha: altas en esa variable.
+
+**Ángulos entre flechas:**
+
+- $< 90$°: correlación positiva
+
+- $\sim 90$°: independencia
+
+- $> 90$°: correlación negativa
+
+En R base se puede obtener de la siguiente forma:
+
+```{r cp72}
+biplot(pca_obj, scale = 0, cex = 0.8)
+```
+Sin embargo, el biplot base suele ser poco estético y difícil de interpretar cuando hay muchas variables.
+
+Con el paquete `factoextra` podemos personalizarlo un poco más.
+
+```{r cp73}
+fviz_pca_biplot(pca_obj,
+                repel = TRUE,
+                col.ind = "gray30",
+                col.var = "firebrick",
+                geom.ind = "point",
+                label = "var",
+                title = "Bibiplot de componentes principales"
+                )
+
+```
+
+Se puede colorear individuos según un grupo. Vamos a agregar una columna de las regiones.
+
+```{r cp74}
+# Crear variable de grupo por región
+region <- state.region   # vector ya incluido en R, en el mismo orden de estados
+
+# Hacemos de nuevo el PCA
+pca_obj <- prcomp(USArrests, scale. = TRUE)
+
+fviz_pca_biplot(pca_obj,
+                repel = TRUE,
+                col.ind = region,      # vector con factor o variable categórica
+                palette = "Dark2",
+                geom.ind = "point",
+                addEllipses = TRUE,
+                title = "Bibiplot coloreado por grupo"
+                )
+
+```
+
+### Gráficos adicionales útiles
+
+Además de los gráficos tradicionales del PCA (score plot, loading plot y biplot), existen otras visualizaciones que permiten comprender mejor la importancia y calidad de representación de cada variable en los componentes principales. A continuación se describen tres tipos de gráficos muy utilizados en análisis exploratorio: contribuciones, calidad de representación ($\cos^2$) y visualización separada de individuos y variables.
+
+**a) Contribuciones por componente:** Las contribuciones indican qué porcentaje del total de varianza explicada por un componente proviene de cada variable.
+Este gráfico permite identificar cuáles variables son las más influyentes en cada componente principal.
+
+```{r cp75}
+fviz_contrib(pca_obj, choice = "var", axes = 1)
+fviz_contrib(pca_obj, choice = "var", axes = 2)
+```
+
+Cómo interpretarlo:
+
+- Las barras más altas representan variables que explican mayor parte de la varianza del componente.
+
+- Una variable con alta contribución en PC1 influye más en la dirección en que PC1 separa las observaciones.
+
+- Si una variable contribuye poco a todos los componentes, tiene poca relevancia estructural para el PCA.
+
+- `Factoextra` suele marcar con una línea roja la “contribución esperada” si todas las variables aportaran por igual.
+  - Barras por arriba de esa línea: variables relevantes.
+
+  - Barras por abajo: variables menos informativas.
+
+Es un gráfico muy útil para responder preguntas como:
+
+“¿Qué variables están definiendo principalmente el primer componente?”
+
+**b) Mapa de calidad de representación ($\cos^2$):** El valor $\cos^2$ es la calidad de representación de una variable o individuo en el plano principal (usualmente PC1–PC2).
+Es decir, indica qué tan bien está proyectada la variable en ese plano.
+
+```{r cp76}
+fviz_pca_var(pca_obj,
+             col.var = "cos2",
+             gradient.cols = c("blue", "yellow", "red"),
+             repel = TRUE
+             )
+
+```
+
+Cómo interpretarlo:
+
+- Un valor alto de $\cos^2$ (cercano a 1) indica que la variable está bien representada en el plano PC1–PC2.
+
+- Valores bajos (cercanos a 0) indican que la variable tiene componente importante en PC3, PC4, etc.
+
+- El color indica la calidad de representación:
+
+  - Rojo: excelente representación ($\cos^2$ alto)
+
+  - Amarillo: intermedia
+
+  - Azul: pobre representación
+
+Regla práctica:
+
+- Solo interpretar direcciones, ángulos y correlaciones para variables con $\cos^2$ alto.
+
+- Variables con $\cos^2$ bajo pueden llevar a interpretaciones erróneas.
+
+
+**c) Variables y observaciones en paneles separados:** Aunque el biplot combina individuos y variables en una sola figura, a veces es más claro analizarlos por separado:
+
+```{r cp77}
+fviz_pca_ind(pca_obj)
+fviz_pca_var(pca_obj)
+```
+
+| Gráfico            | Es útil para…                           | Interpretación clave                                             |
+|--------------------|-----------------------------------------|------------------------------------------------------------------|
+| **Contribuciones** | Ver qué variables definen los componentes | Barras grandes = variables muy influyentes                      |
+| **$\cos^2$**           | Evaluar calidad de representación         | Colores cálidos = buena representación en PC1–PC2                |
+| **Individuos**     | Ver similitudes entre observaciones       | Puntos cercanos = perfiles similares                             |
+| **Variables**      | Analizar correlaciones y direcciones      | Ángulos < 90° = correlación positiva; > 90° = correlación negativa |
+
+
+### Recomendaciones prácticas de interpretación
+
+Usar PC1 y PC2 como primera aproximación, pero revisar también PC3 si la varianza explicada no es alta. Interpretar siempre el biplot considerando:
+
+- magnitud y dirección de las flechas,
+
+- ángulos entre variables,
+
+- ubicación de individuos respecto a las flechas.
+
+Evitar interpretaciones fuertes cuando las $\cos^2$ sean bajas (mala representación en el plano).
+
+
+
 ## Ejemplos con Bases de datos
 
 
@@ -372,7 +783,7 @@ cp1$loadings
 
 Usando estos valores, la fórmula de la primer componente principal se escribiría como:
 
-$$(0.368, 0.365, 0.382,0.385,0.389, 0.389.0.367)(100m-mean(100m), 200m-mean(200m),...,Marathon-mean(Marathon))$$
+$$(0.368, 0.365, 0.382,0.385,0.389, 0.389, 0.367)(100m-mean(100m), 200m-mean(200m),...,Marathon-mean(Marathon))$$
 
 Las desviaciones estándar son las raíces de las lambdas.
 
@@ -656,5 +1067,92 @@ turtledata <- read_delim("data/turtledata.csv",
 ```
 
 
-**Ejercicio 2:**
+**Ejercicio 2:** Trabajaremos con la base de datos `Whisky`, disponible en la librería `FactoClass`. Esta base contiene información de 35 marcas de whisky, a cada una de las cuales se le miden las siguientes variables cuantitativas:
+
+- `price`: precio en francos franceses;
+
+- `malt`: proporción de malta añadida;
+
+- `aging`: años de añejamiento;
+
+- `taste`: calificación promedio otorgada por un panel de catadores.
+
+Además, se incluye una variable categórica:
+
+- `type`: clasificación del whisky según su contenido de malta (1 = bajo, 2 = medio, 3 = puro).
+
+```{r cp58-2}
+library(FactoClass)
+data(Whisky)
+head(Whisky)
+```
+
+Utiliza esta base para responder las siguientes preguntas.
+
+a) ¿Por qué sería conveniente aplicar PCA a esta base de datos? ¿Es importante estandarizar los datos?
+
+b) ¿Cuántas componentes principales serán necesarios para el análisis?
+
+c) ¿Cuál es la variable que más contribuye en cada eje? ¿Cuál es la que menos contribuye?
+
+d) ¿Qué representa el primer eje? ¿Qué nombre le asignaría? ¿Qué representa el segundo eje?
+
+e) ¿Cuál es el individuo mejor representado en el primer plano factorial? ¿Cuál es la peor?
+
+f) ¿Cómo podemos representar los niveles en los datos en las dos primeras componentes?
+
+Ejercicio tomado de https://rpubs.com/JairoAyala/PCA.
+
+
+**Ejercicio 3:** En este ejercicio trabajarás con el conjunto de datos Glass Identification, disponible en [datos](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/glass_identification_full.csv) y [descripciones](https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/glass_identification_variables.csv) . Este dataset contiene mediciones químicas sobre muestras de vidrio, con el objetivo original de clasificar cada muestra según su tipo (ventanas, recipientes, vidrio flotado, etc.).
+
+El conjunto incluye `n = 214` observaciones y `p = 9` variables numéricas asociadas a la composición química del vidrio:
+
+- RI: índice de refracción
+
+- Na: Sodio
+
+- Mg: Magnesio
+
+- Al: Aluminio
+
+- Si: Silicio
+
+- K: Potasio
+
+- Ca: Calcio
+
+- Ba: Bario
+
+- Fe: Hierro
+
+Además, contiene una variable categórica `Type` que identifica el tipo de vidrio (1–7). Este set de datos fue descargado de [UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/42/glass+identification).
+
+Aplica un análisis de componentes principales (PCA) para:
+
+a) Explorar la variabilidad del conjunto de datos.
+
+b) Detarmina si se deben estandarizar o no los datos.
+
+c) ¿Qué matriz usarás para el PCA?
+
+d) Determinar el número adecuado de componentes principales.
+
+e) Interpretar los componentes obtenidos.
+
+f) Visualizar la estructura de los datos en el espacio PCA.
+
+g) Evaluar si existe separación entre los tipos de vidrio mediante PCA.
+
+
+## Tutoriales de DataCamp sugeridos
+
+1) https://www.datacamp.com/tutorial/principal-component-analysis-in-python
+
+2) https://www.datacamp.com/tutorial/pca-analysis-r
+
+3) https://campus.datacamp.com/es/courses/rna-seq-with-bioconductor-in-r/exploratory-data-analysis-2?ex=10
+
+
+
 

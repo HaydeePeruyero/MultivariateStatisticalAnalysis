@@ -59,3 +59,14 @@ gráficos-de-paralelas
 estrellas
 plots-3d
 ejercicios-5
+el-número-de-componentes-principales
+scree-plot
+regla-de-kaiser
+procedimiento-de-horn-parallel-analysis
+visualización-de-los-componentes-principales
+score-plot-individuos-en-el-espacio-pca
+loading-plot-contribución-de-las-variables
+biplot-y-bibiplot
+gráficos-adicionales-útiles
+recomendaciones-prácticas-de-interpretación
+tutoriales-de-datacamp-sugeridos

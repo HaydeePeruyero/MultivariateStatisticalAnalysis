@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Sección 4 Biplot y Bibiplot | Estadística Multivariada</title>
+  <meta name="description" content="Curso ENES Morelia Semestre 2026-1" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Sección 4 Biplot y Bibiplot | Estadística Multivariada" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Curso ENES Morelia Semestre 2026-1" />
+  <meta name="github-repo" content="HaydeePeruyero/MultivariateStatisticalAnalysis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Sección 4 Biplot y Bibiplot | Estadística Multivariada" />
+  
+  <meta name="twitter:description" content="Curso ENES Morelia Semestre 2026-1" />
+  
+
+<meta name="author" content="Haydeé Peruyero" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análisis-de-componentes-principales.html"/>
+<link rel="next" href="análisis-factorial.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MultivariateStatisticalAnalysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="02-PCA.html"><a href="#estad%C3%ADstica-multivariada"><i class="fa fa-check"></i><b>1</b> Estadística Multivariada</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1.1</b> Temario</a></li>
+<li class="chapter" data-level="1.2" data-path="02-PCA.html"><a href="#evaluaci%C3%B3n"><i class="fa fa-check"></i><b>1.2</b> Evaluación</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#proyecto-final"><i class="fa fa-check"></i><b>1.3</b> Proyecto final</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#referencias"><i class="fa fa-check"></i><b>1.4</b> Referencias</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#material-interesante"><i class="fa fa-check"></i><b>1.5</b> Material interesante</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#datacamp"><i class="fa fa-check"></i><b>1.6</b> DataCamp</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="02-PCA.html"><a href="#regresi%C3%B3n-m%C3%BAltiple"><i class="fa fa-check"></i><b>2</b> Regresión múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="02-PCA.html"><a href="#por-qu%C3%A9-estad%C3%ADstica-multivariada"><i class="fa fa-check"></i><b>2.1</b> ¿Por qué estadística multivariada?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="02-PCA.html"><a href="#qu%C3%A9-es-multivariado-y-por-qu%C3%A9-lo-necesitamos"><i class="fa fa-check"></i><b>2.1.1</b> ¿Qué es “multivariado” y por qué lo necesitamos?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="02-PCA.html"><a href="#regresi%C3%B3n-m%C3%BAltiple-1"><i class="fa fa-check"></i><b>2.2</b> Regresión múltiple</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="02-PCA.html"><a href="#modelo-y-estimaci%C3%B3n"><i class="fa fa-check"></i><b>2.2.1</b> Modelo y estimación</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="02-PCA.html"><a href="#estimaci%C3%B3n-de-par%C3%A1metros"><i class="fa fa-check"></i><b>2.3</b> Estimación de parámetros</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html"><i class="fa fa-check"></i><b>2.3.1</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="02-PCA.html"><a href="#pruebas-de-hip%C3%B3tesis"><i class="fa fa-check"></i><b>2.4</b> Pruebas de Hipótesis</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="02-PCA.html"><a href="#prueba-de-la-significancia-de-la-regresi%C3%B3n"><i class="fa fa-check"></i><b>2.4.1</b> Prueba de la significancia de la regresión</a></li>
+<li class="chapter" data-level="2.4.2" data-path="02-PCA.html"><a href="#pruebas-sobre-coeficientes-individuales-de-regresi%C3%B3n"><i class="fa fa-check"></i><b>2.4.2</b> Pruebas sobre coeficientes individuales de regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#intervalos-de-confianza"><i class="fa fa-check"></i><b>2.5</b> Intervalos de confianza</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="02-PCA.html"><a href="#intervalos-de-confianza-en-los-coeficientes-de-regresi%C3%B3n"><i class="fa fa-check"></i><b>2.5.1</b> Intervalos de confianza en los coeficientes de regresión</a></li>
+<li class="chapter" data-level="2.5.2" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#intervalo-de-confianza-de-la-respuesta-media"><i class="fa fa-check"></i><b>2.5.2</b> Intervalo de confianza de la respuesta media</a></li>
+<li class="chapter" data-level="2.5.3" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-1"><i class="fa fa-check"></i><b>2.5.3</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="02-PCA.html"><a href="#ejercicios-regresi%C3%B3n-lineal-multiple"><i class="fa fa-check"></i><b>2.6</b> Ejercicios Regresión Lineal Multiple</a></li>
+<li class="chapter" data-level="2.7" data-path="02-PCA.html"><a href="#validaci%C3%B3n-de-supuestos"><i class="fa fa-check"></i><b>2.7</b> Validación de Supuestos</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#multicolinealidad"><i class="fa fa-check"></i><b>2.7.1</b> Multicolinealidad</a></li>
+<li class="chapter" data-level="2.7.2" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#normalidad-en-los-residuales"><i class="fa fa-check"></i><b>2.7.2</b> Normalidad en los residuales</a></li>
+<li class="chapter" data-level="2.7.3" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#homocedasticidad"><i class="fa fa-check"></i><b>2.7.3</b> Homocedasticidad</a></li>
+<li class="chapter" data-level="2.7.4" data-path="02-PCA.html"><a href="#no-autocorrelaci%C3%B3n"><i class="fa fa-check"></i><b>2.7.4</b> No autocorrelación</a></li>
+<li class="chapter" data-level="2.7.5" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#predicciones"><i class="fa fa-check"></i><b>2.7.5</b> Predicciones</a></li>
+<li class="chapter" data-level="2.7.6" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-2"><i class="fa fa-check"></i><b>2.7.6</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="02-PCA.html"><a href="#an%C3%A1lisis-de-varianza"><i class="fa fa-check"></i><b>2.8</b> Análisis de Varianza</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-3"><i class="fa fa-check"></i><b>2.8.1</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="02-PCA.html"><a href="#selecci%C3%B3n-del-modelo"><i class="fa fa-check"></i><b>2.9</b> Selección del modelo</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#todos-los-modelos-posibles"><i class="fa fa-check"></i><b>2.9.1</b> Todos los modelos posibles</a></li>
+<li class="chapter" data-level="2.9.2" data-path="02-PCA.html"><a href="#selecci%C3%B3n-paso-a-paso"><i class="fa fa-check"></i><b>2.9.2</b> Selección paso a paso</a></li>
+<li class="chapter" data-level="2.9.3" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejemplos"><i class="fa fa-check"></i><b>2.9.3</b> Ejemplos</a></li>
+<li class="chapter" data-level="2.9.4" data-path="02-PCA.html"><a href="#selecci%C3%B3n-paso-a-paso-1"><i class="fa fa-check"></i><b>2.9.4</b> Selección paso a paso</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="02-PCA.html"><a href="#an%C3%A1lisis-de-componentes-principales"><i class="fa fa-check"></i><b>3</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html"><i class="fa fa-check"></i><b>3.1</b> Componentes principales para matriz de covarianza</a></li>
+<li class="chapter" data-level="3.2" data-path="02-PCA.html"><a href="#componentes-principales-para-matriz-de-correlaci%C3%B3n"><i class="fa fa-check"></i><b>3.2</b> Componentes principales para matriz de correlación</a></li>
+<li class="chapter" data-level="3.3" data-path="02-PCA.html"><a href="#el-n%C3%BAmero-de-componentes-principales"><i class="fa fa-check"></i><b>3.3</b> El número de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#scree-plot"><i class="fa fa-check"></i><b>3.3.1</b> Scree plot</a></li>
+<li class="chapter" data-level="3.3.2" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#regla-de-kaiser"><i class="fa fa-check"></i><b>3.3.2</b> Regla de Kaiser</a></li>
+<li class="chapter" data-level="3.3.3" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#procedimiento-de-horn-parallel-analysis"><i class="fa fa-check"></i><b>3.3.3</b> Procedimiento de Horn (parallel analysis)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="02-PCA.html"><a href="#visualizaci%C3%B3n-de-los-componentes-principales"><i class="fa fa-check"></i><b>3.4</b> Visualización de los componentes principales</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#score-plot-individuos-en-el-espacio-pca"><i class="fa fa-check"></i><b>3.4.1</b> Score plot: individuos en el espacio PCA</a></li>
+<li class="chapter" data-level="3.4.2" data-path="02-PCA.html"><a href="#loading-plot-contribuci%C3%B3n-de-las-variables"><i class="fa fa-check"></i><b>3.4.2</b> Loading plot: contribución de las variables</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="biplot-y-bibiplot.html"><a href="biplot-y-bibiplot.html"><i class="fa fa-check"></i><b>4</b> Biplot y Bibiplot</a>
+<ul>
+<li class="chapter" data-level="4.0.1" data-path="02-PCA.html"><a href="#gr%C3%A1ficos-adicionales-%C3%BAtiles"><i class="fa fa-check"></i><b>4.0.1</b> Gráficos adicionales útiles</a></li>
+<li class="chapter" data-level="4.0.2" data-path="02-PCA.html"><a href="#recomendaciones-pr%C3%A1cticas-de-interpretaci%C3%B3n"><i class="fa fa-check"></i><b>4.0.2</b> Recomendaciones prácticas de interpretación</a></li>
+<li class="chapter" data-level="4.1" data-path="biplot-y-bibiplot.html"><a href="biplot-y-bibiplot.html#ejemplos-con-bases-de-datos"><i class="fa fa-check"></i><b>4.1</b> Ejemplos con Bases de datos</a></li>
+<li class="chapter" data-level="4.2" data-path="biplot-y-bibiplot.html"><a href="biplot-y-bibiplot.html#ejercicios-pca"><i class="fa fa-check"></i><b>4.2</b> Ejercicios PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="02-PCA.html"><a href="#an%C3%A1lisis-factorial"><i class="fa fa-check"></i><b>5</b> Análisis Factorial</a></li>
+<li class="chapter" data-level="6" data-path="02-PCA.html"><a href="#an%C3%A1lisis-de-conglomerados"><i class="fa fa-check"></i><b>6</b> Análisis de Conglomerados</a></li>
+<li class="chapter" data-level="7" data-path="02-PCA.html"><a href="#an%C3%A1lisis-de-discriminante"><i class="fa fa-check"></i><b>7</b> Análisis de Discriminante</a></li>
+<li class="chapter" data-level="8" data-path="02-PCA.html"><a href="#ap%C3%A9ndices"><i class="fa fa-check"></i><b>8</b> Apéndices</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="02-PCA.html"><a href="#introducci%C3%B3n-a-r"><i class="fa fa-check"></i><b>8.1</b> Introducción a R</a></li>
+<li class="chapter" data-level="8.2" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>8.2</b> Git + Github</a></li>
+<li class="chapter" data-level="8.3" data-path="apéndices.html"><a href="apéndices.html#correlaciones-y-distancias"><i class="fa fa-check"></i><b>8.3</b> Correlaciones y distancias</a></li>
+<li class="chapter" data-level="8.4" data-path="apéndices.html"><a href="apéndices.html#plots-multivariados"><i class="fa fa-check"></i><b>8.4</b> Plots Multivariados</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="apéndices.html"><a href="apéndices.html#caritas-de-chernoff"><i class="fa fa-check"></i><b>8.4.1</b> Caritas de Chernoff</a></li>
+<li class="chapter" data-level="8.4.2" data-path="apéndices.html"><a href="apéndices.html#curvas-de-andrew"><i class="fa fa-check"></i><b>8.4.2</b> Curvas de Andrew</a></li>
+<li class="chapter" data-level="8.4.3" data-path="02-PCA.html"><a href="#gr%C3%A1ficos-de-paralelas"><i class="fa fa-check"></i><b>8.4.3</b> Gráficos de Paralelas</a></li>
+<li class="chapter" data-level="8.4.4" data-path="apéndices.html"><a href="apéndices.html#estrellas"><i class="fa fa-check"></i><b>8.4.4</b> Estrellas</a></li>
+<li class="chapter" data-level="8.4.5" data-path="apéndices.html"><a href="apéndices.html#plots-3d"><i class="fa fa-check"></i><b>8.4.5</b> Plots 3D</a></li>
+<li class="chapter" data-level="8.4.6" data-path="apéndices.html"><a href="apéndices.html#ejercicios-5"><i class="fa fa-check"></i><b>8.4.6</b> Ejercicios</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estadística Multivariada</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="biplot-y-bibiplot" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Sección 4</span> Biplot y Bibiplot<a href="biplot-y-bibiplot.html#biplot-y-bibiplot" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>El biplot es una visualización conjunta de:</p>
+<ul>
+<li><p>scores (puntos = observaciones)</p></li>
+<li><p>loadings (flechas = variables)</p></li>
+</ul>
+<p>Esto permite ver simultáneamente:</p>
+<ul>
+<li><p>cómo se distribuyen las observaciones en el espacio PCA,</p></li>
+<li><p>qué variables explican esa distribución.</p></li>
+</ul>
+<p><strong>Interpretación esencial del biplot</strong></p>
+<ul>
+<li><p>Flechas largas: variables con mayor contribución.</p></li>
+<li><p>Flechas cercanas: variables correlacionadas.</p></li>
+<li><p>Observaciones proyectadas en dirección de una flecha: altas en esa variable.</p></li>
+</ul>
+<p><strong>Ángulos entre flechas:</strong></p>
+<ul>
+<li><p><span class="math inline">\(&lt; 90\)</span>°: correlación positiva</p></li>
+<li><p><span class="math inline">\(\sim 90\)</span>°: independencia</p></li>
+<li><p><span class="math inline">\(&gt; 90\)</span>°: correlación negativa</p></li>
+</ul>
+<p>En R base se puede obtener de la siguiente forma:</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="biplot-y-bibiplot.html#cb123-1" tabindex="-1"></a><span class="fu">biplot</span>(pca_obj, <span class="at">scale =</span> <span class="dv">0</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/72-1.png" width="672" />
+Sin embargo, el biplot base suele ser poco estético y difícil de interpretar cuando hay muchas variables.</p>
+<p>Con el paquete <code>factoextra</code> podemos personalizarlo un poco más.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="biplot-y-bibiplot.html#cb124-1" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(pca_obj,</span>
+<span id="cb124-2"><a href="biplot-y-bibiplot.html#cb124-2" tabindex="-1"></a>                <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb124-3"><a href="biplot-y-bibiplot.html#cb124-3" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">&quot;gray30&quot;</span>,</span>
+<span id="cb124-4"><a href="biplot-y-bibiplot.html#cb124-4" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb124-5"><a href="biplot-y-bibiplot.html#cb124-5" tabindex="-1"></a>                <span class="at">geom.ind =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb124-6"><a href="biplot-y-bibiplot.html#cb124-6" tabindex="-1"></a>                <span class="at">label =</span> <span class="st">&quot;var&quot;</span>,</span>
+<span id="cb124-7"><a href="biplot-y-bibiplot.html#cb124-7" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">&quot;Bibiplot de componentes principales&quot;</span></span>
+<span id="cb124-8"><a href="biplot-y-bibiplot.html#cb124-8" tabindex="-1"></a>                )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/73-1.png" width="672" /></p>
+<p>Se puede colorear individuos según un grupo. Vamos a agregar una columna de las regiones.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="biplot-y-bibiplot.html#cb125-1" tabindex="-1"></a><span class="co"># Crear variable de grupo por región</span></span>
+<span id="cb125-2"><a href="biplot-y-bibiplot.html#cb125-2" tabindex="-1"></a>region <span class="ot">&lt;-</span> state.region   <span class="co"># vector ya incluido en R, en el mismo orden de estados</span></span>
+<span id="cb125-3"><a href="biplot-y-bibiplot.html#cb125-3" tabindex="-1"></a></span>
+<span id="cb125-4"><a href="biplot-y-bibiplot.html#cb125-4" tabindex="-1"></a><span class="co"># Hacemos de nuevo el PCA</span></span>
+<span id="cb125-5"><a href="biplot-y-bibiplot.html#cb125-5" tabindex="-1"></a>pca_obj <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(USArrests, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb125-6"><a href="biplot-y-bibiplot.html#cb125-6" tabindex="-1"></a></span>
+<span id="cb125-7"><a href="biplot-y-bibiplot.html#cb125-7" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(pca_obj,</span>
+<span id="cb125-8"><a href="biplot-y-bibiplot.html#cb125-8" tabindex="-1"></a>                <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb125-9"><a href="biplot-y-bibiplot.html#cb125-9" tabindex="-1"></a>                <span class="at">col.ind =</span> region,      <span class="co"># vector con factor o variable categórica</span></span>
+<span id="cb125-10"><a href="biplot-y-bibiplot.html#cb125-10" tabindex="-1"></a>                <span class="at">palette =</span> <span class="st">&quot;Dark2&quot;</span>,</span>
+<span id="cb125-11"><a href="biplot-y-bibiplot.html#cb125-11" tabindex="-1"></a>                <span class="at">geom.ind =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb125-12"><a href="biplot-y-bibiplot.html#cb125-12" tabindex="-1"></a>                <span class="at">addEllipses =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb125-13"><a href="biplot-y-bibiplot.html#cb125-13" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">&quot;Bibiplot coloreado por grupo&quot;</span></span>
+<span id="cb125-14"><a href="biplot-y-bibiplot.html#cb125-14" tabindex="-1"></a>                )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/74-1.png" width="672" /></p>
+<div id="gráficos-adicionales-útiles" class="section level3 hasAnchor" number="4.0.1">
+<h3><span class="header-section-number">4.0.1</span> Gráficos adicionales útiles<a href="#gr%C3%A1ficos-adicionales-%C3%BAtiles" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Además de los gráficos tradicionales del PCA (score plot, loading plot y biplot), existen otras visualizaciones que permiten comprender mejor la importancia y calidad de representación de cada variable en los componentes principales. A continuación se describen tres tipos de gráficos muy utilizados en análisis exploratorio: contribuciones, calidad de representación (<span class="math inline">\(\cos^2\)</span>) y visualización separada de individuos y variables.</p>
+<p><strong>a) Contribuciones por componente:</strong> Las contribuciones indican qué porcentaje del total de varianza explicada por un componente proviene de cada variable.
+Este gráfico permite identificar cuáles variables son las más influyentes en cada componente principal.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="biplot-y-bibiplot.html#cb126-1" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pca_obj, <span class="at">choice =</span> <span class="st">&quot;var&quot;</span>, <span class="at">axes =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/75-1.png" width="672" /></p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="biplot-y-bibiplot.html#cb127-1" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pca_obj, <span class="at">choice =</span> <span class="st">&quot;var&quot;</span>, <span class="at">axes =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/75-2.png" width="672" /></p>
+<p>Cómo interpretarlo:</p>
+<ul>
+<li><p>Las barras más altas representan variables que explican mayor parte de la varianza del componente.</p></li>
+<li><p>Una variable con alta contribución en PC1 influye más en la dirección en que PC1 separa las observaciones.</p></li>
+<li><p>Si una variable contribuye poco a todos los componentes, tiene poca relevancia estructural para el PCA.</p></li>
+<li><p><code>Factoextra</code> suele marcar con una línea roja la “contribución esperada” si todas las variables aportaran por igual.</p>
+<ul>
+<li><p>Barras por arriba de esa línea: variables relevantes.</p></li>
+<li><p>Barras por abajo: variables menos informativas.</p></li>
+</ul></li>
+</ul>
+<p>Es un gráfico muy útil para responder preguntas como:</p>
+<p>“¿Qué variables están definiendo principalmente el primer componente?”</p>
+<p><strong>b) Mapa de calidad de representación (<span class="math inline">\(\cos^2\)</span>):</strong> El valor <span class="math inline">\(\cos^2\)</span> es la calidad de representación de una variable o individuo en el plano principal (usualmente PC1–PC2).
+Es decir, indica qué tan bien está proyectada la variable en ese plano.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="biplot-y-bibiplot.html#cb128-1" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pca_obj,</span>
+<span id="cb128-2"><a href="biplot-y-bibiplot.html#cb128-2" tabindex="-1"></a>             <span class="at">col.var =</span> <span class="st">&quot;cos2&quot;</span>,</span>
+<span id="cb128-3"><a href="biplot-y-bibiplot.html#cb128-3" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb128-4"><a href="biplot-y-bibiplot.html#cb128-4" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span></span>
+<span id="cb128-5"><a href="biplot-y-bibiplot.html#cb128-5" tabindex="-1"></a>             )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/76-1.png" width="672" /></p>
+<p>Cómo interpretarlo:</p>
+<ul>
+<li><p>Un valor alto de <span class="math inline">\(\cos^2\)</span> (cercano a 1) indica que la variable está bien representada en el plano PC1–PC2.</p></li>
+<li><p>Valores bajos (cercanos a 0) indican que la variable tiene componente importante en PC3, PC4, etc.</p></li>
+<li><p>El color indica la calidad de representación:</p>
+<ul>
+<li><p>Rojo: excelente representación (<span class="math inline">\(\cos^2\)</span> alto)</p></li>
+<li><p>Amarillo: intermedia</p></li>
+<li><p>Azul: pobre representación</p></li>
+</ul></li>
+</ul>
+<p>Regla práctica:</p>
+<ul>
+<li><p>Solo interpretar direcciones, ángulos y correlaciones para variables con <span class="math inline">\(\cos^2\)</span> alto.</p></li>
+<li><p>Variables con <span class="math inline">\(\cos^2\)</span> bajo pueden llevar a interpretaciones erróneas.</p></li>
+</ul>
+<p><strong>c) Variables y observaciones en paneles separados:</strong> Aunque el biplot combina individuos y variables en una sola figura, a veces es más claro analizarlos por separado:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="biplot-y-bibiplot.html#cb129-1" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(pca_obj)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/77-1.png" width="672" /></p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="biplot-y-bibiplot.html#cb130-1" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pca_obj)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/77-2.png" width="672" /></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="32%" />
+<col width="51%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Gráfico</th>
+<th>Es útil para…</th>
+<th>Interpretación clave</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Contribuciones</strong></td>
+<td>Ver qué variables definen los componentes</td>
+<td>Barras grandes = variables muy influyentes</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\(\cos^2\)</span></strong></td>
+<td>Evaluar calidad de representación</td>
+<td>Colores cálidos = buena representación en PC1–PC2</td>
+</tr>
+<tr class="odd">
+<td><strong>Individuos</strong></td>
+<td>Ver similitudes entre observaciones</td>
+<td>Puntos cercanos = perfiles similares</td>
+</tr>
+<tr class="even">
+<td><strong>Variables</strong></td>
+<td>Analizar correlaciones y direcciones</td>
+<td>Ángulos &lt; 90° = correlación positiva; &gt; 90° = correlación negativa</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="recomendaciones-prácticas-de-interpretación" class="section level3 hasAnchor" number="4.0.2">
+<h3><span class="header-section-number">4.0.2</span> Recomendaciones prácticas de interpretación<a href="#recomendaciones-pr%C3%A1cticas-de-interpretaci%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Usar PC1 y PC2 como primera aproximación, pero revisar también PC3 si la varianza explicada no es alta. Interpretar siempre el biplot considerando:</p>
+<ul>
+<li><p>magnitud y dirección de las flechas,</p></li>
+<li><p>ángulos entre variables,</p></li>
+<li><p>ubicación de individuos respecto a las flechas.</p></li>
+</ul>
+<p>Evitar interpretaciones fuertes cuando las <span class="math inline">\(\cos^2\)</span> sean bajas (mala representación en el plano).</p>
+</div>
+<div id="ejemplos-con-bases-de-datos" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Ejemplos con Bases de datos<a href="biplot-y-bibiplot.html#ejemplos-con-bases-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En R existen varios paquetes que nos permiten realizar análisis de componentes principales. Algunas de las funciones son <code>prcomp()</code>, <code>princomp()</code>, <code>PCA()</code>.</p>
+<p>Los argumentos de la función <code>prcomp()</code> son:</p>
+<ul>
+<li><code>x</code>: una matriz numérica o dataframe.</li>
+<li><code>scale</code>: un valor lógico indicando si las variables deberían ser escaladas para tener varianza unitaria antes de realizar el análisis.</li>
+</ul>
+<p>Los argumentos de <code>princomp()</code> son los siguientes:</p>
+<ul>
+<li><code>x</code>: una matrix numérica o dataframe.</li>
+<li><code>cor</code>: un valor lógico indicando si los datos se centraran y escalaran antes de realizar el análisis.</li>
+<li><code>scores</code>: un valor lógico indicando si se calcularan las coordenadas de cada componente principal.</li>
+</ul>
+<p>Ambas funciones nos regresan los siguientes valores:</p>
+<ul>
+<li><code>sdev</code>: las desviaciones estándar de las componentes principales.</li>
+<li><code>rotation</code>, <code>loadings</code>: la matriz de las cargas donde las columnas son los eigenvectores.</li>
+<li><code>center</code>: las medias de las variables, las que fueron restadas.</li>
+<li><code>scale</code>: las desviaciones estandar de las variables.</li>
+<li><code>x</code>, <code>scores</code>: las coordenadas de las observaciones/individuos de las componentes principales.</li>
+</ul>
+<p>Vamos a usar el paquete <code>factoextra</code> para visualizar los resultados.</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="biplot-y-bibiplot.html#cb131-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span></code></pre></div>
+<p><strong>Ejemplo 1:</strong> Vamos a cargar la base de datos siguiente:</p>
+<p><a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/blob/main/data/NationalTrackRecords2.xlsx">NationalTrackRecords</a></p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="biplot-y-bibiplot.html#cb132-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb132-2"><a href="biplot-y-bibiplot.html#cb132-2" tabindex="-1"></a>records <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/NationalTrackRecords2.xlsx&quot;</span>)</span></code></pre></div>
+<pre><code>## New names:
+## • `` -&gt; `...1`</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="biplot-y-bibiplot.html#cb134-1" tabindex="-1"></a><span class="fu">head</span>(records)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 8
+##   ...1     `100m` `200m` `400m` `800m` `1500m` `3000m` Marathon
+##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+## 1 argentin   11.6   22.9   54.5   2.15    4.43    9.79     179.
+## 2 australi   11.2   22.4   51.1   1.98    4.13    9.08     152.
+## 3 austria    11.4   23.1   50.6   1.99    4.22    9.34     159.
+## 4 belgium    11.4   23.0   52     2       4.14    8.88     158.
+## 5 bermuda    11.5   23.0   53.3   2.16    4.58    9.81     170.
+## 6 brazil     11.3   23.2   52.8   2.1     4.49    9.77     169.</code></pre>
+<p>¿Necesitamos escalar los datos? ¿Cómo son las varianzas y covarianzas? ¿Es conveniente trabajar con la matriz de correlación en vez de con la de varianzas y covarianzas?</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="biplot-y-bibiplot.html#cb136-1" tabindex="-1"></a>records2 <span class="ot">&lt;-</span> records[,<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb136-2"><a href="biplot-y-bibiplot.html#cb136-2" tabindex="-1"></a><span class="fu">rownames</span>(records2) <span class="ot">&lt;-</span> records<span class="sc">$</span>...<span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="biplot-y-bibiplot.html#cb137-1" tabindex="-1"></a><span class="fu">var</span>(records2)</span>
+<span id="cb137-2"><a href="biplot-y-bibiplot.html#cb137-2" tabindex="-1"></a><span class="fu">cor</span>(records2)</span></code></pre></div>
+<p>¿Es apropiado hacer un análisis de componentes principales? ¿por qué? Si lo es, ya que hay muchas correlaciones altas, entonces se podría disminuir la dimensión.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="biplot-y-bibiplot.html#cb138-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code></pre></div>
+<pre><code>## corrplot 0.95 loaded</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="biplot-y-bibiplot.html#cb140-1" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(records2, <span class="at">conf.level=</span> .<span class="dv">95</span>)</span>
+<span id="cb140-2"><a href="biplot-y-bibiplot.html#cb140-2" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(records2, <span class="at">conf.level=</span> .<span class="dv">99</span>)</span>
+<span id="cb140-3"><a href="biplot-y-bibiplot.html#cb140-3" tabindex="-1"></a>cor.mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(records2, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span>
+<span id="cb140-4"><a href="biplot-y-bibiplot.html#cb140-4" tabindex="-1"></a></span>
+<span id="cb140-5"><a href="biplot-y-bibiplot.html#cb140-5" tabindex="-1"></a><span class="fu">corrplot</span>(cor.mat)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp28-1.png" width="672" /></p>
+<p>Vamos a calcular los componentes principales primero con la función <code>princomp</code>.</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="biplot-y-bibiplot.html#cb141-1" tabindex="-1"></a>cp1 <span class="ot">&lt;-</span> <span class="fu">princomp</span>(records2, <span class="at">cor =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb141-2"><a href="biplot-y-bibiplot.html#cb141-2" tabindex="-1"></a><span class="fu">summary</span>(cp1)</span></code></pre></div>
+<pre><code>## Importance of components:
+##                           Comp.1     Comp.2     Comp.3     Comp.4      Comp.5
+## Standard deviation     2.4094991 0.80848347 0.54761522 0.35422802 0.231984732
+## Proportion of Variance 0.8293837 0.09337793 0.04284035 0.01792536 0.007688131
+## Cumulative Proportion  0.8293837 0.92276161 0.96560196 0.98352731 0.991215445
+##                             Comp.6      Comp.7
+## Standard deviation     0.197608919 0.149808546
+## Proportion of Variance 0.005578469 0.003206086
+## Cumulative Proportion  0.996793914 1.000000000</code></pre>
+<p>Con la instrucción <code>loadings</code> lo que obtenemos son las cargas de los componentes principales. Es decir, lo que obtenemos son los coeficientes que se usarán en las combinaciones lineales para calcular cada componente principal. Por ejemplo, para un conjunto de datos <span class="math inline">\(X_1, X_2,..., X_p\)</span> la primera columna que está denotada por <code>Comp.1</code> tiene los coeficientes <span class="math inline">\(\phi_{11}, \phi_{21},... ,\phi_{p1}\)</span> de la combinación lineal con la que se obtiene la primera componente principal:</p>
+<p><span class="math display">\[Z_1=\phi_{11}X_1+\phi_{21}X_2+... +\phi_{p1}X_p\]</span></p>
+<p>Esta primera componente principal será la que refleje la mayor variabilidad de los datos. Las cargas son las entradas de cada eigenvector son las siguientes:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="biplot-y-bibiplot.html#cb143-1" tabindex="-1"></a>cp1<span class="sc">$</span>loadings</span></code></pre></div>
+<pre><code>## 
+## Loadings:
+##          Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7
+## 100m      0.368  0.490  0.286  0.319  0.231  0.620       
+## 200m      0.365  0.537  0.230               -0.711 -0.109
+## 400m      0.382  0.247 -0.515 -0.347 -0.572  0.191  0.208
+## 800m      0.385 -0.155 -0.585         0.620        -0.315
+## 1500m     0.389 -0.360         0.430        -0.231  0.693
+## 3000m     0.389 -0.348  0.153  0.363 -0.463        -0.598
+## Marathon  0.367 -0.369  0.484 -0.672  0.131  0.142       
+## 
+##                Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7
+## SS loadings     1.000  1.000  1.000  1.000  1.000  1.000  1.000
+## Proportion Var  0.143  0.143  0.143  0.143  0.143  0.143  0.143
+## Cumulative Var  0.143  0.286  0.429  0.571  0.714  0.857  1.000</code></pre>
+<p>Usando estos valores, la fórmula de la primer componente principal se escribiría como:</p>
+<p><span class="math display">\[(0.368, 0.365, 0.382,0.385,0.389, 0.389, 0.367)(100m-mean(100m), 200m-mean(200m),...,Marathon-mean(Marathon))\]</span></p>
+<p>Las desviaciones estándar son las raíces de las lambdas.</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="biplot-y-bibiplot.html#cb145-1" tabindex="-1"></a>cp1<span class="sc">$</span>sdev</span></code></pre></div>
+<pre><code>##    Comp.1    Comp.2    Comp.3    Comp.4    Comp.5    Comp.6    Comp.7 
+## 2.4094991 0.8084835 0.5476152 0.3542280 0.2319847 0.1976089 0.1498085</code></pre>
+<p>Para calcular la varianza debemos elevar al cuadrado cada una de las entradas.</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="biplot-y-bibiplot.html#cb147-1" tabindex="-1"></a>varianza.cp1 <span class="ot">&lt;-</span> (cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb147-2"><a href="biplot-y-bibiplot.html#cb147-2" tabindex="-1"></a>varianza.cp1</span></code></pre></div>
+<pre><code>##     Comp.1     Comp.2     Comp.3     Comp.4     Comp.5     Comp.6     Comp.7 
+## 5.80568576 0.65364552 0.29988243 0.12547749 0.05381692 0.03904928 0.02244260</code></pre>
+<p>Para obtener la proporción de la varianza que explica cada componente lo que tenemos que hacer es dividir el valor de la varianza de la componente <span class="math inline">\(j\)</span> entre la suma de las varianzas de todas las componentes.
+El siguiente código muestra como realizarlo. Además, en la instrucción <code>summary</code> vemos que estos valores coinciden con los de la segunda fila.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="biplot-y-bibiplot.html#cb149-1" tabindex="-1"></a>proporcion.varianza.cp1 <span class="ot">&lt;-</span> (cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>((cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb149-2"><a href="biplot-y-bibiplot.html#cb149-2" tabindex="-1"></a>proporcion.varianza.cp1</span></code></pre></div>
+<pre><code>##      Comp.1      Comp.2      Comp.3      Comp.4      Comp.5      Comp.6 
+## 0.829383680 0.093377931 0.042840347 0.017925356 0.007688131 0.005578469 
+##      Comp.7 
+## 0.003206086</code></pre>
+<p>Si lo que queremos es el porcentaje, entonces solo hay que multiplicar por 100</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="biplot-y-bibiplot.html#cb151-1" tabindex="-1"></a>porcentaje_varianza <span class="ot">&lt;-</span> (cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fu">sum</span>((cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb151-2"><a href="biplot-y-bibiplot.html#cb151-2" tabindex="-1"></a>porcentaje_varianza</span></code></pre></div>
+<pre><code>##     Comp.1     Comp.2     Comp.3     Comp.4     Comp.5     Comp.6     Comp.7 
+## 82.9383680  9.3377931  4.2840347  1.7925356  0.7688131  0.5578469  0.3206086</code></pre>
+<p>Para encontrar la proporción de varianza acumulada, lo que tenemos que hacer es dividir la suma de los primeros <span class="math inline">\(j-\)</span>ésimos eigenvalores entre entre la suma de todos los eigenvalores.</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="biplot-y-bibiplot.html#cb153-1" tabindex="-1"></a>proporcion_acumulada_varianza <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(proporcion.varianza.cp1)</span>
+<span id="cb153-2"><a href="biplot-y-bibiplot.html#cb153-2" tabindex="-1"></a>proporcion_acumulada_varianza</span></code></pre></div>
+<pre><code>##    Comp.1    Comp.2    Comp.3    Comp.4    Comp.5    Comp.6    Comp.7 
+## 0.8293837 0.9227616 0.9656020 0.9835273 0.9912154 0.9967939 1.0000000</code></pre>
+<p>Cálculamos los eigenvalores de la matriz cuadrada de correlación.</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="biplot-y-bibiplot.html#cb155-1" tabindex="-1"></a>eigen_base <span class="ot">&lt;-</span> (<span class="fu">eigen</span>(cor.mat))</span>
+<span id="cb155-2"><a href="biplot-y-bibiplot.html#cb155-2" tabindex="-1"></a>eigen_base</span></code></pre></div>
+<pre><code>## eigen() decomposition
+## $values
+## [1] 5.80568576 0.65364552 0.29988243 0.12547749 0.05381692 0.03904928 0.02244260
+## 
+## $vectors
+##            [,1]       [,2]        [,3]        [,4]        [,5]         [,6]
+## [1,] -0.3683561  0.4900597  0.28601157 -0.31938631 -0.23116950 -0.619825234
+## [2,] -0.3653642  0.5365800  0.22981913  0.08330196 -0.04145457  0.710764580
+## [3,] -0.3816103  0.2465377 -0.51536655  0.34737748  0.57217791 -0.190945970
+## [4,] -0.3845592 -0.1554023 -0.58452608  0.04207636 -0.62032379  0.019089032
+## [5,] -0.3891040 -0.3604093 -0.01291198 -0.42953873 -0.03026144  0.231248381
+## [6,] -0.3888661 -0.3475394  0.15272772 -0.36311995  0.46335476 -0.009277159
+## [7,] -0.3670038 -0.3692076  0.48437037  0.67249685 -0.13053590 -0.142280558
+##             [,7]
+## [1,]  0.05217655
+## [2,] -0.10922503
+## [3,]  0.20849691
+## [4,] -0.31520972
+## [5,]  0.69256151
+## [6,] -0.59835943
+## [7,]  0.06959828</code></pre>
+<p>La varianza de las Componentes Principales, es igual a los eigenvalores. Es decir, la desviación estándar de las componentes, es igual a la raíz de los valores propios.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="biplot-y-bibiplot.html#cb157-1" tabindex="-1"></a>desv_base <span class="ot">&lt;-</span> cp1<span class="sc">$</span>sdev</span>
+<span id="cb157-2"><a href="biplot-y-bibiplot.html#cb157-2" tabindex="-1"></a>desv_base</span></code></pre></div>
+<pre><code>##    Comp.1    Comp.2    Comp.3    Comp.4    Comp.5    Comp.6    Comp.7 
+## 2.4094991 0.8084835 0.5476152 0.3542280 0.2319847 0.1976089 0.1498085</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="biplot-y-bibiplot.html#cb159-1" tabindex="-1"></a>desv_rounded_base <span class="ot">&lt;-</span> <span class="fu">round</span>(cp1<span class="sc">$</span>sdev, <span class="dv">1</span>)</span>
+<span id="cb159-2"><a href="biplot-y-bibiplot.html#cb159-2" tabindex="-1"></a>desv_rounded_base</span></code></pre></div>
+<pre><code>## Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 
+##    2.4    0.8    0.5    0.4    0.2    0.2    0.1</code></pre>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="biplot-y-bibiplot.html#cb161-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(eigen_base<span class="sc">$</span>values),<span class="dv">1</span>) <span class="sc">==</span> desv_rounded_base</span></code></pre></div>
+<pre><code>## Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 
+##   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</code></pre>
+<p>Por otra parte, se puede afirmar que la traza de la matriz lambda es igual a la suma de la varianza de cada valor observado.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="biplot-y-bibiplot.html#cb163-1" tabindex="-1"></a>lambda_matriz <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">diag</span>(eigen_base<span class="sc">$</span>values), <span class="dv">2</span>)</span>
+<span id="cb163-2"><a href="biplot-y-bibiplot.html#cb163-2" tabindex="-1"></a>lambda_matriz</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,] 5.81 0.00  0.0 0.00 0.00 0.00 0.00
+## [2,] 0.00 0.65  0.0 0.00 0.00 0.00 0.00
+## [3,] 0.00 0.00  0.3 0.00 0.00 0.00 0.00
+## [4,] 0.00 0.00  0.0 0.13 0.00 0.00 0.00
+## [5,] 0.00 0.00  0.0 0.00 0.05 0.00 0.00
+## [6,] 0.00 0.00  0.0 0.00 0.00 0.04 0.00
+## [7,] 0.00 0.00  0.0 0.00 0.00 0.00 0.02</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="biplot-y-bibiplot.html#cb165-1" tabindex="-1"></a>traza_lambda <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(lambda_matriz))</span>
+<span id="cb165-2"><a href="biplot-y-bibiplot.html#cb165-2" tabindex="-1"></a>traza_lambda</span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<p>Además, el porcentaje de la varianza generalizada que es explicado por la componente <span class="math inline">\(j\)</span>-ésima es igual a la relación que hay entre los eigenvalores divididos por la suma de la diagonal de eigenvalores. Es decir, esto es igual al porcentaje de varianza acumulada por la función <code>summary</code>, y hecho a mano con la suma acumulada de los valores propios.</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="biplot-y-bibiplot.html#cb167-1" tabindex="-1"></a><span class="fu">cumsum</span>(eigen_base<span class="sc">$</span>values<span class="sc">/</span>traza_lambda) </span></code></pre></div>
+<pre><code>## [1] 0.8293837 0.9227616 0.9656020 0.9835273 0.9912154 0.9967939 1.0000000</code></pre>
+<p>Esta matriz es la diagonal con los eigenvalores.</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="biplot-y-bibiplot.html#cb169-1" tabindex="-1"></a>lambda_matriz <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">diag</span>(eigen_base<span class="sc">$</span>values), <span class="dv">2</span>)</span>
+<span id="cb169-2"><a href="biplot-y-bibiplot.html#cb169-2" tabindex="-1"></a>lambda_matriz</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
+## [1,] 5.81 0.00  0.0 0.00 0.00 0.00 0.00
+## [2,] 0.00 0.65  0.0 0.00 0.00 0.00 0.00
+## [3,] 0.00 0.00  0.3 0.00 0.00 0.00 0.00
+## [4,] 0.00 0.00  0.0 0.13 0.00 0.00 0.00
+## [5,] 0.00 0.00  0.0 0.00 0.05 0.00 0.00
+## [6,] 0.00 0.00  0.0 0.00 0.00 0.04 0.00
+## [7,] 0.00 0.00  0.0 0.00 0.00 0.00 0.02</code></pre>
+<p>La traza de la matriz <span class="math inline">\(\Lambda\)</span> es igual a la suma de las varianzas acumuladas por los Componentes.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="biplot-y-bibiplot.html#cb171-1" tabindex="-1"></a>traza_lambda <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(lambda_matriz))</span>
+<span id="cb171-2"><a href="biplot-y-bibiplot.html#cb171-2" tabindex="-1"></a>traza_lambda</span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+<p>Una forma de ver con cuantos componentes nos conviene trabajar es con el gráfico de codo.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="biplot-y-bibiplot.html#cb173-1" tabindex="-1"></a><span class="fu">screeplot</span>(cp1, <span class="at">type=</span><span class="st">&quot;lines&quot;</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp42-1.png" width="672" /></p>
+<p>¿Con cuántas componentes nos conviene quedarnos?</p>
+<p>El biplot es una forma de representar los resultados de PCA.</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="biplot-y-bibiplot.html#cb174-1" tabindex="-1"></a><span class="fu">biplot</span>(cp1)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp43-1.png" width="672" /></p>
+<p>Vamos a analizar el biplot a detalle.</p>
+<p>¿Qué mide la primera componente? o ¿Cómo la interpretas?</p>
+<p>La interpretación no se hace en función delos individuos sino de las variables que explica cada componente. Como en esta primer componente, todas las cargas son positivas y muy similares para todas las variables, podríamos nombrar a esta variable “velocidad en las carreras” por ejemplo.</p>
+<p>En el biplot, los países que quedan a la derecha del cero, ¿qué tipo de corredores tienen? Los lentos.</p>
+<p>En el biplot, los países que quedan con puntajes altos en la segunda componente, tienen velocistas rápidos y fondistas lentos o viceversa?</p>
+<p>Los pesos positivos están en las carreras de velocidad y los pesos negativos en las de fondo. Es decir, un país con valores altos (tiempos grandes) en las carreras X100, X200, X400, tendrá valores positivos y grandes al multiplicar por las cargas de componente 2, y sí tiene tiempos bajos en las carreras de fondo, al multiplicar por las cargas negativas de la componente 2, el score para ese país en el componente 2 será positivo. Caso contrario pasaría con un país con tiempos cortos en las carreras de 100 a 200 m, y tiempos largos en las carreras de fondo.</p>
+<p>¿En qué cuadrante se encuentran los países que tienen a los
+velocistas más rápidos? Sería III, pues es el cuadrante opuesto a la dirección de los vectores de las variables X100, X200, X400 ( cuadrante I, en donde se ubican los velocistas más lentos).</p>
+<p>¿En qué cuadrante se encuentran los países que tienen a los fondistas
+más rápidos? Sería el cuadrante II, opuesto a la dirección de los vectores de marathon, X800, X1500 (ubicados en cuadrante IV, en donde están los fondistas mas lentos).</p>
+<p>¿Qué país tiene los velocistas más lentos?
+Sí observas el biplot CP1 vs CP2, Cookis está hacia donde están apuntando los vectores
+positivos de las carreras de velocidad, lo cual quiere decir que ese país tiene tiempos
+largos en esas carreras de velocidad y en consecuencia, su score en componente 2
+resulta muy positiva.</p>
+<p>¿Qué país tiene los fondistas más lentos?</p>
+<p>Sí observas el biplot CP1 vs CP2, wsamoa está hacia donde están apuntando los vectores
+de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese país tiene tiempos largos en esas carreras de fondo y en consecuencia, su score en componente 2 resulta muy negativa.</p>
+<p><strong>Ejemplo 2:</strong> Vamos a cargar la base de datos <code>decathlon2</code> del paquete <code>factoextra</code> y vamos a extraer los individuos del <code>1:23</code> y las variables <code>1:10</code>.</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="biplot-y-bibiplot.html#cb175-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;decathlon2&quot;</span>)</span>
+<span id="cb175-2"><a href="biplot-y-bibiplot.html#cb175-2" tabindex="-1"></a>decathlon2_activos <span class="ot">&lt;-</span> decathlon2[<span class="dv">1</span><span class="sc">:</span><span class="dv">23</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb175-3"><a href="biplot-y-bibiplot.html#cb175-3" tabindex="-1"></a><span class="fu">head</span>(decathlon2_activos[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div>
+<pre><code>##           X100m Long.jump Shot.put High.jump X400m X110m.hurdle
+## SEBRLE    11.04      7.58    14.83      2.07 49.81        14.69
+## CLAY      10.76      7.40    14.26      1.86 49.37        14.05
+## BERNARD   11.02      7.23    14.25      1.92 48.93        14.99
+## YURKOV    11.34      7.09    15.19      2.10 50.42        15.31
+## ZSIVOCZKY 11.13      7.30    13.48      2.01 48.62        14.17
+## McMULLEN  10.83      7.31    13.76      2.13 49.91        14.38</code></pre>
+<p>¿Necesitamos escalar los datos? ¿Cómo son las varianzas y covarianzas?</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="biplot-y-bibiplot.html#cb177-1" tabindex="-1"></a><span class="fu">var</span>(decathlon2_activos)</span>
+<span id="cb177-2"><a href="biplot-y-bibiplot.html#cb177-2" tabindex="-1"></a><span class="fu">cor</span>(decathlon2_activos)</span></code></pre></div>
+<p>Vamos a calcular la matriz de correlaciones.</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="biplot-y-bibiplot.html#cb178-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb178-2"><a href="biplot-y-bibiplot.html#cb178-2" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(decathlon2_activos, <span class="at">conf.level=</span> .<span class="dv">95</span>)</span>
+<span id="cb178-3"><a href="biplot-y-bibiplot.html#cb178-3" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(decathlon2_activos, <span class="at">conf.level=</span> .<span class="dv">99</span>)</span>
+<span id="cb178-4"><a href="biplot-y-bibiplot.html#cb178-4" tabindex="-1"></a>cor.mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(decathlon2_activos, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span>
+<span id="cb178-5"><a href="biplot-y-bibiplot.html#cb178-5" tabindex="-1"></a></span>
+<span id="cb178-6"><a href="biplot-y-bibiplot.html#cb178-6" tabindex="-1"></a><span class="fu">corrplot</span>(cor.mat)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp46-1.png" width="672" /></p>
+<p>Removemos algunas de las variables correlacionadas.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="biplot-y-bibiplot.html#cb179-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ lubridate 1.9.4     ✔ tibble    3.3.0
+## ✔ purrr     1.1.0     ✔ tidyr     1.3.1
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ psych::%+%()    masks ggplot2::%+%()
+## ✖ psych::alpha()  masks ggplot2::alpha()
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="biplot-y-bibiplot.html#cb181-1" tabindex="-1"></a>base.cp1 <span class="ot">&lt;-</span> decathlon2_activos</span>
+<span id="cb181-2"><a href="biplot-y-bibiplot.html#cb181-2" tabindex="-1"></a>base.cp1 <span class="ot">&lt;-</span> base.cp1 <span class="sc">%&gt;%</span></span>
+<span id="cb181-3"><a href="biplot-y-bibiplot.html#cb181-3" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Pole.vault)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="biplot-y-bibiplot.html#cb182-1" tabindex="-1"></a>cor.mat.aj <span class="ot">&lt;-</span> <span class="fu">cor</span>(base.cp1, <span class="at">use =</span> <span class="st">&quot;complete.obs&quot;</span>)</span>
+<span id="cb182-2"><a href="biplot-y-bibiplot.html#cb182-2" tabindex="-1"></a><span class="fu">corrplot</span>(cor.mat.aj)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp48-1.png" width="672" /></p>
+<p>Usaremos la función <code>prcomp()</code> y primero realizaremos el análisis sin quitar la variable anterior.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="biplot-y-bibiplot.html#cb183-1" tabindex="-1"></a>res.pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(decathlon2_activos, <span class="at">scale =</span> <span class="cn">TRUE</span> )</span></code></pre></div>
+<p>Visualizamos lo eigenvalores.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="biplot-y-bibiplot.html#cb184-1" tabindex="-1"></a><span class="fu">fviz_eig</span>(res.pca)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp50-1.png" width="672" /></p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="biplot-y-bibiplot.html#cb185-1" tabindex="-1"></a><span class="fu">summary</span>(res.pca)</span></code></pre></div>
+<pre><code>## Importance of components:
+##                           PC1    PC2    PC3     PC4     PC5     PC6     PC7
+## Standard deviation     2.0308 1.3559 1.1132 0.90523 0.83759 0.65029 0.55007
+## Proportion of Variance 0.4124 0.1839 0.1239 0.08194 0.07016 0.04229 0.03026
+## Cumulative Proportion  0.4124 0.5963 0.7202 0.80213 0.87229 0.91458 0.94483
+##                            PC8     PC9   PC10
+## Standard deviation     0.52390 0.39398 0.3492
+## Proportion of Variance 0.02745 0.01552 0.0122
+## Cumulative Proportion  0.97228 0.98780 1.0000</code></pre>
+<p>¿Cuál es la proporción de la varianza explicada de las componentes?</p>
+<p>¿Con cuántas componentes nos conviene quedarnos? ¿Porqué?</p>
+<p>Vamos a graficar a los individuos y corolearlos por perfiles similares.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="biplot-y-bibiplot.html#cb187-1" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(res.pca,</span>
+<span id="cb187-2"><a href="biplot-y-bibiplot.html#cb187-2" tabindex="-1"></a>             <span class="at">col.ind =</span> <span class="st">&quot;cos2&quot;</span>, <span class="co"># color por la calidad de representación</span></span>
+<span id="cb187-3"><a href="biplot-y-bibiplot.html#cb187-3" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>, <span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#FC4E07&quot;</span>),</span>
+<span id="cb187-4"><a href="biplot-y-bibiplot.html#cb187-4" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>     <span class="co"># evitar que se sobrelape el texto</span></span>
+<span id="cb187-5"><a href="biplot-y-bibiplot.html#cb187-5" tabindex="-1"></a>             )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp52-1.png" width="672" /></p>
+<p>Para graficar las variables y ver sus correlaciones realizamos lo siguiente. Variables correlacionadas negativamente apuntan a lados opuestos.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="biplot-y-bibiplot.html#cb188-1" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(res.pca,</span>
+<span id="cb188-2"><a href="biplot-y-bibiplot.html#cb188-2" tabindex="-1"></a>             <span class="at">col.var =</span> <span class="st">&quot;contrib&quot;</span>, <span class="co"># Color por contribución al PCA</span></span>
+<span id="cb188-3"><a href="biplot-y-bibiplot.html#cb188-3" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>, <span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#FC4E07&quot;</span>),</span>
+<span id="cb188-4"><a href="biplot-y-bibiplot.html#cb188-4" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>    </span>
+<span id="cb188-5"><a href="biplot-y-bibiplot.html#cb188-5" tabindex="-1"></a>             )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp53-1.png" width="672" /></p>
+<p>Un objeto importante en estos análisis de PCA son los biplots.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="biplot-y-bibiplot.html#cb189-1" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(res.pca, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb189-2"><a href="biplot-y-bibiplot.html#cb189-2" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">&quot;#2E9FDF&quot;</span>, <span class="co"># Variables </span></span>
+<span id="cb189-3"><a href="biplot-y-bibiplot.html#cb189-3" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">&quot;#696969&quot;</span>  <span class="co"># Individuos</span></span>
+<span id="cb189-4"><a href="biplot-y-bibiplot.html#cb189-4" tabindex="-1"></a>                )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp54-1.png" width="672" /></p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="biplot-y-bibiplot.html#cb190-1" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(res.pca, <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">axes =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),</span>
+<span id="cb190-2"><a href="biplot-y-bibiplot.html#cb190-2" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">&quot;#2E9FDF&quot;</span>, <span class="co"># Variables </span></span>
+<span id="cb190-3"><a href="biplot-y-bibiplot.html#cb190-3" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">&quot;#696969&quot;</span>  <span class="co"># Individuos</span></span>
+<span id="cb190-4"><a href="biplot-y-bibiplot.html#cb190-4" tabindex="-1"></a>                )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp55-1.png" width="672" /></p>
+<p>Vamos a acceder a los resultados del PCA.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="biplot-y-bibiplot.html#cb191-1" tabindex="-1"></a><span class="co"># Eigenvalores</span></span>
+<span id="cb191-2"><a href="biplot-y-bibiplot.html#cb191-2" tabindex="-1"></a>eig.val <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(res.pca)</span>
+<span id="cb191-3"><a href="biplot-y-bibiplot.html#cb191-3" tabindex="-1"></a>eig.val</span></code></pre></div>
+<pre><code>##        eigenvalue variance.percent cumulative.variance.percent
+## Dim.1   4.1242133        41.242133                    41.24213
+## Dim.2   1.8385309        18.385309                    59.62744
+## Dim.3   1.2391403        12.391403                    72.01885
+## Dim.4   0.8194402         8.194402                    80.21325
+## Dim.5   0.7015528         7.015528                    87.22878
+## Dim.6   0.4228828         4.228828                    91.45760
+## Dim.7   0.3025817         3.025817                    94.48342
+## Dim.8   0.2744700         2.744700                    97.22812
+## Dim.9   0.1552169         1.552169                    98.78029
+## Dim.10  0.1219710         1.219710                   100.00000</code></pre>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="biplot-y-bibiplot.html#cb193-1" tabindex="-1"></a><span class="co"># Resulados para las variables</span></span>
+<span id="cb193-2"><a href="biplot-y-bibiplot.html#cb193-2" tabindex="-1"></a>res.var <span class="ot">&lt;-</span> <span class="fu">get_pca_var</span>(res.pca)</span>
+<span id="cb193-3"><a href="biplot-y-bibiplot.html#cb193-3" tabindex="-1"></a>res.var<span class="sc">$</span>coord          <span class="co"># Coordenadas</span></span></code></pre></div>
+<pre><code>##                     Dim.1       Dim.2       Dim.3       Dim.4      Dim.5
+## X100m        -0.850625692 -0.17939806 -0.30155643  0.03357320 -0.1944440
+## Long.jump     0.794180641  0.28085695  0.19054653 -0.11538956  0.2331567
+## Shot.put      0.733912733  0.08540412 -0.51759781  0.12846837 -0.2488129
+## High.jump     0.610083985 -0.46521415 -0.33008517  0.14455012  0.4027002
+## X400m        -0.701603377  0.29017826 -0.28353292  0.43082552  0.1039085
+## X110m.hurdle -0.764125197 -0.02474081 -0.44888733 -0.01689589  0.2242200
+## Discus        0.743209016  0.04966086 -0.17652518  0.39500915 -0.4082391
+## Pole.vault   -0.217268042  0.80745110 -0.09405773 -0.33898477 -0.2216853
+## Javeline      0.428226639  0.38610928 -0.60412432 -0.33173454  0.1978128
+## X1500m        0.004278487  0.78448019  0.21947068  0.44800961  0.2632527
+##                     Dim.6        Dim.7        Dim.8       Dim.9       Dim.10
+## X100m        -0.035374780 -0.091336386 -0.104716925 -0.30306448  0.044417974
+## Long.jump     0.033727883 -0.154330810 -0.397380703 -0.05158951  0.029719453
+## Shot.put      0.239789034 -0.009886612  0.024359049  0.04778655  0.217451948
+## High.jump     0.284644846  0.028157465  0.084405578 -0.11213822 -0.133566774
+## X400m         0.049289996  0.286106008 -0.233552216  0.08216041 -0.034170673
+## X110m.hurdle -0.002632395 -0.370072158 -0.008344682  0.16176025 -0.015629914
+## Discus       -0.198544870 -0.142725641 -0.039559255  0.01336209 -0.172590426
+## Pole.vault    0.327464549 -0.010393176  0.032914942 -0.02576874 -0.137211339
+## Javeline     -0.362097598  0.133564318  0.052841099 -0.04045397 -0.003854347
+## X1500m       -0.042050151 -0.111367083  0.194469730 -0.10224014  0.062834809</code></pre>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="biplot-y-bibiplot.html#cb195-1" tabindex="-1"></a>res.var<span class="sc">$</span>contrib        <span class="co"># Contribuciones a las componentes</span></span></code></pre></div>
+<pre><code>##                     Dim.1      Dim.2      Dim.3       Dim.4     Dim.5
+## X100m        1.754429e+01  1.7505098  7.3386590  0.13755240  5.389252
+## Long.jump    1.529317e+01  4.2904162  2.9300944  1.62485936  7.748815
+## Shot.put     1.306014e+01  0.3967224 21.6204325  2.01407269  8.824401
+## High.jump    9.024811e+00 11.7715838  8.7928883  2.54987951 23.115504
+## X400m        1.193554e+01  4.5799296  6.4876363 22.65090599  1.539012
+## X110m.hurdle 1.415754e+01  0.0332933 16.2612611  0.03483735  7.166193
+## Discus       1.339309e+01  0.1341398  2.5147385 19.04132022 23.755756
+## Pole.vault   1.144592e+00 35.4618611  0.7139512 14.02307063  7.005084
+## Javeline     4.446377e+00  8.1086683 29.4531777 13.42963254  5.577615
+## X1500m       4.438531e-04 33.4728757  3.8871610 24.49386930  9.878367
+##                     Dim.6       Dim.7       Dim.8      Dim.9      Dim.10
+## X100m         0.295915322  2.75705260  3.99520353 59.1740009  1.61756139
+## Long.jump     0.269003613  7.87159392 57.53322220  1.7146826  0.72414393
+## Shot.put     13.596858744  0.03230371  0.21618512  1.4712015 38.76768578
+## High.jump    19.159607001  0.26202607  2.59565787  8.1015517 14.62649091
+## X400m         0.574509906 27.05274658 19.87344405  4.3489667  0.95730504
+## X110m.hurdle  0.001638634 45.26163460  0.02537025 16.8579392  0.20028870
+## Discus        9.321746508  6.73226823  0.57016606  0.1150295 24.42174410
+## Pole.vault   25.357622290  0.03569883  0.39472201  0.4278065 15.43559151
+## Javeline     31.004964393  5.89573984  1.01729950  1.0543458  0.01217993
+## X1500m        0.418133591  4.09893563 13.77872941  6.7344755  3.23700871</code></pre>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="biplot-y-bibiplot.html#cb197-1" tabindex="-1"></a>res.var<span class="sc">$</span>cos2           <span class="co"># Calidad de la representación</span></span></code></pre></div>
+<pre><code>##                     Dim.1        Dim.2       Dim.3        Dim.4      Dim.5
+## X100m        7.235641e-01 0.0321836641 0.090936280 0.0011271597 0.03780845
+## Long.jump    6.307229e-01 0.0788806285 0.036307981 0.0133147506 0.05436203
+## Shot.put     5.386279e-01 0.0072938636 0.267907488 0.0165041211 0.06190783
+## High.jump    3.722025e-01 0.2164242070 0.108956221 0.0208947375 0.16216747
+## X400m        4.922473e-01 0.0842034209 0.080390914 0.1856106269 0.01079698
+## X110m.hurdle 5.838873e-01 0.0006121077 0.201499837 0.0002854712 0.05027463
+## Discus       5.523596e-01 0.0024662013 0.031161138 0.1560322304 0.16665918
+## Pole.vault   4.720540e-02 0.6519772763 0.008846856 0.1149106765 0.04914437
+## Javeline     1.833781e-01 0.1490803723 0.364966189 0.1100478063 0.03912992
+## X1500m       1.830545e-05 0.6154091638 0.048167378 0.2007126089 0.06930197
+##                     Dim.6        Dim.7        Dim.8        Dim.9       Dim.10
+## X100m        1.251375e-03 0.0083423353 1.096563e-02 0.0918480768 1.972956e-03
+## Long.jump    1.137570e-03 0.0238179990 1.579114e-01 0.0026614779 8.832459e-04
+## Shot.put     5.749878e-02 0.0000977451 5.933633e-04 0.0022835540 4.728535e-02
+## High.jump    8.102269e-02 0.0007928428 7.124302e-03 0.0125749811 1.784008e-02
+## X400m        2.429504e-03 0.0818566479 5.454664e-02 0.0067503333 1.167635e-03
+## X110m.hurdle 6.929502e-06 0.1369534023 6.963371e-05 0.0261663784 2.442942e-04
+## Discus       3.942007e-02 0.0203706085 1.564935e-03 0.0001785453 2.978746e-02
+## Pole.vault   1.072330e-01 0.0001080181 1.083393e-03 0.0006640282 1.882695e-02
+## Javeline     1.311147e-01 0.0178394271 2.792182e-03 0.0016365234 1.485599e-05
+## X1500m       1.768215e-03 0.0124026272 3.781848e-02 0.0104530472 3.948213e-03</code></pre>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="biplot-y-bibiplot.html#cb199-1" tabindex="-1"></a><span class="co"># Resultados para individuos</span></span>
+<span id="cb199-2"><a href="biplot-y-bibiplot.html#cb199-2" tabindex="-1"></a>res.ind <span class="ot">&lt;-</span> <span class="fu">get_pca_ind</span>(res.pca)</span>
+<span id="cb199-3"><a href="biplot-y-bibiplot.html#cb199-3" tabindex="-1"></a>res.ind<span class="sc">$</span>coord          </span></code></pre></div>
+<pre><code>##                  Dim.1      Dim.2       Dim.3       Dim.4         Dim.5
+## SEBRLE       0.1912074  1.5541282 -0.62836882  0.08205241  1.1426139415
+## CLAY         0.7901217  2.4204156  1.35688701  1.26984296 -0.8068483724
+## BERNARD     -1.3292592  1.6118687 -0.19614996 -1.92092203  0.0823428202
+## YURKOV      -0.8694134 -0.4328779 -2.47398223  0.69723814  0.3988584116
+## ZSIVOCZKY   -0.1057450 -2.0233632  1.30493117 -0.09929630 -0.1970241089
+## McMULLEN     0.1185550 -0.9916237  0.84355824  1.31215266  1.5858708644
+## MARTINEAU   -2.3923532 -1.2849234 -0.89816842  0.37309771 -2.2433515889
+## HERNU       -1.8910497  1.1784614 -0.15641037  0.89130068 -0.1267412520
+## BARRAS      -1.7744575 -0.4125321  0.65817750  0.22872866 -0.2338366980
+## NOOL        -2.7770058 -1.5726757  0.60724821 -1.55548081  1.4241839810
+## BOURGUIGNON -4.4137335  1.2635770 -0.01003734  0.66675478  0.4191518468
+## Sebrle       3.4514485  1.2169193 -1.67816711 -0.80870696 -0.0250530746
+## Clay         3.3162243  1.6232908 -0.61840443 -0.31679906  0.5691645854
+## Karpov       4.0703560 -0.7983510  1.01501662  0.31336354 -0.7974259553
+## Macey        1.8484623 -2.0638828 -0.97928455  0.58469073 -0.0002157834
+## Warners      1.3873514  0.2819083  1.99969621 -1.01959817 -0.0405401497
+## Zsivoczky    0.4715533 -0.9267436 -1.72815525 -0.18483138  0.4073029909
+## Hernu        0.2763118 -1.1657260  0.17056375 -0.84869401 -0.6894795441
+## Bernard      1.3672590 -1.4780354  0.83137913  0.74531557  0.8598016482
+## Schwarzl    -0.7102777  0.6584251  1.04075176 -0.92717510 -0.2887568007
+## Pogorelov   -0.2143524  0.8610557  0.29761010  1.35560294 -0.0150531057
+## Schoenbeck  -0.4953166  1.3000530  0.10300360 -0.24927712 -0.6452257128
+## Barras      -0.3158867 -0.8193681 -0.86169481 -0.58935985 -0.7797389436
+##                   Dim.6       Dim.7        Dim.8        Dim.9      Dim.10
+## SEBRLE       0.46389755 -0.20796012  0.043460568 -0.659344137  0.03273238
+## CLAY        -1.30420016 -0.21291866  0.617240611 -0.060125359 -0.31716015
+## BERNARD      0.40062867 -0.40643754  0.703856040  0.170083313 -0.09908142
+## YURKOV      -0.10286344 -0.32487448  0.114996135 -0.109524039 -0.11969720
+## ZSIVOCZKY   -0.89554111  0.08825624 -0.202341299 -0.523103099 -0.34842265
+## McMULLEN    -0.18657283  0.47828432  0.293089967 -0.105623196 -0.39317797
+## MARTINEAU    0.45666350 -0.29975522 -0.291628488 -0.223417655 -0.61640509
+## HERNU       -0.43623496 -0.56609980 -1.529404317  0.006184409  0.55368016
+## BARRAS      -0.09026010  0.21594095  0.682583078 -0.669282042  0.53085420
+## NOOL        -0.49716399 -0.53205687 -0.433385655 -0.115777808 -0.09622142
+## BOURGUIGNON  0.08200220 -0.59833739  0.563619921  0.525814030  0.05855882
+## Sebrle       0.08279306  0.01016177 -0.030585843 -0.847210682  0.21970353
+## Clay        -0.77715960  0.25750851 -0.580638301  0.409776590 -0.61601933
+## Karpov       0.32958134 -1.36365568  0.345306381  0.193055107  0.21721852
+## Macey        0.19728082 -0.26927772 -0.363219506  0.368260269  0.21249474
+## Warners      0.55673300 -0.26739400 -0.109470797  0.180283071  0.24208420
+## Zsivoczky    0.11383190  0.03991159  0.538039776  0.585966156 -0.14271715
+## Hernu        0.33168404  0.44308686  0.247293566  0.066908586 -0.20868256
+## Bernard      0.32806564  0.36357920  0.006165316  0.279488675  0.32067773
+## Schwarzl     0.68891640  0.56568604 -0.687053339 -0.008358849 -0.30211546
+## Pogorelov    1.59379599  0.78370119 -0.037623661 -0.130531397 -0.03697576
+## Schoenbeck  -0.16172381  0.85752368 -0.255850722  0.564222295  0.29680481
+## Barras      -1.17415412  0.94512710  0.365550568  0.102255763  0.61186706</code></pre>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="biplot-y-bibiplot.html#cb201-1" tabindex="-1"></a>res.ind<span class="sc">$</span>contrib        </span></code></pre></div>
+<pre><code>##                   Dim.1      Dim.2        Dim.3       Dim.4        Dim.5
+## SEBRLE       0.03854254  5.7118249 1.385418e+00  0.03572215 8.091161e+00
+## CLAY         0.65814114 13.8541889 6.460097e+00  8.55568792 4.034555e+00
+## BERNARD      1.86273218  6.1441319 1.349983e-01 19.57827284 4.202070e-02
+## YURKOV       0.79686310  0.4431309 2.147558e+01  2.57939100 9.859373e-01
+## ZSIVOCZKY    0.01178829  9.6816398 5.974848e+00  0.05231437 2.405750e-01
+## McMULLEN     0.01481737  2.3253860 2.496789e+00  9.13531719 1.558646e+01
+## MARTINEAU    6.03367104  3.9044125 2.830527e+00  0.73858431 3.118936e+01
+## HERNU        3.76996156  3.2842176 8.583863e-02  4.21505626 9.955149e-02
+## BARRAS       3.31942012  0.4024544 1.519980e+00  0.27758505 3.388731e-01
+## NOOL         8.12988880  5.8489726 1.293851e+00 12.83761115 1.257025e+01
+## BOURGUIGNON 20.53729577  3.7757623 3.534995e-04  2.35877858 1.088816e+00
+## Sebrle      12.55838616  3.5020697 9.881482e+00  3.47006223 3.889859e-03
+## Clay        11.59361384  6.2315181 1.341828e+00  0.53250375 2.007648e+00
+## Karpov      17.46609555  1.5072627 3.614914e+00  0.52101693 3.940874e+00
+## Macey        3.60207087 10.0732890 3.364879e+00  1.81387486 2.885677e-07
+## Warners      2.02910262  0.1879390 1.403071e+01  5.51585696 1.018550e-02
+## Zsivoczky    0.23441891  2.0310492 1.047894e+01  0.18126182 1.028128e+00
+## Hernu        0.08048777  3.2136178 1.020764e-01  3.82170515 2.946148e+00
+## Bernard      1.97075488  5.1661961 2.425213e+00  2.94737426 4.581507e+00
+## Schwarzl     0.53184785  1.0252129 3.800546e+00  4.56119277 5.167449e-01
+## Pogorelov    0.04843819  1.7533304 3.107757e-01  9.75034337 1.404313e-03
+## Schoenbeck   0.25864068  3.9969003 3.722687e-02  0.32970059 2.580092e+00
+## Barras       0.10519467  1.5876667 2.605305e+00  1.84296038 3.767994e+00
+##                   Dim.6        Dim.7        Dim.8        Dim.9      Dim.10
+## SEBRLE       2.21256620  0.621426384 2.992045e-02 12.177477305  0.03819185
+## CLAY        17.48801877  0.651413899 6.035125e+00  0.101262442  3.58568943
+## BERNARD      1.65019840  2.373652810 7.847747e+00  0.810319793  0.34994507
+## YURKOV       0.10878629  1.516564073 2.094806e-01  0.336009790  0.51072064
+## ZSIVOCZKY    8.24561722  0.111923276 6.485544e-01  7.664919832  4.32741147
+## McMULLEN     0.35788945  3.287016354 1.360753e+00  0.312501167  5.51053518
+## MARTINEAU    2.14409841  1.291109482 1.347216e+00  1.398195851 13.54402896
+## HERNU        1.95655942  4.604850849 3.705288e+01  0.001071345 10.92781554
+## BARRAS       0.08376135  0.670038259 7.380544e+00 12.547331617 10.04537028
+## NOOL         2.54127369  4.067669683 2.975270e+00  0.375477289  0.33003418
+## BOURGUIGNON  0.06913582  5.144247534 5.032108e+00  7.744571086  0.12223626
+## Sebrle       0.07047579  0.001483775 1.481898e-02 20.105546253  1.72063803
+## Clay         6.20972751  0.952824148 5.340583e+00  4.703566841 13.52708188
+## Karpov       1.11680500 26.720158115 1.888802e+00  1.043988269  1.68193477
+## Macey        0.40014909  1.041910483 2.089853e+00  3.798767930  1.60957713
+## Warners      3.18673563  1.027384225 1.898339e-01  0.910422384  2.08904756
+## Zsivoczky    0.13322327  0.022889042 4.585705e+00  9.617852173  0.72605208
+## Hernu        1.13110069  2.821027418 9.687304e-01  0.125399768  1.55234328
+## Bernard      1.10655655  1.899449022 6.021268e-04  2.188071254  3.66566729
+## Schwarzl     4.87961053  4.598122119 7.477531e+00  0.001957159  3.25357879
+## Pogorelov   26.11665608  8.825322559 2.242329e-02  0.477268755  0.04873597
+## Schoenbeck   0.26890572 10.566272800 1.036933e+00  8.917302863  3.14020004
+## Barras      14.17432302 12.835417603 2.116763e+00  0.292892746 13.34533825</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="biplot-y-bibiplot.html#cb203-1" tabindex="-1"></a>res.ind<span class="sc">$</span>cos2            </span></code></pre></div>
+<pre><code>##                   Dim.1      Dim.2        Dim.3       Dim.4        Dim.5
+## SEBRLE      0.007530179 0.49747323 8.132523e-02 0.001386688 2.689027e-01
+## CLAY        0.048701249 0.45701660 1.436281e-01 0.125791741 5.078506e-02
+## BERNARD     0.197199804 0.28996555 4.294015e-03 0.411819183 7.567259e-04
+## YURKOV      0.096109800 0.02382571 7.782303e-01 0.061812637 2.022798e-02
+## ZSIVOCZKY   0.001574385 0.57641944 2.397542e-01 0.001388216 5.465497e-03
+## McMULLEN    0.002175437 0.15219499 1.101379e-01 0.266486530 3.892621e-01
+## MARTINEAU   0.404013915 0.11654676 5.694575e-02 0.009826320 3.552552e-01
+## HERNU       0.399282749 0.15506199 2.731529e-03 0.088699901 1.793538e-03
+## BARRAS      0.616241975 0.03330700 8.478249e-02 0.010239088 1.070152e-02
+## NOOL        0.489872515 0.15711146 2.342405e-02 0.153694675 1.288433e-01
+## BOURGUIGNON 0.859698130 0.07045912 4.446015e-06 0.019618511 7.753120e-03
+## Sebrle      0.675380606 0.08395940 1.596674e-01 0.037079012 3.558507e-05
+## Clay        0.687592867 0.16475409 2.391051e-02 0.006274965 2.025440e-02
+## Karpov      0.783666922 0.03014772 4.873187e-02 0.004644764 3.007790e-02
+## Macey       0.363436037 0.45308203 1.020057e-01 0.036362957 4.952707e-09
+## Warners     0.255651956 0.01055582 5.311341e-01 0.138081100 2.182965e-04
+## Zsivoczky   0.045053176 0.17401353 6.051030e-01 0.006921739 3.361236e-02
+## Hernu       0.024824321 0.44184663 9.459148e-03 0.234196727 1.545686e-01
+## Bernard     0.289347476 0.33813318 1.069834e-01 0.085980212 1.144234e-01
+## Schwarzl    0.116721435 0.10030142 2.506043e-01 0.198892209 1.929118e-02
+## Pogorelov   0.007803472 0.12591966 1.504272e-02 0.312101619 3.848427e-05
+## Schoenbeck  0.067070098 0.46204603 2.900467e-03 0.016987442 1.138116e-01
+## Barras      0.018972684 0.12765099 1.411800e-01 0.066043061 1.156018e-01
+##                    Dim.6        Dim.7        Dim.8        Dim.9       Dim.10
+## SEBRLE      0.0443241299 8.907507e-03 3.890334e-04 8.954067e-02 0.0002206741
+## CLAY        0.1326907339 3.536548e-03 2.972084e-02 2.820119e-04 0.0078471026
+## BERNARD     0.0179131165 1.843634e-02 5.529104e-02 3.228572e-03 0.0010956493
+## YURKOV      0.0013453555 1.341980e-02 1.681440e-03 1.525225e-03 0.0018217256
+## ZSIVOCZKY   0.1129176906 1.096685e-03 5.764478e-03 3.852703e-02 0.0170924251
+## McMULLEN    0.0053876990 3.540616e-02 1.329562e-02 1.726733e-03 0.0239268142
+## MARTINEAU   0.0147210347 6.342774e-03 6.003515e-03 3.523552e-03 0.0268211980
+## HERNU       0.0212478795 3.578167e-02 2.611676e-01 4.270425e-06 0.0342288717
+## BARRAS      0.0015944528 9.126203e-03 9.118662e-02 8.766746e-02 0.0551531863
+## NOOL        0.0157010551 1.798232e-02 1.193105e-02 8.514912e-04 0.0005881295
+## BOURGUIGNON 0.0002967459 1.579887e-02 1.401866e-02 1.220108e-02 0.0001513277
+## Sebrle      0.0003886276 5.854423e-06 5.303795e-05 4.069384e-02 0.0027366539
+## Clay        0.0377627839 4.145976e-03 2.107924e-02 1.049876e-02 0.0237264222
+## Karpov      0.0051379747 8.795817e-02 5.639959e-03 1.762907e-03 0.0022318265
+## Macey       0.0041397727 7.712721e-03 1.403282e-02 1.442502e-02 0.0048028954
+## Warners     0.0411689767 9.496848e-03 1.591742e-03 4.317040e-03 0.0077841113
+## Zsivoczky   0.0026253777 3.227467e-04 5.865332e-02 6.956790e-02 0.0041268259
+## Hernu       0.0357707217 6.383462e-02 1.988402e-02 1.455601e-03 0.0141595965
+## Bernard     0.0166586433 2.046050e-02 5.883405e-06 1.209056e-02 0.0159167991
+## Schwarzl    0.1098063093 7.403638e-02 1.092132e-01 1.616543e-05 0.0211173850
+## Pogorelov   0.4314162233 1.043115e-01 2.404103e-04 2.893750e-03 0.0002322016
+## Schoenbeck  0.0071500829 2.010275e-01 1.789520e-02 8.702893e-02 0.0240826922
+## Barras      0.2621297474 1.698426e-01 2.540745e-02 1.988116e-03 0.0711836486</code></pre>
+<p>El conjunto de datos tiene unas variables categóricas en la columna 13 que se quitó al inicio que corresponde al tipo de competición. Vamos a usar esa variable para agrupar los individuos.</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="biplot-y-bibiplot.html#cb205-1" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(decathlon2<span class="sc">$</span>Competition[<span class="dv">1</span><span class="sc">:</span><span class="dv">23</span>])</span>
+<span id="cb205-2"><a href="biplot-y-bibiplot.html#cb205-2" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(res.pca,</span>
+<span id="cb205-3"><a href="biplot-y-bibiplot.html#cb205-3" tabindex="-1"></a>             <span class="at">col.ind =</span> groups, <span class="co"># color by groups</span></span>
+<span id="cb205-4"><a href="biplot-y-bibiplot.html#cb205-4" tabindex="-1"></a>             <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>,  <span class="st">&quot;#FC4E07&quot;</span>),</span>
+<span id="cb205-5"><a href="biplot-y-bibiplot.html#cb205-5" tabindex="-1"></a>             <span class="at">addEllipses =</span> <span class="cn">TRUE</span>, <span class="co"># Concentration ellipses</span></span>
+<span id="cb205-6"><a href="biplot-y-bibiplot.html#cb205-6" tabindex="-1"></a>             <span class="at">ellipse.level=</span><span class="fl">0.7</span>,</span>
+<span id="cb205-7"><a href="biplot-y-bibiplot.html#cb205-7" tabindex="-1"></a>             <span class="at">legend.title =</span> <span class="st">&quot;Groups&quot;</span>,</span>
+<span id="cb205-8"><a href="biplot-y-bibiplot.html#cb205-8" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span></span>
+<span id="cb205-9"><a href="biplot-y-bibiplot.html#cb205-9" tabindex="-1"></a>             )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp57-1.png" width="672" /></p>
+<p>Explica las componentes. ¿Cómo podrías llamar a las componentes 1 y 2?</p>
+</div>
+<div id="ejercicios-pca" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Ejercicios PCA<a href="biplot-y-bibiplot.html#ejercicios-pca" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ejercicio 1:</strong> Carga la base de datos siguiente y realiza el análisis de componentes principales. Decide y justifica que matriz usaras, la de varianzas y covarianzas o la de correlaciones. ¿Con cuántas componentes te quedarías? ¿por qué? ¿Qué explica cada componente de las que te quedaste? ¿Cuál es la varianza total explicada por esas componentes? ¿Qué tortuga es la más grande? ¿Qué variable tiene la mayor varianza? ¿Las variables están correlacionadas positivamente? ¿Porqué?</p>
+<p><a href="https://drive.google.com/file/d/1gSi65s_Nm0jj2Poo2MtXYN82bYRAErPa/view?usp=share_link">Tortugas</a></p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="biplot-y-bibiplot.html#cb206-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb206-2"><a href="biplot-y-bibiplot.html#cb206-2" tabindex="-1"></a>turtledata <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">&quot;data/turtledata.csv&quot;</span>, </span>
+<span id="cb206-3"><a href="biplot-y-bibiplot.html#cb206-3" tabindex="-1"></a>    <span class="at">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Rows: 48 Columns: 4
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;;&quot;
+## dbl (4): length, width, height, female
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<p><strong>Ejercicio 2:</strong></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análisis-de-componentes-principales.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="análisis-factorial.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/edit/main/02-PCA.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["MultivariateStatisticalAnalysis.pdf", "MultivariateStatisticalAnalysis.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  },
+  "code_folding": "hide"
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

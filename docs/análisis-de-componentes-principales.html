@@ -200,8 +200,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="3.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html"><i class="fa fa-check"></i><b>3.1</b> Componentes principales para matriz de covarianza</a></li>
 <li class="chapter" data-level="3.2" data-path="02-PCA.html"><a href="#componentes-principales-para-matriz-de-correlaci%C3%B3n"><i class="fa fa-check"></i><b>3.2</b> Componentes principales para matriz de correlación</a></li>
-<li class="chapter" data-level="3.3" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#ejemplos-con-bases-de-datos"><i class="fa fa-check"></i><b>3.3</b> Ejemplos con Bases de datos</a></li>
-<li class="chapter" data-level="3.4" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#ejercicios-pca"><i class="fa fa-check"></i><b>3.4</b> Ejercicios PCA</a></li>
+<li class="chapter" data-level="3.3" data-path="02-PCA.html"><a href="#el-n%C3%BAmero-de-componentes-principales"><i class="fa fa-check"></i><b>3.3</b> El número de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#scree-plot"><i class="fa fa-check"></i><b>3.3.1</b> Scree plot</a></li>
+<li class="chapter" data-level="3.3.2" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#regla-de-kaiser"><i class="fa fa-check"></i><b>3.3.2</b> Regla de Kaiser</a></li>
+<li class="chapter" data-level="3.3.3" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#procedimiento-de-horn-parallel-analysis"><i class="fa fa-check"></i><b>3.3.3</b> Procedimiento de Horn (parallel analysis)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="02-PCA.html"><a href="#visualizaci%C3%B3n-de-los-componentes-principales"><i class="fa fa-check"></i><b>3.4</b> Visualización de los componentes principales</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#score-plot-individuos-en-el-espacio-pca"><i class="fa fa-check"></i><b>3.4.1</b> Score plot: individuos en el espacio PCA</a></li>
+<li class="chapter" data-level="3.4.2" data-path="02-PCA.html"><a href="#loading-plot-contribuci%C3%B3n-de-las-variables"><i class="fa fa-check"></i><b>3.4.2</b> Loading plot: contribución de las variables</a></li>
+<li class="chapter" data-level="3.4.3" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#biplot-y-bibiplot"><i class="fa fa-check"></i><b>3.4.3</b> Biplot y Bibiplot</a></li>
+<li class="chapter" data-level="3.4.4" data-path="02-PCA.html"><a href="#gr%C3%A1ficos-adicionales-%C3%BAtiles"><i class="fa fa-check"></i><b>3.4.4</b> Gráficos adicionales útiles</a></li>
+<li class="chapter" data-level="3.4.5" data-path="02-PCA.html"><a href="#recomendaciones-pr%C3%A1cticas-de-interpretaci%C3%B3n"><i class="fa fa-check"></i><b>3.4.5</b> Recomendaciones prácticas de interpretación</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#ejemplos-con-bases-de-datos"><i class="fa fa-check"></i><b>3.5</b> Ejemplos con Bases de datos</a></li>
+<li class="chapter" data-level="3.6" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#ejercicios-pca"><i class="fa fa-check"></i><b>3.6</b> Ejercicios PCA</a></li>
+<li class="chapter" data-level="3.7" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#tutoriales-de-datacamp-sugeridos"><i class="fa fa-check"></i><b>3.7</b> Tutoriales de DataCamp sugeridos</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="02-PCA.html"><a href="#an%C3%A1lisis-factorial"><i class="fa fa-check"></i><b>4</b> Análisis Factorial</a></li>
 <li class="chapter" data-level="5" data-path="02-PCA.html"><a href="#an%C3%A1lisis-de-conglomerados"><i class="fa fa-check"></i><b>5</b> Análisis de Conglomerados</a></li>
@@ -527,8 +542,371 @@ conservar en lo posible su estructura, es decir la <strong>forma</strong> de la 
 ## [1,]  1.4  0.0
 ## [2,]  0.0  0.6</code></pre>
 </div>
-<div id="ejemplos-con-bases-de-datos" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Ejemplos con Bases de datos<a href="análisis-de-componentes-principales.html#ejemplos-con-bases-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="el-número-de-componentes-principales" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> El número de Componentes Principales<a href="#el-n%C3%BAmero-de-componentes-principales" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Uno de los pasos fundamentales en el análisis de componentes principales (PCA) consiste en determinar cuántos componentes deben retenerse para describir adecuadamente la estructura de los datos. No existe un criterio único y universal, por lo que en la práctica se suelen combinar varias estrategias complementarias. A continuación se describen tres de los métodos más utilizados: el scree plot, la regla de Kaiser y el procedimiento de Horn.</p>
+<div id="scree-plot" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Scree plot<a href="análisis-de-componentes-principales.html#scree-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El <em>scree plot</em> es una herramienta gráfica propuesta por Cattell (1966), en la que se representan los valores propios (varianzas explicadas) en función del número de componente. La idea es identificar el punto a partir del cual los valores propios dejan de decrecer de manera pronunciada y se estabilizan. Esta “zona de estabilización” se conoce como codo (elbow).
+Los componentes anteriores al codo explican la mayor parte de la variabilidad estructural, mientras que los posteriores suelen corresponderse con ruido. Aunque el criterio del codo es visual y puede ser subjetivo, es una aproximación muy útil como primera guía.</p>
+<p>En R, el scree plot se puede obtener con funciones como <code>screeplot(obj_pca)</code> o haciendo un plot usual de los eigenvalores.</p>
+<p><strong>Ejemplo:</strong> Vamos a cargar la base de datos <code>USArrests</code>. Calculamos los componentes principales con la función <code>prcomp</code> y guardaresmos los eigenvalores en una variable.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="análisis-de-componentes-principales.html#cb97-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;USArrests&quot;</span>)</span>
+<span id="cb97-2"><a href="análisis-de-componentes-principales.html#cb97-2" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(USArrests)</span>
+<span id="cb97-3"><a href="análisis-de-componentes-principales.html#cb97-3" tabindex="-1"></a>pca_obj <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(datos, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb97-4"><a href="análisis-de-componentes-principales.html#cb97-4" tabindex="-1"></a>eigenvalues <span class="ot">&lt;-</span> pca_obj<span class="sc">$</span>sdev<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb97-5"><a href="análisis-de-componentes-principales.html#cb97-5" tabindex="-1"></a>eigenvalues</span></code></pre></div>
+<pre><code>## [1] 2.4802416 0.9897652 0.3565632 0.1734301</code></pre>
+<p>Tenemos tres formas de realizar este plot, unos usando los valores de los eigenvalores y el segundo usando la función de <code>screeplot</code> o usando la función <code>fviz_eig</code> de <code>factoextra</code>.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="análisis-de-componentes-principales.html#cb99-1" tabindex="-1"></a><span class="fu">plot</span>(eigenvalues, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Componente principal&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Eigenvalor&quot;</span>, </span>
+<span id="cb99-2"><a href="análisis-de-componentes-principales.html#cb99-2" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Scree plot&quot;</span>)</span>
+<span id="cb99-3"><a href="análisis-de-componentes-principales.html#cb99-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">1</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># línea de referencia en 1 (útil para Kaiser)</span></span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp60-1.png" width="672" /></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="análisis-de-componentes-principales.html#cb100-1" tabindex="-1"></a><span class="fu">screeplot</span>(pca_obj, <span class="at">type=</span><span class="st">&quot;lines&quot;</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp61-1.png" width="672" /></p>
+<p>Si utilizamos el paquete factoextra, el scree plot también puede mostrar directamente la proporción de varianza explicada:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="análisis-de-componentes-principales.html#cb101-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span></code></pre></div>
+<pre><code>## Cargando paquete requerido: ggplot2</code></pre>
+<pre><code>## Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="análisis-de-componentes-principales.html#cb104-1" tabindex="-1"></a><span class="fu">fviz_eig</span>(pca_obj, <span class="at">addlabels =</span> <span class="cn">TRUE</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp62-1.png" width="672" /></p>
+<p>La interpretación consiste en buscar el “codo” en la gráfica: el punto a partir del cual la pendiente deja de ser pronunciada y los eigenvalores se estabilizan. En los tres plots, podemos ver que en la componente dos, se forma el “codo”, además de que las primeras dos componentes tienen una mayor variabilidad. Este método nos sugiere quedarnos con las primeras dos componentes principales.</p>
+</div>
+<div id="regla-de-kaiser" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Regla de Kaiser<a href="análisis-de-componentes-principales.html#regla-de-kaiser" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La regla de , fue propuesta por Kaiser en 1959. Propone retener únicamente los componentes cuyos eigenvalores sean mayores que 1 (cuando el PCA se realiza sobre la <strong>matriz de correlaciones</strong>).
+La justificación es que cada componente debe explicar al menos tanta variabilidad como una variable original estandarizada.
+Este criterio es sencillo de aplicar, pero puede sobrestimar el número de componentes cuando el número de variables es grande o cuando la estructura de los datos es débil.</p>
+<p>Una forma de hacer esto es la siguiente:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="análisis-de-componentes-principales.html#cb105-1" tabindex="-1"></a>componentes_kaiser <span class="ot">&lt;-</span> <span class="fu">which</span>(eigenvalues <span class="sc">&gt;</span> <span class="dv">1</span>)</span>
+<span id="cb105-2"><a href="análisis-de-componentes-principales.html#cb105-2" tabindex="-1"></a>componentes_kaiser</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="análisis-de-componentes-principales.html#cb107-1" tabindex="-1"></a><span class="fu">length</span>(componentes_kaiser) </span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>Podríamos resumir también esto en una tabla:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="análisis-de-componentes-principales.html#cb109-1" tabindex="-1"></a>prop_var <span class="ot">&lt;-</span> eigenvalues <span class="sc">/</span> <span class="fu">sum</span>(eigenvalues)</span>
+<span id="cb109-2"><a href="análisis-de-componentes-principales.html#cb109-2" tabindex="-1"></a>tabla_pca <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb109-3"><a href="análisis-de-componentes-principales.html#cb109-3" tabindex="-1"></a><span class="at">Componente =</span> <span class="fu">paste0</span>(<span class="st">&quot;PC&quot;</span>, <span class="fu">seq_along</span>(eigenvalues)),</span>
+<span id="cb109-4"><a href="análisis-de-componentes-principales.html#cb109-4" tabindex="-1"></a><span class="at">Eigenvalor =</span> eigenvalues,</span>
+<span id="cb109-5"><a href="análisis-de-componentes-principales.html#cb109-5" tabindex="-1"></a><span class="at">PropVar    =</span> prop_var,</span>
+<span id="cb109-6"><a href="análisis-de-componentes-principales.html#cb109-6" tabindex="-1"></a><span class="at">PropVarAcum =</span> <span class="fu">cumsum</span>(prop_var),</span>
+<span id="cb109-7"><a href="análisis-de-componentes-principales.html#cb109-7" tabindex="-1"></a><span class="at">Kaiser     =</span> eigenvalues <span class="sc">&gt;</span> <span class="dv">1</span></span>
+<span id="cb109-8"><a href="análisis-de-componentes-principales.html#cb109-8" tabindex="-1"></a>)</span>
+<span id="cb109-9"><a href="análisis-de-componentes-principales.html#cb109-9" tabindex="-1"></a>tabla_pca</span></code></pre></div>
+<pre><code>##   Componente Eigenvalor    PropVar PropVarAcum Kaiser
+## 1        PC1  2.4802416 0.62006039   0.6200604   TRUE
+## 2        PC2  0.9897652 0.24744129   0.8675017  FALSE
+## 3        PC3  0.3565632 0.08914080   0.9566425  FALSE
+## 4        PC4  0.1734301 0.04335752   1.0000000  FALSE</code></pre>
+<p>Aunque la componente 2 es menor a 1, si podría considerarse.</p>
+</div>
+<div id="procedimiento-de-horn-parallel-analysis" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Procedimiento de Horn (parallel analysis)<a href="análisis-de-componentes-principales.html#procedimiento-de-horn-parallel-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El procedimiento de Horn, propuesto por Horn en 1965, también llamado análisis paralelo, es uno de los métodos más robustos para decidir el número de componentes.
+Consiste en comparar los eigenvalores obtenidos a partir de los datos reales con los eigenvalores obtenidos de matrices aleatorias generadas bajo ausencia de estructura (ruido). En lugar de tomar todos los eigenvalores mayores a 1, propone tomar otro corte dependiendo de los valores obtenidos de matrices aleatoias.
+Se retienen únicamente aquellos componentes cuyo eigenvalor sea mayor al correspondiente eigenvalor promedio de las matrices aleatorias.</p>
+<p>Este procedimiento reduce los riesgos tanto de incluir componentes irrelevantes como de descartar componentes importantes. En R se puede implementar con el paquete <code>psych</code> mediante la función <code>fa.parallel()</code> o con funciones específicas de análisis paralelo para PCA.</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="análisis-de-componentes-principales.html#cb111-1" tabindex="-1"></a><span class="fu">library</span>(psych)</span></code></pre></div>
+<pre><code>## 
+## Adjuntando el paquete: &#39;psych&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     %+%, alpha</code></pre>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="análisis-de-componentes-principales.html#cb114-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># para reproducibilidad</span></span>
+<span id="cb114-2"><a href="análisis-de-componentes-principales.html#cb114-2" tabindex="-1"></a></span>
+<span id="cb114-3"><a href="análisis-de-componentes-principales.html#cb114-3" tabindex="-1"></a><span class="fu">fa.parallel</span>(datos, </span>
+<span id="cb114-4"><a href="análisis-de-componentes-principales.html#cb114-4" tabindex="-1"></a>            <span class="at">fa =</span> <span class="st">&quot;pc&quot;</span>, <span class="co"># especifica que queremos análisis de componentes principales</span></span>
+<span id="cb114-5"><a href="análisis-de-componentes-principales.html#cb114-5" tabindex="-1"></a>            <span class="at">n.iter =</span> <span class="dv">100</span>, <span class="co"># número de matrices aleatorias</span></span>
+<span id="cb114-6"><a href="análisis-de-componentes-principales.html#cb114-6" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb114-7"><a href="análisis-de-componentes-principales.html#cb114-7" tabindex="-1"></a>            <span class="at">main =</span> <span class="st">&quot;Análisis paralelo (Procedimiento de Horn)&quot;</span></span>
+<span id="cb114-8"><a href="análisis-de-componentes-principales.html#cb114-8" tabindex="-1"></a>            )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp65-1.png" width="672" /></p>
+<pre><code>## Parallel analysis suggests that the number of factors =  NA  and the number of components =  1</code></pre>
+<p>Además de los criterios clásicos, como el scree plot o la regla de Kaiser, el paquete nFactors ofrece una forma integrada de comparar varios métodos para decidir cuántos componentes principales deben retenerse. Este enfoque combina:</p>
+<ul>
+<li><p>Los eigenvalores reales obtenidos del PCA;</p></li>
+<li><p>Los eigenvalores simulados mediante análisis paralelo (procedimiento de Horn);</p></li>
+<li><p>Criterios gráficos, como el scree plot refinado (Cattell);</p></li>
+<li><p>La regla de Kaiser (eigenvalores mayores que 1 cuando se usa una matriz de correlaciones).</p></li>
+</ul>
+<p>A continuación se describe el procedimiento y el significado de cada paso.</p>
+<p><strong>Eigenvalores reales:</strong> El primer paso consiste en obtener los eigenvalores de la matriz de correlaciones. Si los datos han sido estandarizados o se usa directamente la matriz de correlaciones, cada variable tiene varianza igual a 1 y la regla de Kaiser puede aplicarse de manera directa.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="análisis-de-componentes-principales.html#cb116-1" tabindex="-1"></a>cor_mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(datos, <span class="at">use =</span> <span class="st">&quot;pairwise.complete.obs&quot;</span>)</span>
+<span id="cb116-2"><a href="análisis-de-componentes-principales.html#cb116-2" tabindex="-1"></a><span class="co"># Eigenvalores de la matriz de correlaciones</span></span>
+<span id="cb116-3"><a href="análisis-de-componentes-principales.html#cb116-3" tabindex="-1"></a>ev_cor <span class="ot">&lt;-</span> <span class="fu">eigen</span>(cor_mat)</span></code></pre></div>
+<p><strong>Análisis paralelo (Procedimiento de Horn):</strong> El análisis paralelo compara los eigenvalores reales con eigenvalores obtenidos a partir de matrices aleatorias sin estructura (ruido). Los componentes se retienen únicamente si su eigenvalor es mayor que el correspondiente eigenvalor simulado bajo el escenario nulo.</p>
+<p>En <code>nFactors</code>, esto se realiza con:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="análisis-de-componentes-principales.html#cb117-1" tabindex="-1"></a><span class="fu">library</span>(nFactors)</span>
+<span id="cb117-2"><a href="análisis-de-componentes-principales.html#cb117-2" tabindex="-1"></a>ap <span class="ot">&lt;-</span> <span class="fu">parallel</span>(</span>
+<span id="cb117-3"><a href="análisis-de-componentes-principales.html#cb117-3" tabindex="-1"></a>  <span class="at">subject =</span> <span class="fu">nrow</span>(datos),   <span class="co"># número de observaciones</span></span>
+<span id="cb117-4"><a href="análisis-de-componentes-principales.html#cb117-4" tabindex="-1"></a>  <span class="at">var     =</span> <span class="fu">ncol</span>(datos),   <span class="co"># número de variables</span></span>
+<span id="cb117-5"><a href="análisis-de-componentes-principales.html#cb117-5" tabindex="-1"></a>  <span class="at">rep     =</span> <span class="dv">100</span>,                 <span class="co"># número de simulaciones</span></span>
+<span id="cb117-6"><a href="análisis-de-componentes-principales.html#cb117-6" tabindex="-1"></a>  <span class="at">cent    =</span> .<span class="dv">05</span>                  <span class="co"># percentil usado para ajustar los eigenvalores simulados</span></span>
+<span id="cb117-7"><a href="análisis-de-componentes-principales.html#cb117-7" tabindex="-1"></a>)</span></code></pre></div>
+<p>La salida <code>ap$eigen$qevpea</code> contiene los eigenvalores simulados promediados y ajustados, que se usarán más adelante para la comparación.</p>
+<p><strong>Función <code>nScree()</code>:</strong> Kaiser + Scree + Análisis paralelo en una sola función. El paquete <code>nFactors</code> permite integrar todos los criterios anteriores usando la función <code>nScree()</code>. Esta función toma:</p>
+<ul>
+<li><p>los eigenvalores reales</p></li>
+<li><p>los eigenvalores simulados del análisis paralelo</p></li>
+<li><p>información adicional si se trabaja con la matriz de correlaciones <code>(cor = TRUE)</code></p></li>
+</ul>
+<p>y produce una recomendación conjunta.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="análisis-de-componentes-principales.html#cb118-1" tabindex="-1"></a>num_cp <span class="ot">&lt;-</span> <span class="fu">nScree</span>(<span class="at">x =</span> ev_cor<span class="sc">$</span>values,           <span class="co"># eigenvalores reales</span></span>
+<span id="cb118-2"><a href="análisis-de-componentes-principales.html#cb118-2" tabindex="-1"></a>                 <span class="at">aparallel =</span> ap<span class="sc">$</span>eigen<span class="sc">$</span>qevpea, <span class="co"># eigenvalores simulados</span></span>
+<span id="cb118-3"><a href="análisis-de-componentes-principales.html#cb118-3" tabindex="-1"></a>                 <span class="at">cor       =</span> <span class="cn">TRUE</span>       <span class="co"># indica que provienen de una matriz de correlaciones</span></span>
+<span id="cb118-4"><a href="análisis-de-componentes-principales.html#cb118-4" tabindex="-1"></a>                 )</span>
+<span id="cb118-5"><a href="análisis-de-componentes-principales.html#cb118-5" tabindex="-1"></a>num_cp</span></code></pre></div>
+<pre><code>## $Components
+##   noc naf nparallel nkaiser
+## 1   1   1         1       1
+## 
+## $Analysis
+##   Eigenvalues       Prop      Cumu Par.Analysis  Pred.eig     OC Acc.factor
+## 1   2.4802416 0.62006039 0.6200604    1.1460230 1.3979327 (&lt; OC)         NA
+## 2   0.9897652 0.24744129 0.8675017    0.9951257 0.5396963         0.8572745
+## 3   0.3565632 0.08914080 0.9566425    0.7977450        NA         0.4500689
+## 4   0.1734301 0.04335752 1.0000000    0.5471219        NA                NA
+##       AF
+## 1 (&lt; AF)
+## 2       
+## 3       
+## 4       
+## 
+## $Model
+## [1] &quot;components&quot;
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;nScree&quot;</code></pre>
+<p>La salida <code>num_cp</code> resume cuántos componentes recomienda cada criterio:</p>
+<ul>
+<li><p><em>Regla de Kaiser</em>: componentes con eigenvalor &gt; 1.</p></li>
+<li><p><em>Scree Test (Cattell)</em>: número de componentes hasta el “codo”.</p></li>
+<li><p><em>Parallel analysis</em>: eigenvalores observados mayores que los simulados.</p></li>
+<li><p><em>nScree solution</em>: recomendación final combinada.</p></li>
+</ul>
+<p>Puede visualizarse con:</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="análisis-de-componentes-principales.html#cb120-1" tabindex="-1"></a><span class="fu">plotnScree</span>(num_cp)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp69-1.png" width="672" /></p>
+<p>Esta gráfica muestra simultáneamente los eigenvalores reales y los simulados, así como las líneas marcando los puntos de corte según cada método.</p>
+<p><strong>Interpretación</strong></p>
+<p>Usar <code>nScree()</code> tiene la ventaja de ofrecer una visión amplia e integradora:</p>
+<ul>
+<li><p>La regla de Kaiser es rápida pero puede sobreestimar componentes.</p></li>
+<li><p>El scree plot puede ser subjetivo.</p></li>
+<li><p>El análisis paralelo es el más estable y recomendado en literatura moderna.</p></li>
+<li><p>La solución nScree combina los tres, ofreciendo un punto de vista equilibrado.</p></li>
+</ul>
+<p>La recomendación final debe tomarse considerando la interpretación sustantiva del problema, la proporción de varianza explicada y la finalidad del PCA.</p>
+</div>
+</div>
+<div id="visualización-de-los-componentes-principales" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Visualización de los componentes principales<a href="#visualizaci%C3%B3n-de-los-componentes-principales" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Una vez seleccionado el número adecuado de componentes principales, es fundamental apoyarse en diversas visualizaciones para interpretar la estructura de los datos y la contribución de las variables. En PCA, los gráficos más comunes son:</p>
+<ul>
+<li><p>el score plot (individuos en el espacio de los componentes),</p></li>
+<li><p>el loading plot (contribución de variables),</p></li>
+<li><p>el biplot o bibiplot, que combina ambos.</p></li>
+</ul>
+<div id="score-plot-individuos-en-el-espacio-pca" class="section level3 hasAnchor" number="3.4.1">
+<h3><span class="header-section-number">3.4.1</span> Score plot: individuos en el espacio PCA<a href="análisis-de-componentes-principales.html#score-plot-individuos-en-el-espacio-pca" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El score plot muestra las observaciones proyectadas en los ejes principales (típicamente PC1 y PC2). Permite identificar:</p>
+<ul>
+<li><p>agrupamientos naturales,</p></li>
+<li><p>valores atípicos,</p></li>
+<li><p>diferencias entre grupos (si se colorean por una variable categórica).</p></li>
+</ul>
+<p>Veamos un ejemplo en <code>Factoextra</code></p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="análisis-de-componentes-principales.html#cb121-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb121-2"><a href="análisis-de-componentes-principales.html#cb121-2" tabindex="-1"></a></span>
+<span id="cb121-3"><a href="análisis-de-componentes-principales.html#cb121-3" tabindex="-1"></a><span class="co"># PCA</span></span>
+<span id="cb121-4"><a href="análisis-de-componentes-principales.html#cb121-4" tabindex="-1"></a>pca_obj <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(datos, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb121-5"><a href="análisis-de-componentes-principales.html#cb121-5" tabindex="-1"></a></span>
+<span id="cb121-6"><a href="análisis-de-componentes-principales.html#cb121-6" tabindex="-1"></a><span class="co"># Score plot PC1 vs PC2</span></span>
+<span id="cb121-7"><a href="análisis-de-componentes-principales.html#cb121-7" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(pca_obj,</span>
+<span id="cb121-8"><a href="análisis-de-componentes-principales.html#cb121-8" tabindex="-1"></a>             <span class="at">geom =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb121-9"><a href="análisis-de-componentes-principales.html#cb121-9" tabindex="-1"></a>             <span class="at">pointsize =</span> <span class="dv">2</span>,</span>
+<span id="cb121-10"><a href="análisis-de-componentes-principales.html#cb121-10" tabindex="-1"></a>             <span class="at">col.ind =</span> <span class="st">&quot;steelblue&quot;</span>,</span>
+<span id="cb121-11"><a href="análisis-de-componentes-principales.html#cb121-11" tabindex="-1"></a>             <span class="at">addEllipses =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb121-12"><a href="análisis-de-componentes-principales.html#cb121-12" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Score plot: individuos en el espacio PC1-PC2&quot;</span></span>
+<span id="cb121-13"><a href="análisis-de-componentes-principales.html#cb121-13" tabindex="-1"></a>             )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp70-1.png" width="672" /></p>
+</div>
+<div id="loading-plot-contribución-de-las-variables" class="section level3 hasAnchor" number="3.4.2">
+<h3><span class="header-section-number">3.4.2</span> Loading plot: contribución de las variables<a href="#loading-plot-contribuci%C3%B3n-de-las-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Los loadings representan cuánto contribuye cada variable a los componentes principales.</p>
+<p>Un loading alto (positivo o negativo) indica que la variable influye fuertemente en ese componente.</p>
+<p>Las variables agrupadas en el gráfico suelen estar correlacionadas.
+En el plano definido por los componentes principales, el ángulo entre dos vectores (flechas) refleja el signo y la fuerza de la correlación entre las variables:</p>
+<ul>
+<li><p>Ángulos menores a 90°: correlación positiva.</p></li>
+<li><p>Ángulo aproximadamente de 90°: variables prácticamente no correlacionadas en el plano PC1–PC2.</p></li>
+<li><p>Ángulos mayores a 90°: correlación negativa.</p></li>
+<li><p>Ángulo cercano a 180°: correlación negativa muy fuerte.</p></li>
+</ul>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="análisis-de-componentes-principales.html#cb122-1" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pca_obj,</span>
+<span id="cb122-2"><a href="análisis-de-componentes-principales.html#cb122-2" tabindex="-1"></a>             <span class="at">col.var =</span> <span class="st">&quot;contrib&quot;</span>,</span>
+<span id="cb122-3"><a href="análisis-de-componentes-principales.html#cb122-3" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>, <span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#FC4E07&quot;</span>),</span>
+<span id="cb122-4"><a href="análisis-de-componentes-principales.html#cb122-4" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="co"># evita que las etiquetas se traslapen</span></span>
+<span id="cb122-5"><a href="análisis-de-componentes-principales.html#cb122-5" tabindex="-1"></a>             <span class="at">title =</span> <span class="st">&quot;Loading plot: contribución de variables&quot;</span></span>
+<span id="cb122-6"><a href="análisis-de-componentes-principales.html#cb122-6" tabindex="-1"></a>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp71-1.png" width="672" /></p>
+</div>
+<div id="biplot-y-bibiplot" class="section level3 hasAnchor" number="3.4.3">
+<h3><span class="header-section-number">3.4.3</span> Biplot y Bibiplot<a href="análisis-de-componentes-principales.html#biplot-y-bibiplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El biplot es una visualización conjunta de:</p>
+<ul>
+<li><p>scores (puntos = observaciones)</p></li>
+<li><p>loadings (flechas = variables)</p></li>
+</ul>
+<p>Esto permite ver simultáneamente:</p>
+<ul>
+<li><p>cómo se distribuyen las observaciones en el espacio PCA,</p></li>
+<li><p>qué variables explican esa distribución.</p></li>
+</ul>
+<p><strong>Interpretación esencial del biplot</strong></p>
+<ul>
+<li><p>Flechas largas: variables con mayor contribución.</p></li>
+<li><p>Flechas cercanas: variables correlacionadas.</p></li>
+<li><p>Observaciones proyectadas en dirección de una flecha: altas en esa variable.</p></li>
+</ul>
+<p><strong>Ángulos entre flechas:</strong></p>
+<ul>
+<li><p><span class="math inline">\(&lt; 90\)</span>°: correlación positiva</p></li>
+<li><p><span class="math inline">\(\sim 90\)</span>°: independencia</p></li>
+<li><p><span class="math inline">\(&gt; 90\)</span>°: correlación negativa</p></li>
+</ul>
+<p>En R base se puede obtener de la siguiente forma:</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="análisis-de-componentes-principales.html#cb123-1" tabindex="-1"></a><span class="fu">biplot</span>(pca_obj, <span class="at">scale =</span> <span class="dv">0</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp72-1.png" width="672" />
+Sin embargo, el biplot base suele ser poco estético y difícil de interpretar cuando hay muchas variables.</p>
+<p>Con el paquete <code>factoextra</code> podemos personalizarlo un poco más.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="análisis-de-componentes-principales.html#cb124-1" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(pca_obj,</span>
+<span id="cb124-2"><a href="análisis-de-componentes-principales.html#cb124-2" tabindex="-1"></a>                <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb124-3"><a href="análisis-de-componentes-principales.html#cb124-3" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">&quot;gray30&quot;</span>,</span>
+<span id="cb124-4"><a href="análisis-de-componentes-principales.html#cb124-4" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">&quot;firebrick&quot;</span>,</span>
+<span id="cb124-5"><a href="análisis-de-componentes-principales.html#cb124-5" tabindex="-1"></a>                <span class="at">geom.ind =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb124-6"><a href="análisis-de-componentes-principales.html#cb124-6" tabindex="-1"></a>                <span class="at">label =</span> <span class="st">&quot;var&quot;</span>,</span>
+<span id="cb124-7"><a href="análisis-de-componentes-principales.html#cb124-7" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">&quot;Bibiplot de componentes principales&quot;</span></span>
+<span id="cb124-8"><a href="análisis-de-componentes-principales.html#cb124-8" tabindex="-1"></a>                )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp73-1.png" width="672" /></p>
+<p>Se puede colorear individuos según un grupo. Vamos a agregar una columna de las regiones.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="análisis-de-componentes-principales.html#cb125-1" tabindex="-1"></a><span class="co"># Crear variable de grupo por región</span></span>
+<span id="cb125-2"><a href="análisis-de-componentes-principales.html#cb125-2" tabindex="-1"></a>region <span class="ot">&lt;-</span> state.region   <span class="co"># vector ya incluido en R, en el mismo orden de estados</span></span>
+<span id="cb125-3"><a href="análisis-de-componentes-principales.html#cb125-3" tabindex="-1"></a></span>
+<span id="cb125-4"><a href="análisis-de-componentes-principales.html#cb125-4" tabindex="-1"></a><span class="co"># Hacemos de nuevo el PCA</span></span>
+<span id="cb125-5"><a href="análisis-de-componentes-principales.html#cb125-5" tabindex="-1"></a>pca_obj <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(USArrests, <span class="at">scale. =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb125-6"><a href="análisis-de-componentes-principales.html#cb125-6" tabindex="-1"></a></span>
+<span id="cb125-7"><a href="análisis-de-componentes-principales.html#cb125-7" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(pca_obj,</span>
+<span id="cb125-8"><a href="análisis-de-componentes-principales.html#cb125-8" tabindex="-1"></a>                <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb125-9"><a href="análisis-de-componentes-principales.html#cb125-9" tabindex="-1"></a>                <span class="at">col.ind =</span> region,      <span class="co"># vector con factor o variable categórica</span></span>
+<span id="cb125-10"><a href="análisis-de-componentes-principales.html#cb125-10" tabindex="-1"></a>                <span class="at">palette =</span> <span class="st">&quot;Dark2&quot;</span>,</span>
+<span id="cb125-11"><a href="análisis-de-componentes-principales.html#cb125-11" tabindex="-1"></a>                <span class="at">geom.ind =</span> <span class="st">&quot;point&quot;</span>,</span>
+<span id="cb125-12"><a href="análisis-de-componentes-principales.html#cb125-12" tabindex="-1"></a>                <span class="at">addEllipses =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb125-13"><a href="análisis-de-componentes-principales.html#cb125-13" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">&quot;Bibiplot coloreado por grupo&quot;</span></span>
+<span id="cb125-14"><a href="análisis-de-componentes-principales.html#cb125-14" tabindex="-1"></a>                )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp74-1.png" width="672" /></p>
+</div>
+<div id="gráficos-adicionales-útiles" class="section level3 hasAnchor" number="3.4.4">
+<h3><span class="header-section-number">3.4.4</span> Gráficos adicionales útiles<a href="#gr%C3%A1ficos-adicionales-%C3%BAtiles" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Además de los gráficos tradicionales del PCA (score plot, loading plot y biplot), existen otras visualizaciones que permiten comprender mejor la importancia y calidad de representación de cada variable en los componentes principales. A continuación se describen tres tipos de gráficos muy utilizados en análisis exploratorio: contribuciones, calidad de representación (<span class="math inline">\(\cos^2\)</span>) y visualización separada de individuos y variables.</p>
+<p><strong>a) Contribuciones por componente:</strong> Las contribuciones indican qué porcentaje del total de varianza explicada por un componente proviene de cada variable.
+Este gráfico permite identificar cuáles variables son las más influyentes en cada componente principal.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="análisis-de-componentes-principales.html#cb126-1" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pca_obj, <span class="at">choice =</span> <span class="st">&quot;var&quot;</span>, <span class="at">axes =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp75-1.png" width="672" /></p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="análisis-de-componentes-principales.html#cb127-1" tabindex="-1"></a><span class="fu">fviz_contrib</span>(pca_obj, <span class="at">choice =</span> <span class="st">&quot;var&quot;</span>, <span class="at">axes =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp75-2.png" width="672" /></p>
+<p>Cómo interpretarlo:</p>
+<ul>
+<li><p>Las barras más altas representan variables que explican mayor parte de la varianza del componente.</p></li>
+<li><p>Una variable con alta contribución en PC1 influye más en la dirección en que PC1 separa las observaciones.</p></li>
+<li><p>Si una variable contribuye poco a todos los componentes, tiene poca relevancia estructural para el PCA.</p></li>
+<li><p><code>Factoextra</code> suele marcar con una línea roja la “contribución esperada” si todas las variables aportaran por igual.</p>
+<ul>
+<li><p>Barras por arriba de esa línea: variables relevantes.</p></li>
+<li><p>Barras por abajo: variables menos informativas.</p></li>
+</ul></li>
+</ul>
+<p>Es un gráfico muy útil para responder preguntas como:</p>
+<p>“¿Qué variables están definiendo principalmente el primer componente?”</p>
+<p><strong>b) Mapa de calidad de representación (<span class="math inline">\(\cos^2\)</span>):</strong> El valor <span class="math inline">\(\cos^2\)</span> es la calidad de representación de una variable o individuo en el plano principal (usualmente PC1–PC2).
+Es decir, indica qué tan bien está proyectada la variable en ese plano.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="análisis-de-componentes-principales.html#cb128-1" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pca_obj,</span>
+<span id="cb128-2"><a href="análisis-de-componentes-principales.html#cb128-2" tabindex="-1"></a>             <span class="at">col.var =</span> <span class="st">&quot;cos2&quot;</span>,</span>
+<span id="cb128-3"><a href="análisis-de-componentes-principales.html#cb128-3" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;yellow&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb128-4"><a href="análisis-de-componentes-principales.html#cb128-4" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span></span>
+<span id="cb128-5"><a href="análisis-de-componentes-principales.html#cb128-5" tabindex="-1"></a>             )</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp76-1.png" width="672" /></p>
+<p>Cómo interpretarlo:</p>
+<ul>
+<li><p>Un valor alto de <span class="math inline">\(\cos^2\)</span> (cercano a 1) indica que la variable está bien representada en el plano PC1–PC2.</p></li>
+<li><p>Valores bajos (cercanos a 0) indican que la variable tiene componente importante en PC3, PC4, etc.</p></li>
+<li><p>El color indica la calidad de representación:</p>
+<ul>
+<li><p>Rojo: excelente representación (<span class="math inline">\(\cos^2\)</span> alto)</p></li>
+<li><p>Amarillo: intermedia</p></li>
+<li><p>Azul: pobre representación</p></li>
+</ul></li>
+</ul>
+<p>Regla práctica:</p>
+<ul>
+<li><p>Solo interpretar direcciones, ángulos y correlaciones para variables con <span class="math inline">\(\cos^2\)</span> alto.</p></li>
+<li><p>Variables con <span class="math inline">\(\cos^2\)</span> bajo pueden llevar a interpretaciones erróneas.</p></li>
+</ul>
+<p><strong>c) Variables y observaciones en paneles separados:</strong> Aunque el biplot combina individuos y variables en una sola figura, a veces es más claro analizarlos por separado:</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="análisis-de-componentes-principales.html#cb129-1" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(pca_obj)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp77-1.png" width="672" /></p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="análisis-de-componentes-principales.html#cb130-1" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(pca_obj)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp77-2.png" width="672" /></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="32%" />
+<col width="51%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Gráfico</th>
+<th>Es útil para…</th>
+<th>Interpretación clave</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Contribuciones</strong></td>
+<td>Ver qué variables definen los componentes</td>
+<td>Barras grandes = variables muy influyentes</td>
+</tr>
+<tr class="even">
+<td><strong><span class="math inline">\(\cos^2\)</span></strong></td>
+<td>Evaluar calidad de representación</td>
+<td>Colores cálidos = buena representación en PC1–PC2</td>
+</tr>
+<tr class="odd">
+<td><strong>Individuos</strong></td>
+<td>Ver similitudes entre observaciones</td>
+<td>Puntos cercanos = perfiles similares</td>
+</tr>
+<tr class="even">
+<td><strong>Variables</strong></td>
+<td>Analizar correlaciones y direcciones</td>
+<td>Ángulos &lt; 90° = correlación positiva; &gt; 90° = correlación negativa</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="recomendaciones-prácticas-de-interpretación" class="section level3 hasAnchor" number="3.4.5">
+<h3><span class="header-section-number">3.4.5</span> Recomendaciones prácticas de interpretación<a href="#recomendaciones-pr%C3%A1cticas-de-interpretaci%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Usar PC1 y PC2 como primera aproximación, pero revisar también PC3 si la varianza explicada no es alta. Interpretar siempre el biplot considerando:</p>
+<ul>
+<li><p>magnitud y dirección de las flechas,</p></li>
+<li><p>ángulos entre variables,</p></li>
+<li><p>ubicación de individuos respecto a las flechas.</p></li>
+</ul>
+<p>Evitar interpretaciones fuertes cuando las <span class="math inline">\(\cos^2\)</span> sean bajas (mala representación en el plano).</p>
+</div>
+</div>
+<div id="ejemplos-con-bases-de-datos" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Ejemplos con Bases de datos<a href="análisis-de-componentes-principales.html#ejemplos-con-bases-de-datos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>En R existen varios paquetes que nos permiten realizar análisis de componentes principales. Algunas de las funciones son <code>prcomp()</code>, <code>princomp()</code>, <code>PCA()</code>.</p>
 <p>Los argumentos de la función <code>prcomp()</code> son:</p>
 <ul>
@@ -550,14 +928,14 @@ conservar en lo posible su estructura, es decir la <strong>forma</strong> de la 
 <li><code>x</code>, <code>scores</code>: las coordenadas de las observaciones/individuos de las componentes principales.</li>
 </ul>
 <p>Vamos a usar el paquete <code>factoextra</code> para visualizar los resultados.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="análisis-de-componentes-principales.html#cb97-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="análisis-de-componentes-principales.html#cb131-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span></code></pre></div>
 <p><strong>Ejemplo 1:</strong> Vamos a cargar la base de datos siguiente:</p>
 <p><a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/blob/main/data/NationalTrackRecords2.xlsx">NationalTrackRecords</a></p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="análisis-de-componentes-principales.html#cb98-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb98-2"><a href="análisis-de-componentes-principales.html#cb98-2" tabindex="-1"></a>records <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/NationalTrackRecords2.xlsx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="análisis-de-componentes-principales.html#cb132-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb132-2"><a href="análisis-de-componentes-principales.html#cb132-2" tabindex="-1"></a>records <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/NationalTrackRecords2.xlsx&quot;</span>)</span></code></pre></div>
 <pre><code>## New names:
 ## • `` -&gt; `...1`</code></pre>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="análisis-de-componentes-principales.html#cb100-1" tabindex="-1"></a><span class="fu">head</span>(records)</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="análisis-de-componentes-principales.html#cb134-1" tabindex="-1"></a><span class="fu">head</span>(records)</span></code></pre></div>
 <pre><code>## # A tibble: 6 × 8
 ##   ...1     `100m` `200m` `400m` `800m` `1500m` `3000m` Marathon
 ##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
@@ -568,22 +946,22 @@ conservar en lo posible su estructura, es decir la <strong>forma</strong> de la 
 ## 5 bermuda    11.5   23.0   53.3   2.16    4.58    9.81     170.
 ## 6 brazil     11.3   23.2   52.8   2.1     4.49    9.77     169.</code></pre>
 <p>¿Necesitamos escalar los datos? ¿Cómo son las varianzas y covarianzas? ¿Es conveniente trabajar con la matriz de correlación en vez de con la de varianzas y covarianzas?</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="análisis-de-componentes-principales.html#cb102-1" tabindex="-1"></a>records2 <span class="ot">&lt;-</span> records[,<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>]</span>
-<span id="cb102-2"><a href="análisis-de-componentes-principales.html#cb102-2" tabindex="-1"></a><span class="fu">rownames</span>(records2) <span class="ot">&lt;-</span> records<span class="sc">$</span>...<span class="dv">1</span></span></code></pre></div>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="análisis-de-componentes-principales.html#cb103-1" tabindex="-1"></a><span class="fu">var</span>(records2)</span>
-<span id="cb103-2"><a href="análisis-de-componentes-principales.html#cb103-2" tabindex="-1"></a><span class="fu">cor</span>(records2)</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="análisis-de-componentes-principales.html#cb136-1" tabindex="-1"></a>records2 <span class="ot">&lt;-</span> records[,<span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb136-2"><a href="análisis-de-componentes-principales.html#cb136-2" tabindex="-1"></a><span class="fu">rownames</span>(records2) <span class="ot">&lt;-</span> records<span class="sc">$</span>...<span class="dv">1</span></span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="análisis-de-componentes-principales.html#cb137-1" tabindex="-1"></a><span class="fu">var</span>(records2)</span>
+<span id="cb137-2"><a href="análisis-de-componentes-principales.html#cb137-2" tabindex="-1"></a><span class="fu">cor</span>(records2)</span></code></pre></div>
 <p>¿Es apropiado hacer un análisis de componentes principales? ¿por qué? Si lo es, ya que hay muchas correlaciones altas, entonces se podría disminuir la dimensión.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="análisis-de-componentes-principales.html#cb104-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="análisis-de-componentes-principales.html#cb138-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code></pre></div>
 <pre><code>## corrplot 0.95 loaded</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="análisis-de-componentes-principales.html#cb106-1" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(records2, <span class="at">conf.level=</span> .<span class="dv">95</span>)</span>
-<span id="cb106-2"><a href="análisis-de-componentes-principales.html#cb106-2" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(records2, <span class="at">conf.level=</span> .<span class="dv">99</span>)</span>
-<span id="cb106-3"><a href="análisis-de-componentes-principales.html#cb106-3" tabindex="-1"></a>cor.mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(records2, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span>
-<span id="cb106-4"><a href="análisis-de-componentes-principales.html#cb106-4" tabindex="-1"></a></span>
-<span id="cb106-5"><a href="análisis-de-componentes-principales.html#cb106-5" tabindex="-1"></a><span class="fu">corrplot</span>(cor.mat)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="análisis-de-componentes-principales.html#cb140-1" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(records2, <span class="at">conf.level=</span> .<span class="dv">95</span>)</span>
+<span id="cb140-2"><a href="análisis-de-componentes-principales.html#cb140-2" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(records2, <span class="at">conf.level=</span> .<span class="dv">99</span>)</span>
+<span id="cb140-3"><a href="análisis-de-componentes-principales.html#cb140-3" tabindex="-1"></a>cor.mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(records2, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span>
+<span id="cb140-4"><a href="análisis-de-componentes-principales.html#cb140-4" tabindex="-1"></a></span>
+<span id="cb140-5"><a href="análisis-de-componentes-principales.html#cb140-5" tabindex="-1"></a><span class="fu">corrplot</span>(cor.mat)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp28-1.png" width="672" /></p>
 <p>Vamos a calcular los componentes principales primero con la función <code>princomp</code>.</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="análisis-de-componentes-principales.html#cb107-1" tabindex="-1"></a>cp1 <span class="ot">&lt;-</span> <span class="fu">princomp</span>(records2, <span class="at">cor =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb107-2"><a href="análisis-de-componentes-principales.html#cb107-2" tabindex="-1"></a><span class="fu">summary</span>(cp1)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="análisis-de-componentes-principales.html#cb141-1" tabindex="-1"></a>cp1 <span class="ot">&lt;-</span> <span class="fu">princomp</span>(records2, <span class="at">cor =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb141-2"><a href="análisis-de-componentes-principales.html#cb141-2" tabindex="-1"></a><span class="fu">summary</span>(cp1)</span></code></pre></div>
 <pre><code>## Importance of components:
 ##                           Comp.1     Comp.2     Comp.3     Comp.4      Comp.5
 ## Standard deviation     2.4094991 0.80848347 0.54761522 0.35422802 0.231984732
@@ -596,7 +974,7 @@ conservar en lo posible su estructura, es decir la <strong>forma</strong> de la 
 <p>Con la instrucción <code>loadings</code> lo que obtenemos son las cargas de los componentes principales. Es decir, lo que obtenemos son los coeficientes que se usarán en las combinaciones lineales para calcular cada componente principal. Por ejemplo, para un conjunto de datos <span class="math inline">\(X_1, X_2,..., X_p\)</span> la primera columna que está denotada por <code>Comp.1</code> tiene los coeficientes <span class="math inline">\(\phi_{11}, \phi_{21},... ,\phi_{p1}\)</span> de la combinación lineal con la que se obtiene la primera componente principal:</p>
 <p><span class="math display">\[Z_1=\phi_{11}X_1+\phi_{21}X_2+... +\phi_{p1}X_p\]</span></p>
 <p>Esta primera componente principal será la que refleje la mayor variabilidad de los datos. Las cargas son las entradas de cada eigenvector son las siguientes:</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="análisis-de-componentes-principales.html#cb109-1" tabindex="-1"></a>cp1<span class="sc">$</span>loadings</span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="análisis-de-componentes-principales.html#cb143-1" tabindex="-1"></a>cp1<span class="sc">$</span>loadings</span></code></pre></div>
 <pre><code>## 
 ## Loadings:
 ##          Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7
@@ -613,37 +991,37 @@ conservar en lo posible su estructura, es decir la <strong>forma</strong> de la 
 ## Proportion Var  0.143  0.143  0.143  0.143  0.143  0.143  0.143
 ## Cumulative Var  0.143  0.286  0.429  0.571  0.714  0.857  1.000</code></pre>
 <p>Usando estos valores, la fórmula de la primer componente principal se escribiría como:</p>
-<p><span class="math display">\[(0.368, 0.365, 0.382,0.385,0.389, 0.389.0.367)(100m-mean(100m), 200m-mean(200m),...,Marathon-mean(Marathon))\]</span></p>
+<p><span class="math display">\[(0.368, 0.365, 0.382,0.385,0.389, 0.389, 0.367)(100m-mean(100m), 200m-mean(200m),...,Marathon-mean(Marathon))\]</span></p>
 <p>Las desviaciones estándar son las raíces de las lambdas.</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="análisis-de-componentes-principales.html#cb111-1" tabindex="-1"></a>cp1<span class="sc">$</span>sdev</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="análisis-de-componentes-principales.html#cb145-1" tabindex="-1"></a>cp1<span class="sc">$</span>sdev</span></code></pre></div>
 <pre><code>##    Comp.1    Comp.2    Comp.3    Comp.4    Comp.5    Comp.6    Comp.7 
 ## 2.4094991 0.8084835 0.5476152 0.3542280 0.2319847 0.1976089 0.1498085</code></pre>
 <p>Para calcular la varianza debemos elevar al cuadrado cada una de las entradas.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="análisis-de-componentes-principales.html#cb113-1" tabindex="-1"></a>varianza.cp1 <span class="ot">&lt;-</span> (cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb113-2"><a href="análisis-de-componentes-principales.html#cb113-2" tabindex="-1"></a>varianza.cp1</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="análisis-de-componentes-principales.html#cb147-1" tabindex="-1"></a>varianza.cp1 <span class="ot">&lt;-</span> (cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb147-2"><a href="análisis-de-componentes-principales.html#cb147-2" tabindex="-1"></a>varianza.cp1</span></code></pre></div>
 <pre><code>##     Comp.1     Comp.2     Comp.3     Comp.4     Comp.5     Comp.6     Comp.7 
 ## 5.80568576 0.65364552 0.29988243 0.12547749 0.05381692 0.03904928 0.02244260</code></pre>
 <p>Para obtener la proporción de la varianza que explica cada componente lo que tenemos que hacer es dividir el valor de la varianza de la componente <span class="math inline">\(j\)</span> entre la suma de las varianzas de todas las componentes.
 El siguiente código muestra como realizarlo. Además, en la instrucción <code>summary</code> vemos que estos valores coinciden con los de la segunda fila.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="análisis-de-componentes-principales.html#cb115-1" tabindex="-1"></a>proporcion.varianza.cp1 <span class="ot">&lt;-</span> (cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>((cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb115-2"><a href="análisis-de-componentes-principales.html#cb115-2" tabindex="-1"></a>proporcion.varianza.cp1</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="análisis-de-componentes-principales.html#cb149-1" tabindex="-1"></a>proporcion.varianza.cp1 <span class="ot">&lt;-</span> (cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>((cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb149-2"><a href="análisis-de-componentes-principales.html#cb149-2" tabindex="-1"></a>proporcion.varianza.cp1</span></code></pre></div>
 <pre><code>##      Comp.1      Comp.2      Comp.3      Comp.4      Comp.5      Comp.6 
 ## 0.829383680 0.093377931 0.042840347 0.017925356 0.007688131 0.005578469 
 ##      Comp.7 
 ## 0.003206086</code></pre>
 <p>Si lo que queremos es el porcentaje, entonces solo hay que multiplicar por 100</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="análisis-de-componentes-principales.html#cb117-1" tabindex="-1"></a>porcentaje_varianza <span class="ot">&lt;-</span> (cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fu">sum</span>((cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb117-2"><a href="análisis-de-componentes-principales.html#cb117-2" tabindex="-1"></a>porcentaje_varianza</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="análisis-de-componentes-principales.html#cb151-1" tabindex="-1"></a>porcentaje_varianza <span class="ot">&lt;-</span> (cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span><span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fu">sum</span>((cp1<span class="sc">$</span>sdev)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb151-2"><a href="análisis-de-componentes-principales.html#cb151-2" tabindex="-1"></a>porcentaje_varianza</span></code></pre></div>
 <pre><code>##     Comp.1     Comp.2     Comp.3     Comp.4     Comp.5     Comp.6     Comp.7 
 ## 82.9383680  9.3377931  4.2840347  1.7925356  0.7688131  0.5578469  0.3206086</code></pre>
 <p>Para encontrar la proporción de varianza acumulada, lo que tenemos que hacer es dividir la suma de los primeros <span class="math inline">\(j-\)</span>ésimos eigenvalores entre entre la suma de todos los eigenvalores.</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="análisis-de-componentes-principales.html#cb119-1" tabindex="-1"></a>proporcion_acumulada_varianza <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(proporcion.varianza.cp1)</span>
-<span id="cb119-2"><a href="análisis-de-componentes-principales.html#cb119-2" tabindex="-1"></a>proporcion_acumulada_varianza</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="análisis-de-componentes-principales.html#cb153-1" tabindex="-1"></a>proporcion_acumulada_varianza <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(proporcion.varianza.cp1)</span>
+<span id="cb153-2"><a href="análisis-de-componentes-principales.html#cb153-2" tabindex="-1"></a>proporcion_acumulada_varianza</span></code></pre></div>
 <pre><code>##    Comp.1    Comp.2    Comp.3    Comp.4    Comp.5    Comp.6    Comp.7 
 ## 0.8293837 0.9227616 0.9656020 0.9835273 0.9912154 0.9967939 1.0000000</code></pre>
 <p>Cálculamos los eigenvalores de la matriz cuadrada de correlación.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="análisis-de-componentes-principales.html#cb121-1" tabindex="-1"></a>eigen_base <span class="ot">&lt;-</span> (<span class="fu">eigen</span>(cor.mat))</span>
-<span id="cb121-2"><a href="análisis-de-componentes-principales.html#cb121-2" tabindex="-1"></a>eigen_base</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="análisis-de-componentes-principales.html#cb155-1" tabindex="-1"></a>eigen_base <span class="ot">&lt;-</span> (<span class="fu">eigen</span>(cor.mat))</span>
+<span id="cb155-2"><a href="análisis-de-componentes-principales.html#cb155-2" tabindex="-1"></a>eigen_base</span></code></pre></div>
 <pre><code>## eigen() decomposition
 ## $values
 ## [1] 5.80568576 0.65364552 0.29988243 0.12547749 0.05381692 0.03904928 0.02244260
@@ -666,20 +1044,20 @@ El siguiente código muestra como realizarlo. Además, en la instrucción <code>
 ## [6,] -0.59835943
 ## [7,]  0.06959828</code></pre>
 <p>La varianza de las Componentes Principales, es igual a los eigenvalores. Es decir, la desviación estándar de las componentes, es igual a la raíz de los valores propios.</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="análisis-de-componentes-principales.html#cb123-1" tabindex="-1"></a>desv_base <span class="ot">&lt;-</span> cp1<span class="sc">$</span>sdev</span>
-<span id="cb123-2"><a href="análisis-de-componentes-principales.html#cb123-2" tabindex="-1"></a>desv_base</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="análisis-de-componentes-principales.html#cb157-1" tabindex="-1"></a>desv_base <span class="ot">&lt;-</span> cp1<span class="sc">$</span>sdev</span>
+<span id="cb157-2"><a href="análisis-de-componentes-principales.html#cb157-2" tabindex="-1"></a>desv_base</span></code></pre></div>
 <pre><code>##    Comp.1    Comp.2    Comp.3    Comp.4    Comp.5    Comp.6    Comp.7 
 ## 2.4094991 0.8084835 0.5476152 0.3542280 0.2319847 0.1976089 0.1498085</code></pre>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="análisis-de-componentes-principales.html#cb125-1" tabindex="-1"></a>desv_rounded_base <span class="ot">&lt;-</span> <span class="fu">round</span>(cp1<span class="sc">$</span>sdev, <span class="dv">1</span>)</span>
-<span id="cb125-2"><a href="análisis-de-componentes-principales.html#cb125-2" tabindex="-1"></a>desv_rounded_base</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="análisis-de-componentes-principales.html#cb159-1" tabindex="-1"></a>desv_rounded_base <span class="ot">&lt;-</span> <span class="fu">round</span>(cp1<span class="sc">$</span>sdev, <span class="dv">1</span>)</span>
+<span id="cb159-2"><a href="análisis-de-componentes-principales.html#cb159-2" tabindex="-1"></a>desv_rounded_base</span></code></pre></div>
 <pre><code>## Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 
 ##    2.4    0.8    0.5    0.4    0.2    0.2    0.1</code></pre>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="análisis-de-componentes-principales.html#cb127-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(eigen_base<span class="sc">$</span>values),<span class="dv">1</span>) <span class="sc">==</span> desv_rounded_base</span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="análisis-de-componentes-principales.html#cb161-1" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sqrt</span>(eigen_base<span class="sc">$</span>values),<span class="dv">1</span>) <span class="sc">==</span> desv_rounded_base</span></code></pre></div>
 <pre><code>## Comp.1 Comp.2 Comp.3 Comp.4 Comp.5 Comp.6 Comp.7 
 ##   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE   TRUE</code></pre>
 <p>Por otra parte, se puede afirmar que la traza de la matriz lambda es igual a la suma de la varianza de cada valor observado.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="análisis-de-componentes-principales.html#cb129-1" tabindex="-1"></a>lambda_matriz <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">diag</span>(eigen_base<span class="sc">$</span>values), <span class="dv">2</span>)</span>
-<span id="cb129-2"><a href="análisis-de-componentes-principales.html#cb129-2" tabindex="-1"></a>lambda_matriz</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="análisis-de-componentes-principales.html#cb163-1" tabindex="-1"></a>lambda_matriz <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">diag</span>(eigen_base<span class="sc">$</span>values), <span class="dv">2</span>)</span>
+<span id="cb163-2"><a href="análisis-de-componentes-principales.html#cb163-2" tabindex="-1"></a>lambda_matriz</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
 ## [1,] 5.81 0.00  0.0 0.00 0.00 0.00 0.00
 ## [2,] 0.00 0.65  0.0 0.00 0.00 0.00 0.00
@@ -688,15 +1066,15 @@ El siguiente código muestra como realizarlo. Además, en la instrucción <code>
 ## [5,] 0.00 0.00  0.0 0.00 0.05 0.00 0.00
 ## [6,] 0.00 0.00  0.0 0.00 0.00 0.04 0.00
 ## [7,] 0.00 0.00  0.0 0.00 0.00 0.00 0.02</code></pre>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="análisis-de-componentes-principales.html#cb131-1" tabindex="-1"></a>traza_lambda <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(lambda_matriz))</span>
-<span id="cb131-2"><a href="análisis-de-componentes-principales.html#cb131-2" tabindex="-1"></a>traza_lambda</span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="análisis-de-componentes-principales.html#cb165-1" tabindex="-1"></a>traza_lambda <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(lambda_matriz))</span>
+<span id="cb165-2"><a href="análisis-de-componentes-principales.html#cb165-2" tabindex="-1"></a>traza_lambda</span></code></pre></div>
 <pre><code>## [1] 7</code></pre>
 <p>Además, el porcentaje de la varianza generalizada que es explicado por la componente <span class="math inline">\(j\)</span>-ésima es igual a la relación que hay entre los eigenvalores divididos por la suma de la diagonal de eigenvalores. Es decir, esto es igual al porcentaje de varianza acumulada por la función <code>summary</code>, y hecho a mano con la suma acumulada de los valores propios.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="análisis-de-componentes-principales.html#cb133-1" tabindex="-1"></a><span class="fu">cumsum</span>(eigen_base<span class="sc">$</span>values<span class="sc">/</span>traza_lambda) </span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="análisis-de-componentes-principales.html#cb167-1" tabindex="-1"></a><span class="fu">cumsum</span>(eigen_base<span class="sc">$</span>values<span class="sc">/</span>traza_lambda) </span></code></pre></div>
 <pre><code>## [1] 0.8293837 0.9227616 0.9656020 0.9835273 0.9912154 0.9967939 1.0000000</code></pre>
 <p>Esta matriz es la diagonal con los eigenvalores.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="análisis-de-componentes-principales.html#cb135-1" tabindex="-1"></a>lambda_matriz <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">diag</span>(eigen_base<span class="sc">$</span>values), <span class="dv">2</span>)</span>
-<span id="cb135-2"><a href="análisis-de-componentes-principales.html#cb135-2" tabindex="-1"></a>lambda_matriz</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="análisis-de-componentes-principales.html#cb169-1" tabindex="-1"></a>lambda_matriz <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">diag</span>(eigen_base<span class="sc">$</span>values), <span class="dv">2</span>)</span>
+<span id="cb169-2"><a href="análisis-de-componentes-principales.html#cb169-2" tabindex="-1"></a>lambda_matriz</span></code></pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7]
 ## [1,] 5.81 0.00  0.0 0.00 0.00 0.00 0.00
 ## [2,] 0.00 0.65  0.0 0.00 0.00 0.00 0.00
@@ -706,15 +1084,15 @@ El siguiente código muestra como realizarlo. Además, en la instrucción <code>
 ## [6,] 0.00 0.00  0.0 0.00 0.00 0.04 0.00
 ## [7,] 0.00 0.00  0.0 0.00 0.00 0.00 0.02</code></pre>
 <p>La traza de la matriz <span class="math inline">\(\Lambda\)</span> es igual a la suma de las varianzas acumuladas por los Componentes.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="análisis-de-componentes-principales.html#cb137-1" tabindex="-1"></a>traza_lambda <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(lambda_matriz))</span>
-<span id="cb137-2"><a href="análisis-de-componentes-principales.html#cb137-2" tabindex="-1"></a>traza_lambda</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="análisis-de-componentes-principales.html#cb171-1" tabindex="-1"></a>traza_lambda <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(lambda_matriz))</span>
+<span id="cb171-2"><a href="análisis-de-componentes-principales.html#cb171-2" tabindex="-1"></a>traza_lambda</span></code></pre></div>
 <pre><code>## [1] 7</code></pre>
 <p>Una forma de ver con cuantos componentes nos conviene trabajar es con el gráfico de codo.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="análisis-de-componentes-principales.html#cb139-1" tabindex="-1"></a><span class="fu">screeplot</span>(cp1, <span class="at">type=</span><span class="st">&quot;lines&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="análisis-de-componentes-principales.html#cb173-1" tabindex="-1"></a><span class="fu">screeplot</span>(cp1, <span class="at">type=</span><span class="st">&quot;lines&quot;</span>)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp42-1.png" width="672" /></p>
 <p>¿Con cuántas componentes nos conviene quedarnos?</p>
 <p>El biplot es una forma de representar los resultados de PCA.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="análisis-de-componentes-principales.html#cb140-1" tabindex="-1"></a><span class="fu">biplot</span>(cp1)</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="análisis-de-componentes-principales.html#cb174-1" tabindex="-1"></a><span class="fu">biplot</span>(cp1)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp43-1.png" width="672" /></p>
 <p>Vamos a analizar el biplot a detalle.</p>
 <p>¿Qué mide la primera componente? o ¿Cómo la interpretas?</p>
@@ -735,9 +1113,9 @@ resulta muy positiva.</p>
 <p>Sí observas el biplot CP1 vs CP2, wsamoa está hacia donde están apuntando los vectores
 de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese país tiene tiempos largos en esas carreras de fondo y en consecuencia, su score en componente 2 resulta muy negativa.</p>
 <p><strong>Ejemplo 2:</strong> Vamos a cargar la base de datos <code>decathlon2</code> del paquete <code>factoextra</code> y vamos a extraer los individuos del <code>1:23</code> y las variables <code>1:10</code>.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="análisis-de-componentes-principales.html#cb141-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;decathlon2&quot;</span>)</span>
-<span id="cb141-2"><a href="análisis-de-componentes-principales.html#cb141-2" tabindex="-1"></a>decathlon2_activos <span class="ot">&lt;-</span> decathlon2[<span class="dv">1</span><span class="sc">:</span><span class="dv">23</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb141-3"><a href="análisis-de-componentes-principales.html#cb141-3" tabindex="-1"></a><span class="fu">head</span>(decathlon2_activos[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="análisis-de-componentes-principales.html#cb175-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;decathlon2&quot;</span>)</span>
+<span id="cb175-2"><a href="análisis-de-componentes-principales.html#cb175-2" tabindex="-1"></a>decathlon2_activos <span class="ot">&lt;-</span> decathlon2[<span class="dv">1</span><span class="sc">:</span><span class="dv">23</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb175-3"><a href="análisis-de-componentes-principales.html#cb175-3" tabindex="-1"></a><span class="fu">head</span>(decathlon2_activos[,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div>
 <pre><code>##           X100m Long.jump Shot.put High.jump X400m X110m.hurdle
 ## SEBRLE    11.04      7.58    14.83      2.07 49.81        14.69
 ## CLAY      10.76      7.40    14.26      1.86 49.37        14.05
@@ -746,39 +1124,41 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 ## ZSIVOCZKY 11.13      7.30    13.48      2.01 48.62        14.17
 ## McMULLEN  10.83      7.31    13.76      2.13 49.91        14.38</code></pre>
 <p>¿Necesitamos escalar los datos? ¿Cómo son las varianzas y covarianzas?</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="análisis-de-componentes-principales.html#cb143-1" tabindex="-1"></a><span class="fu">var</span>(decathlon2_activos)</span>
-<span id="cb143-2"><a href="análisis-de-componentes-principales.html#cb143-2" tabindex="-1"></a><span class="fu">cor</span>(decathlon2_activos)</span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="análisis-de-componentes-principales.html#cb177-1" tabindex="-1"></a><span class="fu">var</span>(decathlon2_activos)</span>
+<span id="cb177-2"><a href="análisis-de-componentes-principales.html#cb177-2" tabindex="-1"></a><span class="fu">cor</span>(decathlon2_activos)</span></code></pre></div>
 <p>Vamos a calcular la matriz de correlaciones.</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="análisis-de-componentes-principales.html#cb144-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb144-2"><a href="análisis-de-componentes-principales.html#cb144-2" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(decathlon2_activos, <span class="at">conf.level=</span> .<span class="dv">95</span>)</span>
-<span id="cb144-3"><a href="análisis-de-componentes-principales.html#cb144-3" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(decathlon2_activos, <span class="at">conf.level=</span> .<span class="dv">99</span>)</span>
-<span id="cb144-4"><a href="análisis-de-componentes-principales.html#cb144-4" tabindex="-1"></a>cor.mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(decathlon2_activos, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span>
-<span id="cb144-5"><a href="análisis-de-componentes-principales.html#cb144-5" tabindex="-1"></a></span>
-<span id="cb144-6"><a href="análisis-de-componentes-principales.html#cb144-6" tabindex="-1"></a><span class="fu">corrplot</span>(cor.mat)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="análisis-de-componentes-principales.html#cb178-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb178-2"><a href="análisis-de-componentes-principales.html#cb178-2" tabindex="-1"></a>res1 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(decathlon2_activos, <span class="at">conf.level=</span> .<span class="dv">95</span>)</span>
+<span id="cb178-3"><a href="análisis-de-componentes-principales.html#cb178-3" tabindex="-1"></a>res2 <span class="ot">&lt;-</span> <span class="fu">cor.mtest</span>(decathlon2_activos, <span class="at">conf.level=</span> .<span class="dv">99</span>)</span>
+<span id="cb178-4"><a href="análisis-de-componentes-principales.html#cb178-4" tabindex="-1"></a>cor.mat <span class="ot">&lt;-</span> <span class="fu">cor</span>(decathlon2_activos, <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span>
+<span id="cb178-5"><a href="análisis-de-componentes-principales.html#cb178-5" tabindex="-1"></a></span>
+<span id="cb178-6"><a href="análisis-de-componentes-principales.html#cb178-6" tabindex="-1"></a><span class="fu">corrplot</span>(cor.mat)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp46-1.png" width="672" /></p>
 <p>Removemos algunas de las variables correlacionadas.</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="análisis-de-componentes-principales.html#cb145-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="análisis-de-componentes-principales.html#cb179-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ## ✔ lubridate 1.9.4     ✔ tibble    3.3.0
 ## ✔ purrr     1.1.0     ✔ tidyr     1.3.1
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ psych::%+%()    masks ggplot2::%+%()
+## ✖ psych::alpha()  masks ggplot2::alpha()
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="análisis-de-componentes-principales.html#cb147-1" tabindex="-1"></a>base.cp1 <span class="ot">&lt;-</span> decathlon2_activos</span>
-<span id="cb147-2"><a href="análisis-de-componentes-principales.html#cb147-2" tabindex="-1"></a>base.cp1 <span class="ot">&lt;-</span> base.cp1 <span class="sc">%&gt;%</span></span>
-<span id="cb147-3"><a href="análisis-de-componentes-principales.html#cb147-3" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Pole.vault)</span></code></pre></div>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="análisis-de-componentes-principales.html#cb148-1" tabindex="-1"></a>cor.mat.aj <span class="ot">&lt;-</span> <span class="fu">cor</span>(base.cp1, <span class="at">use =</span> <span class="st">&quot;complete.obs&quot;</span>)</span>
-<span id="cb148-2"><a href="análisis-de-componentes-principales.html#cb148-2" tabindex="-1"></a><span class="fu">corrplot</span>(cor.mat.aj)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="análisis-de-componentes-principales.html#cb181-1" tabindex="-1"></a>base.cp1 <span class="ot">&lt;-</span> decathlon2_activos</span>
+<span id="cb181-2"><a href="análisis-de-componentes-principales.html#cb181-2" tabindex="-1"></a>base.cp1 <span class="ot">&lt;-</span> base.cp1 <span class="sc">%&gt;%</span></span>
+<span id="cb181-3"><a href="análisis-de-componentes-principales.html#cb181-3" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Pole.vault)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="análisis-de-componentes-principales.html#cb182-1" tabindex="-1"></a>cor.mat.aj <span class="ot">&lt;-</span> <span class="fu">cor</span>(base.cp1, <span class="at">use =</span> <span class="st">&quot;complete.obs&quot;</span>)</span>
+<span id="cb182-2"><a href="análisis-de-componentes-principales.html#cb182-2" tabindex="-1"></a><span class="fu">corrplot</span>(cor.mat.aj)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp48-1.png" width="672" /></p>
 <p>Usaremos la función <code>prcomp()</code> y primero realizaremos el análisis sin quitar la variable anterior.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="análisis-de-componentes-principales.html#cb149-1" tabindex="-1"></a>res.pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(decathlon2_activos, <span class="at">scale =</span> <span class="cn">TRUE</span> )</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="análisis-de-componentes-principales.html#cb183-1" tabindex="-1"></a>res.pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(decathlon2_activos, <span class="at">scale =</span> <span class="cn">TRUE</span> )</span></code></pre></div>
 <p>Visualizamos lo eigenvalores.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="análisis-de-componentes-principales.html#cb150-1" tabindex="-1"></a><span class="fu">fviz_eig</span>(res.pca)</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="análisis-de-componentes-principales.html#cb184-1" tabindex="-1"></a><span class="fu">fviz_eig</span>(res.pca)</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp50-1.png" width="672" /></p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="análisis-de-componentes-principales.html#cb151-1" tabindex="-1"></a><span class="fu">summary</span>(res.pca)</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="análisis-de-componentes-principales.html#cb185-1" tabindex="-1"></a><span class="fu">summary</span>(res.pca)</span></code></pre></div>
 <pre><code>## Importance of components:
 ##                           PC1    PC2    PC3     PC4     PC5     PC6     PC7
 ## Standard deviation     2.0308 1.3559 1.1132 0.90523 0.83759 0.65029 0.55007
@@ -791,34 +1171,34 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 <p>¿Cuál es la proporción de la varianza explicada de las componentes?</p>
 <p>¿Con cuántas componentes nos conviene quedarnos? ¿Porqué?</p>
 <p>Vamos a graficar a los individuos y corolearlos por perfiles similares.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="análisis-de-componentes-principales.html#cb153-1" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(res.pca,</span>
-<span id="cb153-2"><a href="análisis-de-componentes-principales.html#cb153-2" tabindex="-1"></a>             <span class="at">col.ind =</span> <span class="st">&quot;cos2&quot;</span>, <span class="co"># color por la calidad de representación</span></span>
-<span id="cb153-3"><a href="análisis-de-componentes-principales.html#cb153-3" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>, <span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#FC4E07&quot;</span>),</span>
-<span id="cb153-4"><a href="análisis-de-componentes-principales.html#cb153-4" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>     <span class="co"># evitar que se sobrelape el texto</span></span>
-<span id="cb153-5"><a href="análisis-de-componentes-principales.html#cb153-5" tabindex="-1"></a>             )</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="análisis-de-componentes-principales.html#cb187-1" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(res.pca,</span>
+<span id="cb187-2"><a href="análisis-de-componentes-principales.html#cb187-2" tabindex="-1"></a>             <span class="at">col.ind =</span> <span class="st">&quot;cos2&quot;</span>, <span class="co"># color por la calidad de representación</span></span>
+<span id="cb187-3"><a href="análisis-de-componentes-principales.html#cb187-3" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>, <span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#FC4E07&quot;</span>),</span>
+<span id="cb187-4"><a href="análisis-de-componentes-principales.html#cb187-4" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>     <span class="co"># evitar que se sobrelape el texto</span></span>
+<span id="cb187-5"><a href="análisis-de-componentes-principales.html#cb187-5" tabindex="-1"></a>             )</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp52-1.png" width="672" /></p>
 <p>Para graficar las variables y ver sus correlaciones realizamos lo siguiente. Variables correlacionadas negativamente apuntan a lados opuestos.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="análisis-de-componentes-principales.html#cb154-1" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(res.pca,</span>
-<span id="cb154-2"><a href="análisis-de-componentes-principales.html#cb154-2" tabindex="-1"></a>             <span class="at">col.var =</span> <span class="st">&quot;contrib&quot;</span>, <span class="co"># Color por contribución al PCA</span></span>
-<span id="cb154-3"><a href="análisis-de-componentes-principales.html#cb154-3" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>, <span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#FC4E07&quot;</span>),</span>
-<span id="cb154-4"><a href="análisis-de-componentes-principales.html#cb154-4" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>    </span>
-<span id="cb154-5"><a href="análisis-de-componentes-principales.html#cb154-5" tabindex="-1"></a>             )</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="análisis-de-componentes-principales.html#cb188-1" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(res.pca,</span>
+<span id="cb188-2"><a href="análisis-de-componentes-principales.html#cb188-2" tabindex="-1"></a>             <span class="at">col.var =</span> <span class="st">&quot;contrib&quot;</span>, <span class="co"># Color por contribución al PCA</span></span>
+<span id="cb188-3"><a href="análisis-de-componentes-principales.html#cb188-3" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>, <span class="st">&quot;#E7B800&quot;</span>, <span class="st">&quot;#FC4E07&quot;</span>),</span>
+<span id="cb188-4"><a href="análisis-de-componentes-principales.html#cb188-4" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>    </span>
+<span id="cb188-5"><a href="análisis-de-componentes-principales.html#cb188-5" tabindex="-1"></a>             )</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp53-1.png" width="672" /></p>
 <p>Un objeto importante en estos análisis de PCA son los biplots.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="análisis-de-componentes-principales.html#cb155-1" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(res.pca, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb155-2"><a href="análisis-de-componentes-principales.html#cb155-2" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">&quot;#2E9FDF&quot;</span>, <span class="co"># Variables </span></span>
-<span id="cb155-3"><a href="análisis-de-componentes-principales.html#cb155-3" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">&quot;#696969&quot;</span>  <span class="co"># Individuos</span></span>
-<span id="cb155-4"><a href="análisis-de-componentes-principales.html#cb155-4" tabindex="-1"></a>                )</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="análisis-de-componentes-principales.html#cb189-1" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(res.pca, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb189-2"><a href="análisis-de-componentes-principales.html#cb189-2" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">&quot;#2E9FDF&quot;</span>, <span class="co"># Variables </span></span>
+<span id="cb189-3"><a href="análisis-de-componentes-principales.html#cb189-3" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">&quot;#696969&quot;</span>  <span class="co"># Individuos</span></span>
+<span id="cb189-4"><a href="análisis-de-componentes-principales.html#cb189-4" tabindex="-1"></a>                )</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp54-1.png" width="672" /></p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="análisis-de-componentes-principales.html#cb156-1" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(res.pca, <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">axes =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),</span>
-<span id="cb156-2"><a href="análisis-de-componentes-principales.html#cb156-2" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">&quot;#2E9FDF&quot;</span>, <span class="co"># Variables </span></span>
-<span id="cb156-3"><a href="análisis-de-componentes-principales.html#cb156-3" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">&quot;#696969&quot;</span>  <span class="co"># Individuos</span></span>
-<span id="cb156-4"><a href="análisis-de-componentes-principales.html#cb156-4" tabindex="-1"></a>                )</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="análisis-de-componentes-principales.html#cb190-1" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(res.pca, <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="at">axes =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>),</span>
+<span id="cb190-2"><a href="análisis-de-componentes-principales.html#cb190-2" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">&quot;#2E9FDF&quot;</span>, <span class="co"># Variables </span></span>
+<span id="cb190-3"><a href="análisis-de-componentes-principales.html#cb190-3" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">&quot;#696969&quot;</span>  <span class="co"># Individuos</span></span>
+<span id="cb190-4"><a href="análisis-de-componentes-principales.html#cb190-4" tabindex="-1"></a>                )</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp55-1.png" width="672" /></p>
 <p>Vamos a acceder a los resultados del PCA.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="análisis-de-componentes-principales.html#cb157-1" tabindex="-1"></a><span class="co"># Eigenvalores</span></span>
-<span id="cb157-2"><a href="análisis-de-componentes-principales.html#cb157-2" tabindex="-1"></a>eig.val <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(res.pca)</span>
-<span id="cb157-3"><a href="análisis-de-componentes-principales.html#cb157-3" tabindex="-1"></a>eig.val</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="análisis-de-componentes-principales.html#cb191-1" tabindex="-1"></a><span class="co"># Eigenvalores</span></span>
+<span id="cb191-2"><a href="análisis-de-componentes-principales.html#cb191-2" tabindex="-1"></a>eig.val <span class="ot">&lt;-</span> <span class="fu">get_eigenvalue</span>(res.pca)</span>
+<span id="cb191-3"><a href="análisis-de-componentes-principales.html#cb191-3" tabindex="-1"></a>eig.val</span></code></pre></div>
 <pre><code>##        eigenvalue variance.percent cumulative.variance.percent
 ## Dim.1   4.1242133        41.242133                    41.24213
 ## Dim.2   1.8385309        18.385309                    59.62744
@@ -830,9 +1210,9 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 ## Dim.8   0.2744700         2.744700                    97.22812
 ## Dim.9   0.1552169         1.552169                    98.78029
 ## Dim.10  0.1219710         1.219710                   100.00000</code></pre>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="análisis-de-componentes-principales.html#cb159-1" tabindex="-1"></a><span class="co"># Resulados para las variables</span></span>
-<span id="cb159-2"><a href="análisis-de-componentes-principales.html#cb159-2" tabindex="-1"></a>res.var <span class="ot">&lt;-</span> <span class="fu">get_pca_var</span>(res.pca)</span>
-<span id="cb159-3"><a href="análisis-de-componentes-principales.html#cb159-3" tabindex="-1"></a>res.var<span class="sc">$</span>coord          <span class="co"># Coordenadas</span></span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="análisis-de-componentes-principales.html#cb193-1" tabindex="-1"></a><span class="co"># Resulados para las variables</span></span>
+<span id="cb193-2"><a href="análisis-de-componentes-principales.html#cb193-2" tabindex="-1"></a>res.var <span class="ot">&lt;-</span> <span class="fu">get_pca_var</span>(res.pca)</span>
+<span id="cb193-3"><a href="análisis-de-componentes-principales.html#cb193-3" tabindex="-1"></a>res.var<span class="sc">$</span>coord          <span class="co"># Coordenadas</span></span></code></pre></div>
 <pre><code>##                     Dim.1       Dim.2       Dim.3       Dim.4      Dim.5
 ## X100m        -0.850625692 -0.17939806 -0.30155643  0.03357320 -0.1944440
 ## Long.jump     0.794180641  0.28085695  0.19054653 -0.11538956  0.2331567
@@ -855,7 +1235,7 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 ## Pole.vault    0.327464549 -0.010393176  0.032914942 -0.02576874 -0.137211339
 ## Javeline     -0.362097598  0.133564318  0.052841099 -0.04045397 -0.003854347
 ## X1500m       -0.042050151 -0.111367083  0.194469730 -0.10224014  0.062834809</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="análisis-de-componentes-principales.html#cb161-1" tabindex="-1"></a>res.var<span class="sc">$</span>contrib        <span class="co"># Contribuciones a las componentes</span></span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="análisis-de-componentes-principales.html#cb195-1" tabindex="-1"></a>res.var<span class="sc">$</span>contrib        <span class="co"># Contribuciones a las componentes</span></span></code></pre></div>
 <pre><code>##                     Dim.1      Dim.2      Dim.3       Dim.4     Dim.5
 ## X100m        1.754429e+01  1.7505098  7.3386590  0.13755240  5.389252
 ## Long.jump    1.529317e+01  4.2904162  2.9300944  1.62485936  7.748815
@@ -878,7 +1258,7 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 ## Pole.vault   25.357622290  0.03569883  0.39472201  0.4278065 15.43559151
 ## Javeline     31.004964393  5.89573984  1.01729950  1.0543458  0.01217993
 ## X1500m        0.418133591  4.09893563 13.77872941  6.7344755  3.23700871</code></pre>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="análisis-de-componentes-principales.html#cb163-1" tabindex="-1"></a>res.var<span class="sc">$</span>cos2           <span class="co"># Calidad de la representación</span></span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="análisis-de-componentes-principales.html#cb197-1" tabindex="-1"></a>res.var<span class="sc">$</span>cos2           <span class="co"># Calidad de la representación</span></span></code></pre></div>
 <pre><code>##                     Dim.1        Dim.2       Dim.3        Dim.4      Dim.5
 ## X100m        7.235641e-01 0.0321836641 0.090936280 0.0011271597 0.03780845
 ## Long.jump    6.307229e-01 0.0788806285 0.036307981 0.0133147506 0.05436203
@@ -901,9 +1281,9 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 ## Pole.vault   1.072330e-01 0.0001080181 1.083393e-03 0.0006640282 1.882695e-02
 ## Javeline     1.311147e-01 0.0178394271 2.792182e-03 0.0016365234 1.485599e-05
 ## X1500m       1.768215e-03 0.0124026272 3.781848e-02 0.0104530472 3.948213e-03</code></pre>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="análisis-de-componentes-principales.html#cb165-1" tabindex="-1"></a><span class="co"># Resultados para individuos</span></span>
-<span id="cb165-2"><a href="análisis-de-componentes-principales.html#cb165-2" tabindex="-1"></a>res.ind <span class="ot">&lt;-</span> <span class="fu">get_pca_ind</span>(res.pca)</span>
-<span id="cb165-3"><a href="análisis-de-componentes-principales.html#cb165-3" tabindex="-1"></a>res.ind<span class="sc">$</span>coord          </span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="análisis-de-componentes-principales.html#cb199-1" tabindex="-1"></a><span class="co"># Resultados para individuos</span></span>
+<span id="cb199-2"><a href="análisis-de-componentes-principales.html#cb199-2" tabindex="-1"></a>res.ind <span class="ot">&lt;-</span> <span class="fu">get_pca_ind</span>(res.pca)</span>
+<span id="cb199-3"><a href="análisis-de-componentes-principales.html#cb199-3" tabindex="-1"></a>res.ind<span class="sc">$</span>coord          </span></code></pre></div>
 <pre><code>##                  Dim.1      Dim.2       Dim.3       Dim.4         Dim.5
 ## SEBRLE       0.1912074  1.5541282 -0.62836882  0.08205241  1.1426139415
 ## CLAY         0.7901217  2.4204156  1.35688701  1.26984296 -0.8068483724
@@ -952,7 +1332,7 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 ## Pogorelov    1.59379599  0.78370119 -0.037623661 -0.130531397 -0.03697576
 ## Schoenbeck  -0.16172381  0.85752368 -0.255850722  0.564222295  0.29680481
 ## Barras      -1.17415412  0.94512710  0.365550568  0.102255763  0.61186706</code></pre>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="análisis-de-componentes-principales.html#cb167-1" tabindex="-1"></a>res.ind<span class="sc">$</span>contrib        </span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="análisis-de-componentes-principales.html#cb201-1" tabindex="-1"></a>res.ind<span class="sc">$</span>contrib        </span></code></pre></div>
 <pre><code>##                   Dim.1      Dim.2        Dim.3       Dim.4        Dim.5
 ## SEBRLE       0.03854254  5.7118249 1.385418e+00  0.03572215 8.091161e+00
 ## CLAY         0.65814114 13.8541889 6.460097e+00  8.55568792 4.034555e+00
@@ -1001,7 +1381,7 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 ## Pogorelov   26.11665608  8.825322559 2.242329e-02  0.477268755  0.04873597
 ## Schoenbeck   0.26890572 10.566272800 1.036933e+00  8.917302863  3.14020004
 ## Barras      14.17432302 12.835417603 2.116763e+00  0.292892746 13.34533825</code></pre>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="análisis-de-componentes-principales.html#cb169-1" tabindex="-1"></a>res.ind<span class="sc">$</span>cos2            </span></code></pre></div>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="análisis-de-componentes-principales.html#cb203-1" tabindex="-1"></a>res.ind<span class="sc">$</span>cos2            </span></code></pre></div>
 <pre><code>##                   Dim.1      Dim.2        Dim.3       Dim.4        Dim.5
 ## SEBRLE      0.007530179 0.49747323 8.132523e-02 0.001386688 2.689027e-01
 ## CLAY        0.048701249 0.45701660 1.436281e-01 0.125791741 5.078506e-02
@@ -1051,25 +1431,25 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 ## Schoenbeck  0.0071500829 2.010275e-01 1.789520e-02 8.702893e-02 0.0240826922
 ## Barras      0.2621297474 1.698426e-01 2.540745e-02 1.988116e-03 0.0711836486</code></pre>
 <p>El conjunto de datos tiene unas variables categóricas en la columna 13 que se quitó al inicio que corresponde al tipo de competición. Vamos a usar esa variable para agrupar los individuos.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="análisis-de-componentes-principales.html#cb171-1" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(decathlon2<span class="sc">$</span>Competition[<span class="dv">1</span><span class="sc">:</span><span class="dv">23</span>])</span>
-<span id="cb171-2"><a href="análisis-de-componentes-principales.html#cb171-2" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(res.pca,</span>
-<span id="cb171-3"><a href="análisis-de-componentes-principales.html#cb171-3" tabindex="-1"></a>             <span class="at">col.ind =</span> groups, <span class="co"># color by groups</span></span>
-<span id="cb171-4"><a href="análisis-de-componentes-principales.html#cb171-4" tabindex="-1"></a>             <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>,  <span class="st">&quot;#FC4E07&quot;</span>),</span>
-<span id="cb171-5"><a href="análisis-de-componentes-principales.html#cb171-5" tabindex="-1"></a>             <span class="at">addEllipses =</span> <span class="cn">TRUE</span>, <span class="co"># Concentration ellipses</span></span>
-<span id="cb171-6"><a href="análisis-de-componentes-principales.html#cb171-6" tabindex="-1"></a>             <span class="at">ellipse.level=</span><span class="fl">0.7</span>,</span>
-<span id="cb171-7"><a href="análisis-de-componentes-principales.html#cb171-7" tabindex="-1"></a>             <span class="at">legend.title =</span> <span class="st">&quot;Groups&quot;</span>,</span>
-<span id="cb171-8"><a href="análisis-de-componentes-principales.html#cb171-8" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span></span>
-<span id="cb171-9"><a href="análisis-de-componentes-principales.html#cb171-9" tabindex="-1"></a>             )</span></code></pre></div>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="análisis-de-componentes-principales.html#cb205-1" tabindex="-1"></a>groups <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(decathlon2<span class="sc">$</span>Competition[<span class="dv">1</span><span class="sc">:</span><span class="dv">23</span>])</span>
+<span id="cb205-2"><a href="análisis-de-componentes-principales.html#cb205-2" tabindex="-1"></a><span class="fu">fviz_pca_ind</span>(res.pca,</span>
+<span id="cb205-3"><a href="análisis-de-componentes-principales.html#cb205-3" tabindex="-1"></a>             <span class="at">col.ind =</span> groups, <span class="co"># color by groups</span></span>
+<span id="cb205-4"><a href="análisis-de-componentes-principales.html#cb205-4" tabindex="-1"></a>             <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;#00AFBB&quot;</span>,  <span class="st">&quot;#FC4E07&quot;</span>),</span>
+<span id="cb205-5"><a href="análisis-de-componentes-principales.html#cb205-5" tabindex="-1"></a>             <span class="at">addEllipses =</span> <span class="cn">TRUE</span>, <span class="co"># Concentration ellipses</span></span>
+<span id="cb205-6"><a href="análisis-de-componentes-principales.html#cb205-6" tabindex="-1"></a>             <span class="at">ellipse.level=</span><span class="fl">0.7</span>,</span>
+<span id="cb205-7"><a href="análisis-de-componentes-principales.html#cb205-7" tabindex="-1"></a>             <span class="at">legend.title =</span> <span class="st">&quot;Groups&quot;</span>,</span>
+<span id="cb205-8"><a href="análisis-de-componentes-principales.html#cb205-8" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span></span>
+<span id="cb205-9"><a href="análisis-de-componentes-principales.html#cb205-9" tabindex="-1"></a>             )</span></code></pre></div>
 <p><img src="MultivariateStatisticalAnalysis_files/figure-html/cp57-1.png" width="672" /></p>
 <p>Explica las componentes. ¿Cómo podrías llamar a las componentes 1 y 2?</p>
 </div>
-<div id="ejercicios-pca" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Ejercicios PCA<a href="análisis-de-componentes-principales.html#ejercicios-pca" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ejercicios-pca" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Ejercicios PCA<a href="análisis-de-componentes-principales.html#ejercicios-pca" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Ejercicio 1:</strong> Carga la base de datos siguiente y realiza el análisis de componentes principales. Decide y justifica que matriz usaras, la de varianzas y covarianzas o la de correlaciones. ¿Con cuántas componentes te quedarías? ¿por qué? ¿Qué explica cada componente de las que te quedaste? ¿Cuál es la varianza total explicada por esas componentes? ¿Qué tortuga es la más grande? ¿Qué variable tiene la mayor varianza? ¿Las variables están correlacionadas positivamente? ¿Porqué?</p>
 <p><a href="https://drive.google.com/file/d/1gSi65s_Nm0jj2Poo2MtXYN82bYRAErPa/view?usp=share_link">Tortugas</a></p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="análisis-de-componentes-principales.html#cb172-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb172-2"><a href="análisis-de-componentes-principales.html#cb172-2" tabindex="-1"></a>turtledata <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">&quot;data/turtledata.csv&quot;</span>, </span>
-<span id="cb172-3"><a href="análisis-de-componentes-principales.html#cb172-3" tabindex="-1"></a>    <span class="at">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="análisis-de-componentes-principales.html#cb206-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb206-2"><a href="análisis-de-componentes-principales.html#cb206-2" tabindex="-1"></a>turtledata <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">&quot;data/turtledata.csv&quot;</span>, </span>
+<span id="cb206-3"><a href="análisis-de-componentes-principales.html#cb206-3" tabindex="-1"></a>    <span class="at">delim =</span> <span class="st">&quot;;&quot;</span>, <span class="at">escape_double =</span> <span class="cn">FALSE</span>, <span class="at">trim_ws =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## Rows: 48 Columns: 4
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;;&quot;
@@ -1077,7 +1457,73 @@ de las carreras de fondo (X800, X1500, Xmarathon), lo cual quiere decir que ese 
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<p><strong>Ejercicio 2:</strong></p>
+<p><strong>Ejercicio 2:</strong> Trabajaremos con la base de datos <code>Whisky</code>, disponible en la librería <code>FactoClass</code>. Esta base contiene información de 35 marcas de whisky, a cada una de las cuales se le miden las siguientes variables cuantitativas:</p>
+<ul>
+<li><p><code>price</code>: precio en francos franceses;</p></li>
+<li><p><code>malt</code>: proporción de malta añadida;</p></li>
+<li><p><code>aging</code>: años de añejamiento;</p></li>
+<li><p><code>taste</code>: calificación promedio otorgada por un panel de catadores.</p></li>
+</ul>
+<p>Además, se incluye una variable categórica:</p>
+<ul>
+<li><code>type</code>: clasificación del whisky según su contenido de malta (1 = bajo, 2 = medio, 3 = puro).</li>
+</ul>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="análisis-de-componentes-principales.html#cb208-1" tabindex="-1"></a><span class="fu">library</span>(FactoClass)</span></code></pre></div>
+<pre><code>## Cargando paquete requerido: ade4</code></pre>
+<pre><code>## Cargando paquete requerido: ggrepel</code></pre>
+<pre><code>## Cargando paquete requerido: xtable</code></pre>
+<pre><code>## Cargando paquete requerido: scatterplot3d</code></pre>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="análisis-de-componentes-principales.html#cb213-1" tabindex="-1"></a><span class="fu">data</span>(Whisky)</span>
+<span id="cb213-2"><a href="análisis-de-componentes-principales.html#cb213-2" tabindex="-1"></a><span class="fu">head</span>(Whisky)</span></code></pre></div>
+<pre><code>##   price malt type aging taste
+## 1    70   20  low   5.0     3
+## 2    60   20  low   5.0     2
+## 3    65   20  low   7.5     2
+## 4    74   25  low  12.0     2
+## 5    70   25  low  12.0     3
+## 6    73   30  low   5.0     0</code></pre>
+<p>Utiliza esta base para responder las siguientes preguntas.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>¿Por qué sería conveniente aplicar PCA a esta base de datos? ¿Es importante estandarizar los datos?</p></li>
+<li><p>¿Cuántas componentes principales serán necesarios para el análisis?</p></li>
+<li><p>¿Cuál es la variable que más contribuye en cada eje? ¿Cuál es la que menos contribuye?</p></li>
+<li><p>¿Qué representa el primer eje? ¿Qué nombre le asignaría? ¿Qué representa el segundo eje?</p></li>
+<li><p>¿Cuál es el individuo mejor representado en el primer plano factorial? ¿Cuál es la peor?</p></li>
+<li><p>¿Cómo podemos representar los niveles en los datos en las dos primeras componentes?</p></li>
+</ol>
+<p>Ejercicio tomado de <a href="https://rpubs.com/JairoAyala/PCA" class="uri">https://rpubs.com/JairoAyala/PCA</a>.</p>
+<p><strong>Ejercicio 3:</strong> En este ejercicio trabajarás con el conjunto de datos Glass Identification, disponible en <a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/glass_identification_full.csv">datos</a> y <a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/glass_identification_variables.csv">descripciones</a> . Este dataset contiene mediciones químicas sobre muestras de vidrio, con el objetivo original de clasificar cada muestra según su tipo (ventanas, recipientes, vidrio flotado, etc.).</p>
+<p>El conjunto incluye <code>n = 214</code> observaciones y <code>p = 9</code> variables numéricas asociadas a la composición química del vidrio:</p>
+<ul>
+<li><p>RI: índice de refracción</p></li>
+<li><p>Na: Sodio</p></li>
+<li><p>Mg: Magnesio</p></li>
+<li><p>Al: Aluminio</p></li>
+<li><p>Si: Silicio</p></li>
+<li><p>K: Potasio</p></li>
+<li><p>Ca: Calcio</p></li>
+<li><p>Ba: Bario</p></li>
+<li><p>Fe: Hierro</p></li>
+</ul>
+<p>Además, contiene una variable categórica <code>Type</code> que identifica el tipo de vidrio (1–7). Este set de datos fue descargado de <a href="https://archive.ics.uci.edu/dataset/42/glass+identification">UCI Machine Learning Repository</a>.</p>
+<p>Aplica un análisis de componentes principales (PCA) para:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Explorar la variabilidad del conjunto de datos.</p></li>
+<li><p>Detarmina si se deben estandarizar o no los datos.</p></li>
+<li><p>¿Qué matriz usarás para el PCA?</p></li>
+<li><p>Determinar el número adecuado de componentes principales.</p></li>
+<li><p>Interpretar los componentes obtenidos.</p></li>
+<li><p>Visualizar la estructura de los datos en el espacio PCA.</p></li>
+<li><p>Evaluar si existe separación entre los tipos de vidrio mediante PCA.</p></li>
+</ol>
+</div>
+<div id="tutoriales-de-datacamp-sugeridos" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Tutoriales de DataCamp sugeridos<a href="análisis-de-componentes-principales.html#tutoriales-de-datacamp-sugeridos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p><a href="https://www.datacamp.com/tutorial/principal-component-analysis-in-python" class="uri">https://www.datacamp.com/tutorial/principal-component-analysis-in-python</a></p></li>
+<li><p><a href="https://www.datacamp.com/tutorial/pca-analysis-r" class="uri">https://www.datacamp.com/tutorial/pca-analysis-r</a></p></li>
+<li><p><a href="https://campus.datacamp.com/es/courses/rna-seq-with-bioconductor-in-r/exploratory-data-analysis-2?ex=10" class="uri">https://campus.datacamp.com/es/courses/rna-seq-with-bioconductor-in-r/exploratory-data-analysis-2?ex=10</a></p></li>
+</ol>
 
 </div>
 </div>
