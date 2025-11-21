@@ -114,6 +114,26 @@
   \thm@postskip=\thm@preskip
 }
 \makeatother
+
+
+\usepackage{color}
+\usepackage{framed}
+\setlength{\fboxsep}{.8em}
+
+\newenvironment{blackbox}{
+  \definecolor{shadecolor}{HTML}{8B8989}%{rgb}{0, 0, 0}  % black
+  \color{white}
+  \begin{shaded}}
+ {\end{shaded}}
+ 
+%\usepackage{tcolorbox}
+
+%\newtcolorbox{blackbox}{
+%  colback=black,
+%  colframe=orange,
+%  coltext=white,
+%  boxsep=5pt,
+%  arc=4pt}
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -4121,6 +4141,626 @@ Comprobación para \(R\): \(t(P_r) * R * P_r\)
 ## [2,]  0.0  0.6
 \end{verbatim}
 
+\section{El número de Componentes Principales}\label{el-nuxfamero-de-componentes-principales}
+
+Uno de los pasos fundamentales en el análisis de componentes principales (PCA) consiste en determinar cuántos componentes deben retenerse para describir adecuadamente la estructura de los datos. No existe un criterio único y universal, por lo que en la práctica se suelen combinar varias estrategias complementarias. A continuación se describen tres de los métodos más utilizados: el scree plot, la regla de Kaiser y el procedimiento de Horn.
+
+\subsection{Scree plot}\label{scree-plot}
+
+El \emph{scree plot} es una herramienta gráfica propuesta por Cattell (1966), en la que se representan los valores propios (varianzas explicadas) en función del número de componente. La idea es identificar el punto a partir del cual los valores propios dejan de decrecer de manera pronunciada y se estabilizan. Esta ``zona de estabilización'' se conoce como codo (elbow).
+Los componentes anteriores al codo explican la mayor parte de la variabilidad estructural, mientras que los posteriores suelen corresponderse con ruido. Aunque el criterio del codo es visual y puede ser subjetivo, es una aproximación muy útil como primera guía.
+
+En R, el scree plot se puede obtener con funciones como \texttt{screeplot(obj\_pca)} o haciendo un plot usual de los eigenvalores.
+
+\textbf{Ejemplo:} Vamos a cargar la base de datos \texttt{USArrests}. Calculamos los componentes principales con la función \texttt{prcomp} y guardaresmos los eigenvalores en una variable.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(}\StringTok{"USArrests"}\NormalTok{)}
+\NormalTok{datos }\OtherTok{\textless{}{-}} \FunctionTok{na.omit}\NormalTok{(USArrests)}
+\NormalTok{pca\_obj }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(datos, }\AttributeTok{scale. =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{eigenvalues }\OtherTok{\textless{}{-}}\NormalTok{ pca\_obj}\SpecialCharTok{$}\NormalTok{sdev}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{eigenvalues}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.4802416 0.9897652 0.3565632 0.1734301
+\end{verbatim}
+
+Tenemos tres formas de realizar este plot, unos usando los valores de los eigenvalores y el segundo usando la función de \texttt{screeplot} o usando la función \texttt{fviz\_eig} de \texttt{factoextra}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(eigenvalues, }\AttributeTok{type =} \StringTok{"b"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Componente principal"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Eigenvalor"}\NormalTok{, }
+     \AttributeTok{main =} \StringTok{"Scree plot"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\CommentTok{\# línea de referencia en 1 (útil para Kaiser)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp60-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{screeplot}\NormalTok{(pca\_obj, }\AttributeTok{type=}\StringTok{"lines"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp61-1.pdf}}
+
+Si utilizamos el paquete factoextra, el scree plot también puede mostrar directamente la proporción de varianza explicada:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(factoextra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Welcome! Want to learn more? See two factoextra-related books at https://goo.gl/ve3WBa
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_eig}\NormalTok{(pca\_obj, }\AttributeTok{addlabels =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp62-1.pdf}}
+
+La interpretación consiste en buscar el ``codo'' en la gráfica: el punto a partir del cual la pendiente deja de ser pronunciada y los eigenvalores se estabilizan. En los tres plots, podemos ver que en la componente dos, se forma el ``codo'', además de que las primeras dos componentes tienen una mayor variabilidad. Este método nos sugiere quedarnos con las primeras dos componentes principales.
+
+\subsection{Regla de Kaiser}\label{regla-de-kaiser}
+
+La regla de , fue propuesta por Kaiser en 1959. Propone retener únicamente los componentes cuyos eigenvalores sean mayores que 1 (cuando el PCA se realiza sobre la \textbf{matriz de correlaciones}).
+La justificación es que cada componente debe explicar al menos tanta variabilidad como una variable original estandarizada.
+Este criterio es sencillo de aplicar, pero puede sobrestimar el número de componentes cuando el número de variables es grande o cuando la estructura de los datos es débil.
+
+Una forma de hacer esto es la siguiente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{componentes\_kaiser }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(eigenvalues }\SpecialCharTok{\textgreater{}} \DecValTok{1}\NormalTok{)}
+\NormalTok{componentes\_kaiser}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(componentes\_kaiser) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+
+Podríamos resumir también esto en una tabla:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{prop\_var }\OtherTok{\textless{}{-}}\NormalTok{ eigenvalues }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(eigenvalues)}
+\NormalTok{tabla\_pca }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+\AttributeTok{Componente =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"PC"}\NormalTok{, }\FunctionTok{seq\_along}\NormalTok{(eigenvalues)),}
+\AttributeTok{Eigenvalor =}\NormalTok{ eigenvalues,}
+\AttributeTok{PropVar    =}\NormalTok{ prop\_var,}
+\AttributeTok{PropVarAcum =} \FunctionTok{cumsum}\NormalTok{(prop\_var),}
+\AttributeTok{Kaiser     =}\NormalTok{ eigenvalues }\SpecialCharTok{\textgreater{}} \DecValTok{1}
+\NormalTok{)}
+\NormalTok{tabla\_pca}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   Componente Eigenvalor    PropVar PropVarAcum Kaiser
+## 1        PC1  2.4802416 0.62006039   0.6200604   TRUE
+## 2        PC2  0.9897652 0.24744129   0.8675017  FALSE
+## 3        PC3  0.3565632 0.08914080   0.9566425  FALSE
+## 4        PC4  0.1734301 0.04335752   1.0000000  FALSE
+\end{verbatim}
+
+Aunque la componente 2 es menor a 1, si podría considerarse.
+
+\subsection{Procedimiento de Horn (parallel analysis)}\label{procedimiento-de-horn-parallel-analysis}
+
+El procedimiento de Horn, propuesto por Horn en 1965, también llamado análisis paralelo, es uno de los métodos más robustos para decidir el número de componentes.
+Consiste en comparar los eigenvalores obtenidos a partir de los datos reales con los eigenvalores obtenidos de matrices aleatorias generadas bajo ausencia de estructura (ruido). En lugar de tomar todos los eigenvalores mayores a 1, propone tomar otro corte dependiendo de los valores obtenidos de matrices aleatoias.
+Se retienen únicamente aquellos componentes cuyo eigenvalor sea mayor al correspondiente eigenvalor promedio de las matrices aleatorias.
+
+Este procedimiento reduce los riesgos tanto de incluir componentes irrelevantes como de descartar componentes importantes. En R se puede implementar con el paquete \texttt{psych} mediante la función \texttt{fa.parallel()} o con funciones específicas de análisis paralelo para PCA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(psych)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Adjuntando el paquete: 'psych'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:ggplot2':
+## 
+##     %+%, alpha
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{123}\NormalTok{) }\CommentTok{\# para reproducibilidad}
+
+\FunctionTok{fa.parallel}\NormalTok{(datos, }
+            \AttributeTok{fa =} \StringTok{"pc"}\NormalTok{, }\CommentTok{\# especifica que queremos análisis de componentes principales}
+            \AttributeTok{n.iter =} \DecValTok{100}\NormalTok{, }\CommentTok{\# número de matrices aleatorias}
+            \AttributeTok{show.legend =} \ConstantTok{TRUE}\NormalTok{,}
+            \AttributeTok{main =} \StringTok{"Análisis paralelo (Procedimiento de Horn)"}
+\NormalTok{            )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp65-1.pdf}}
+
+\begin{verbatim}
+## Parallel analysis suggests that the number of factors =  NA  and the number of components =  1
+\end{verbatim}
+
+Además de los criterios clásicos, como el scree plot o la regla de Kaiser, el paquete nFactors ofrece una forma integrada de comparar varios métodos para decidir cuántos componentes principales deben retenerse. Este enfoque combina:
+
+\begin{itemize}
+\item
+  Los eigenvalores reales obtenidos del PCA;
+\item
+  Los eigenvalores simulados mediante análisis paralelo (procedimiento de Horn);
+\item
+  Criterios gráficos, como el scree plot refinado (Cattell);
+\item
+  La regla de Kaiser (eigenvalores mayores que 1 cuando se usa una matriz de correlaciones).
+\end{itemize}
+
+A continuación se describe el procedimiento y el significado de cada paso.
+
+\textbf{Eigenvalores reales:} El primer paso consiste en obtener los eigenvalores de la matriz de correlaciones. Si los datos han sido estandarizados o se usa directamente la matriz de correlaciones, cada variable tiene varianza igual a 1 y la regla de Kaiser puede aplicarse de manera directa.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cor\_mat }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(datos, }\AttributeTok{use =} \StringTok{"pairwise.complete.obs"}\NormalTok{)}
+\CommentTok{\# Eigenvalores de la matriz de correlaciones}
+\NormalTok{ev\_cor }\OtherTok{\textless{}{-}} \FunctionTok{eigen}\NormalTok{(cor\_mat)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Análisis paralelo (Procedimiento de Horn):} El análisis paralelo compara los eigenvalores reales con eigenvalores obtenidos a partir de matrices aleatorias sin estructura (ruido). Los componentes se retienen únicamente si su eigenvalor es mayor que el correspondiente eigenvalor simulado bajo el escenario nulo.
+
+En \texttt{nFactors}, esto se realiza con:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(nFactors)}
+\NormalTok{ap }\OtherTok{\textless{}{-}} \FunctionTok{parallel}\NormalTok{(}
+  \AttributeTok{subject =} \FunctionTok{nrow}\NormalTok{(datos),   }\CommentTok{\# número de observaciones}
+  \AttributeTok{var     =} \FunctionTok{ncol}\NormalTok{(datos),   }\CommentTok{\# número de variables}
+  \AttributeTok{rep     =} \DecValTok{100}\NormalTok{,                 }\CommentTok{\# número de simulaciones}
+  \AttributeTok{cent    =}\NormalTok{ .}\DecValTok{05}                  \CommentTok{\# percentil usado para ajustar los eigenvalores simulados}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+La salida \texttt{ap\$eigen\$qevpea} contiene los eigenvalores simulados promediados y ajustados, que se usarán más adelante para la comparación.
+
+\textbf{Función \texttt{nScree()}:} Kaiser + Scree + Análisis paralelo en una sola función. El paquete \texttt{nFactors} permite integrar todos los criterios anteriores usando la función \texttt{nScree()}. Esta función toma:
+
+\begin{itemize}
+\item
+  los eigenvalores reales
+\item
+  los eigenvalores simulados del análisis paralelo
+\item
+  información adicional si se trabaja con la matriz de correlaciones \texttt{(cor\ =\ TRUE)}
+\end{itemize}
+
+y produce una recomendación conjunta.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{num\_cp }\OtherTok{\textless{}{-}} \FunctionTok{nScree}\NormalTok{(}\AttributeTok{x =}\NormalTok{ ev\_cor}\SpecialCharTok{$}\NormalTok{values,           }\CommentTok{\# eigenvalores reales}
+                 \AttributeTok{aparallel =}\NormalTok{ ap}\SpecialCharTok{$}\NormalTok{eigen}\SpecialCharTok{$}\NormalTok{qevpea, }\CommentTok{\# eigenvalores simulados}
+                 \AttributeTok{cor       =} \ConstantTok{TRUE}       \CommentTok{\# indica que provienen de una matriz de correlaciones}
+\NormalTok{                 )}
+\NormalTok{num\_cp}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $Components
+##   noc naf nparallel nkaiser
+## 1   1   1         1       1
+## 
+## $Analysis
+##   Eigenvalues       Prop      Cumu Par.Analysis  Pred.eig     OC Acc.factor
+## 1   2.4802416 0.62006039 0.6200604    1.1460230 1.3979327 (< OC)         NA
+## 2   0.9897652 0.24744129 0.8675017    0.9951257 0.5396963         0.8572745
+## 3   0.3565632 0.08914080 0.9566425    0.7977450        NA         0.4500689
+## 4   0.1734301 0.04335752 1.0000000    0.5471219        NA                NA
+##       AF
+## 1 (< AF)
+## 2       
+## 3       
+## 4       
+## 
+## $Model
+## [1] "components"
+## 
+## attr(,"class")
+## [1] "nScree"
+\end{verbatim}
+
+La salida \texttt{num\_cp} resume cuántos componentes recomienda cada criterio:
+
+\begin{itemize}
+\item
+  \emph{Regla de Kaiser}: componentes con eigenvalor \textgreater{} 1.
+\item
+  \emph{Scree Test (Cattell)}: número de componentes hasta el ``codo''.
+\item
+  \emph{Parallel analysis}: eigenvalores observados mayores que los simulados.
+\item
+  \emph{nScree solution}: recomendación final combinada.
+\end{itemize}
+
+Puede visualizarse con:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotnScree}\NormalTok{(num\_cp)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp69-1.pdf}}
+
+Esta gráfica muestra simultáneamente los eigenvalores reales y los simulados, así como las líneas marcando los puntos de corte según cada método.
+
+\textbf{Interpretación}
+
+Usar \texttt{nScree()} tiene la ventaja de ofrecer una visión amplia e integradora:
+
+\begin{itemize}
+\item
+  La regla de Kaiser es rápida pero puede sobreestimar componentes.
+\item
+  El scree plot puede ser subjetivo.
+\item
+  El análisis paralelo es el más estable y recomendado en literatura moderna.
+\item
+  La solución nScree combina los tres, ofreciendo un punto de vista equilibrado.
+\end{itemize}
+
+La recomendación final debe tomarse considerando la interpretación sustantiva del problema, la proporción de varianza explicada y la finalidad del PCA.
+
+\section{Visualización de los componentes principales}\label{visualizaciuxf3n-de-los-componentes-principales}
+
+Una vez seleccionado el número adecuado de componentes principales, es fundamental apoyarse en diversas visualizaciones para interpretar la estructura de los datos y la contribución de las variables. En PCA, los gráficos más comunes son:
+
+\begin{itemize}
+\item
+  el score plot (individuos en el espacio de los componentes),
+\item
+  el loading plot (contribución de variables),
+\item
+  el biplot o bibiplot, que combina ambos.
+\end{itemize}
+
+\subsection{Score plot: individuos en el espacio PCA}\label{score-plot-individuos-en-el-espacio-pca}
+
+El score plot muestra las observaciones proyectadas en los ejes principales (típicamente PC1 y PC2). Permite identificar:
+
+\begin{itemize}
+\item
+  agrupamientos naturales,
+\item
+  valores atípicos,
+\item
+  diferencias entre grupos (si se colorean por una variable categórica).
+\end{itemize}
+
+Veamos un ejemplo en \texttt{Factoextra}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(factoextra)}
+
+\CommentTok{\# PCA}
+\NormalTok{pca\_obj }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(datos, }\AttributeTok{scale. =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Score plot PC1 vs PC2}
+\FunctionTok{fviz\_pca\_ind}\NormalTok{(pca\_obj,}
+             \AttributeTok{geom =} \StringTok{"point"}\NormalTok{,}
+             \AttributeTok{pointsize =} \DecValTok{2}\NormalTok{,}
+             \AttributeTok{col.ind =} \StringTok{"steelblue"}\NormalTok{,}
+             \AttributeTok{addEllipses =} \ConstantTok{FALSE}\NormalTok{,}
+             \AttributeTok{title =} \StringTok{"Score plot: individuos en el espacio PC1{-}PC2"}
+\NormalTok{             )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp70-1.pdf}}
+
+\subsection{Loading plot: contribución de las variables}\label{loading-plot-contribuciuxf3n-de-las-variables}
+
+Los loadings representan cuánto contribuye cada variable a los componentes principales.
+
+Un loading alto (positivo o negativo) indica que la variable influye fuertemente en ese componente.
+
+Las variables agrupadas en el gráfico suelen estar correlacionadas.
+En el plano definido por los componentes principales, el ángulo entre dos vectores (flechas) refleja el signo y la fuerza de la correlación entre las variables:
+
+\begin{itemize}
+\item
+  Ángulos menores a 90°: correlación positiva.
+\item
+  Ángulo aproximadamente de 90°: variables prácticamente no correlacionadas en el plano PC1--PC2.
+\item
+  Ángulos mayores a 90°: correlación negativa.
+\item
+  Ángulo cercano a 180°: correlación negativa muy fuerte.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_pca\_var}\NormalTok{(pca\_obj,}
+             \AttributeTok{col.var =} \StringTok{"contrib"}\NormalTok{,}
+             \AttributeTok{gradient.cols =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#00AFBB"}\NormalTok{, }\StringTok{"\#E7B800"}\NormalTok{, }\StringTok{"\#FC4E07"}\NormalTok{),}
+             \AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{, }\CommentTok{\# evita que las etiquetas se traslapen}
+             \AttributeTok{title =} \StringTok{"Loading plot: contribución de variables"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp71-1.pdf}}
+
+\subsection{Biplot y Bibiplot}\label{biplot-y-bibiplot}
+
+El biplot es una visualización conjunta de:
+
+\begin{itemize}
+\item
+  scores (puntos = observaciones)
+\item
+  loadings (flechas = variables)
+\end{itemize}
+
+Esto permite ver simultáneamente:
+
+\begin{itemize}
+\item
+  cómo se distribuyen las observaciones en el espacio PCA,
+\item
+  qué variables explican esa distribución.
+\end{itemize}
+
+\textbf{Interpretación esencial del biplot}
+
+\begin{itemize}
+\item
+  Flechas largas: variables con mayor contribución.
+\item
+  Flechas cercanas: variables correlacionadas.
+\item
+  Observaciones proyectadas en dirección de una flecha: altas en esa variable.
+\end{itemize}
+
+\textbf{Ángulos entre flechas:}
+
+\begin{itemize}
+\item
+  \(< 90\)°: correlación positiva
+\item
+  \(\sim 90\)°: independencia
+\item
+  \(> 90\)°: correlación negativa
+\end{itemize}
+
+En R base se puede obtener de la siguiente forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{biplot}\NormalTok{(pca\_obj, }\AttributeTok{scale =} \DecValTok{0}\NormalTok{, }\AttributeTok{cex =} \FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp72-1.pdf}}
+Sin embargo, el biplot base suele ser poco estético y difícil de interpretar cuando hay muchas variables.
+
+Con el paquete \texttt{factoextra} podemos personalizarlo un poco más.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_pca\_biplot}\NormalTok{(pca\_obj,}
+                \AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{,}
+                \AttributeTok{col.ind =} \StringTok{"gray30"}\NormalTok{,}
+                \AttributeTok{col.var =} \StringTok{"firebrick"}\NormalTok{,}
+                \AttributeTok{geom.ind =} \StringTok{"point"}\NormalTok{,}
+                \AttributeTok{label =} \StringTok{"var"}\NormalTok{,}
+                \AttributeTok{title =} \StringTok{"Bibiplot de componentes principales"}
+\NormalTok{                )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp73-1.pdf}}
+
+Se puede colorear individuos según un grupo. Vamos a agregar una columna de las regiones.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Crear variable de grupo por región}
+\NormalTok{region }\OtherTok{\textless{}{-}}\NormalTok{ state.region   }\CommentTok{\# vector ya incluido en R, en el mismo orden de estados}
+
+\CommentTok{\# Hacemos de nuevo el PCA}
+\NormalTok{pca\_obj }\OtherTok{\textless{}{-}} \FunctionTok{prcomp}\NormalTok{(USArrests, }\AttributeTok{scale. =} \ConstantTok{TRUE}\NormalTok{)}
+
+\FunctionTok{fviz\_pca\_biplot}\NormalTok{(pca\_obj,}
+                \AttributeTok{repel =} \ConstantTok{TRUE}\NormalTok{,}
+                \AttributeTok{col.ind =}\NormalTok{ region,      }\CommentTok{\# vector con factor o variable categórica}
+                \AttributeTok{palette =} \StringTok{"Dark2"}\NormalTok{,}
+                \AttributeTok{geom.ind =} \StringTok{"point"}\NormalTok{,}
+                \AttributeTok{addEllipses =} \ConstantTok{TRUE}\NormalTok{,}
+                \AttributeTok{title =} \StringTok{"Bibiplot coloreado por grupo"}
+\NormalTok{                )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp74-1.pdf}}
+
+\subsection{Gráficos adicionales útiles}\label{gruxe1ficos-adicionales-uxfatiles}
+
+Además de los gráficos tradicionales del PCA (score plot, loading plot y biplot), existen otras visualizaciones que permiten comprender mejor la importancia y calidad de representación de cada variable en los componentes principales. A continuación se describen tres tipos de gráficos muy utilizados en análisis exploratorio: contribuciones, calidad de representación (\(\cos^2\)) y visualización separada de individuos y variables.
+
+\textbf{a) Contribuciones por componente:} Las contribuciones indican qué porcentaje del total de varianza explicada por un componente proviene de cada variable.
+Este gráfico permite identificar cuáles variables son las más influyentes en cada componente principal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_contrib}\NormalTok{(pca\_obj, }\AttributeTok{choice =} \StringTok{"var"}\NormalTok{, }\AttributeTok{axes =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp75-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_contrib}\NormalTok{(pca\_obj, }\AttributeTok{choice =} \StringTok{"var"}\NormalTok{, }\AttributeTok{axes =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp75-2.pdf}}
+
+Cómo interpretarlo:
+
+\begin{itemize}
+\item
+  Las barras más altas representan variables que explican mayor parte de la varianza del componente.
+\item
+  Una variable con alta contribución en PC1 influye más en la dirección en que PC1 separa las observaciones.
+\item
+  Si una variable contribuye poco a todos los componentes, tiene poca relevancia estructural para el PCA.
+\item
+  \texttt{Factoextra} suele marcar con una línea roja la ``contribución esperada'' si todas las variables aportaran por igual.
+
+  \begin{itemize}
+  \item
+    Barras por arriba de esa línea: variables relevantes.
+  \item
+    Barras por abajo: variables menos informativas.
+  \end{itemize}
+\end{itemize}
+
+Es un gráfico muy útil para responder preguntas como:
+
+``¿Qué variables están definiendo principalmente el primer componente?''
+
+\textbf{b) Mapa de calidad de representación (\(\cos^2\)):} El valor \(\cos^2\) es la calidad de representación de una variable o individuo en el plano principal (usualmente PC1--PC2).
+Es decir, indica qué tan bien está proyectada la variable en ese plano.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_pca\_var}\NormalTok{(pca\_obj,}
+             \AttributeTok{col.var =} \StringTok{"cos2"}\NormalTok{,}
+             \AttributeTok{gradient.cols =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"yellow"}\NormalTok{, }\StringTok{"red"}\NormalTok{),}
+             \AttributeTok{repel =} \ConstantTok{TRUE}
+\NormalTok{             )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp76-1.pdf}}
+
+Cómo interpretarlo:
+
+\begin{itemize}
+\item
+  Un valor alto de \(\cos^2\) (cercano a 1) indica que la variable está bien representada en el plano PC1--PC2.
+\item
+  Valores bajos (cercanos a 0) indican que la variable tiene componente importante en PC3, PC4, etc.
+\item
+  El color indica la calidad de representación:
+
+  \begin{itemize}
+  \item
+    Rojo: excelente representación (\(\cos^2\) alto)
+  \item
+    Amarillo: intermedia
+  \item
+    Azul: pobre representación
+  \end{itemize}
+\end{itemize}
+
+Regla práctica:
+
+\begin{itemize}
+\item
+  Solo interpretar direcciones, ángulos y correlaciones para variables con \(\cos^2\) alto.
+\item
+  Variables con \(\cos^2\) bajo pueden llevar a interpretaciones erróneas.
+\end{itemize}
+
+\textbf{c) Variables y observaciones en paneles separados:} Aunque el biplot combina individuos y variables en una sola figura, a veces es más claro analizarlos por separado:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_pca\_ind}\NormalTok{(pca\_obj)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp77-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_pca\_var}\NormalTok{(pca\_obj)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/cp77-2.pdf}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.1575}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3228}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5197}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Gráfico
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Es útil para\ldots{}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Interpretación clave
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Contribuciones} & Ver qué variables definen los componentes & Barras grandes = variables muy influyentes \\
+\textbf{\(\cos^2\)} & Evaluar calidad de representación & Colores cálidos = buena representación en PC1--PC2 \\
+\textbf{Individuos} & Ver similitudes entre observaciones & Puntos cercanos = perfiles similares \\
+\textbf{Variables} & Analizar correlaciones y direcciones & Ángulos \textless{} 90° = correlación positiva; \textgreater{} 90° = correlación negativa \\
+\end{longtable}
+
+\subsection{Recomendaciones prácticas de interpretación}\label{recomendaciones-pruxe1cticas-de-interpretaciuxf3n}
+
+Usar PC1 y PC2 como primera aproximación, pero revisar también PC3 si la varianza explicada no es alta. Interpretar siempre el biplot considerando:
+
+\begin{itemize}
+\item
+  magnitud y dirección de las flechas,
+\item
+  ángulos entre variables,
+\item
+  ubicación de individuos respecto a las flechas.
+\end{itemize}
+
+Evitar interpretaciones fuertes cuando las \(\cos^2\) sean bajas (mala representación en el plano).
+
 \section{Ejemplos con Bases de datos}\label{ejemplos-con-bases-de-datos}
 
 En R existen varios paquetes que nos permiten realizar análisis de componentes principales. Algunas de las funciones son \texttt{prcomp()}, \texttt{princomp()}, \texttt{PCA()}.
@@ -4289,7 +4929,7 @@ Esta primera componente principal será la que refleje la mayor variabilidad de 
 
 Usando estos valores, la fórmula de la primer componente principal se escribiría como:
 
-\[(0.368, 0.365, 0.382,0.385,0.389, 0.389.0.367)(100m-mean(100m), 200m-mean(200m),...,Marathon-mean(Marathon))\]
+\[(0.368, 0.365, 0.382,0.385,0.389, 0.389, 0.367)(100m-mean(100m), 200m-mean(200m),...,Marathon-mean(Marathon))\]
 
 Las desviaciones estándar son las raíces de las lambdas.
 
@@ -5052,9 +5692,806 @@ Explica las componentes. ¿Cómo podrías llamar a las componentes 1 y 2?
 ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
 \end{verbatim}
 
-\textbf{Ejercicio 2:}
+\textbf{Ejercicio 2:} Trabajaremos con la base de datos \texttt{Whisky}, disponible en la librería \texttt{FactoClass}. Esta base contiene información de 35 marcas de whisky, a cada una de las cuales se le miden las siguientes variables cuantitativas:
+
+\begin{itemize}
+\item
+  \texttt{price}: precio en francos franceses;
+\item
+  \texttt{malt}: proporción de malta añadida;
+\item
+  \texttt{aging}: años de añejamiento;
+\item
+  \texttt{taste}: calificación promedio otorgada por un panel de catadores.
+\end{itemize}
+
+Además, se incluye una variable categórica:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{type}: clasificación del whisky según su contenido de malta (1 = bajo, 2 = medio, 3 = puro).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(FactoClass)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Cargando paquete requerido: ade4
+\end{verbatim}
+
+\begin{verbatim}
+## Cargando paquete requerido: ggrepel
+\end{verbatim}
+
+\begin{verbatim}
+## Cargando paquete requerido: xtable
+\end{verbatim}
+
+\begin{verbatim}
+## Cargando paquete requerido: scatterplot3d
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(Whisky)}
+\FunctionTok{head}\NormalTok{(Whisky)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   price malt type aging taste
+## 1    70   20  low   5.0     3
+## 2    60   20  low   5.0     2
+## 3    65   20  low   7.5     2
+## 4    74   25  low  12.0     2
+## 5    70   25  low  12.0     3
+## 6    73   30  low   5.0     0
+\end{verbatim}
+
+Utiliza esta base para responder las siguientes preguntas.
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  ¿Por qué sería conveniente aplicar PCA a esta base de datos? ¿Es importante estandarizar los datos?
+\item
+  ¿Cuántas componentes principales serán necesarios para el análisis?
+\item
+  ¿Cuál es la variable que más contribuye en cada eje? ¿Cuál es la que menos contribuye?
+\item
+  ¿Qué representa el primer eje? ¿Qué nombre le asignaría? ¿Qué representa el segundo eje?
+\item
+  ¿Cuál es el individuo mejor representado en el primer plano factorial? ¿Cuál es la peor?
+\item
+  ¿Cómo podemos representar los niveles en los datos en las dos primeras componentes?
+\end{enumerate}
+
+Ejercicio tomado de \url{https://rpubs.com/JairoAyala/PCA}.
+
+\textbf{Ejercicio 3:} En este ejercicio trabajarás con el conjunto de datos Glass Identification, disponible en \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/glass_identification_full.csv}{datos} y \href{https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/tree/main/data/glass_identification_variables.csv}{descripciones} . Este dataset contiene mediciones químicas sobre muestras de vidrio, con el objetivo original de clasificar cada muestra según su tipo (ventanas, recipientes, vidrio flotado, etc.).
+
+El conjunto incluye \texttt{n\ =\ 214} observaciones y \texttt{p\ =\ 9} variables numéricas asociadas a la composición química del vidrio:
+
+\begin{itemize}
+\item
+  RI: índice de refracción
+\item
+  Na: Sodio
+\item
+  Mg: Magnesio
+\item
+  Al: Aluminio
+\item
+  Si: Silicio
+\item
+  K: Potasio
+\item
+  Ca: Calcio
+\item
+  Ba: Bario
+\item
+  Fe: Hierro
+\end{itemize}
+
+Además, contiene una variable categórica \texttt{Type} que identifica el tipo de vidrio (1--7). Este set de datos fue descargado de \href{https://archive.ics.uci.edu/dataset/42/glass+identification}{UCI Machine Learning Repository}.
+
+Aplica un análisis de componentes principales (PCA) para:
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  Explorar la variabilidad del conjunto de datos.
+\item
+  Detarmina si se deben estandarizar o no los datos.
+\item
+  ¿Qué matriz usarás para el PCA?
+\item
+  Determinar el número adecuado de componentes principales.
+\item
+  Interpretar los componentes obtenidos.
+\item
+  Visualizar la estructura de los datos en el espacio PCA.
+\item
+  Evaluar si existe separación entre los tipos de vidrio mediante PCA.
+\end{enumerate}
+
+\section{Tutoriales de DataCamp sugeridos}\label{tutoriales-de-datacamp-sugeridos}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \url{https://www.datacamp.com/tutorial/principal-component-analysis-in-python}
+\item
+  \url{https://www.datacamp.com/tutorial/pca-analysis-r}
+\item
+  \url{https://campus.datacamp.com/es/courses/rna-seq-with-bioconductor-in-r/exploratory-data-analysis-2?ex=10}
+\end{enumerate}
 
 \chapter{Análisis Factorial}\label{anuxe1lisis-factorial}
+
+El objetivo esencial del análisis de factores es describir las relaciones de covarianza entre muchas variables mediante unas pocas variables latentes no observables, llamadas factores. La idea central es:
+
+\begin{itemize}
+\item
+  Si un conjunto de variables presenta correlaciones altas entre sí, pero bajas con otras variables, es posible que ese grupo comparta una causa común subyacente.
+\item
+  Ese patrón puede interpretarse como la presencia de un factor responsable de las correlaciones dentro del grupo.
+\end{itemize}
+
+Las variables consideradas tienen una \textbf{escala de medición continua}.
+\[X^\top = (X_1, \dots, X_p)\]
+
+La correlación \(r_{ij}\) entre dos variables \(X_i\) y \(X_j\) se debe a que ambas tienen una relación con una tercera variable \(Z_k\) que se considera \textbf{no observable}.
+
+El coeficiente de \textbf{correlación parcial} \(r_{ij.k}\) mide la asociación que hay entre \(X_i\) y \(X_j\) \textbf{luego de remover} el efecto que tiene \(Z_k\) en cada una.
+
+Si \(r_{ij.k} \approx 0\), se puede pensar que \(Z_k\) ha explicado la correlación existente entre \(X_i\) y \(X_j\).
+
+-De manera más general, pueden considerarse varias variables \(Z_1, \dots, Z_m\) para explicar la asociación que existe entre \(X_i\) y \(X_j\).
+
+La idea en análisis de factores es:
+
+\begin{itemize}
+\item
+  Explicar las correlaciones contenidas en la matriz
+  \[R = [r_{ij}]\]
+  a través de un conjunto de variables \textbf{no observables} \(f_1, \dots, f_m\), llamadas \textbf{factores comunes}.
+\item
+  Buscar que las correlaciones parciales \(r_{ij.{f_1,\dots,f_m}}\) sean muy pequeñas:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Es decir, que las correlaciones entre las variables se deban a esas \(f_i\).
+  \end{itemize}
+\item
+  Además, se desea que el número de factores comunes \(m\) sea \textbf{pequeño}.
+\end{itemize}
+
+Un ejemplo clásico es el de Spearman, cuyas correlaciones entre calificaciones de materias como latín, francés, inglés, matemáticas y música sugerían un factor de ``inteligencia''. Otro grupo de variables, como pruebas físicas, podría reflejar un factor de condición física.
+
+El análisis de factores busca precisamente confirmar este tipo de estructura, en la cual grupos de variables se explican por factores subyacentes.
+
+Otro ejemplo: Las variables en los rectángulos están correlacionadas entre sí, debido a que detrás están las variables latentes (no observables) que aparecen en los óvalos.
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{img/factor_1.png}}
+\caption{Variables latentes}
+\end{figure}
+
+Aunque el análisis de factores está relacionado con el análisis de componentes principales (PCA) y ambos intentan aproximar la matriz de covarianzas, el enfoque de factores es más complejo: no solo reduce dimensiones, sino que intenta comprobar si los datos son consistentes con un modelo estructural prescrito.
+
+\section{\texorpdfstring{Modelo de factores ortogonales con \(m\) factores comunes}{Modelo de factores ortogonales con m factores comunes}}\label{modelo-de-factores-ortogonales-con-m-factores-comunes}
+
+El vector aleatorio observable \(X\), con \(p\) componentes, tiene media \(\mu\) y matriz de covarianzas \(\Sigma\). El modelo de factores quiere explicar las relaciones entre las variables manifiestas \(X=(X_1, \dots, X_p)\) a través de \(m\) variables latentes \(f_1, \dots, f_m\), llamadas \textbf{factores comunes} y \(p\) fuentes adicionales de variación \(e_1,...,e_p\) llamados \emph{errores} o \emph{factores específicos}:
+
+\[
+X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j, \quad j = 1, \dots, p.
+\]
+
+\begin{itemize}
+\item
+  \(\mu_j\) y \(\lambda_{ji}\) son constantes.
+\item
+  Los \(\lambda_{ji}\) se llaman también las cargas (\emph{loadings}) de la j-ésima variable en el factor i-ésimo.
+\item
+  \(e_j\) y los \(f_i\) son variables aleatorias.
+\item
+  A los \(e_j\) se les llama \textbf{factores específicos}.
+\item
+  Se considera que:
+
+  \begin{itemize}
+  \item
+    los \(e_j\) no están correlacionados entre sí;
+  \item
+    los \(e_j\) son no correlacionados con los \(f_i\).
+  \end{itemize}
+\end{itemize}
+
+En forma matricial, el modelo se escribe como:
+
+\[
+X = \mu + \Lambda F + e,
+\]
+
+o, centrando la variable,
+
+\[
+X - \mu = \Lambda F + e,
+\]
+
+donde:
+
+\begin{itemize}
+\item
+  \(X = (X_1, \dots, X_p)^\top\),
+\item
+  \(e^\top = (e_1, \dots, e_p)\),
+\item
+  \(F^\top = (f_1, \dots, f_m)\),
+\item
+  \(\Lambda\) es una matriz de constantes:
+\end{itemize}
+
+\[
+\Lambda =
+\begin{pmatrix}
+\lambda_{11} & \cdots & \lambda_{1m} \\
+\vdots       &        & \vdots       \\
+\lambda_{p1} & \cdots & \lambda_{pm}
+\end{pmatrix}.
+\]
+
+Se supone que \(\mathbb{E}(e) = 0\) y \(\mathbb{E}(F) = 0\).
+
+La matriz de varianzas y covarianzas de los factores específicos se denota por:
+
+\[
+\operatorname{cov}(e) = \Psi.
+\]
+
+Como los \(e_j\) son no correlacionados entre sí, \(\Psi\) es \textbf{diagonal}:
+
+\[
+\Psi =
+\begin{pmatrix}
+\psi_1^2 & 0        & \cdots & 0 \\
+0        & \psi_2^2 & \cdots & 0 \\
+\vdots   & \vdots   & \ddots & \vdots \\
+0        & 0        & \cdots & \psi_p^2
+\end{pmatrix}.
+\]
+
+Supongamos que la matriz de varianzas y covarianzas de \(F\) es \(\Gamma\). Si \(\Gamma\) no es diagonal (i.e., las entradas son correlacionadas), como es simétrica y semidefinida positiva, puede escribirse como:
+
+\[
+\Gamma = LL^\top.
+\]
+
+Sea ahora el vector
+
+\[
+F^* = L^{-1} F
+\]
+
+Entonces:
+
+\begin{itemize}
+\item
+  \(E(F^*) = L^{-1} E(F) = 0\),
+\item
+  \(\operatorname{var}(F^*) = L^{-1} \Gamma L^{-1\top}
+  = L^{-1} LL^\top L^{-1\top} = I\).
+\end{itemize}
+
+Es decir, \(F^*\) tiene entradas \textbf{no correlacionadas}.
+
+Además
+
+\begin{itemize}
+\tightlist
+\item
+  \(\operatorname{cov}(e, F) = \mathbb{E}(eF^\top) = 0\).
+\end{itemize}
+
+Si definimos \(\Lambda^* = \Lambda L\), se tiene:
+
+\[
+\Lambda^* F^* = \Lambda L L^{-1} F = \Lambda F.
+\]
+
+Sustituyendo en el modelo:
+
+\[
+X = \mu + \Lambda^* F^* + e = \mu + \Lambda^* LL^{-1}F + e = \mu + \Lambda F + e.
+\]
+
+El modelo con factores no correlacionados \(F^*\) es \textbf{indistinguible} del modelo original con factores correlacionados \(F\). Por sencillez, se consideran los factores comunes como \textbf{no correlacionados}.
+
+Para ver las varianzas de las variables originales, partimos de:
+
+\[
+X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j.
+\]
+
+Como factores comunes y específicos son no correlacionados, al calcular la varianza:
+
+\[
+\operatorname{var}(X_j) = 
+\sum_{k=1}^m \lambda_{jk}^2
+\;\;+\;\; \operatorname{var}(e_j)
+= \underbrace{\sum_{k=1}^m \lambda_{jk}^2}_{\text{comunalidad}}
++ \underbrace{\psi_j^2}_{\text{especificidad}}.
+\]
+
+Las covarianzas entre variables quedan:
+
+\[
+\operatorname{cov}(X_i, X_j)
+= \sum_{k=1}^m \lambda_{ik} \lambda_{jk}.
+\]
+
+En forma matricial, la matriz de varianzas y covarianzas de \(X\) se escribe como:
+
+\[
+\Sigma = \Lambda \Lambda^\top + \Psi.
+\]
+
+Al calcular la covarianza entre los factores comunes y las variables originales se tiene:
+
+\[
+\operatorname{cov}(X, F)
+= E\big[(\Lambda F + e) F^\top\big]
+= \Lambda E(FF^\top) + E(eF^\top)
+= \Lambda,
+\]
+
+porque \(E(FF^\top) = I\) y \(E(eF^\top) = 0\).
+
+Por tanto, las cargas \(\lambda_{ij}\) pueden interpretarse como la \textbf{covarianza} entre la variable original \(X_i\) y el factor \(f_j\).
+
+\textbf{Diferencias entre Análisis de Componentes Principales (PCA) y Análisis de Factores (AF)}
+
+\begin{itemize}
+\tightlist
+\item
+  El análisis de factores busca explicar las \textbf{varianzas y covarianzas} (y correlaciones).
+\item
+  El análisis de componentes principales se enfoca en buscar \textbf{direcciones de máxima varianza}.
+\item
+  En PCA hay tantas componentes como variables originales.
+\item
+  En AF se fija de antemano el número de factores comunes \(m\), con \(m < p\).
+\item
+  En AF hay varios métodos para calcular las cargas.
+\item
+  En PCA las cargas se obtienen a través de eigenvalores y eigenvectores (direcciones de máxima varianza).
+\end{itemize}
+
+En AF, las cargas \(\lambda_{ij}\) se pueden calcular por tres métodos principales:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Extracción inicial de factores}: factores principales.
+\item
+  \textbf{Factores principales iterados}.
+\item
+  \textbf{Factores por máxima verosimilitud}.
+\end{enumerate}
+
+\textbf{Ejemplo:} Verificar que \(Σ= \Lambda\Lambda^\top+\Psi\).
+
+Consideremos la matriz de covarianzas
+
+\[
+\Sigma =
+\begin{pmatrix}
+19 & 30 &  2 & 12 \\
+30 & 57 &  5 & 23 \\
+ 2 &  5 & 38 & 47 \\
+12 & 23 & 47 & 68
+\end{pmatrix}
+\]
+
+Queremos verificar que esta matriz puede escribirse como:
+
+\[Σ= \Lambda\Lambda^\top+\Psi\]
+
+para un modelo factorial ortogonal con \(m=2\) factores.
+
+Vamos a considerar las siguientes matrices de cargas \(\Lambda\) y de varianzas específicas \(\Psi\):
+
+\[
+L =
+\begin{pmatrix}
+ 4 &  1 \\
+ 7 &  2 \\
+-1 &  6 \\
+ 1 &  8
+\end{pmatrix}
+\]
+
+y
+
+\[
+\Psi =
+\begin{pmatrix}
+2 & 0 & 0 & 0 \\
+0 & 4 & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 3
+\end{pmatrix}
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Definir matrices}
+\NormalTok{Sigma }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{19}\NormalTok{,}\DecValTok{30}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{12}\NormalTok{,}
+                  \DecValTok{30}\NormalTok{,}\DecValTok{57}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{23}\NormalTok{,}
+                  \DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{38}\NormalTok{,}\DecValTok{47}\NormalTok{,}
+                  \DecValTok{12}\NormalTok{,}\DecValTok{23}\NormalTok{,}\DecValTok{47}\NormalTok{,}\DecValTok{68}\NormalTok{), }
+                \AttributeTok{nrow =} \DecValTok{4}\NormalTok{, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{)}
+\CommentTok{\# Matriz Lambda}
+\NormalTok{L }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}
+              \DecValTok{7}\NormalTok{,}\DecValTok{2}\NormalTok{,}
+              \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{6}\NormalTok{,}
+              \DecValTok{1}\NormalTok{,}\DecValTok{8}\NormalTok{),}
+            \AttributeTok{nrow =} \DecValTok{4}\NormalTok{, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{)}
+
+\NormalTok{Psi }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))  }\CommentTok{\# matriz diagonal}
+
+\CommentTok{\# Queremos verificar Sigma = L L\textquotesingle{} + Psi}
+\NormalTok{LLt\_plus\_Psi }\OtherTok{\textless{}{-}}\NormalTok{ L }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(L) }\SpecialCharTok{+}\NormalTok{ Psi}
+
+\NormalTok{Sigma}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]   19   30    2   12
+## [2,]   30   57    5   23
+## [3,]    2    5   38   47
+## [4,]   12   23   47   68
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LLt\_plus\_Psi}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4]
+## [1,]   19   30    2   12
+## [2,]   30   57    5   23
+## [3,]    2    5   38   47
+## [4,]   12   23   47   68
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{all.equal}\NormalTok{(Sigma, LLt\_plus\_Psi)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+Cálculo de la comunalidad de \(X_1\):
+
+\[h_1^2 = \lambda_{11}^2 + \lambda_{12}^2 = 4^2 + 1^2 = 17\]
+
+En R:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h1\_sq }\OtherTok{\textless{}{-}}\NormalTok{ L[}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{]}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ L[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{]}\SpecialCharTok{\^{}}\DecValTok{2}
+\NormalTok{h1\_sq}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 17
+\end{verbatim}
+
+Descomposición de la varianza de \(X_1\):
+
+\[\sigma_{11} = (\lambda_{11}^2 + \lambda_{12}^2) + \psi_1 = h_{1}^2 + \psi_1 \]
+
+\[
+\underbrace{19}_{\text{varianza}}
+\;=\;
+\underbrace{4^2 + 1^2}_{\text{comunalidad}}
+\;+\;
+\underbrace{2}_{\text{varianza específica}}
+\;=\;
+17 + 2
+\]
+
+Este ejemplo muestra que:
+
+\[\Sigma= \Lambda\Lambda^\top+\Psi\]
+
+sí representa un modelo factorial ortogonal con 2 factores, pues toda la matriz \(\Sigma\) puede reconstruirse exactamente usando:
+
+\begin{itemize}
+\item
+  las cargas factoriales en \(\Lambda\),
+\item
+  las varianzas específicas en \(\Psi\).
+\end{itemize}
+
+\section{Métodos de estimación}\label{muxe9todos-de-estimaciuxf3n}
+
+¿Cuándo es útil el Análisis Factorial?
+
+El objetivo del análisis factorial es determinar si un conjunto de \(p\) variables puede explicarse adecuadamente mediante unos pocos factores comunes.
+
+Para evaluar esta idea, se compara la matriz de covarianzas muestral con la estructura propuesta por el modelo factorial.
+
+Si las correlaciones entre variables son muy pequeñas, no vale la pena hacer un análisis factorial, porque no existen factores comunes fuertes; dominan los factores específicos.
+
+Si la matriz de covarianzas no parece diagonal, entonces es razonable intentar un modelo factorial.
+
+El paso central es estimar las cargas factoriales \(\lambda_{ij}\) y las varianzas específicas \(\psi_i\).
+
+Los métodos de estimación más usados son:
+
+\begin{itemize}
+\item
+  Componentes principales / factores principales,
+\item
+  Máxima verosimilitud (ML).
+\end{itemize}
+
+Una vez obtenidas las cargas, se aplica una rotación (Varimax, Promax, etc.) para mejorar la interpretación.
+
+Es recomendable usar varios métodos y comparar resultados; si el modelo factorial es adecuado, las soluciones serán similares.
+
+La estimación y la rotación requieren algoritmos iterativos, por lo que se utilizan programas especializados.
+
+\subsection{Factores Método de Componentes Principales y Método de Factores Principales}\label{factores-muxe9todo-de-componentes-principales-y-muxe9todo-de-factores-principales}
+
+El punto de partida es la matriz de covarianzas poblacional \(\Sigma\).
+Por teoría de álgebra lineal, toda matriz simétrica y semidefinida positiva
+puede escribirse mediante su descomposición espectral. Existen pares
+autovalor--autovector \((\lambda_i, e_i)\), con
+\(\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_p\), que permiten escribir:
+
+\[
+\Sigma 
+= \lambda_1 e_1 e_1' 
++ \lambda_2 e_2 e_2' 
++ \cdots 
++ \lambda_p e_p e_p'.
+\]
+
+Esta representación puede reescribirse como
+
+\[
+\Sigma 
+= 
+\left[
+\sqrt{\lambda_1} e_1 \;\; 
+\sqrt{\lambda_2} e_2 \;\; 
+\cdots \;\; 
+\sqrt{\lambda_p} e_p
+\right]
+\left[
+\begin{array}{c}
+\sqrt{\lambda_1} e_1' \\
+\sqrt{\lambda_2} e_2' \\
+\vdots \\
+\sqrt{\lambda_p} e_p'
+\end{array}
+\right]
+= \Lambda\Lambda^\top,
+\]
+
+donde \(\Lambda\) es la matriz cuyas columnas son \(\sqrt{\lambda_j} e_j\).\\
+Esta expresión coincide exactamente con la estructura del modelo factorial
+ortogonal
+
+\[
+\Sigma = \Lambda\Lambda^{\top} + \Psi,
+\]
+
+donde en este caso \(\Psi = 0\) y el número de factores es \(m = p\).\\
+Aunque esta representación es exacta, no es útil para la reducción de
+dimensión porque emplea tantos factores como variables.
+
+Si los últimos \(p-m\) autovalores son pequeños, puede ignorarse su contribución
+y aproximar:
+
+\[
+\Sigma \approx 
+\lambda_1 e_1 e_1' + \cdots + \lambda_m e_m e_m'.
+\]
+
+En forma matricial:
+
+\[
+\Sigma \approx 
+\left[
+\sqrt{\lambda_1} e_1 \;\; 
+\sqrt{\lambda_2} e_2 \;\; 
+\cdots \;\;
+\sqrt{\lambda_m} e_m
+\right]
+\left[
+\begin{array}{c}
+\sqrt{\lambda_1} e_1' \\
+\sqrt{\lambda_2} e_2' \\
+\vdots \\
+\sqrt{\lambda_m} e_m'
+\end{array}
+\right]
+= \Lambda\Lambda^\top,
+\]
+
+donde \(\Lambda\) es ahora una matriz \(p \times m\).\\
+Esta es la base del método de \textit{factores principales}: aproximar la
+covariación usando sólo los \(m\) factores más importantes.
+
+El modelo factorial considera, además, un término de varianza específica
+\(\psi_i\) para cada variable. Para obtenerlo, se define:
+
+\[
+\psi_i = \sigma_{ii} - \sum_{j=1}^m \ \lambda_{ij}^2, 
+\qquad i = 1,\dots,p,
+\]
+
+donde \(\lambda_{ij}\) es la carga factorial correspondiente.\\
+La aproximación factorial completa se escribe entonces como
+
+\[
+\Sigma \approx \Lambda\Lambda^\top + \Psi,
+\]
+
+donde \(\Psi\) es diagonal con las varianzas específicas.
+
+Dados datos \(x_1, x_2, \dots, x_n\), el primer paso es centrar las variables:
+
+\[
+x_j - \bar{x} = 
+\begin{pmatrix}
+x_{j1} - \bar{x}_1 \\
+x_{j2} - \bar{x}_2 \\
+\vdots \\
+x_{jp} - \bar{x}_p
+\end{pmatrix}.
+\]
+
+La matriz de covarianzas de estas observaciones centradas es la matriz de
+covarianzas muestral \(S\).
+
+Cuando las variables no están en las mismas unidades, se recomienda
+estandarizarlas:
+
+\[
+z_j =
+\begin{pmatrix}
+\dfrac{x_{j1} - \bar{x}_1}{\sqrt{s_{11}}} \\
+\dfrac{x_{j2} - \bar{x}_2}{\sqrt{s_{22}}} \\
+\vdots \\
+\dfrac{x_{jp} - \bar{x}_p}{\sqrt{s_{pp}}}
+\end{pmatrix}.
+\]
+
+La matriz de covarianzas de los \(z_j\) es la matriz de correlaciones muestral \(R\).\\
+Estandarizar evita que una variable con varianza anormalmente grande influya de
+manera indebida en la estimación de las cargas.
+
+Aplicar la aproximación
+
+\[
+\Sigma \approx \Lambda\Lambda^\top + \Psi
+\]
+
+a \(S\) (o a \(R\) si se trabaja con variables estandarizadas), usando los
+autovalores y autovectores de \(S\) o \(R\), produce la llamada
+\textbf{solución de componentes principales} del análisis factorial.\\
+El nombre proviene de que las cargas factoriales \(\lambda_{ij}\) se derivan de los
+coeficientes de las primeras componentes principales, reescaladas por
+\(\sqrt{\lambda_j}\).
+
+\begin{blackbox}
+
+\begin{center}
+\textbf{RESUMEN}
+
+\textbf{Solución por Componentes Principales del Modelo Factorial}
+
+\end{center}
+
+El análisis factorial por componentes principales de la matriz de covarianzas muestral \(S\)
+se basa en sus pares autovalor--autovector estimados
+\[
+(\hat{\lambda}_1, \hat{e}_1),\; (\hat{\lambda}_2, \hat{e}_2),\; \dots,\; (\hat{\lambda}_p, \hat{e}_p),
+\]
+donde
+\[
+\hat{\lambda}_1 \ge \hat{\lambda}_2 \ge \cdots \ge \hat{\lambda}_p.
+\]
+
+Sea \(m < p\) el número de factores comunes elegidos.\\
+La matriz de cargas factoriales \(\{\widetilde{\lambda}_{i,j}\}\) estimadas está dada por
+
+\[
+\widetilde{\Lambda}
+=
+\left[
+\sqrt{\hat{\lambda}_1}\,\hat{e}_1
+\;\;
+\sqrt{\hat{\lambda}_2}\,\hat{e}_2
+\;\;
+\cdots
+\;\;
+\sqrt{\hat{\lambda}_m}\,\hat{e}_m
+\right].
+\]
+
+Las varianzas específicas se obtienen como los elementos diagonales de
+\[
+S - \widetilde{\Lambda}\,\widetilde{\Lambda}^\top,
+\]
+es decir,
+
+\[
+\widetilde{\Psi}
+=
+\begin{pmatrix}
+\tilde{\psi}_1 & 0 & \cdots & 0 \\
+0 & \tilde{\psi}_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \tilde{\psi}_p
+\end{pmatrix},
+\qquad
+\text{donde}
+\qquad
+\tilde{\psi}_i
+=
+s_{ii} - \sum_{j=1}^m \tilde{\lambda}_{ij}^{\,2}.
+\]
+
+La comunalidad estimada de la variable \(i\) es
+
+\[
+\tilde{h}_i^{\,2}
+=
+\tilde{\lambda}_{i1}^{\,2}
++
+\tilde{\lambda}_{i2}^{\,2}
++
+\cdots
++
+\tilde{\lambda}_{im}^{\,2}.
+\]
+
+La solución por componentes principales del análisis factorial basada en la matriz de
+correlaciones se obtiene sustituyendo \(R\) en lugar de \(S\) y aplicando las mismas fórmulas.
+
+\end{blackbox}
+
+\subsection{Factores principales iterados}\label{factores-principales-iterados}
+
+\subsection{Factores por máxima verosimilitud}\label{factores-por-muxe1xima-verosimilitud}
+
+\section{Rotación de factores}\label{rotaciuxf3n-de-factores}
+
+\section{Ejemplos}\label{ejemplos-1}
+
+\section{Ejercicios}\label{ejercicios-5}
 
 \chapter{Análisis de Conglomerados}\label{anuxe1lisis-de-conglomerados}
 
@@ -5291,6 +6728,22 @@ Podemos observar que las especies de color rojo se separan más de las otras dos
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(lattice)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Adjuntando el paquete: 'lattice'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:nFactors':
+## 
+##     parallel
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{data}\NormalTok{(mtcars)}
 \FunctionTok{parallelplot}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{mtcars}\SpecialCharTok{|}\NormalTok{mtcars}\SpecialCharTok{$}\NormalTok{cyl, }\AttributeTok{main=}\StringTok{"Plot de paralelas por Cilindros"}\NormalTok{)}
 \end{Highlighting}
@@ -5374,7 +6827,7 @@ También se puede realizar un plot de radar.
 
 \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a18-1.pdf}}
 
-\subsection{Ejercicios}\label{ejercicios-5}
+\subsection{Ejercicios}\label{ejercicios-6}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}

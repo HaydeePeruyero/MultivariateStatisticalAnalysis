@@ -16,7 +16,7 @@ El objetivo esencial del análisis de factores es describir las relaciones de co
 - Ese patrón puede interpretarse como la presencia de un factor responsable de las correlaciones dentro del grupo.
 
 Las variables consideradas tienen una **escala de medición continua**.
-\[X' = (X_1, \dots, X_p)\]
+\[X^\top = (X_1, \dots, X_p)\]
 
 La correlación $r_{ij}$ entre dos variables $X_i$ y $X_j$ se debe a que ambas tienen una relación con una tercera variable $Z_k$ que se considera **no observable**.
 
@@ -328,7 +328,254 @@ sí representa un modelo factorial ortogonal con 2 factores, pues toda la matriz
 
 ## Métodos de estimación
 
-### Factores principales
+¿Cuándo es útil el Análisis Factorial?
+
+El objetivo del análisis factorial es determinar si un conjunto de $p$ variables puede explicarse adecuadamente mediante unos pocos factores comunes.
+
+Para evaluar esta idea, se compara la matriz de covarianzas muestral con la estructura propuesta por el modelo factorial.
+
+Si las correlaciones entre variables son muy pequeñas, no vale la pena hacer un análisis factorial, porque no existen factores comunes fuertes; dominan los factores específicos.
+
+Si la matriz de covarianzas no parece diagonal, entonces es razonable intentar un modelo factorial.
+
+El paso central es estimar las cargas factoriales $\lambda_{ij}$ y las varianzas específicas $\psi_i$.
+
+Los métodos de estimación más usados son:
+
+- Componentes principales / factores principales,
+
+- Máxima verosimilitud (ML).
+
+Una vez obtenidas las cargas, se aplica una rotación (Varimax, Promax, etc.) para mejorar la interpretación.
+
+Es recomendable usar varios métodos y comparar resultados; si el modelo factorial es adecuado, las soluciones serán similares.
+
+La estimación y la rotación requieren algoritmos iterativos, por lo que se utilizan programas especializados.
+
+### Factores Método de Componentes Principales y Método de Factores Principales
+
+El punto de partida es la matriz de covarianzas poblacional $\Sigma$. 
+Por teoría de álgebra lineal, toda matriz simétrica y semidefinida positiva 
+puede escribirse mediante su descomposición espectral. Existen pares 
+autovalor–autovector $(\lambda_i, e_i)$, con 
+$\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_p$, que permiten escribir:
+
+\[
+\Sigma 
+= \lambda_1 e_1 e_1' 
++ \lambda_2 e_2 e_2' 
++ \cdots 
++ \lambda_p e_p e_p'.
+\]
+
+Esta representación puede reescribirse como
+
+\[
+\Sigma 
+= 
+\left[
+\sqrt{\lambda_1} e_1 \;\; 
+\sqrt{\lambda_2} e_2 \;\; 
+\cdots \;\; 
+\sqrt{\lambda_p} e_p
+\right]
+\left[
+\begin{array}{c}
+\sqrt{\lambda_1} e_1' \\
+\sqrt{\lambda_2} e_2' \\
+\vdots \\
+\sqrt{\lambda_p} e_p'
+\end{array}
+\right]
+= \Lambda\Lambda^\top,
+\]
+
+donde $\Lambda$ es la matriz cuyas columnas son $\sqrt{\lambda_j} e_j$.  
+Esta expresión coincide exactamente con la estructura del modelo factorial 
+ortogonal
+
+\[
+\Sigma = \Lambda\Lambda^{\top} + \Psi,
+\]
+
+donde en este caso $\Psi = 0$ y el número de factores es $m = p$.  
+Aunque esta representación es exacta, no es útil para la reducción de 
+dimensión porque emplea tantos factores como variables.
+
+Si los últimos $p-m$ autovalores son pequeños, puede ignorarse su contribución 
+y aproximar:
+
+\[
+\Sigma \approx 
+\lambda_1 e_1 e_1' + \cdots + \lambda_m e_m e_m'.
+\]
+
+En forma matricial:
+
+\[
+\Sigma \approx 
+\left[
+\sqrt{\lambda_1} e_1 \;\; 
+\sqrt{\lambda_2} e_2 \;\; 
+\cdots \;\;
+\sqrt{\lambda_m} e_m
+\right]
+\left[
+\begin{array}{c}
+\sqrt{\lambda_1} e_1' \\
+\sqrt{\lambda_2} e_2' \\
+\vdots \\
+\sqrt{\lambda_m} e_m'
+\end{array}
+\right]
+= \Lambda\Lambda^\top,
+\]
+
+donde $\Lambda$ es ahora una matriz $p \times m$.  
+Esta es la base del método de \textit{factores principales}: aproximar la 
+covariación usando sólo los $m$ factores más importantes.
+
+El modelo factorial considera, además, un término de varianza específica 
+$\psi_i$ para cada variable. Para obtenerlo, se define:
+
+\[
+\psi_i = \sigma_{ii} - \sum_{j=1}^m \ \lambda_{ij}^2, 
+\qquad i = 1,\dots,p,
+\]
+
+donde $\lambda_{ij}$ es la carga factorial correspondiente.  
+La aproximación factorial completa se escribe entonces como
+
+\[
+\Sigma \approx \Lambda\Lambda^\top + \Psi,
+\]
+
+donde $\Psi$ es diagonal con las varianzas específicas.
+
+Dados datos $x_1, x_2, \dots, x_n$, el primer paso es centrar las variables:
+
+\[
+x_j - \bar{x} = 
+\begin{pmatrix}
+x_{j1} - \bar{x}_1 \\
+x_{j2} - \bar{x}_2 \\
+\vdots \\
+x_{jp} - \bar{x}_p
+\end{pmatrix}.
+\]
+
+La matriz de covarianzas de estas observaciones centradas es la matriz de 
+covarianzas muestral $S$.
+
+Cuando las variables no están en las mismas unidades, se recomienda 
+estandarizarlas:
+
+\[
+z_j =
+\begin{pmatrix}
+\dfrac{x_{j1} - \bar{x}_1}{\sqrt{s_{11}}} \\
+\dfrac{x_{j2} - \bar{x}_2}{\sqrt{s_{22}}} \\
+\vdots \\
+\dfrac{x_{jp} - \bar{x}_p}{\sqrt{s_{pp}}}
+\end{pmatrix}.
+\]
+
+La matriz de covarianzas de los $z_j$ es la matriz de correlaciones muestral $R$.  
+Estandarizar evita que una variable con varianza anormalmente grande influya de 
+manera indebida en la estimación de las cargas.
+
+
+Aplicar la aproximación 
+
+\[
+\Sigma \approx \Lambda\Lambda^\top + \Psi
+\]
+
+a $S$ (o a $R$ si se trabaja con variables estandarizadas), usando los 
+autovalores y autovectores de $S$ o $R$, produce la llamada 
+\textbf{solución de componentes principales} del análisis factorial.  
+El nombre proviene de que las cargas factoriales $\lambda_{ij}$ se derivan de los 
+coeficientes de las primeras componentes principales, reescaladas por 
+$\sqrt{\lambda_j}$.
+
+
+
+:::: {.blackbox data-latex=""}
+::: {.center data-latex=""}
+**RESUMEN**
+
+**Solución por Componentes Principales del Modelo Factorial**
+:::
+
+El análisis factorial por componentes principales de la matriz de covarianzas muestral $S$
+se basa en sus pares autovalor–autovector estimados
+\[
+(\hat{\lambda}_1, \hat{e}_1),\; (\hat{\lambda}_2, \hat{e}_2),\; \dots,\; (\hat{\lambda}_p, \hat{e}_p),
+\]
+donde
+\[
+\hat{\lambda}_1 \ge \hat{\lambda}_2 \ge \cdots \ge \hat{\lambda}_p.
+\]
+
+Sea $m < p$ el número de factores comunes elegidos.  
+La matriz de cargas factoriales $\{\widetilde{\lambda}_{i,j}\}$ estimadas está dada por
+
+\[
+\widetilde{\Lambda}
+=
+\left[
+\sqrt{\hat{\lambda}_1}\,\hat{e}_1
+\;\;
+\sqrt{\hat{\lambda}_2}\,\hat{e}_2
+\;\;
+\cdots
+\;\;
+\sqrt{\hat{\lambda}_m}\,\hat{e}_m
+\right].
+\]
+
+Las varianzas específicas se obtienen como los elementos diagonales de
+\[
+S - \widetilde{\Lambda}\,\widetilde{\Lambda}^\top,
+\]
+es decir,
+
+\[
+\widetilde{\Psi}
+=
+\begin{pmatrix}
+\tilde{\psi}_1 & 0 & \cdots & 0 \\
+0 & \tilde{\psi}_2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \tilde{\psi}_p
+\end{pmatrix},
+\qquad
+\text{donde}
+\qquad
+\tilde{\psi}_i
+=
+s_{ii} - \sum_{j=1}^m \tilde{\lambda}_{ij}^{\,2}.
+\]
+
+La comunalidad estimada de la variable $i$ es
+
+\[
+\tilde{h}_i^{\,2}
+=
+\tilde{\lambda}_{i1}^{\,2}
++
+\tilde{\lambda}_{i2}^{\,2}
++
+\cdots
++
+\tilde{\lambda}_{im}^{\,2}.
+\]
+
+La solución por componentes principales del análisis factorial basada en la matriz de
+correlaciones se obtiene sustituyendo $R$ en lugar de $S$ y aplicando las mismas fórmulas.
+::::
+
+
 
 ### Factores principales iterados
 
