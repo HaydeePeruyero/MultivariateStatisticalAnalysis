@@ -70,3 +70,14 @@ biplot-y-bibiplot
 gráficos-adicionales-útiles
 recomendaciones-prácticas-de-interpretación
 tutoriales-de-datacamp-sugeridos
+modelo-básico-escala-univariada
+modelo-básico-en-forma-matricial
+modelo-básico
+métodos-de-estimación
+modelo-de-factores-ortogonales-con-m-factores-comunes
+factores-principales
+factores-principales-iterados
+factores-por-máxima-verosimilitud
+rotación-de-factores
+ejemplos-1
+ejercicios-6

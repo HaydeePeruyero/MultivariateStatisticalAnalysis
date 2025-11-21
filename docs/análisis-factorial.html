@@ -1,97 +1,610 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Sección 4 Análisis Factorial | Estadística Multivariada</title>
-<meta name="author" content="Haydeé Peruyero">
-<meta name="description" content="Curso ENES Morelia Semestre 2026-1">
-<meta name="generator" content="bookdown 0.43 with bs4_book()">
-<meta property="og:title" content="Sección 4 Análisis Factorial | Estadística Multivariada">
-<meta property="og:type" content="book">
-<meta property="og:description" content="Curso ENES Morelia Semestre 2026-1">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sección 4 Análisis Factorial | Estadística Multivariada">
-<meta name="twitter:description" content="Curso ENES Morelia Semestre 2026-1">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.9.0/transition.js"></script><script src="libs/bs3compat-0.9.0/tabs.js"></script><script src="libs/bs3compat-0.9.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
-    
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  </style>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Sección 4 Análisis Factorial | Estadística Multivariada</title>
+  <meta name="description" content="Curso ENES Morelia Semestre 2026-1" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Sección 4 Análisis Factorial | Estadística Multivariada" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Curso ENES Morelia Semestre 2026-1" />
+  <meta name="github-repo" content="HaydeePeruyero/MultivariateStatisticalAnalysis" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Sección 4 Análisis Factorial | Estadística Multivariada" />
+  
+  <meta name="twitter:description" content="Curso ENES Morelia Semestre 2026-1" />
+  
+
+<meta name="author" content="Haydeé Peruyero" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análisis-de-componentes-principales.html"/>
+<link rel="next" href="análisis-de-conglomerados.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">Estadística Multivariada</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html"><span class="header-section-number">1</span> Estadística Multivariada</a></li>
-<li><a class="" href="regresi%C3%B3n-m%C3%BAltiple.html"><span class="header-section-number">2</span> Regresión múltiple</a></li>
-<li><a class="" href="an%C3%A1lisis-de-componentes-principales.html"><span class="header-section-number">3</span> Análisis de Componentes Principales</a></li>
-<li><a class="active" href="an%C3%A1lisis-factorial.html"><span class="header-section-number">4</span> Análisis Factorial</a></li>
-<li><a class="" href="an%C3%A1lisis-de-conglomerados.html"><span class="header-section-number">5</span> Análisis de Conglomerados</a></li>
-<li><a class="" href="an%C3%A1lisis-de-discriminante.html"><span class="header-section-number">6</span> Análisis de Discriminante</a></li>
-<li><a class="" href="ap%C3%A9ndices.html"><span class="header-section-number">7</span> Apéndices</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MultivariateStatisticalAnalysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="03-AF.html"><a href="#estad%C3%ADstica-multivariada"><i class="fa fa-check"></i><b>1</b> Estadística Multivariada</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1.1</b> Temario</a></li>
+<li class="chapter" data-level="1.2" data-path="03-AF.html"><a href="#evaluaci%C3%B3n"><i class="fa fa-check"></i><b>1.2</b> Evaluación</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#proyecto-final"><i class="fa fa-check"></i><b>1.3</b> Proyecto final</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#referencias"><i class="fa fa-check"></i><b>1.4</b> Referencias</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#material-interesante"><i class="fa fa-check"></i><b>1.5</b> Material interesante</a></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#datacamp"><i class="fa fa-check"></i><b>1.6</b> DataCamp</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="03-AF.html"><a href="#regresi%C3%B3n-m%C3%BAltiple"><i class="fa fa-check"></i><b>2</b> Regresión múltiple</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="03-AF.html"><a href="#por-qu%C3%A9-estad%C3%ADstica-multivariada"><i class="fa fa-check"></i><b>2.1</b> ¿Por qué estadística multivariada?</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="03-AF.html"><a href="#qu%C3%A9-es-multivariado-y-por-qu%C3%A9-lo-necesitamos"><i class="fa fa-check"></i><b>2.1.1</b> ¿Qué es “multivariado” y por qué lo necesitamos?</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="03-AF.html"><a href="#regresi%C3%B3n-m%C3%BAltiple-1"><i class="fa fa-check"></i><b>2.2</b> Regresión múltiple</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="03-AF.html"><a href="#modelo-y-estimaci%C3%B3n"><i class="fa fa-check"></i><b>2.2.1</b> Modelo y estimación</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="03-AF.html"><a href="#estimaci%C3%B3n-de-par%C3%A1metros"><i class="fa fa-check"></i><b>2.3</b> Estimación de parámetros</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html"><i class="fa fa-check"></i><b>2.3.1</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="03-AF.html"><a href="#pruebas-de-hip%C3%B3tesis"><i class="fa fa-check"></i><b>2.4</b> Pruebas de Hipótesis</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="03-AF.html"><a href="#prueba-de-la-significancia-de-la-regresi%C3%B3n"><i class="fa fa-check"></i><b>2.4.1</b> Prueba de la significancia de la regresión</a></li>
+<li class="chapter" data-level="2.4.2" data-path="03-AF.html"><a href="#pruebas-sobre-coeficientes-individuales-de-regresi%C3%B3n"><i class="fa fa-check"></i><b>2.4.2</b> Pruebas sobre coeficientes individuales de regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#intervalos-de-confianza"><i class="fa fa-check"></i><b>2.5</b> Intervalos de confianza</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="03-AF.html"><a href="#intervalos-de-confianza-en-los-coeficientes-de-regresi%C3%B3n"><i class="fa fa-check"></i><b>2.5.1</b> Intervalos de confianza en los coeficientes de regresión</a></li>
+<li class="chapter" data-level="2.5.2" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#intervalo-de-confianza-de-la-respuesta-media"><i class="fa fa-check"></i><b>2.5.2</b> Intervalo de confianza de la respuesta media</a></li>
+<li class="chapter" data-level="2.5.3" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-1"><i class="fa fa-check"></i><b>2.5.3</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="03-AF.html"><a href="#ejercicios-regresi%C3%B3n-lineal-multiple"><i class="fa fa-check"></i><b>2.6</b> Ejercicios Regresión Lineal Multiple</a></li>
+<li class="chapter" data-level="2.7" data-path="03-AF.html"><a href="#validaci%C3%B3n-de-supuestos"><i class="fa fa-check"></i><b>2.7</b> Validación de Supuestos</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#multicolinealidad"><i class="fa fa-check"></i><b>2.7.1</b> Multicolinealidad</a></li>
+<li class="chapter" data-level="2.7.2" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#normalidad-en-los-residuales"><i class="fa fa-check"></i><b>2.7.2</b> Normalidad en los residuales</a></li>
+<li class="chapter" data-level="2.7.3" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#homocedasticidad"><i class="fa fa-check"></i><b>2.7.3</b> Homocedasticidad</a></li>
+<li class="chapter" data-level="2.7.4" data-path="03-AF.html"><a href="#no-autocorrelaci%C3%B3n"><i class="fa fa-check"></i><b>2.7.4</b> No autocorrelación</a></li>
+<li class="chapter" data-level="2.7.5" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#predicciones"><i class="fa fa-check"></i><b>2.7.5</b> Predicciones</a></li>
+<li class="chapter" data-level="2.7.6" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-2"><i class="fa fa-check"></i><b>2.7.6</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="03-AF.html"><a href="#an%C3%A1lisis-de-varianza"><i class="fa fa-check"></i><b>2.8</b> Análisis de Varianza</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejercicios-3"><i class="fa fa-check"></i><b>2.8.1</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="03-AF.html"><a href="#selecci%C3%B3n-del-modelo"><i class="fa fa-check"></i><b>2.9</b> Selección del modelo</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#todos-los-modelos-posibles"><i class="fa fa-check"></i><b>2.9.1</b> Todos los modelos posibles</a></li>
+<li class="chapter" data-level="2.9.2" data-path="03-AF.html"><a href="#selecci%C3%B3n-paso-a-paso"><i class="fa fa-check"></i><b>2.9.2</b> Selección paso a paso</a></li>
+<li class="chapter" data-level="2.9.3" data-path="regresión-múltiple.html"><a href="regresión-múltiple.html#ejemplos"><i class="fa fa-check"></i><b>2.9.3</b> Ejemplos</a></li>
+<li class="chapter" data-level="2.9.4" data-path="03-AF.html"><a href="#selecci%C3%B3n-paso-a-paso-1"><i class="fa fa-check"></i><b>2.9.4</b> Selección paso a paso</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="03-AF.html"><a href="#an%C3%A1lisis-de-componentes-principales"><i class="fa fa-check"></i><b>3</b> Análisis de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html"><i class="fa fa-check"></i><b>3.1</b> Componentes principales para matriz de covarianza</a></li>
+<li class="chapter" data-level="3.2" data-path="03-AF.html"><a href="#componentes-principales-para-matriz-de-correlaci%C3%B3n"><i class="fa fa-check"></i><b>3.2</b> Componentes principales para matriz de correlación</a></li>
+<li class="chapter" data-level="3.3" data-path="03-AF.html"><a href="#el-n%C3%BAmero-de-componentes-principales"><i class="fa fa-check"></i><b>3.3</b> El número de Componentes Principales</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#scree-plot"><i class="fa fa-check"></i><b>3.3.1</b> Scree plot</a></li>
+<li class="chapter" data-level="3.3.2" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#regla-de-kaiser"><i class="fa fa-check"></i><b>3.3.2</b> Regla de Kaiser</a></li>
+<li class="chapter" data-level="3.3.3" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#procedimiento-de-horn-parallel-analysis"><i class="fa fa-check"></i><b>3.3.3</b> Procedimiento de Horn (parallel analysis)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="03-AF.html"><a href="#visualizaci%C3%B3n-de-los-componentes-principales"><i class="fa fa-check"></i><b>3.4</b> Visualización de los componentes principales</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#score-plot-individuos-en-el-espacio-pca"><i class="fa fa-check"></i><b>3.4.1</b> Score plot: individuos en el espacio PCA</a></li>
+<li class="chapter" data-level="3.4.2" data-path="03-AF.html"><a href="#loading-plot-contribuci%C3%B3n-de-las-variables"><i class="fa fa-check"></i><b>3.4.2</b> Loading plot: contribución de las variables</a></li>
+<li class="chapter" data-level="3.4.3" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#biplot-y-bibiplot"><i class="fa fa-check"></i><b>3.4.3</b> Biplot y Bibiplot</a></li>
+<li class="chapter" data-level="3.4.4" data-path="03-AF.html"><a href="#gr%C3%A1ficos-adicionales-%C3%BAtiles"><i class="fa fa-check"></i><b>3.4.4</b> Gráficos adicionales útiles</a></li>
+<li class="chapter" data-level="3.4.5" data-path="03-AF.html"><a href="#recomendaciones-pr%C3%A1cticas-de-interpretaci%C3%B3n"><i class="fa fa-check"></i><b>3.4.5</b> Recomendaciones prácticas de interpretación</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#ejemplos-con-bases-de-datos"><i class="fa fa-check"></i><b>3.5</b> Ejemplos con Bases de datos</a></li>
+<li class="chapter" data-level="3.6" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#ejercicios-pca"><i class="fa fa-check"></i><b>3.6</b> Ejercicios PCA</a></li>
+<li class="chapter" data-level="3.7" data-path="análisis-de-componentes-principales.html"><a href="análisis-de-componentes-principales.html#tutoriales-de-datacamp-sugeridos"><i class="fa fa-check"></i><b>3.7</b> Tutoriales de DataCamp sugeridos</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="03-AF.html"><a href="#an%C3%A1lisis-factorial"><i class="fa fa-check"></i><b>4</b> Análisis Factorial</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="análisis-factorial.html"><a href="análisis-factorial.html"><i class="fa fa-check"></i><b>4.1</b> Modelo de factores ortogonales con <span class="math inline">\(m\)</span> factores comunes</a></li>
+<li class="chapter" data-level="4.2" data-path="03-AF.html"><a href="#m%C3%A9todos-de-estimaci%C3%B3n"><i class="fa fa-check"></i><b>4.2</b> Métodos de estimación</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="análisis-factorial.html"><a href="análisis-factorial.html#factores-principales"><i class="fa fa-check"></i><b>4.2.1</b> Factores principales</a></li>
+<li class="chapter" data-level="4.2.2" data-path="análisis-factorial.html"><a href="análisis-factorial.html#factores-principales-iterados"><i class="fa fa-check"></i><b>4.2.2</b> Factores principales iterados</a></li>
+<li class="chapter" data-level="4.2.3" data-path="03-AF.html"><a href="#factores-por-m%C3%A1xima-verosimilitud"><i class="fa fa-check"></i><b>4.2.3</b> Factores por máxima verosimilitud</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="03-AF.html"><a href="#rotaci%C3%B3n-de-factores"><i class="fa fa-check"></i><b>4.3</b> Rotación de factores</a></li>
+<li class="chapter" data-level="4.4" data-path="análisis-factorial.html"><a href="análisis-factorial.html#ejemplos-1"><i class="fa fa-check"></i><b>4.4</b> Ejemplos</a></li>
+<li class="chapter" data-level="4.5" data-path="análisis-factorial.html"><a href="análisis-factorial.html#ejercicios-5"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="03-AF.html"><a href="#an%C3%A1lisis-de-conglomerados"><i class="fa fa-check"></i><b>5</b> Análisis de Conglomerados</a></li>
+<li class="chapter" data-level="6" data-path="03-AF.html"><a href="#an%C3%A1lisis-de-discriminante"><i class="fa fa-check"></i><b>6</b> Análisis de Discriminante</a></li>
+<li class="chapter" data-level="7" data-path="03-AF.html"><a href="#ap%C3%A9ndices"><i class="fa fa-check"></i><b>7</b> Apéndices</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="03-AF.html"><a href="#introducci%C3%B3n-a-r"><i class="fa fa-check"></i><b>7.1</b> Introducción a R</a></li>
+<li class="chapter" data-level="7.2" data-path="apéndices.html"><a href="apéndices.html"><i class="fa fa-check"></i><b>7.2</b> Git + Github</a></li>
+<li class="chapter" data-level="7.3" data-path="apéndices.html"><a href="apéndices.html#correlaciones-y-distancias"><i class="fa fa-check"></i><b>7.3</b> Correlaciones y distancias</a></li>
+<li class="chapter" data-level="7.4" data-path="apéndices.html"><a href="apéndices.html#plots-multivariados"><i class="fa fa-check"></i><b>7.4</b> Plots Multivariados</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="apéndices.html"><a href="apéndices.html#caritas-de-chernoff"><i class="fa fa-check"></i><b>7.4.1</b> Caritas de Chernoff</a></li>
+<li class="chapter" data-level="7.4.2" data-path="apéndices.html"><a href="apéndices.html#curvas-de-andrew"><i class="fa fa-check"></i><b>7.4.2</b> Curvas de Andrew</a></li>
+<li class="chapter" data-level="7.4.3" data-path="03-AF.html"><a href="#gr%C3%A1ficos-de-paralelas"><i class="fa fa-check"></i><b>7.4.3</b> Gráficos de Paralelas</a></li>
+<li class="chapter" data-level="7.4.4" data-path="apéndices.html"><a href="apéndices.html#estrellas"><i class="fa fa-check"></i><b>7.4.4</b> Estrellas</a></li>
+<li class="chapter" data-level="7.4.5" data-path="apéndices.html"><a href="apéndices.html#plots-3d"><i class="fa fa-check"></i><b>7.4.5</b> Plots 3D</a></li>
+<li class="chapter" data-level="7.4.6" data-path="apéndices.html"><a href="apéndices.html#ejercicios-6"><i class="fa fa-check"></i><b>7.4.6</b> Ejercicios</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/" target="blank">Published with bookdown</a></li>
+
 </ul>
 
-        <div class="book-extra">
-          
-        </div>
       </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estadística Multivariada</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="análisis-factorial" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Sección 4</span> Análisis Factorial<a href="#an%C3%A1lisis-factorial" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>El objetivo esencial del análisis de factores es describir las relaciones de covarianza entre muchas variables mediante unas pocas variables latentes no observables, llamadas factores. La idea central es:</p>
+<ul>
+<li><p>Si un conjunto de variables presenta correlaciones altas entre sí, pero bajas con otras variables, es posible que ese grupo comparta una causa común subyacente.</p></li>
+<li><p>Ese patrón puede interpretarse como la presencia de un factor responsable de las correlaciones dentro del grupo.</p></li>
+</ul>
+<p>Las variables consideradas tienen una <strong>escala de medición continua</strong>.
+<span class="math display">\[X&#39; = (X_1, \dots, X_p)\]</span></p>
+<p>La correlación <span class="math inline">\(r_{ij}\)</span> entre dos variables <span class="math inline">\(X_i\)</span> y <span class="math inline">\(X_j\)</span> se debe a que ambas tienen una relación con una tercera variable <span class="math inline">\(Z_k\)</span> que se considera <strong>no observable</strong>.</p>
+<p>El coeficiente de <strong>correlación parcial</strong> <span class="math inline">\(r_{ij.k}\)</span> mide la asociación que hay entre <span class="math inline">\(X_i\)</span> y <span class="math inline">\(X_j\)</span> <strong>luego de remover</strong> el efecto que tiene <span class="math inline">\(Z_k\)</span> en cada una.</p>
+<p>Si <span class="math inline">\(r_{ij.k} \approx 0\)</span>, se puede pensar que <span class="math inline">\(Z_k\)</span> ha explicado la correlación existente entre <span class="math inline">\(X_i\)</span> y <span class="math inline">\(X_j\)</span>.</p>
+<p>-De manera más general, pueden considerarse varias variables <span class="math inline">\(Z_1, \dots, Z_m\)</span> para explicar la asociación que existe entre <span class="math inline">\(X_i\)</span> y <span class="math inline">\(X_j\)</span>.</p>
+<p>La idea en análisis de factores es:</p>
+<ul>
+<li><p>Explicar las correlaciones contenidas en la matriz
+<span class="math display">\[R = [r_{ij}]\]</span>
+a través de un conjunto de variables <strong>no observables</strong> <span class="math inline">\(f_1, \dots, f_m\)</span>, llamadas <strong>factores comunes</strong>.</p></li>
+<li><p>Buscar que las correlaciones parciales <span class="math inline">\(r_{ij.{f_1,\dots,f_m}}\)</span> sean muy pequeñas:</p>
+<ul>
+<li>Es decir, que las correlaciones entre las variables se deban a esas <span class="math inline">\(f_i\)</span>.</li>
+</ul></li>
+<li><p>Además, se desea que el número de factores comunes <span class="math inline">\(m\)</span> sea <strong>pequeño</strong>.</p></li>
+</ul>
+<p>Un ejemplo clásico es el de Spearman, cuyas correlaciones entre calificaciones de materias como latín, francés, inglés, matemáticas y música sugerían un factor de “inteligencia”. Otro grupo de variables, como pruebas físicas, podría reflejar un factor de condición física.</p>
+<p>El análisis de factores busca precisamente confirmar este tipo de estructura, en la cual grupos de variables se explican por factores subyacentes.</p>
+<p>Otro ejemplo: Las variables en los rectángulos están correlacionadas entre sí, debido a que detrás están las variables latentes (no observables) que aparecen en los óvalos.</p>
+<div class="float">
+<img src="img/factor_1.png" alt="Variables latentes" />
+<div class="figcaption">Variables latentes</div>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="análisis-factorial" class="section level1" number="4">
-<h1>
-<span class="header-section-number">Sección 4</span> Análisis Factorial<a class="anchor" aria-label="anchor" href="#an%C3%A1lisis-factorial"><i class="fas fa-link"></i></a>
-</h1>
+<p>Aunque el análisis de factores está relacionado con el análisis de componentes principales (PCA) y ambos intentan aproximar la matriz de covarianzas, el enfoque de factores es más complejo: no solo reduce dimensiones, sino que intenta comprobar si los datos son consistentes con un modelo estructural prescrito.</p>
+<div id="modelo-de-factores-ortogonales-con-m-factores-comunes" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Modelo de factores ortogonales con <span class="math inline">\(m\)</span> factores comunes<a href="análisis-factorial.html#modelo-de-factores-ortogonales-con-m-factores-comunes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El vector aleatorio observable <span class="math inline">\(X\)</span>, con <span class="math inline">\(p\)</span> componentes, tiene media <span class="math inline">\(\mu\)</span> y matriz de covarianzas <span class="math inline">\(\Sigma\)</span>. El modelo de factores quiere explicar las relaciones entre las variables manifiestas <span class="math inline">\(X=(X_1, \dots, X_p)\)</span> a través de <span class="math inline">\(m\)</span> variables latentes <span class="math inline">\(f_1, \dots, f_m\)</span>, llamadas <strong>factores comunes</strong> y <span class="math inline">\(p\)</span> fuentes adicionales de variación <span class="math inline">\(e_1,...,e_p\)</span> llamados <em>errores</em> o <em>factores específicos</em>:</p>
+<p><span class="math display">\[
+X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j, \quad j = 1, \dots, p.
+\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\mu_j\)</span> y <span class="math inline">\(\lambda_{ji}\)</span> son constantes.</p></li>
+<li><p>Los <span class="math inline">\(\lambda_{ji}\)</span> se llaman también las cargas (<em>loadings</em>) de la j-ésima variable en el factor i-ésimo.</p></li>
+<li><p><span class="math inline">\(e_j\)</span> y los <span class="math inline">\(f_i\)</span> son variables aleatorias.</p></li>
+<li><p>A los <span class="math inline">\(e_j\)</span> se les llama <strong>factores específicos</strong>.</p></li>
+<li><p>Se considera que:</p>
+<ul>
+<li><p>los <span class="math inline">\(e_j\)</span> no están correlacionados entre sí;</p></li>
+<li><p>los <span class="math inline">\(e_j\)</span> son no correlacionados con los <span class="math inline">\(f_i\)</span>.</p></li>
+</ul></li>
+</ul>
+<p>En forma matricial, el modelo se escribe como:</p>
+<p><span class="math display">\[
+X = \mu + \Lambda F + e,
+\]</span></p>
+<p>o, centrando la variable,</p>
+<p><span class="math display">\[
+X - \mu = \Lambda F + e,
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><p><span class="math inline">\(X = (X_1, \dots, X_p)^\top\)</span>,</p></li>
+<li><p><span class="math inline">\(e^\top = (e_1, \dots, e_p)\)</span>,</p></li>
+<li><p><span class="math inline">\(F^\top = (f_1, \dots, f_m)\)</span>,</p></li>
+<li><p><span class="math inline">\(\Lambda\)</span> es una matriz de constantes:</p></li>
+</ul>
+<p><span class="math display">\[
+\Lambda =
+\begin{pmatrix}
+\lambda_{11} &amp; \cdots &amp; \lambda_{1m} \\
+\vdots       &amp;        &amp; \vdots       \\
+\lambda_{p1} &amp; \cdots &amp; \lambda_{pm}
+\end{pmatrix}.
+\]</span></p>
+<p>Se supone que <span class="math inline">\(\mathbb{E}(e) = 0\)</span> y <span class="math inline">\(\mathbb{E}(F) = 0\)</span>.</p>
+<p>La matriz de varianzas y covarianzas de los factores específicos se denota por:</p>
+<p><span class="math display">\[
+\operatorname{cov}(e) = \Psi.
+\]</span></p>
+<p>Como los <span class="math inline">\(e_j\)</span> son no correlacionados entre sí, <span class="math inline">\(\Psi\)</span> es <strong>diagonal</strong>:</p>
+<p><span class="math display">\[
+\Psi =
+\begin{pmatrix}
+\psi_1^2 &amp; 0        &amp; \cdots &amp; 0 \\
+0        &amp; \psi_2^2 &amp; \cdots &amp; 0 \\
+\vdots   &amp; \vdots   &amp; \ddots &amp; \vdots \\
+0        &amp; 0        &amp; \cdots &amp; \psi_p^2
+\end{pmatrix}.
+\]</span></p>
+<p>Supongamos que la matriz de varianzas y covarianzas de <span class="math inline">\(F\)</span> es <span class="math inline">\(\Gamma\)</span>. Si <span class="math inline">\(\Gamma\)</span> no es diagonal (i.e., las entradas son correlacionadas), como es simétrica y semidefinida positiva, puede escribirse como:</p>
+<p><span class="math display">\[
+\Gamma = LL^\top.
+\]</span></p>
+<p>Sea ahora el vector</p>
+<p><span class="math display">\[
+F^* = L^{-1} F
+\]</span></p>
+<p>Entonces:</p>
+<ul>
+<li><p><span class="math inline">\(E(F^*) = L^{-1} E(F) = 0\)</span>,</p></li>
+<li><p><span class="math inline">\(\operatorname{var}(F^*) = L^{-1} \Gamma L^{-1\top}
+= L^{-1} LL^\top L^{-1\top} = I\)</span>.</p></li>
+</ul>
+<p>Es decir, <span class="math inline">\(F^*\)</span> tiene entradas <strong>no correlacionadas</strong>.</p>
+<p>Además</p>
+<ul>
+<li><span class="math inline">\(\operatorname{cov}(e, F) = \mathbb{E}(eF^\top) = 0\)</span>.</li>
+</ul>
+<p>Si definimos <span class="math inline">\(\Lambda^* = \Lambda L\)</span>, se tiene:</p>
+<p><span class="math display">\[
+\Lambda^* F^* = \Lambda L L^{-1} F = \Lambda F.
+\]</span></p>
+<p>Sustituyendo en el modelo:</p>
+<p><span class="math display">\[
+X = \mu + \Lambda^* F^* + e = \mu + \Lambda^* LL^{-1}F + e = \mu + \Lambda F + e.
+\]</span></p>
+<p>El modelo con factores no correlacionados <span class="math inline">\(F^*\)</span> es <strong>indistinguible</strong> del modelo original con factores correlacionados <span class="math inline">\(F\)</span>. Por sencillez, se consideran los factores comunes como <strong>no correlacionados</strong>.</p>
+<p>Para ver las varianzas de las variables originales, partimos de:</p>
+<p><span class="math display">\[
+X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j.
+\]</span></p>
+<p>Como factores comunes y específicos son no correlacionados, al calcular la varianza:</p>
+<p><span class="math display">\[
+\operatorname{var}(X_j) =
+\sum_{k=1}^m \lambda_{jk}^2
+\;\;+\;\; \operatorname{var}(e_j)
+= \underbrace{\sum_{k=1}^m \lambda_{jk}^2}_{\text{comunalidad}}
++ \underbrace{\psi_j^2}_{\text{especificidad}}.
+\]</span></p>
+<p>Las covarianzas entre variables quedan:</p>
+<p><span class="math display">\[
+\operatorname{cov}(X_i, X_j)
+= \sum_{k=1}^m \lambda_{ik} \lambda_{jk}.
+\]</span></p>
+<p>En forma matricial, la matriz de varianzas y covarianzas de <span class="math inline">\(X\)</span> se escribe como:</p>
+<p><span class="math display">\[
+\Sigma = \Lambda \Lambda^\top + \Psi.
+\]</span></p>
+<p>Al calcular la covarianza entre los factores comunes y las variables originales se tiene:</p>
+<p><span class="math display">\[
+\operatorname{cov}(X, F)
+= E\big[(\Lambda F + e) F^\top\big]
+= \Lambda E(FF^\top) + E(eF^\top)
+= \Lambda,
+\]</span></p>
+<p>porque <span class="math inline">\(E(FF^\top) = I\)</span> y <span class="math inline">\(E(eF^\top) = 0\)</span>.</p>
+<p>Por tanto, las cargas <span class="math inline">\(\lambda_{ij}\)</span> pueden interpretarse como la <strong>covarianza</strong> entre la variable original <span class="math inline">\(X_i\)</span> y el factor <span class="math inline">\(f_j\)</span>.</p>
+<p><strong>Diferencias entre Análisis de Componentes Principales (PCA) y Análisis de Factores (AF)</strong></p>
+<ul>
+<li>El análisis de factores busca explicar las <strong>varianzas y covarianzas</strong> (y correlaciones).</li>
+<li>El análisis de componentes principales se enfoca en buscar <strong>direcciones de máxima varianza</strong>.</li>
+<li>En PCA hay tantas componentes como variables originales.</li>
+<li>En AF se fija de antemano el número de factores comunes <span class="math inline">\(m\)</span>, con <span class="math inline">\(m &lt; p\)</span>.</li>
+<li>En AF hay varios métodos para calcular las cargas.</li>
+<li>En PCA las cargas se obtienen a través de eigenvalores y eigenvectores (direcciones de máxima varianza).</li>
+</ul>
+<p>En AF, las cargas <span class="math inline">\(\lambda_{ij}\)</span> se pueden calcular por tres métodos principales:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Extracción inicial de factores</strong>: factores principales.</li>
+<li><strong>Factores principales iterados</strong>.</li>
+<li><strong>Factores por máxima verosimilitud</strong>.</li>
+</ol>
+<p><strong>Ejemplo:</strong> Verificar que <span class="math inline">\(Σ= \Lambda\Lambda^\top+\Psi\)</span>.</p>
+<p>Consideremos la matriz de covarianzas</p>
+<p><span class="math display">\[
+\Sigma =
+\begin{pmatrix}
+19 &amp; 30 &amp;  2 &amp; 12 \\
+30 &amp; 57 &amp;  5 &amp; 23 \\
+2 &amp;  5 &amp; 38 &amp; 47 \\
+12 &amp; 23 &amp; 47 &amp; 68
+\end{pmatrix}
+\]</span></p>
+<p>Queremos verificar que esta matriz puede escribirse como:</p>
+<p><span class="math display">\[Σ= \Lambda\Lambda^\top+\Psi\]</span></p>
+<p>para un modelo factorial ortogonal con <span class="math inline">\(m=2\)</span> factores.</p>
+<p>Vamos a considerar las siguientes matrices de cargas <span class="math inline">\(\Lambda\)</span> y de varianzas específicas <span class="math inline">\(\Psi\)</span>:</p>
+<p><span class="math display">\[
+L =
+\begin{pmatrix}
+4 &amp;  1 \\
+7 &amp;  2 \\
+-1 &amp;  6 \\
+1 &amp;  8
+\end{pmatrix}
+\]</span></p>
+<p>y</p>
+<p><span class="math display">\[
+\Psi =
+\begin{pmatrix}
+2 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 4 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 3
+\end{pmatrix}
+\]</span></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="análisis-factorial.html#cb1-1" tabindex="-1"></a><span class="co"># Definir matrices</span></span>
+<span id="cb1-2"><a href="análisis-factorial.html#cb1-2" tabindex="-1"></a>Sigma <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">19</span>,<span class="dv">30</span>,<span class="dv">2</span>,<span class="dv">12</span>,</span>
+<span id="cb1-3"><a href="análisis-factorial.html#cb1-3" tabindex="-1"></a>                  <span class="dv">30</span>,<span class="dv">57</span>,<span class="dv">5</span>,<span class="dv">23</span>,</span>
+<span id="cb1-4"><a href="análisis-factorial.html#cb1-4" tabindex="-1"></a>                  <span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">38</span>,<span class="dv">47</span>,</span>
+<span id="cb1-5"><a href="análisis-factorial.html#cb1-5" tabindex="-1"></a>                  <span class="dv">12</span>,<span class="dv">23</span>,<span class="dv">47</span>,<span class="dv">68</span>), </span>
+<span id="cb1-6"><a href="análisis-factorial.html#cb1-6" tabindex="-1"></a>                <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-7"><a href="análisis-factorial.html#cb1-7" tabindex="-1"></a><span class="co"># Matriz Lambda</span></span>
+<span id="cb1-8"><a href="análisis-factorial.html#cb1-8" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">1</span>,</span>
+<span id="cb1-9"><a href="análisis-factorial.html#cb1-9" tabindex="-1"></a>              <span class="dv">7</span>,<span class="dv">2</span>,</span>
+<span id="cb1-10"><a href="análisis-factorial.html#cb1-10" tabindex="-1"></a>              <span class="sc">-</span><span class="dv">1</span>,<span class="dv">6</span>,</span>
+<span id="cb1-11"><a href="análisis-factorial.html#cb1-11" tabindex="-1"></a>              <span class="dv">1</span>,<span class="dv">8</span>),</span>
+<span id="cb1-12"><a href="análisis-factorial.html#cb1-12" tabindex="-1"></a>            <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-13"><a href="análisis-factorial.html#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="análisis-factorial.html#cb1-14" tabindex="-1"></a>Psi <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">3</span>))  <span class="co"># matriz diagonal</span></span>
+<span id="cb1-15"><a href="análisis-factorial.html#cb1-15" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="análisis-factorial.html#cb1-16" tabindex="-1"></a><span class="co"># Queremos verificar Sigma = L L&#39; + Psi</span></span>
+<span id="cb1-17"><a href="análisis-factorial.html#cb1-17" tabindex="-1"></a>LLt_plus_Psi <span class="ot">&lt;-</span> L <span class="sc">%*%</span> <span class="fu">t</span>(L) <span class="sc">+</span> Psi</span>
+<span id="cb1-18"><a href="análisis-factorial.html#cb1-18" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="análisis-factorial.html#cb1-19" tabindex="-1"></a>Sigma</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   19   30    2   12
+## [2,]   30   57    5   23
+## [3,]    2    5   38   47
+## [4,]   12   23   47   68</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="análisis-factorial.html#cb3-1" tabindex="-1"></a>LLt_plus_Psi</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   19   30    2   12
+## [2,]   30   57    5   23
+## [3,]    2    5   38   47
+## [4,]   12   23   47   68</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="análisis-factorial.html#cb5-1" tabindex="-1"></a><span class="fu">all.equal</span>(Sigma, LLt_plus_Psi)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Cálculo de la comunalidad de <span class="math inline">\(X_1\)</span>:</p>
+<p><span class="math display">\[h_1^2 = \lambda_{11}^2 + \lambda_{12}^2 = 4^2 + 1^2 = 17\]</span></p>
+<p>En R:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="análisis-factorial.html#cb7-1" tabindex="-1"></a>h1_sq <span class="ot">&lt;-</span> L[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> L[<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb7-2"><a href="análisis-factorial.html#cb7-2" tabindex="-1"></a>h1_sq</span></code></pre></div>
+<pre><code>## [1] 17</code></pre>
+<p>Descomposición de la varianza de <span class="math inline">\(X_1\)</span>:</p>
+<p><span class="math display">\[\sigma_{11} = (\lambda_{11}^2 + \lambda_{12}^2) + \psi_1 = h_{1}^2 + \psi_1 \]</span></p>
+<p><span class="math display">\[
+\underbrace{19}_{\text{varianza}}
+\;=\;
+\underbrace{4^2 + 1^2}_{\text{comunalidad}}
+\;+\;
+\underbrace{2}_{\text{varianza específica}}
+\;=\;
+17 + 2
+\]</span></p>
+<p>Este ejemplo muestra que:</p>
+<p><span class="math display">\[\Sigma= \Lambda\Lambda^\top+\Psi\]</span></p>
+<p>sí representa un modelo factorial ortogonal con 2 factores, pues toda la matriz <span class="math inline">\(\Sigma\)</span> puede reconstruirse exactamente usando:</p>
+<ul>
+<li><p>las cargas factoriales en <span class="math inline">\(\Lambda\)</span>,</p></li>
+<li><p>las varianzas específicas en <span class="math inline">\(\Psi\)</span>.</p></li>
+</ul>
+</div>
+<div id="métodos-de-estimación" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Métodos de estimación<a href="#m%C3%A9todos-de-estimaci%C3%B3n" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="factores-principales" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Factores principales<a href="análisis-factorial.html#factores-principales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="factores-principales-iterados" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Factores principales iterados<a href="análisis-factorial.html#factores-principales-iterados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="factores-por-máxima-verosimilitud" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Factores por máxima verosimilitud<a href="#factores-por-m%C3%A1xima-verosimilitud" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="rotación-de-factores" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Rotación de factores<a href="#rotaci%C3%B3n-de-factores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="ejemplos-1" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Ejemplos<a href="análisis-factorial.html#ejemplos-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="ejercicios-5" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Ejercicios<a href="análisis-factorial.html#ejercicios-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
-  <div class="chapter-nav">
-<div class="prev"><a href="an%C3%A1lisis-de-componentes-principales.html"><span class="header-section-number">3</span> Análisis de Componentes Principales</a></div>
-<div class="next"><a href="an%C3%A1lisis-de-conglomerados.html"><span class="header-section-number">5</span> Análisis de Conglomerados</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav"><li><a class="nav-link" href="#an%C3%A1lisis-factorial"><span class="header-section-number">4</span> Análisis Factorial</a></li></ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-          
-        </ul>
 </div>
-    </nav>
-</div>
+            </section>
 
-</div>
-</div> <!-- .container -->
-
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Estadística Multivariada</strong>" was written by Haydeé Peruyero. </p>
+          </div>
+        </div>
+      </div>
+<a href="análisis-de-componentes-principales.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="análisis-de-conglomerados.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/HaydeePeruyero/MultivariateStatisticalAnalysis/edit/main/03-AF.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["MultivariateStatisticalAnalysis.pdf", "MultivariateStatisticalAnalysis.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  },
+  "code_folding": "hide"
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -103,22 +616,7 @@
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
-
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
 </script>
 </body>
+
 </html>
