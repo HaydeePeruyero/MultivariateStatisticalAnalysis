@@ -719,6 +719,100 @@ s_{ii} - \sum_{j=1}^m \tilde{\lambda}_{ij}^{\,2}.
 <p>La solución por componentes principales del análisis factorial basada en la matriz de
 correlaciones se obtiene sustituyendo <span class="math inline">\(R\)</span> en lugar de <span class="math inline">\(S\)</span> y aplicando las mismas fórmulas.</p>
 </div>
+<div id="selección-del-número-de-factores-en-la-solución-por-componentes-principales" class="section level4 hasAnchor" number="4.2.1.1">
+<h4><span class="header-section-number">4.2.1.1</span> Selección del número de factores en la solución por componentes principales<a href="#selecci%C3%B3n-del-n%C3%BAmero-de-factores-en-la-soluci%C3%B3n-por-componentes-principales" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>En la solución por componentes principales del modelo factorial, las cargas estimadas
+para un factor dado <em>no cambian</em> cuando se aumenta el número total de factores
+<span class="math inline">\(m\)</span>.</p>
+<p>Por ejemplo, si <span class="math inline">\(m = 1\)</span>, la matriz de cargas estimadas es
+<span class="math display">\[
+\widetilde{\Lambda} = [\,\sqrt{\hat{\lambda}_1}\,\hat{e}_1\,],
+\]</span>
+y si <span class="math inline">\(m = 2\)</span>,
+<span class="math display">\[
+\widetilde{\Lambda} =
+\big[\,\sqrt{\hat{\lambda}_1}\,\hat{e}_1
+\;\; \sqrt{\hat{\lambda}_2}\,\hat{e}_2\,\big],
+\]</span>
+donde <span class="math inline">\((\hat{\lambda}_1,\hat{e}_1)\)</span> y <span class="math inline">\((\hat{\lambda}_2,\hat{e}_2)\)</span> son los dos primeros
+pares autovalor–autovector de la matriz de covarianzas muestral <span class="math inline">\(S\)</span> (o de la matriz
+de correlaciones muestral <span class="math inline">\(R\)</span>).</p>
+<p>Por definición de las varianzas específicas estimadas <span class="math inline">\(\tilde{\psi}_i\)</span>, los elementos
+diagonales de <span class="math inline">\(S\)</span> coinciden con los elementos diagonales de
+<span class="math display">\[
+\widetilde{\Lambda}\,\widetilde{\Lambda}^\top + \widetilde{\Psi}.
+\]</span>
+Sin embargo, los elementos <em>fuera de la diagonal</em> de <span class="math inline">\(S\)</span> normalmente no se
+reproducen exactamente por <span class="math inline">\(\widetilde{\Lambda}\,\widetilde{\Lambda}^\top + \widetilde{\Psi}\)</span>.</p>
+<p>Esto plantea la pregunta: <strong>¿cómo seleccionar el número de factores comunes <span class="math inline">\(m\)</span>?</strong></p>
+<p>Si el número de factores <span class="math inline">\(m\)</span> no está determinado <strong>a priori</strong> (por teoría, por
+estudios previos, etc.), entonces puede elegirse con base en los autovalores estimados,
+de manera análoga a como se hace en el análisis de componentes principales.</p>
+<p>Para ello se considera la <strong>matriz residual</strong>
+<span class="math display">\[
+S - (\widetilde{\Lambda}\,\widetilde{\Lambda}^{\top} + \widetilde{\Psi})
+\]</span>
+que resulta de aproximar <span class="math inline">\(S\)</span> mediante la solución de componentes principales.
+Los elementos diagonales de esta matriz residual son cero (por construcción), y si los
+elementos fuera de la diagonal son también pequeños, se puede considerar que el modelo
+con <span class="math inline">\(m\)</span> factores es adecuado.</p>
+<p>Analíticamente, se tiene que la suma de cuadrados de los elementos de la
+matriz residual está acotada por la suma de los autovalores <strong>no utilizados</strong>:
+<span class="math display">\[
+\text{Suma de cuadrados de las entradas de }
+\bigl(S - (\widetilde{\Lambda}\,\widetilde{\Lambda}^\top + \widetilde{\Psi})\bigr)
+\;\;\le\;\;
+\hat{\lambda}_{m+1}^2 + \cdots + \hat{\lambda}_p^2.
+\]</span>
+Por tanto, si los autovalores <span class="math inline">\(\hat{\lambda}_{m+1},\dots,\hat{\lambda}_p\)</span> son pequeños,
+el error de aproximación también lo será.</p>
+<p>Idealmente, las contribuciones de los primeros factores a las varianzas muestrales de
+las variables deberían ser grandes. La contribución del <strong>primer factor</strong> común a
+la varianza de la variable <span class="math inline">\(X_i\)</span> viene dada por el cuadrado de su carga,
+<span class="math inline">\(\tilde{\lambda}_{i1}^2\)</span>. La contribución del primer factor a la <strong>varianza muestral
+total</strong>
+<span class="math display">\[
+s_{11} + s_{22} + \cdots + s_{pp} = \operatorname{tr}(S),
+\]</span>
+es entonces
+<span class="math display">\[
+\tilde{\lambda}_{11}^2 + \tilde{\lambda}_{21}^2 + \cdots + \tilde{\lambda}_{p1}^2
+= (\sqrt{\hat{\lambda}_1}\,\hat{e}_1)^\top
+(\sqrt{\hat{\lambda}_1}\,\hat{e}_1)
+= \hat{\lambda}_1,
+\]</span>
+pues el autovector <span class="math inline">\(\hat{e}_1\)</span> tiene norma unitaria.</p>
+<p>En general, la <strong>proporción de varianza muestral total explicada por el
+factor <span class="math inline">\(j\)</span></strong> viene dada por
+<span class="math display">\[\begin{array}{c}
+\text{Proporción de la varianza} \\
+\text{ muestral total explicada} \\
+\text{por el factor $j$}
+\end{array}
+=
+\begin{cases}
+\dfrac{\hat{\lambda}_j}{s_{11} + s_{22} + \cdots + s_{pp}},
+  &amp; \text{si se factoriza } S, \\[8pt]
+\dfrac{\hat{\lambda}_j}{p},
+  &amp; \text{si se factoriza } R.
+\end{cases}
+\]</span>
+ya que en el caso de la matriz de correlaciones <span class="math inline">\(R\)</span> la traza es <span class="math inline">\(p\)</span>.</p>
+<p>El criterio anterior se utiliza frecuentemente como una <em>regla heurística</em> para
+determinar el número adecuado de factores comunes: se incrementa <span class="math inline">\(m\)</span> hasta que
+se alcanza una <em>proporción razonable</em> de varianza explicada (por ejemplo,
+70%, 80%, etc.).</p>
+<p>Otra convención, muy habitual en programas estadísticos, consiste en fijar <span class="math inline">\(m\)</span> igual
+al número de autovalores de <span class="math inline">\(R\)</span> <em>mayores que uno</em> (cuando se factoriza la matriz
+de correlaciones), o igual al número de autovalores positivos de <span class="math inline">\(S\)</span> (cuando se
+factoriza la matriz de covarianzas). Estas reglas no deben aplicarse
+indiscriminadamente. Por ejemplo, si se usa la regla de los autovalores positivos de
+<span class="math inline">\(S\)</span>, para muestras grandes los autovalores tienden a ser todos positivos, y se podría
+terminar eligiendo <span class="math inline">\(m = p\)</span>.</p>
+El enfoque más recomendable es retener un número relativamente pequeño de factores,
+siempre que:
+<p><strong>Ejemplo:</strong></p>
+</div>
 </div>
 <div id="factores-principales-iterados" class="section level3 hasAnchor" number="4.2.2">
 <h3><span class="header-section-number">4.2.2</span> Factores principales iterados<a href="análisis-factorial.html#factores-principales-iterados" class="anchor-section" aria-label="Anchor link to header"></a></h3>

@@ -575,6 +575,118 @@ La solución por componentes principales del análisis factorial basada en la ma
 correlaciones se obtiene sustituyendo $R$ en lugar de $S$ y aplicando las mismas fórmulas.
 ::::
 
+#### Selección del número de factores en la solución por componentes principales
+
+En la solución por componentes principales del modelo factorial, las cargas estimadas
+para un factor dado *no cambian* cuando se aumenta el número total de factores
+$m$. 
+
+Por ejemplo, si $m = 1$, la matriz de cargas estimadas es
+\[
+\widetilde{\Lambda} = [\,\sqrt{\hat{\lambda}_1}\,\hat{e}_1\,],
+\]
+y si $m = 2$,
+\[
+\widetilde{\Lambda} = 
+\big[\,\sqrt{\hat{\lambda}_1}\,\hat{e}_1 
+\;\; \sqrt{\hat{\lambda}_2}\,\hat{e}_2\,\big],
+\]
+donde $(\hat{\lambda}_1,\hat{e}_1)$ y $(\hat{\lambda}_2,\hat{e}_2)$ son los dos primeros
+pares autovalor--autovector de la matriz de covarianzas muestral $S$ (o de la matriz
+de correlaciones muestral $R$).
+
+Por definición de las varianzas específicas estimadas $\tilde{\psi}_i$, los elementos
+diagonales de $S$ coinciden con los elementos diagonales de
+\[
+\widetilde{\Lambda}\,\widetilde{\Lambda}^\top + \widetilde{\Psi}.
+\]
+Sin embargo, los elementos *fuera de la diagonal* de $S$ normalmente no se
+reproducen exactamente por $\widetilde{\Lambda}\,\widetilde{\Lambda}^\top + \widetilde{\Psi}$.
+
+Esto plantea la pregunta: **¿cómo seleccionar el número de factores comunes $m$?**
+
+Si el número de factores $m$ no está determinado **a priori** (por teoría, por
+estudios previos, etc.), entonces puede elegirse con base en los autovalores estimados,
+de manera análoga a como se hace en el análisis de componentes principales.
+
+Para ello se considera la **matriz residual**
+\[
+S - (\widetilde{\Lambda}\,\widetilde{\Lambda}^{\top} + \widetilde{\Psi})
+\]
+que resulta de aproximar $S$ mediante la solución de componentes principales.
+Los elementos diagonales de esta matriz residual son cero (por construcción), y si los
+elementos fuera de la diagonal son también pequeños, se puede considerar que el modelo
+con $m$ factores es adecuado.
+
+Analíticamente, se tiene que la suma de cuadrados de los elementos de la
+matriz residual está acotada por la suma de los autovalores **no utilizados**:
+\[
+\text{Suma de cuadrados de las entradas de }
+\bigl(S - (\widetilde{\Lambda}\,\widetilde{\Lambda}^\top + \widetilde{\Psi})\bigr)
+\;\;\le\;\;
+\hat{\lambda}_{m+1}^2 + \cdots + \hat{\lambda}_p^2.
+\]
+Por tanto, si los autovalores $\hat{\lambda}_{m+1},\dots,\hat{\lambda}_p$ son pequeños,
+el error de aproximación también lo será.
+
+
+Idealmente, las contribuciones de los primeros factores a las varianzas muestrales de
+las variables deberían ser grandes. La contribución del **primer factor** común a
+la varianza de la variable $X_i$ viene dada por el cuadrado de su carga,
+$\tilde{\lambda}_{i1}^2$. La contribución del primer factor a la **varianza muestral
+total** 
+\[
+s_{11} + s_{22} + \cdots + s_{pp} = \operatorname{tr}(S),
+\]
+es entonces
+\[
+\tilde{\lambda}_{11}^2 + \tilde{\lambda}_{21}^2 + \cdots + \tilde{\lambda}_{p1}^2
+= (\sqrt{\hat{\lambda}_1}\,\hat{e}_1)^\top
+(\sqrt{\hat{\lambda}_1}\,\hat{e}_1)
+= \hat{\lambda}_1,
+\]
+pues el autovector $\hat{e}_1$ tiene norma unitaria.
+
+
+En general, la **proporción de varianza muestral total explicada por el
+factor $j$** viene dada por
+\[\begin{array}{c}
+\text{Proporción de la varianza} \\
+\text{ muestral total explicada} \\
+\text{por el factor $j$}
+\end{array}
+= 
+\begin{cases}
+\dfrac{\hat{\lambda}_j}{s_{11} + s_{22} + \cdots + s_{pp}},
+  & \text{si se factoriza } S, \\[8pt]
+\dfrac{\hat{\lambda}_j}{p},
+  & \text{si se factoriza } R.
+\end{cases}
+\]
+ya que en el caso de la matriz de correlaciones $R$ la traza es $p$.
+
+El criterio anterior se utiliza frecuentemente como una *regla heurística* para
+determinar el número adecuado de factores comunes: se incrementa $m$ hasta que
+se alcanza una *proporción razonable* de varianza explicada (por ejemplo,
+70\%, 80\%, etc.).
+
+Otra convención, muy habitual en programas estadísticos, consiste en fijar $m$ igual
+al número de autovalores de $R$ *mayores que uno* (cuando se factoriza la matriz
+de correlaciones), o igual al número de autovalores positivos de $S$ (cuando se
+factoriza la matriz de covarianzas). Estas reglas no deben aplicarse
+indiscriminadamente. Por ejemplo, si se usa la regla de los autovalores positivos de
+$S$, para muestras grandes los autovalores tienden a ser todos positivos, y se podría
+terminar eligiendo $m = p$.
+
+El enfoque más recomendable es retener un número relativamente pequeño de factores,
+siempre que:
+\begin{itemize}
+  \item proporcionen una interpretación razonable de los datos, y
+  \item ajusten de manera satisfactoria a $S$ o a $R$ (errores residuales pequeños).
+\end{itemize}
+
+**Ejemplo:**
+
 
 
 ### Factores principales iterados
