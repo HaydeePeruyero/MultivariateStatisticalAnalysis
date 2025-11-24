@@ -224,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="03-AF.html"><a href="#m%C3%A9todos-de-estimaci%C3%B3n"><i class="fa fa-check"></i><b>4.2</b> Métodos de estimación</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="03-AF.html"><a href="#factores-m%C3%A9todo-de-componentes-principales-y-m%C3%A9todo-de-factores-principales"><i class="fa fa-check"></i><b>4.2.1</b> Factores Método de Componentes Principales y Método de Factores Principales</a></li>
-<li class="chapter" data-level="4.2.2" data-path="análisis-factorial.html"><a href="análisis-factorial.html#factores-principales-iterados"><i class="fa fa-check"></i><b>4.2.2</b> Factores principales iterados</a></li>
+<li class="chapter" data-level="4.2.2" data-path="análisis-factorial.html"><a href="análisis-factorial.html#factores-principales-iterados-un-enfoque-modificado-factores-principales"><i class="fa fa-check"></i><b>4.2.2</b> Factores principales iterados (un enfoque modificado Factores principales)</a></li>
 <li class="chapter" data-level="4.2.3" data-path="03-AF.html"><a href="#factores-por-m%C3%A1xima-verosimilitud"><i class="fa fa-check"></i><b>4.2.3</b> Factores por máxima verosimilitud</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="03-AF.html"><a href="#rotaci%C3%B3n-de-factores"><i class="fa fa-check"></i><b>4.3</b> Rotación de factores</a></li>
@@ -304,11 +304,11 @@ a través de un conjunto de variables <strong>no observables</strong> <span clas
 <h2><span class="header-section-number">4.1</span> Modelo de factores ortogonales con <span class="math inline">\(m\)</span> factores comunes<a href="análisis-factorial.html#modelo-de-factores-ortogonales-con-m-factores-comunes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>El vector aleatorio observable <span class="math inline">\(X\)</span>, con <span class="math inline">\(p\)</span> componentes, tiene media <span class="math inline">\(\mu\)</span> y matriz de covarianzas <span class="math inline">\(\Sigma\)</span>. El modelo de factores quiere explicar las relaciones entre las variables manifiestas <span class="math inline">\(X=(X_1, \dots, X_p)\)</span> a través de <span class="math inline">\(m\)</span> variables latentes <span class="math inline">\(f_1, \dots, f_m\)</span>, llamadas <strong>factores comunes</strong> y <span class="math inline">\(p\)</span> fuentes adicionales de variación <span class="math inline">\(e_1,...,e_p\)</span> llamados <em>errores</em> o <em>factores específicos</em>:</p>
 <p><span class="math display">\[
-X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j, \quad j = 1, \dots, p.
+X_j = \mu_j + \ell_{j1} f_1 + \dots + \ell_{jm} f_m + e_j, \quad j = 1, \dots, p.
 \]</span></p>
 <ul>
-<li><p><span class="math inline">\(\mu_j\)</span> y <span class="math inline">\(\lambda_{ji}\)</span> son constantes.</p></li>
-<li><p>Los <span class="math inline">\(\lambda_{ji}\)</span> se llaman también las cargas (<em>loadings</em>) de la j-ésima variable en el factor i-ésimo.</p></li>
+<li><p><span class="math inline">\(\mu_j\)</span> y <span class="math inline">\(\ell_{ji}\)</span> son constantes.</p></li>
+<li><p>Los <span class="math inline">\(\ell_{ji}\)</span> se llaman también las cargas (<em>loadings</em>) de la j-ésima variable en el factor i-ésimo.</p></li>
 <li><p><span class="math inline">\(e_j\)</span> y los <span class="math inline">\(f_i\)</span> son variables aleatorias.</p></li>
 <li><p>A los <span class="math inline">\(e_j\)</span> se les llama <strong>factores específicos</strong>.</p></li>
 <li><p>Se considera que:</p>
@@ -318,26 +318,25 @@ X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j, \quad j = 1, \d
 </ul></li>
 </ul>
 <p>En forma matricial, el modelo se escribe como:</p>
-<p><span class="math display">\[
-X = \mu + \Lambda F + e,
+<p><span class="math display">\[ X = \mu_{p\times 1} + L_{p\times m} F_{m\times 1} + e_{p\times 1},
 \]</span></p>
 <p>o, centrando la variable,</p>
 <p><span class="math display">\[
-X - \mu = \Lambda F + e,
+X - \mu = L F + e,
 \]</span></p>
 <p>donde:</p>
 <ul>
 <li><p><span class="math inline">\(X = (X_1, \dots, X_p)^\top\)</span>,</p></li>
 <li><p><span class="math inline">\(e^\top = (e_1, \dots, e_p)\)</span>,</p></li>
 <li><p><span class="math inline">\(F^\top = (f_1, \dots, f_m)\)</span>,</p></li>
-<li><p><span class="math inline">\(\Lambda\)</span> es una matriz de constantes:</p></li>
+<li><p><span class="math inline">\(L\)</span> es una matriz de constantes:</p></li>
 </ul>
 <p><span class="math display">\[
-\Lambda =
+L =
 \begin{pmatrix}
-\lambda_{11} &amp; \cdots &amp; \lambda_{1m} \\
+\ell_{11} &amp; \cdots &amp; \ell_{1m} \\
 \vdots       &amp;        &amp; \vdots       \\
-\lambda_{p1} &amp; \cdots &amp; \lambda_{pm}
+\ell_{p1} &amp; \cdots &amp; \ell_{pm}
 \end{pmatrix}.
 \]</span></p>
 <p>Se supone que <span class="math inline">\(\mathbb{E}(e) = 0\)</span> y <span class="math inline">\(\mathbb{E}(F) = 0\)</span>.</p>
@@ -357,62 +356,62 @@ X - \mu = \Lambda F + e,
 \]</span></p>
 <p>Supongamos que la matriz de varianzas y covarianzas de <span class="math inline">\(F\)</span> es <span class="math inline">\(\Gamma\)</span>. Si <span class="math inline">\(\Gamma\)</span> no es diagonal (i.e., las entradas son correlacionadas), como es simétrica y semidefinida positiva, puede escribirse como:</p>
 <p><span class="math display">\[
-\Gamma = LL^\top.
+\Gamma = TT^\top.
 \]</span></p>
 <p>Sea ahora el vector</p>
 <p><span class="math display">\[
-F^* = L^{-1} F
+F^* = T^\top F
 \]</span></p>
 <p>Entonces:</p>
 <ul>
-<li><p><span class="math inline">\(E(F^*) = L^{-1} E(F) = 0\)</span>,</p></li>
-<li><p><span class="math inline">\(\operatorname{var}(F^*) = L^{-1} \Gamma L^{-1\top}
-= L^{-1} LL^\top L^{-1\top} = I\)</span>.</p></li>
+<li><p><span class="math inline">\(\mathbb{E}(F^*) = T^{\top} \mathbb{E}(F) = 0\)</span>,</p></li>
+<li><p><span class="math inline">\(\operatorname{var}(F^*) = T^{\top} \Gamma T
+= T^\top T = I\)</span>.</p></li>
 </ul>
 <p>Es decir, <span class="math inline">\(F^*\)</span> tiene entradas <strong>no correlacionadas</strong>.</p>
-<p>Además</p>
+<p>Además,</p>
 <ul>
-<li><span class="math inline">\(\operatorname{cov}(e, F) = \mathbb{E}(eF^\top) = 0\)</span>.</li>
+<li><span class="math inline">\(\operatorname{cov}(e, F) = \mathbb{E}(eF^\top) = 0_{p\times m}\)</span>.</li>
 </ul>
-<p>Si definimos <span class="math inline">\(\Lambda^* = \Lambda L\)</span>, se tiene:</p>
+<p>Si definimos <span class="math inline">\(L^* = L T\)</span>, se tiene:</p>
 <p><span class="math display">\[
-\Lambda^* F^* = \Lambda L L^{-1} F = \Lambda F.
+L^* F^* = L T T^\top F = L F.
 \]</span></p>
 <p>Sustituyendo en el modelo:</p>
 <p><span class="math display">\[
-X = \mu + \Lambda^* F^* + e = \mu + \Lambda^* LL^{-1}F + e = \mu + \Lambda F + e.
+X = \mu + L^* F^* + e = \mu + L^* TT^{\top}F + e = \mu + L F + e.
 \]</span></p>
 <p>El modelo con factores no correlacionados <span class="math inline">\(F^*\)</span> es <strong>indistinguible</strong> del modelo original con factores correlacionados <span class="math inline">\(F\)</span>. Por sencillez, se consideran los factores comunes como <strong>no correlacionados</strong>.</p>
 <p>Para ver las varianzas de las variables originales, partimos de:</p>
 <p><span class="math display">\[
-X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j.
+X_j = \mu_j + \ell_{j1} f_1 + \dots + \ell_{jm} f_m + e_j.
 \]</span></p>
 <p>Como factores comunes y específicos son no correlacionados, al calcular la varianza:</p>
 <p><span class="math display">\[
 \operatorname{var}(X_j) =
-\sum_{k=1}^m \lambda_{jk}^2
+\sum_{k=1}^m \ell_{jk}^2
 \;\;+\;\; \operatorname{var}(e_j)
-= \underbrace{\sum_{k=1}^m \lambda_{jk}^2}_{\text{comunalidad}}
+= \underbrace{\sum_{k=1}^m \ell_{jk}^2}_{\text{comunalidad}}
 + \underbrace{\psi_j^2}_{\text{especificidad}}.
 \]</span></p>
 <p>Las covarianzas entre variables quedan:</p>
 <p><span class="math display">\[
 \operatorname{cov}(X_i, X_j)
-= \sum_{k=1}^m \lambda_{ik} \lambda_{jk}.
+= \sum_{k=1}^m \ell_{ik} \ell_{jk}.
 \]</span></p>
 <p>En forma matricial, la matriz de varianzas y covarianzas de <span class="math inline">\(X\)</span> se escribe como:</p>
 <p><span class="math display">\[
-\Sigma = \Lambda \Lambda^\top + \Psi.
+\Sigma = LL^\top + \Psi.
 \]</span></p>
 <p>Al calcular la covarianza entre los factores comunes y las variables originales se tiene:</p>
 <p><span class="math display">\[
 \operatorname{cov}(X, F)
-= E\big[(\Lambda F + e) F^\top\big]
-= \Lambda E(FF^\top) + E(eF^\top)
-= \Lambda,
+= \mathbb{E}\big[(L F + e) F^\top\big]
+= L \mathbb{E}(FF^\top) + \mathbb{E}(eF^\top)
+= L,
 \]</span></p>
-<p>porque <span class="math inline">\(E(FF^\top) = I\)</span> y <span class="math inline">\(E(eF^\top) = 0\)</span>.</p>
-<p>Por tanto, las cargas <span class="math inline">\(\lambda_{ij}\)</span> pueden interpretarse como la <strong>covarianza</strong> entre la variable original <span class="math inline">\(X_i\)</span> y el factor <span class="math inline">\(f_j\)</span>.</p>
+<p>porque <span class="math inline">\(\mathbb{E}(FF^\top) = I\)</span> y <span class="math inline">\(\mathbb{E}(eF^\top) = 0\)</span>.</p>
+<p>Por tanto, las cargas <span class="math inline">\(\ell_{ij}\)</span> pueden interpretarse como la <strong>covarianza</strong> entre la variable original <span class="math inline">\(X_i\)</span> y el factor <span class="math inline">\(f_j\)</span>.</p>
 <p><strong>Diferencias entre Análisis de Componentes Principales (PCA) y Análisis de Factores (AF)</strong></p>
 <ul>
 <li>El análisis de factores busca explicar las <strong>varianzas y covarianzas</strong> (y correlaciones).</li>
@@ -422,13 +421,13 @@ X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j.
 <li>En AF hay varios métodos para calcular las cargas.</li>
 <li>En PCA las cargas se obtienen a través de eigenvalores y eigenvectores (direcciones de máxima varianza).</li>
 </ul>
-<p>En AF, las cargas <span class="math inline">\(\lambda_{ij}\)</span> se pueden calcular por tres métodos principales:</p>
+<p>En AF, las cargas <span class="math inline">\(\ell_{ij}\)</span> se pueden calcular por tres métodos principales:</p>
 <ol style="list-style-type: decimal">
 <li><strong>Extracción inicial de factores</strong>: factores principales.</li>
 <li><strong>Factores principales iterados</strong>.</li>
 <li><strong>Factores por máxima verosimilitud</strong>.</li>
 </ol>
-<p><strong>Ejemplo:</strong> Verificar que <span class="math inline">\(Σ= \Lambda\Lambda^\top+\Psi\)</span>.</p>
+<p><strong>Ejemplo:</strong> Verificar que <span class="math inline">\(\Sigma= LL^\top+\Psi\)</span>.</p>
 <p>Consideremos la matriz de covarianzas</p>
 <p><span class="math display">\[
 \Sigma =
@@ -440,9 +439,9 @@ X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j.
 \end{pmatrix}
 \]</span></p>
 <p>Queremos verificar que esta matriz puede escribirse como:</p>
-<p><span class="math display">\[Σ= \Lambda\Lambda^\top+\Psi\]</span></p>
+<p><span class="math display">\[\Sigma= LL^\top+\Psi\]</span></p>
 <p>para un modelo factorial ortogonal con <span class="math inline">\(m=2\)</span> factores.</p>
-<p>Vamos a considerar las siguientes matrices de cargas <span class="math inline">\(\Lambda\)</span> y de varianzas específicas <span class="math inline">\(\Psi\)</span>:</p>
+<p>Vamos a considerar las siguientes matrices de cargas <span class="math inline">\(L\)</span> y de varianzas específicas <span class="math inline">\(\Psi\)</span>:</p>
 <p><span class="math display">\[
 L =
 \begin{pmatrix}
@@ -495,13 +494,13 @@ L =
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="análisis-factorial.html#cb5-1" tabindex="-1"></a><span class="fu">all.equal</span>(Sigma, LLt_plus_Psi)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>Cálculo de la comunalidad de <span class="math inline">\(X_1\)</span>:</p>
-<p><span class="math display">\[h_1^2 = \lambda_{11}^2 + \lambda_{12}^2 = 4^2 + 1^2 = 17\]</span></p>
+<p><span class="math display">\[h_1^2 = \ell_{11}^2 + \ell_{12}^2 = 4^2 + 1^2 = 17\]</span></p>
 <p>En R:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="análisis-factorial.html#cb7-1" tabindex="-1"></a>h1_sq <span class="ot">&lt;-</span> L[<span class="dv">1</span>,<span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> L[<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb7-2"><a href="análisis-factorial.html#cb7-2" tabindex="-1"></a>h1_sq</span></code></pre></div>
 <pre><code>## [1] 17</code></pre>
 <p>Descomposición de la varianza de <span class="math inline">\(X_1\)</span>:</p>
-<p><span class="math display">\[\sigma_{11} = (\lambda_{11}^2 + \lambda_{12}^2) + \psi_1 = h_{1}^2 + \psi_1 \]</span></p>
+<p><span class="math display">\[\sigma_{11} = (\ell_{11}^2 + \ell_{12}^2) + \psi_1 = h_{1}^2 + \psi_1 \]</span></p>
 <p><span class="math display">\[
 \underbrace{19}_{\text{varianza}}
 \;=\;
@@ -512,10 +511,10 @@ L =
 17 + 2
 \]</span></p>
 <p>Este ejemplo muestra que:</p>
-<p><span class="math display">\[\Sigma= \Lambda\Lambda^\top+\Psi\]</span></p>
+<p><span class="math display">\[\Sigma= LL^\top+\Psi\]</span></p>
 <p>sí representa un modelo factorial ortogonal con 2 factores, pues toda la matriz <span class="math inline">\(\Sigma\)</span> puede reconstruirse exactamente usando:</p>
 <ul>
-<li><p>las cargas factoriales en <span class="math inline">\(\Lambda\)</span>,</p></li>
+<li><p>las cargas factoriales en <span class="math inline">\(L\)</span>,</p></li>
 <li><p>las varianzas específicas en <span class="math inline">\(\Psi\)</span>.</p></li>
 </ul>
 </div>
@@ -526,7 +525,7 @@ L =
 <p>Para evaluar esta idea, se compara la matriz de covarianzas muestral con la estructura propuesta por el modelo factorial.</p>
 <p>Si las correlaciones entre variables son muy pequeñas, no vale la pena hacer un análisis factorial, porque no existen factores comunes fuertes; dominan los factores específicos.</p>
 <p>Si la matriz de covarianzas no parece diagonal, entonces es razonable intentar un modelo factorial.</p>
-<p>El paso central es estimar las cargas factoriales <span class="math inline">\(\lambda_{ij}\)</span> y las varianzas específicas <span class="math inline">\(\psi_i\)</span>.</p>
+<p>El paso central es estimar las cargas factoriales <span class="math inline">\(\ell_{ij}\)</span> y las varianzas específicas <span class="math inline">\(\psi_i\)</span>.</p>
 <p>Los métodos de estimación más usados son:</p>
 <ul>
 <li><p>Componentes principales / factores principales,</p></li>
@@ -537,17 +536,13 @@ L =
 <p>La estimación y la rotación requieren algoritmos iterativos, por lo que se utilizan programas especializados.</p>
 <div id="factores-método-de-componentes-principales-y-método-de-factores-principales" class="section level3 hasAnchor" number="4.2.1">
 <h3><span class="header-section-number">4.2.1</span> Factores Método de Componentes Principales y Método de Factores Principales<a href="#factores-m%C3%A9todo-de-componentes-principales-y-m%C3%A9todo-de-factores-principales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>El punto de partida es la matriz de covarianzas poblacional <span class="math inline">\(\Sigma\)</span>.
-Por teoría de álgebra lineal, toda matriz simétrica y semidefinida positiva
-puede escribirse mediante su descomposición espectral. Existen pares
-autovalor–autovector <span class="math inline">\((\lambda_i, e_i)\)</span>, con
-<span class="math inline">\(\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_p\)</span>, que permiten escribir:</p>
+<p>El punto de partida es la matriz de covarianzas poblacional <span class="math inline">\(\Sigma\)</span>. Sabemos que toda matriz simétrica y semidefinida positiva puede escribirse mediante su descomposición espectral. Existen pares autovalor–autovector <span class="math inline">\((\lambda_i, e_i)\)</span>, con <span class="math inline">\(\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_p\)</span>, que permiten escribir:</p>
 <p><span class="math display">\[
 \Sigma
-= \lambda_1 e_1 e_1&#39;
-+ \lambda_2 e_2 e_2&#39;
+= \lambda_1 e_1 e_1^\top
++ \lambda_2 e_2 e_2^\top
 + \cdots
-+ \lambda_p e_p e_p&#39;.
++ \lambda_p e_p e_p^\top.
 \]</span></p>
 <p>Esta representación puede reescribirse como</p>
 <p><span class="math display">\[
@@ -561,28 +556,25 @@ autovalor–autovector <span class="math inline">\((\lambda_i, e_i)\)</span>, co
 \right]
 \left[
 \begin{array}{c}
-\sqrt{\lambda_1} e_1&#39; \\
-\sqrt{\lambda_2} e_2&#39; \\
+\sqrt{\lambda_1} e_1^\top \\
+\sqrt{\lambda_2} e_2^\top \\
 \vdots \\
-\sqrt{\lambda_p} e_p&#39;
+\sqrt{\lambda_p} e_p^\top
 \end{array}
 \right]
-= \Lambda\Lambda^\top,
+= L_{p\times p}L_{p\times p}^\top + 0_{p\times p} = LL^\top,
 \]</span></p>
-<p>donde <span class="math inline">\(\Lambda\)</span> es la matriz cuyas columnas son <span class="math inline">\(\sqrt{\lambda_j} e_j\)</span>.<br />
-Esta expresión coincide exactamente con la estructura del modelo factorial
-ortogonal</p>
+<p>donde <span class="math inline">\(L\)</span> es la matriz cuyas columnas son <span class="math inline">\(\sqrt{\lambda_j} e_j\)</span>.<br />
+Esta expresión coincide exactamente con la estructura del modelo factorial ortogonal</p>
 <p><span class="math display">\[
-\Sigma = \Lambda\Lambda^{\top} + \Psi,
+\Sigma = LL^{\top} + \Psi,
 \]</span></p>
 <p>donde en este caso <span class="math inline">\(\Psi = 0\)</span> y el número de factores es <span class="math inline">\(m = p\)</span>.<br />
-Aunque esta representación es exacta, no es útil para la reducción de
-dimensión porque emplea tantos factores como variables.</p>
-<p>Si los últimos <span class="math inline">\(p-m\)</span> autovalores son pequeños, puede ignorarse su contribución
-y aproximar:</p>
+Aunque esta representación es exacta, no es útil para la reducción de dimensión porque emplea tantos factores como variables.</p>
+<p>Si los últimos <span class="math inline">\(p-m\)</span> autovalores son pequeños, puede ignorarse su contribucióny aproximar:</p>
 <p><span class="math display">\[
 \Sigma \approx
-\lambda_1 e_1 e_1&#39; + \cdots + \lambda_m e_m e_m&#39;.
+\lambda_1 e_1 e_1^{\top} + \cdots + \lambda_m e_m e_m^{\top}.
 \]</span></p>
 <p>En forma matricial:</p>
 <p><span class="math display">\[
@@ -595,27 +587,24 @@ y aproximar:</p>
 \right]
 \left[
 \begin{array}{c}
-\sqrt{\lambda_1} e_1&#39; \\
-\sqrt{\lambda_2} e_2&#39; \\
+\sqrt{\lambda_1} e_1^{\top} \\
+\sqrt{\lambda_2} e_2^{\top} \\
 \vdots \\
-\sqrt{\lambda_m} e_m&#39;
+\sqrt{\lambda_m} e_m^{\top}
 \end{array}
 \right]
-= \Lambda\Lambda^\top,
+= L_{p\times m}L_{m\times p}^\top,
 \]</span></p>
-<p>donde <span class="math inline">\(\Lambda\)</span> es ahora una matriz <span class="math inline">\(p \times m\)</span>.<br />
-Esta es la base del método de : aproximar la
-covariación usando sólo los <span class="math inline">\(m\)</span> factores más importantes.</p>
-<p>El modelo factorial considera, además, un término de varianza específica
-<span class="math inline">\(\psi_i\)</span> para cada variable. Para obtenerlo, se define:</p>
+<p>Esta es la base del método de : aproximar la covariación usando sólo los <span class="math inline">\(m\)</span> factores más importantes.</p>
+<p>El modelo factorial considera, además, un término de varianza específica <span class="math inline">\(\psi_i\)</span> para cada variable. Para obtenerlo, se define:</p>
 <p><span class="math display">\[
-\psi_i = \sigma_{ii} - \sum_{j=1}^m \ \lambda_{ij}^2,
+\psi_i = \sigma_{ii} - \sum_{j=1}^m \ \ell_{ij}^2,
 \qquad i = 1,\dots,p,
 \]</span></p>
-<p>donde <span class="math inline">\(\lambda_{ij}\)</span> es la carga factorial correspondiente.<br />
+<p>donde <span class="math inline">\(\ell_{ij}\)</span> es la carga factorial correspondiente.<br />
 La aproximación factorial completa se escribe entonces como</p>
 <p><span class="math display">\[
-\Sigma \approx \Lambda\Lambda^\top + \Psi,
+\Sigma \approx LL^\top + \Psi,
 \]</span></p>
 <p>donde <span class="math inline">\(\Psi\)</span> es diagonal con las varianzas específicas.</p>
 <p>Dados datos <span class="math inline">\(x_1, x_2, \dots, x_n\)</span>, el primer paso es centrar las variables:</p>
@@ -628,10 +617,8 @@ x_{j2} - \bar{x}_2 \\
 x_{jp} - \bar{x}_p
 \end{pmatrix}.
 \]</span></p>
-<p>La matriz de covarianzas de estas observaciones centradas es la matriz de
-covarianzas muestral <span class="math inline">\(S\)</span>.</p>
-<p>Cuando las variables no están en las mismas unidades, se recomienda
-estandarizarlas:</p>
+<p>La matriz de covarianzas de estas observaciones centradas es la matriz de covarianzas muestral <span class="math inline">\(S\)</span>.</p>
+<p>Cuando las variables no están en las mismas unidades, se recomienda estandarizarlas:</p>
 <p><span class="math display">\[
 z_j =
 \begin{pmatrix}
@@ -641,26 +628,19 @@ z_j =
 \dfrac{x_{jp} - \bar{x}_p}{\sqrt{s_{pp}}}
 \end{pmatrix}.
 \]</span></p>
-<p>La matriz de covarianzas de los <span class="math inline">\(z_j\)</span> es la matriz de correlaciones muestral <span class="math inline">\(R\)</span>.<br />
-Estandarizar evita que una variable con varianza anormalmente grande influya de
-manera indebida en la estimación de las cargas.</p>
+<p>La matriz de covarianzas de los <span class="math inline">\(z_j\)</span> es la matriz de correlaciones muestral <span class="math inline">\(R\)</span>. Estandarizar evita que una variable con varianza anormalmente grande influya de manera indebida en la estimación de las cargas.</p>
 <p>Aplicar la aproximación</p>
 <p><span class="math display">\[
-\Sigma \approx \Lambda\Lambda^\top + \Psi
+\Sigma \approx LL^\top + \Psi
 \]</span></p>
-<p>a <span class="math inline">\(S\)</span> (o a <span class="math inline">\(R\)</span> si se trabaja con variables estandarizadas), usando los
-autovalores y autovectores de <span class="math inline">\(S\)</span> o <span class="math inline">\(R\)</span>, produce la llamada
-del análisis factorial.<br />
-El nombre proviene de que las cargas factoriales <span class="math inline">\(\lambda_{ij}\)</span> se derivan de los
-coeficientes de las primeras componentes principales, reescaladas por
-<span class="math inline">\(\sqrt{\lambda_j}\)</span>.</p>
+<p>a <span class="math inline">\(S\)</span> (o a <span class="math inline">\(R\)</span> si se trabaja con variables estandarizadas), usando los autovalores y autovectores de <span class="math inline">\(S\)</span> o <span class="math inline">\(R\)</span>, produce la llamada del análisis factorial.</p>
+<p>El nombre proviene de que las cargas factoriales <span class="math inline">\(\ell_{ij}\)</span> se derivan de los coeficientes de las primeras componentes principales, reescaladas por <span class="math inline">\(\sqrt{\lambda_j}\)</span>.</p>
 <div class="blackbox">
 <div class="center">
 <p><strong>RESUMEN</strong></p>
 <p><strong>Solución por Componentes Principales del Modelo Factorial</strong></p>
 </div>
-<p>El análisis factorial por componentes principales de la matriz de covarianzas muestral <span class="math inline">\(S\)</span>
-se basa en sus pares autovalor–autovector estimados
+<p>El análisis factorial por componentes principales de la matriz de covarianzas muestral <span class="math inline">\(S\)</span> se basa en sus pares autovalor–autovector estimados
 <span class="math display">\[
 (\hat{\lambda}_1, \hat{e}_1),\; (\hat{\lambda}_2, \hat{e}_2),\; \dots,\; (\hat{\lambda}_p, \hat{e}_p),
 \]</span>
@@ -669,9 +649,9 @@ donde
 \hat{\lambda}_1 \ge \hat{\lambda}_2 \ge \cdots \ge \hat{\lambda}_p.
 \]</span></p>
 <p>Sea <span class="math inline">\(m &lt; p\)</span> el número de factores comunes elegidos.<br />
-La matriz de cargas factoriales <span class="math inline">\(\{\widetilde{\lambda}_{i,j}\}\)</span> estimadas está dada por</p>
+La matriz de cargas factoriales <span class="math inline">\(\{\widetilde{\ell}_{i,j}\}\)</span> estimadas está dada por</p>
 <p><span class="math display">\[
-\widetilde{\Lambda}
+\widetilde{L}
 =
 \left[
 \sqrt{\hat{\lambda}_1}\,\hat{e}_1
@@ -685,7 +665,7 @@ La matriz de cargas factoriales <span class="math inline">\(\{\widetilde{\lambda
 \]</span></p>
 <p>Las varianzas específicas se obtienen como los elementos diagonales de
 <span class="math display">\[
-S - \widetilde{\Lambda}\,\widetilde{\Lambda}^\top,
+S - \widetilde{L}\,\widetilde{L}^\top,
 \]</span>
 es decir,</p>
 <p><span class="math display">\[
@@ -702,88 +682,69 @@ es decir,</p>
 \qquad
 \tilde{\psi}_i
 =
-s_{ii} - \sum_{j=1}^m \tilde{\lambda}_{ij}^{\,2}.
+s_{ii} - \sum_{j=1}^m \tilde{\ell}_{ij}^{\,2}.
 \]</span></p>
 <p>La comunalidad estimada de la variable <span class="math inline">\(i\)</span> es</p>
 <p><span class="math display">\[
 \tilde{h}_i^{\,2}
 =
-\tilde{\lambda}_{i1}^{\,2}
+\tilde{\ell}_{i1}^{\,2}
 +
-\tilde{\lambda}_{i2}^{\,2}
+\tilde{\ell}_{i2}^{\,2}
 +
 \cdots
 +
-\tilde{\lambda}_{im}^{\,2}.
+\tilde{\ell}_{im}^{\,2}.
 \]</span></p>
-<p>La solución por componentes principales del análisis factorial basada en la matriz de
-correlaciones se obtiene sustituyendo <span class="math inline">\(R\)</span> en lugar de <span class="math inline">\(S\)</span> y aplicando las mismas fórmulas.</p>
+<p>La solución por componentes principales del análisis factorial basada en la matriz de correlaciones se obtiene sustituyendo <span class="math inline">\(R\)</span> en lugar de <span class="math inline">\(S\)</span> y aplicando las mismas fórmulas.</p>
 </div>
 <div id="selección-del-número-de-factores-en-la-solución-por-componentes-principales" class="section level4 hasAnchor" number="4.2.1.1">
 <h4><span class="header-section-number">4.2.1.1</span> Selección del número de factores en la solución por componentes principales<a href="#selecci%C3%B3n-del-n%C3%BAmero-de-factores-en-la-soluci%C3%B3n-por-componentes-principales" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>En la solución por componentes principales del modelo factorial, las cargas estimadas
-para un factor dado <em>no cambian</em> cuando se aumenta el número total de factores
-<span class="math inline">\(m\)</span>.</p>
+<p>En la solución por componentes principales del modelo factorial, las cargas estimadas para un factor dado <em>no cambian</em> cuando se aumenta el número total de factores <span class="math inline">\(m\)</span>.</p>
 <p>Por ejemplo, si <span class="math inline">\(m = 1\)</span>, la matriz de cargas estimadas es
 <span class="math display">\[
-\widetilde{\Lambda} = [\,\sqrt{\hat{\lambda}_1}\,\hat{e}_1\,],
+\widetilde{L} = [\,\sqrt{\hat{\lambda}_1}\,\hat{e}_1\,],
 \]</span>
 y si <span class="math inline">\(m = 2\)</span>,
 <span class="math display">\[
-\widetilde{\Lambda} =
+\widetilde{L} =
 \big[\,\sqrt{\hat{\lambda}_1}\,\hat{e}_1
 \;\; \sqrt{\hat{\lambda}_2}\,\hat{e}_2\,\big],
 \]</span>
-donde <span class="math inline">\((\hat{\lambda}_1,\hat{e}_1)\)</span> y <span class="math inline">\((\hat{\lambda}_2,\hat{e}_2)\)</span> son los dos primeros
-pares autovalor–autovector de la matriz de covarianzas muestral <span class="math inline">\(S\)</span> (o de la matriz
-de correlaciones muestral <span class="math inline">\(R\)</span>).</p>
-<p>Por definición de las varianzas específicas estimadas <span class="math inline">\(\tilde{\psi}_i\)</span>, los elementos
-diagonales de <span class="math inline">\(S\)</span> coinciden con los elementos diagonales de
+donde <span class="math inline">\((\hat{\lambda}_1,\hat{e}_1)\)</span> y <span class="math inline">\((\hat{\lambda}_2,\hat{e}_2)\)</span> son los dos primeros pares autovalor–autovector de la matriz de covarianzas muestral <span class="math inline">\(S\)</span> (o de la matriz de correlaciones muestral <span class="math inline">\(R\)</span>).</p>
+<p>Por definición de las varianzas específicas estimadas <span class="math inline">\(\tilde{\psi}_i\)</span>, los elementos diagonales de <span class="math inline">\(S\)</span> coinciden con los elementos diagonales de
 <span class="math display">\[
-\widetilde{\Lambda}\,\widetilde{\Lambda}^\top + \widetilde{\Psi}.
+\widetilde{L}\,\widetilde{L}^\top + \widetilde{\Psi}.
 \]</span>
-Sin embargo, los elementos <em>fuera de la diagonal</em> de <span class="math inline">\(S\)</span> normalmente no se
-reproducen exactamente por <span class="math inline">\(\widetilde{\Lambda}\,\widetilde{\Lambda}^\top + \widetilde{\Psi}\)</span>.</p>
+Sin embargo, los elementos <em>fuera de la diagonal</em> de <span class="math inline">\(S\)</span> normalmente no se reproducen exactamente por <span class="math inline">\(\widetilde{L}\,\widetilde{L}^\top + \widetilde{\Psi}\)</span>.</p>
 <p>Esto plantea la pregunta: <strong>¿cómo seleccionar el número de factores comunes <span class="math inline">\(m\)</span>?</strong></p>
-<p>Si el número de factores <span class="math inline">\(m\)</span> no está determinado <strong>a priori</strong> (por teoría, por
-estudios previos, etc.), entonces puede elegirse con base en los autovalores estimados,
-de manera análoga a como se hace en el análisis de componentes principales.</p>
+<p>Si el número de factores <span class="math inline">\(m\)</span> no está determinado <strong>a priori</strong> (por teoría, por estudios previos, etc.), entonces puede elegirse con base en los autovalores estimados, de manera análoga a como se hace en el análisis de componentes principales.</p>
 <p>Para ello se considera la <strong>matriz residual</strong>
 <span class="math display">\[
-S - (\widetilde{\Lambda}\,\widetilde{\Lambda}^{\top} + \widetilde{\Psi})
+S - (\widetilde{L}\,\widetilde{L}^{\top} + \widetilde{\Psi})
 \]</span>
-que resulta de aproximar <span class="math inline">\(S\)</span> mediante la solución de componentes principales.
-Los elementos diagonales de esta matriz residual son cero (por construcción), y si los
-elementos fuera de la diagonal son también pequeños, se puede considerar que el modelo
-con <span class="math inline">\(m\)</span> factores es adecuado.</p>
-<p>Analíticamente, se tiene que la suma de cuadrados de los elementos de la
-matriz residual está acotada por la suma de los autovalores <strong>no utilizados</strong>:
+que resulta de aproximar <span class="math inline">\(S\)</span> mediante la solución de componentes principales. Los elementos diagonales de esta matriz residual son cero (por construcción), y si los elementos fuera de la diagonal son también pequeños, se puede considerar que el modelo con <span class="math inline">\(m\)</span> factores es adecuado.</p>
+<p>Analíticamente, se tiene que la suma de cuadrados de los elementos de la matriz residual está acotada por la suma de los autovalores <strong>no utilizados</strong>:
 <span class="math display">\[
 \text{Suma de cuadrados de las entradas de }
-\bigl(S - (\widetilde{\Lambda}\,\widetilde{\Lambda}^\top + \widetilde{\Psi})\bigr)
+\bigl(S - (\widetilde{L}\,\widetilde{L}^\top + \widetilde{\Psi})\bigr)
 \;\;\le\;\;
 \hat{\lambda}_{m+1}^2 + \cdots + \hat{\lambda}_p^2.
 \]</span>
-Por tanto, si los autovalores <span class="math inline">\(\hat{\lambda}_{m+1},\dots,\hat{\lambda}_p\)</span> son pequeños,
-el error de aproximación también lo será.</p>
-<p>Idealmente, las contribuciones de los primeros factores a las varianzas muestrales de
-las variables deberían ser grandes. La contribución del <strong>primer factor</strong> común a
-la varianza de la variable <span class="math inline">\(X_i\)</span> viene dada por el cuadrado de su carga,
-<span class="math inline">\(\tilde{\lambda}_{i1}^2\)</span>. La contribución del primer factor a la <strong>varianza muestral
-total</strong>
+Por tanto, si los autovalores <span class="math inline">\(\hat{\lambda}_{m+1},\dots,\hat{\lambda}_p\)</span> son pequeños, el error de aproximación también lo será.</p>
+<p>Idealmente, las contribuciones de los primeros factores a las varianzas muestrales de las variables deberían ser grandes. La contribución del <strong>primer factor</strong> común a la varianza de la variable <span class="math inline">\(X_i\)</span> viene dada por el cuadrado de su carga, <span class="math inline">\(\tilde{\ell}_{i1}^2\)</span>. La contribución del primer factor a la <strong>varianza muestral total</strong>
 <span class="math display">\[
 s_{11} + s_{22} + \cdots + s_{pp} = \operatorname{tr}(S),
 \]</span>
 es entonces
 <span class="math display">\[
-\tilde{\lambda}_{11}^2 + \tilde{\lambda}_{21}^2 + \cdots + \tilde{\lambda}_{p1}^2
+\tilde{\ell}_{11}^2 + \tilde{\ell}_{21}^2 + \cdots + \tilde{\ell}_{p1}^2
 = (\sqrt{\hat{\lambda}_1}\,\hat{e}_1)^\top
 (\sqrt{\hat{\lambda}_1}\,\hat{e}_1)
 = \hat{\lambda}_1,
 \]</span>
 pues el autovector <span class="math inline">\(\hat{e}_1\)</span> tiene norma unitaria.</p>
-<p>En general, la <strong>proporción de varianza muestral total explicada por el
-factor <span class="math inline">\(j\)</span></strong> viene dada por
+<p>En general, la <strong>proporción de varianza muestral total explicada por el factor <span class="math inline">\(j\)</span></strong> viene dada por
 <span class="math display">\[\begin{array}{c}
 \text{Proporción de la varianza} \\
 \text{ muestral total explicada} \\
@@ -798,24 +759,116 @@ factor <span class="math inline">\(j\)</span></strong> viene dada por
 \end{cases}
 \]</span>
 ya que en el caso de la matriz de correlaciones <span class="math inline">\(R\)</span> la traza es <span class="math inline">\(p\)</span>.</p>
-<p>El criterio anterior se utiliza frecuentemente como una <em>regla heurística</em> para
-determinar el número adecuado de factores comunes: se incrementa <span class="math inline">\(m\)</span> hasta que
-se alcanza una <em>proporción razonable</em> de varianza explicada (por ejemplo,
-70%, 80%, etc.).</p>
-<p>Otra convención, muy habitual en programas estadísticos, consiste en fijar <span class="math inline">\(m\)</span> igual
-al número de autovalores de <span class="math inline">\(R\)</span> <em>mayores que uno</em> (cuando se factoriza la matriz
-de correlaciones), o igual al número de autovalores positivos de <span class="math inline">\(S\)</span> (cuando se
-factoriza la matriz de covarianzas). Estas reglas no deben aplicarse
-indiscriminadamente. Por ejemplo, si se usa la regla de los autovalores positivos de
-<span class="math inline">\(S\)</span>, para muestras grandes los autovalores tienden a ser todos positivos, y se podría
-terminar eligiendo <span class="math inline">\(m = p\)</span>.</p>
-El enfoque más recomendable es retener un número relativamente pequeño de factores,
-siempre que:
-<p><strong>Ejemplo:</strong></p>
+<p>El criterio anterior se utiliza frecuentemente como una <em>regla heurística</em> para determinar el número adecuado de factores comunes: se incrementa <span class="math inline">\(m\)</span> hasta que se alcanza una <em>proporción razonable</em> de varianza explicada (por ejemplo, 70%, 80%, etc.).</p>
+<p>Otra convención, muy habitual en programas estadísticos, consiste en fijar <span class="math inline">\(m\)</span> igual al número de autovalores de <span class="math inline">\(R\)</span> <em>mayores que uno</em> (cuando se factoriza la matriz de correlaciones), o igual al número de autovalores positivos de <span class="math inline">\(S\)</span> (cuando se factoriza la matriz de covarianzas). Estas reglas no deben aplicarse indiscriminadamente. Por ejemplo, si se usa la regla de los autovalores positivos de <span class="math inline">\(S\)</span>, para muestras grandes los autovalores tienden a ser todos positivos, y se podría terminar eligiendo <span class="math inline">\(m = p\)</span>.</p>
+<p>El enfoque más recomendable es retener un número relativamente pequeño de factores, siempre que:</p>
+<ul>
+<li><p>proporcionen una interpretación razonable de los datos, y</p></li>
+<li><p>ajusten de manera satisfactoria a <span class="math inline">\(S\)</span> o a <span class="math inline">\(R\)</span> (errores residuales pequeños).</p></li>
+</ul>
+<p><strong>Ejemplo(Ej 9.3 Johnson and Wichern):</strong> Se encuestó a una muestra de clientes para calificar, en una escala de 7 puntos,
+los siguientes atributos de un producto:
+- Taste (sabor)</p>
+<ul>
+<li><p>Good buy for money (buena compra por el dinero)</p></li>
+<li><p>Flavor (sabor/aroma)</p></li>
+<li><p>Suitable for snack (adecuado como botana)</p></li>
+<li><p>Provides lots of energy (aporta mucha energía)</p></li>
+</ul>
+<p>A partir de las calificaciones se construyó la matriz de correlaciones</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="análisis-factorial.html#cb9-1" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(</span>
+<span id="cb9-2"><a href="análisis-factorial.html#cb9-2" tabindex="-1"></a>  <span class="fl">1.00</span>, <span class="fl">0.02</span>, <span class="fl">0.96</span>, <span class="fl">0.42</span>, <span class="fl">0.01</span>,</span>
+<span id="cb9-3"><a href="análisis-factorial.html#cb9-3" tabindex="-1"></a>  <span class="fl">0.02</span>, <span class="fl">1.00</span>, <span class="fl">0.13</span>, <span class="fl">0.71</span>, <span class="fl">0.85</span>,</span>
+<span id="cb9-4"><a href="análisis-factorial.html#cb9-4" tabindex="-1"></a>  <span class="fl">0.96</span>, <span class="fl">0.13</span>, <span class="fl">1.00</span>, <span class="fl">0.50</span>, <span class="fl">0.11</span>,</span>
+<span id="cb9-5"><a href="análisis-factorial.html#cb9-5" tabindex="-1"></a>  <span class="fl">0.42</span>, <span class="fl">0.71</span>, <span class="fl">0.50</span>, <span class="fl">1.00</span>, <span class="fl">0.79</span>,</span>
+<span id="cb9-6"><a href="análisis-factorial.html#cb9-6" tabindex="-1"></a>  <span class="fl">0.01</span>, <span class="fl">0.85</span>, <span class="fl">0.11</span>, <span class="fl">0.79</span>, <span class="fl">1.00</span></span>
+<span id="cb9-7"><a href="análisis-factorial.html#cb9-7" tabindex="-1"></a>), <span class="at">nrow =</span> <span class="dv">5</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-8"><a href="análisis-factorial.html#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="análisis-factorial.html#cb9-9" tabindex="-1"></a><span class="fu">colnames</span>(R) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(R) <span class="ot">&lt;-</span></span>
+<span id="cb9-10"><a href="análisis-factorial.html#cb9-10" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">&quot;Taste&quot;</span>, <span class="st">&quot;GoodBuy&quot;</span>, <span class="st">&quot;Flavor&quot;</span>, <span class="st">&quot;Snack&quot;</span>, <span class="st">&quot;Energy&quot;</span>)</span>
+<span id="cb9-11"><a href="análisis-factorial.html#cb9-11" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="análisis-factorial.html#cb9-12" tabindex="-1"></a>R</span></code></pre></div>
+<pre><code>##         Taste GoodBuy Flavor Snack Energy
+## Taste    1.00    0.02   0.96  0.42   0.01
+## GoodBuy  0.02    1.00   0.13  0.71   0.85
+## Flavor   0.96    0.13   1.00  0.50   0.11
+## Snack    0.42    0.71   0.50  1.00   0.79
+## Energy   0.01    0.85   0.11  0.79   1.00</code></pre>
+<p>Las correlaciones altas entre las variables (1,3) y (2,5), así como las correlaciones de la variable 4 con 2 y 5, sugieren la presencia de dos grupos de atributos. Por ello, vamos a considerar un modelo con <span class="math inline">\(m=2\)</span> factores comunes.</p>
+<p>Calculemos los eigenvalores de <span class="math inline">\(R\)</span>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="análisis-factorial.html#cb11-1" tabindex="-1"></a>eig <span class="ot">&lt;-</span> <span class="fu">eigen</span>(R)</span>
+<span id="cb11-2"><a href="análisis-factorial.html#cb11-2" tabindex="-1"></a>eig<span class="sc">$</span>values          <span class="co"># eigenvalores (en orden decreciente)</span></span></code></pre></div>
+<pre><code>## [1] 2.85309042 1.80633245 0.20449022 0.10240947 0.03367744</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="análisis-factorial.html#cb13-1" tabindex="-1"></a>eig<span class="sc">$</span>vectors         <span class="co"># eigenvectores</span></span></code></pre></div>
+<pre><code>##           [,1]        [,2]        [,3]       [,4]         [,5]
+## [1,] 0.3314539 -0.60721643  0.09848524  0.1386643  0.701783012
+## [2,] 0.4601593  0.39003172  0.74256408 -0.2821170  0.071674637
+## [3,] 0.3820572 -0.55650828  0.16840896  0.1170037 -0.708716714
+## [4,] 0.5559769  0.07806457 -0.60158211 -0.5682357  0.001656352
+## [5,] 0.4725608  0.40418799 -0.22053713  0.7513990  0.009012569</code></pre>
+<p>Sólo los dos primeros son mayores que 1, de modo que se toma <span class="math inline">\(m=2\)</span> factores.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="análisis-factorial.html#cb15-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="dv">2</span></span></code></pre></div>
+<p>La proporción de varianza total explicada por estos dos factores es $=$0.9318846.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="análisis-factorial.html#cb16-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(eig<span class="sc">$</span>values)</span>
+<span id="cb16-2"><a href="análisis-factorial.html#cb16-2" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> eig<span class="sc">$</span>values[<span class="dv">1</span><span class="sc">:</span>m]</span>
+<span id="cb16-3"><a href="análisis-factorial.html#cb16-3" tabindex="-1"></a><span class="fu">sum</span>(lambda)<span class="sc">/</span>p</span></code></pre></div>
+<pre><code>## [1] 0.9318846</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="análisis-factorial.html#cb18-1" tabindex="-1"></a>E <span class="ot">&lt;-</span> eig<span class="sc">$</span>vectors[, <span class="dv">1</span><span class="sc">:</span>m]</span></code></pre></div>
+<p>Consideremos los pares de autovalores y autovectores de la matriz de correlación <span class="math inline">\(R\)</span>
+<span class="math display">\[
+(\hat{\lambda}_1, \hat{e}_1),\; (\hat{\lambda}_2, \hat{e}_2),\; \dots,\; (\hat{\lambda}_p, \hat{e}_p),
+\]</span>
+Para el método de componentes principales, las cargas factoriales iniciales se obtienen como</p>
+<p><span class="math display">\[
+\tilde{\ell_ij} = \sqrt{\hat{\lambda_i}}\hat{e_i} ,
+\]</span></p>
+<p>Para este ejemplo se obtiene</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="análisis-factorial.html#cb19-1" tabindex="-1"></a>L <span class="ot">&lt;-</span> E <span class="sc">%*%</span> <span class="fu">diag</span>(<span class="fu">sqrt</span>(lambda))</span>
+<span id="cb19-2"><a href="análisis-factorial.html#cb19-2" tabindex="-1"></a><span class="fu">round</span>(L, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##      [,1]  [,2]
+## [1,] 0.56 -0.82
+## [2,] 0.78  0.52
+## [3,] 0.65 -0.75
+## [4,] 0.94  0.10
+## [5,] 0.80  0.54</code></pre>
+<p>Donde cada columna corresponde a los factores <span class="math inline">\(f_i\)</span>.</p>
+<p>La comunialidad de la variable <span class="math inline">\(i\)</span> es
+<span class="math display">\[
+\tilde{h}_i^2 = \sum_{j=1}^m \tilde{\ell}_{ij}^2,
+\]</span>
+y, dado que trabajamos con variables estandarizadas, la varianza
+específica es
+<span class="math display">\[
+\tilde{\psi}_i = 1 - \tilde{h}_i^2.
+\]</span></p>
+<p>Las comunialidades y varianzas específicas se obtienen de la siguiente forma:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="análisis-factorial.html#cb21-1" tabindex="-1"></a>h2  <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(L<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb21-2"><a href="análisis-factorial.html#cb21-2" tabindex="-1"></a>psi <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> h2</span>
+<span id="cb21-3"><a href="análisis-factorial.html#cb21-3" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="análisis-factorial.html#cb21-4" tabindex="-1"></a><span class="fu">round</span>(h2, <span class="dv">2</span>)        <span class="co"># comunialidades</span></span></code></pre></div>
+<pre><code>## [1] 0.98 0.88 0.98 0.89 0.93</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="análisis-factorial.html#cb23-1" tabindex="-1"></a><span class="fu">round</span>(psi, <span class="dv">2</span>)       <span class="co"># varianzas específicas</span></span></code></pre></div>
+<pre><code>## [1] 0.02 0.12 0.02 0.11 0.07</code></pre>
+<p>El modelo factorial implicaría que
+<span class="math display">\[
+R \approx \tilde{L}\tilde{L}^{\top} + \tilde{\Psi},
+\]</span>
+donde <span class="math inline">\(\tilde{\Psi}\)</span> es una matriz diagonal con las varianzas específicas <span class="math inline">\(\tilde{\psi}_i\)</span> en la diagonal.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="análisis-factorial.html#cb25-1" tabindex="-1"></a>R_hat <span class="ot">&lt;-</span> L <span class="sc">%*%</span> <span class="fu">t</span>(L) <span class="sc">+</span> <span class="fu">diag</span>(psi)</span>
+<span id="cb25-2"><a href="análisis-factorial.html#cb25-2" tabindex="-1"></a><span class="fu">round</span>(R_hat, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5]
+## [1,] 1.00 0.01 0.97 0.44 0.00
+## [2,] 0.01 1.00 0.11 0.78 0.91
+## [3,] 0.97 0.11 1.00 0.53 0.11
+## [4,] 0.44 0.78 0.53 1.00 0.81
+## [5,] 0.00 0.91 0.11 0.81 1.00</code></pre>
+<p>Para este ejemplo, la matriz <span class="math inline">\(\tilde{L}\tilde{L}^{\top} + \tilde{\Psi}\)</span> es muy cercana a <span class="math inline">\(R\)</span>, por lo que el modelo de dos factores proporciona un buen ajuste descriptivo a los datos. Además, las comunialidades indican que el modelo de dos factores alcanza un porcentaje alto de la varianza total explicada de cada variable.</p>
 </div>
 </div>
-<div id="factores-principales-iterados" class="section level3 hasAnchor" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Factores principales iterados<a href="análisis-factorial.html#factores-principales-iterados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="factores-principales-iterados-un-enfoque-modificado-factores-principales" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Factores principales iterados (un enfoque modificado Factores principales)<a href="análisis-factorial.html#factores-principales-iterados-un-enfoque-modificado-factores-principales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Este proceso se puede realizar tanto sobre <span class="math inline">\(R\)</span> como <span class="math inline">\(S\)</span>. Lo siguiente será en función de la matriz <span class="math inline">\(R\)</span>.</p>
+<p>Si el modelo de factores <span class="math inline">\(\rho = LL^\top + \Psi\)</span> está correctamente especificado, los <span class="math inline">\(m\)</span> factores comunes</p>
 </div>
 <div id="factores-por-máxima-verosimilitud" class="section level3 hasAnchor" number="4.2.3">
 <h3><span class="header-section-number">4.2.3</span> Factores por máxima verosimilitud<a href="#factores-por-m%C3%A1xima-verosimilitud" class="anchor-section" aria-label="Anchor link to header"></a></h3>
