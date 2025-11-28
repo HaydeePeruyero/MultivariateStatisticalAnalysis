@@ -80,3 +80,4 @@ plots-3d
 ejercicios-6
 selección-del-número-de-factores-en-la-solución-por-componentes-principales
 factores-principales-iterados-un-enfoque-modificado-factores-principales
+factores-principales-iterados-un-enfoque-modificado-de-factores-principales

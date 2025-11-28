@@ -224,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2" data-path="03-AF.html"><a href="#m%C3%A9todos-de-estimaci%C3%B3n"><i class="fa fa-check"></i><b>4.2</b> Métodos de estimación</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="03-AF.html"><a href="#factores-m%C3%A9todo-de-componentes-principales-y-m%C3%A9todo-de-factores-principales"><i class="fa fa-check"></i><b>4.2.1</b> Factores Método de Componentes Principales y Método de Factores Principales</a></li>
-<li class="chapter" data-level="4.2.2" data-path="análisis-factorial.html"><a href="análisis-factorial.html#factores-principales-iterados-un-enfoque-modificado-factores-principales"><i class="fa fa-check"></i><b>4.2.2</b> Factores principales iterados (un enfoque modificado Factores principales)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="análisis-factorial.html"><a href="análisis-factorial.html#factores-principales-iterados-un-enfoque-modificado-de-factores-principales"><i class="fa fa-check"></i><b>4.2.2</b> Factores principales iterados (un enfoque modificado de Factores principales)</a></li>
 <li class="chapter" data-level="4.2.3" data-path="03-AF.html"><a href="#factores-por-m%C3%A1xima-verosimilitud"><i class="fa fa-check"></i><b>4.2.3</b> Factores por máxima verosimilitud</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="03-AF.html"><a href="#rotaci%C3%B3n-de-factores"><i class="fa fa-check"></i><b>4.3</b> Rotación de factores</a></li>
@@ -865,13 +865,177 @@ donde <span class="math inline">\(\tilde{\Psi}\)</span> es una matriz diagonal c
 <p>Para este ejemplo, la matriz <span class="math inline">\(\tilde{L}\tilde{L}^{\top} + \tilde{\Psi}\)</span> es muy cercana a <span class="math inline">\(R\)</span>, por lo que el modelo de dos factores proporciona un buen ajuste descriptivo a los datos. Además, las comunialidades indican que el modelo de dos factores alcanza un porcentaje alto de la varianza total explicada de cada variable.</p>
 </div>
 </div>
-<div id="factores-principales-iterados-un-enfoque-modificado-factores-principales" class="section level3 hasAnchor" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Factores principales iterados (un enfoque modificado Factores principales)<a href="análisis-factorial.html#factores-principales-iterados-un-enfoque-modificado-factores-principales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="factores-principales-iterados-un-enfoque-modificado-de-factores-principales" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Factores principales iterados (un enfoque modificado de Factores principales)<a href="análisis-factorial.html#factores-principales-iterados-un-enfoque-modificado-de-factores-principales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Este proceso se puede realizar tanto sobre <span class="math inline">\(R\)</span> como <span class="math inline">\(S\)</span>. Lo siguiente será en función de la matriz <span class="math inline">\(R\)</span>.</p>
 <p>Si el modelo de factores <span class="math inline">\(\rho = LL^\top + \Psi\)</span> está correctamente especificado, los <span class="math inline">\(m\)</span> factores comunes</p>
+<p>En el análisis factorial partimos del modelo
+<span class="math display">\[
+\rho = LL^{\top} + \Psi,
+\]</span>
+donde <span class="math inline">\(\rho\)</span> es la matriz de correlaciones poblacional, <span class="math inline">\(L\)</span> contiene las cargas
+factoriales y <span class="math inline">\(\Psi\)</span> es la matriz diagonal de varianzas específicas. Dado que las
+variables están estandarizadas, cada diagonal cumple
+<span class="math display">\[
+\rho_{ii} = 1 = h_i^2 + \psi_i,
+\]</span>
+donde <span class="math inline">\(h_i^2\)</span> es la comunalidad de la variable <span class="math inline">\(i\)</span> y <span class="math inline">\(\psi_i\)</span> su varianza
+específica.</p>
+<p>Si removemos la contribución específica <span class="math inline">\(\psi_i\)</span> de la diagonal, o
+equivalentemente reemplazamos el 1 por <span class="math inline">\(h_i^2\)</span>, obtenemos la matriz
+<span class="math display">\[
+\rho - \Psi = LL^\top.
+\]</span></p>
+<p>Supongamos ahora que tenemos estimaciones iniciales <span class="math inline">\(\psi_i^*\)</span> de las varianzas
+específicas. Entonces la <span class="math inline">\(i\)</span>-ésima diagonal de <span class="math inline">\(\rho\)</span> se reemplaza por
+<span class="math display">\[
+h_i^{*2} = 1 - \psi_i^*,
+\]</span>
+con lo cual obtenemos la
+<span class="math display">\[
+R_r =
+\begin{pmatrix}
+h_1^{*2} &amp; r_{12} &amp; \cdots &amp; r_{1p} \\
+r_{12} &amp; h_2^{*2} &amp; \cdots &amp; r_{2p} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+r_{1p} &amp; r_{2p} &amp; \cdots &amp; h_p^{*2}
+\end{pmatrix}.
+\]</span></p>
+<p>Supondremos que toda la estructura de correlación en <span class="math inline">\(R_r\)</span> puede explicarse por
+<span class="math inline">\(m\)</span> factores comunes. Por ello, factorizamos
+<span class="math display">\[
+R_r \approx L^* {L^*}^\top,
+\]</span>
+donde <span class="math inline">\(L^* = (\ell_{ij}^*)\)</span> contiene las .</p>
+<p>El método de factores principales utiliza para <span class="math inline">\(L^*\)</span> la expresión
+<span class="math display">\[
+L^* =
+\left[
+\sqrt{\hat{\lambda}_1^*}\, \hat{e}_1^* \,:\:
+\sqrt{\hat{\lambda}_2^*}\, \hat{e}_2^* \,:\:
+\cdots \,:\:
+\sqrt{\hat{\lambda}_m^*}\, \hat{e}_m^*
+\right],
+\]</span>
+donde <span class="math inline">\((\hat{\lambda}_i^*, \hat{e}_i^*)\)</span> son los <span class="math inline">\(m\)</span> mayores pares
+autovalor-autovector obtenidos de la matriz reducida <span class="math inline">\(R_r\)</span>.</p>
+<p>Dadas estas cargas, las comunalidades se reestiman mediante
+<span class="math display">\[
+\tilde{h}_i^2 = \sum_{j=1}^m \ell_{ij}^{*2}.
+\]</span></p>
+<p>El procedimiento se puede iterar: las comunalidades estimadas reemplazan a las
+anteriores en la diagonal de <span class="math inline">\(R_r\)</span>, y se recalculan autovalores y cargas.</p>
+<p>De forma similar al método de componentes principales, los autovalores
+<span class="math display">\[
+\hat{\lambda}_1^*,\ \hat{\lambda}_2^*,\ \ldots,\ \hat{\lambda}_p^*
+\]</span>
+de la matriz reducida ayudan a decidir cuántos factores retener. Sin embargo,
+debido al uso de comunalidades estimadas, algunos autovalores pueden ser
+negativos, lo cual complica la elección del número de factores. Idealmente,
+retendríamos tantos factores como el rango de la matriz poblacional reducida.</p>
+<p>Para comenzar el algoritmo se requieren valores iniciales <span class="math inline">\(\psi_i^*\)</span>. Una
+elección muy común, cuando se trabaja con matrices de correlación, es
+<span class="math display">\[
+\psi_i^* = \frac{1}{r^{ii}},
+\]</span>
+donde <span class="math inline">\(r^{ii}\)</span> es el elemento diagonal <span class="math inline">\(i\)</span> de <span class="math inline">\(R^{-1}\)</span>. Las comunalidades
+iniciales serían entonces
+<span class="math display">\[
+h_i^{*2} = 1 - \psi_i^* = 1 - \frac{1}{r^{ii}}.
+\]</span></p>
+<p>Este valor coincide con el cuadrado del coeficiente de correlación múltiple entre
+<span class="math inline">\(X_i\)</span> y las restantes <span class="math inline">\(p-1\)</span> variables.</p>
+<p>Aunque el método de componentes principales puede verse como un caso especial del
+método de factores principales (si se toman las comunalidades iniciales iguales a
+1), ambos enfoques tienen diferencias filosóficas y geométricas importantes. En la
+práctica, las dos técnicas producen con frecuencia cargas factoriales similares,
+especialmente cuando:</p>
+<ul>
+<li><p>el número de variables es grande,</p></li>
+<li><p>el número de factores comunes es pequeño.</p></li>
+</ul>
 </div>
 <div id="factores-por-máxima-verosimilitud" class="section level3 hasAnchor" number="4.2.3">
 <h3><span class="header-section-number">4.2.3</span> Factores por máxima verosimilitud<a href="#factores-por-m%C3%A1xima-verosimilitud" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>En el análisis factorial, si asumimos que los factores comunes <span class="math inline">\(F\)</span> y los factores
+específicos <span class="math inline">\(\varepsilon\)</span> están normalmente distribuidos, entonces es posible
+obtener estimadores de máxima verosimilitud para las cargas factoriales y las
+varianzas específicas.</p>
+<p>Sea el modelo factorial
+<span class="math display">\[
+X_j - \mu = L F_j + \varepsilon_j,
+\]</span>
+donde <span class="math inline">\(X_j\)</span> es el vector de observaciones de la variable <span class="math inline">\(j\)</span>, <span class="math inline">\(L\)</span> es la matriz de
+cargas y <span class="math inline">\(\Psi\)</span> es la matriz diagonal de varianzas específicas. Si tanto
+<span class="math inline">\(F_j\)</span> como <span class="math inline">\(\varepsilon_j\)</span> son normales, entonces cada <span class="math inline">\(X_j\)</span> es normal con matriz
+de covarianza
+<span class="math display">\[
+\Sigma = LL^{\top} + \Psi.
+\]</span></p>
+<p>Suponiendo una muestra aleatoria <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> de
+<span class="math inline">\(\mathcal{N}_p(\mu, \Sigma)\)</span>, la verosimilitud viene dada por
+<span class="math display">\[
+L(\mu,\Sigma)
+= (2\pi)^{-\frac{np}{2}} |\Sigma|^{-\frac{n}{2}}
+\exp\left(
+    -\frac{1}{2}\texttt{tr}\left[\sum \ ^{-1} \left(\sum_{j=1}^{n} (X_j -\bar{X})(X_j -\bar{X})^{\top} +
+    n(\bar{X} - \mu)(\bar{X} - \mu)^{\top} \right)\right]
+\right),
+\]</span>
+es decir, depende de <span class="math inline">\(L\)</span> y <span class="math inline">\(\Psi\)</span> únicamente a través de <span class="math inline">\(\Sigma = LL^{\top} + \Psi\)</span>.</p>
+<p>Debido a que múltiples matrices <span class="math inline">\(L\)</span> producen la misma matriz <span class="math inline">\(\Sigma\)</span> mediante
+rotaciones ortogonales, el modelo no está completamente identificado. Para
+resolver esta indeterminación, se impone la siguiente condición de unicidad:
+<span class="math display">\[
+L^{\top}\Psi^{-1} L = \Delta,
+\]</span>
+donde <span class="math inline">\(\Delta\)</span> es una matriz diagonal. Esta restricción fija una
+orientación conveniente para los factores.</p>
+<p>En la práctica, los estimadores de máxima verosimilitud <span class="math inline">\(\hat{L}\)</span> y <span class="math inline">\(\hat{\Psi}\)</span>
+se obtienen mediante algoritmos numéricos, ya que maximizar explícitamente la
+verosimilitud es algebraicamente complejo. Existen hoy en día programas de
+computadora que realizan estas estimaciones de manera eficiente.</p>
+<div class="blackbox">
+<div class="center">
+<p><strong>Método de Máxima Verosimilitud (Maximum Likelihood Method)</strong></p>
+</div>
+<p><strong>Proposición: </strong> Sea <span class="math inline">\(X_1, X_2, \ldots, X_n\)</span> una muestra aleatoria de <span class="math inline">\(\mathcal{N}_p(\mu,\Sigma)\)</span>,
+donde
+<span class="math display">\[
+\Sigma = LL^{\top} + \Psi
+\]</span>
+es la matriz de covarianzas bajo el modelo factorial con <span class="math inline">\(m\)</span> factores comunes.
+Sean <span class="math inline">\(\hat{L}\)</span> y <span class="math inline">\(\hat{\Psi}\)</span> los estimadores de máxima verosimilitud que
+maximizan la verosimilitud sujeta a la condición
+<span class="math display">\[
+\hat{L}^{\top} \hat{\Psi}^{-1} \hat{L} \quad \text{diagonal}.
+\]</span></p>
+<p>Entonces:</p>
+<ol style="list-style-type: decimal">
+<li><p>Las comunalidades estimadas por máxima verosimilitud son
+<span class="math display">\[
+\hat{h}_i^2 = \hat{\ell}_{i1}^2 + \hat{\ell}_{i2}^2 + \cdots + \hat{\ell}_{im}^2,
+\qquad i=1,\ldots,p.
+\]</span></p></li>
+<li><p>La proporción de la varianza total de la muestra explicada por el
+factor <span class="math inline">\(j\)</span> es
+<span class="math display">\[
+\frac{
+     \hat{\ell}_{1j}^2 + \hat{\ell}_{2j}^2 + \cdots + \hat{\ell}_{pj}^2
+}{
+     s_{11} + s_{22} + \cdots + s_{pp}
+},
+\]</span>
+donde <span class="math inline">\(s_{ii}\)</span> son los elementos diagonales de la matriz de covarianzas de
+la muestra.</p></li>
+</ol>
+</div>
+<p>Este resultado resume las cantidades más importantes obtenidas mediante el
+método de máxima verosimilitud: las comunalidades y la varianza explicada por
+cada factor. Aunque la maximización de la verosimilitud requiere métodos
+numéricos, las expresiones finales para la interpretación del modelo factorial
+son conceptualmente simples.</p>
+<p><strong>Ejemplo:</strong></p>
 </div>
 </div>
 <div id="rotación-de-factores" class="section level2 hasAnchor" number="4.3">

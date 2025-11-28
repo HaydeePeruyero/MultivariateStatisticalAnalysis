@@ -750,15 +750,201 @@ Para este ejemplo, la matriz $\tilde{L}\tilde{L}^{\top} + \tilde{\Psi}$ es muy c
 
 
 
-### Factores principales iterados (un enfoque modificado Factores principales)
+### Factores principales iterados (un enfoque modificado de Factores principales)
 
 Este proceso se puede realizar tanto sobre $R$ como $S$. Lo siguiente será en función de la matriz $R$. 
 
 Si el modelo de factores $\rho = LL^\top + \Psi$ está correctamente especificado, los $m$ factores comunes 
 
+En el análisis factorial partimos del modelo
+\[
+\rho = LL^{\top} + \Psi,
+\]
+donde $\rho$ es la matriz de correlaciones poblacional, $L$ contiene las cargas
+factoriales y $\Psi$ es la matriz diagonal de varianzas específicas. Dado que las
+variables están estandarizadas, cada diagonal cumple
+\[
+\rho_{ii} = 1 = h_i^2 + \psi_i,
+\]
+donde $h_i^2$ es la comunalidad de la variable $i$ y $\psi_i$ su varianza
+específica.
+
+Si removemos la contribución específica $\psi_i$ de la diagonal, o
+equivalentemente reemplazamos el 1 por $h_i^2$, obtenemos la matriz
+\[
+\rho - \Psi = LL^\top.
+\]
+
+Supongamos ahora que tenemos estimaciones iniciales $\psi_i^*$ de las varianzas
+específicas. Entonces la $i$-ésima diagonal de $\rho$ se reemplaza por
+\[
+h_i^{*2} = 1 - \psi_i^*,
+\]
+con lo cual obtenemos la \emph{matriz de correlaciones reducida}
+\[
+R_r =
+\begin{pmatrix}
+h_1^{*2} & r_{12} & \cdots & r_{1p} \\
+r_{12} & h_2^{*2} & \cdots & r_{2p} \\
+\vdots & \vdots & \ddots & \vdots \\
+r_{1p} & r_{2p} & \cdots & h_p^{*2}
+\end{pmatrix}.
+\]
+
+Supondremos que toda la estructura de correlación en $R_r$ puede explicarse por
+$m$ factores comunes. Por ello, factorizamos
+\[
+R_r \approx L^* {L^*}^\top,
+\]
+donde $L^* = (\ell_{ij}^*)$ contiene las \emph{cargas factoriales estimadas}.
+
+El método de factores principales utiliza para $L^*$ la expresión
+\[
+L^* = 
+\left[
+\sqrt{\hat{\lambda}_1^*}\, \hat{e}_1^* \,:\:
+\sqrt{\hat{\lambda}_2^*}\, \hat{e}_2^* \,:\:
+\cdots \,:\:
+\sqrt{\hat{\lambda}_m^*}\, \hat{e}_m^*
+\right],
+\]
+donde $(\hat{\lambda}_i^*, \hat{e}_i^*)$ son los $m$ mayores pares
+autovalor-autovector obtenidos de la matriz reducida $R_r$.
+
+Dadas estas cargas, las comunalidades se reestiman mediante
+\[
+\tilde{h}_i^2 = \sum_{j=1}^m \ell_{ij}^{*2}. 
+\]
+
+El procedimiento se puede iterar: las comunalidades estimadas reemplazan a las
+anteriores en la diagonal de $R_r$, y se recalculan autovalores y cargas.
+
+De forma similar al método de componentes principales, los autovalores
+\[
+\hat{\lambda}_1^*,\ \hat{\lambda}_2^*,\ \ldots,\ \hat{\lambda}_p^*
+\]
+de la matriz reducida ayudan a decidir cuántos factores retener. Sin embargo,
+debido al uso de comunalidades estimadas, algunos autovalores pueden ser
+negativos, lo cual complica la elección del número de factores. Idealmente,
+retendríamos tantos factores como el rango de la matriz poblacional reducida.
+
+Para comenzar el algoritmo se requieren valores iniciales $\psi_i^*$. Una
+elección muy común, cuando se trabaja con matrices de correlación, es
+\[
+\psi_i^* = \frac{1}{r^{ii}},
+\]
+donde $r^{ii}$ es el elemento diagonal $i$ de $R^{-1}$. Las comunalidades
+iniciales serían entonces
+\[
+h_i^{*2} = 1 - \psi_i^* = 1 - \frac{1}{r^{ii}}. 
+\]
+
+Este valor coincide con el cuadrado del coeficiente de correlación múltiple entre
+$X_i$ y las restantes $p-1$ variables.
+
+Aunque el método de componentes principales puede verse como un caso especial del
+método de factores principales (si se toman las comunalidades iniciales iguales a
+1), ambos enfoques tienen diferencias filosóficas y geométricas importantes. En la
+práctica, las dos técnicas producen con frecuencia cargas factoriales similares,
+especialmente cuando:
+
+- el número de variables es grande,
+
+- el número de factores comunes es pequeño.
+
+
 ### Factores por máxima verosimilitud
 
+En el análisis factorial, si asumimos que los factores comunes $F$ y los factores
+específicos $\varepsilon$ están normalmente distribuidos, entonces es posible
+obtener estimadores de máxima verosimilitud para las cargas factoriales y las
+varianzas específicas.
 
+Sea el modelo factorial
+\[
+X_j - \mu = L F_j + \varepsilon_j,
+\]
+donde $X_j$ es el vector de observaciones de la variable $j$, $L$ es la matriz de
+cargas y $\Psi$ es la matriz diagonal de varianzas específicas. Si tanto
+$F_j$ como $\varepsilon_j$ son normales, entonces cada $X_j$ es normal con matriz
+de covarianza
+\[
+\Sigma = LL^{\top} + \Psi.
+\]
+
+Suponiendo una muestra aleatoria $X_1, X_2, \ldots, X_n$ de 
+$\mathcal{N}_p(\mu, \Sigma)$, la verosimilitud viene dada por
+\[
+L(\mu,\Sigma)
+= (2\pi)^{-\frac{np}{2}} |\Sigma|^{-\frac{n}{2}}
+\exp\left(
+    -\frac{1}{2}\texttt{tr}\left[\sum \ ^{-1} \left(\sum_{j=1}^{n} (X_j -\bar{X})(X_j -\bar{X})^{\top} +
+    n(\bar{X} - \mu)(\bar{X} - \mu)^{\top} \right)\right]
+\right),
+\]
+es decir, depende de $L$ y $\Psi$ únicamente a través de $\Sigma = LL^{\top} + \Psi$.
+
+Debido a que múltiples matrices $L$ producen la misma matriz $\Sigma$ mediante
+rotaciones ortogonales, el modelo no está completamente identificado. Para
+resolver esta indeterminación, se impone la siguiente condición de unicidad:
+\[
+L^{\top}\Psi^{-1} L = \Delta,
+\]
+donde $\Delta$ es una matriz diagonal. Esta restricción fija una
+orientación conveniente para los factores.
+
+En la práctica, los estimadores de máxima verosimilitud $\hat{L}$ y $\hat{\Psi}$
+se obtienen mediante algoritmos numéricos, ya que maximizar explícitamente la
+verosimilitud es algebraicamente complejo. Existen hoy en día programas de
+computadora que realizan estas estimaciones de manera eficiente.
+
+
+:::: {.blackbox data-latex=""}
+::: {.center data-latex=""}
+**Método de Máxima Verosimilitud (Maximum Likelihood Method)**
+:::
+
+**Proposición: ** Sea $X_1, X_2, \ldots, X_n$ una muestra aleatoria de $\mathcal{N}_p(\mu,\Sigma)$,
+donde
+\[
+\Sigma = LL^{\top} + \Psi
+\]
+es la matriz de covarianzas bajo el modelo factorial con $m$ factores comunes.
+Sean $\hat{L}$ y $\hat{\Psi}$ los estimadores de máxima verosimilitud que
+maximizan la verosimilitud sujeta a la condición
+\[
+\hat{L}^{\top} \hat{\Psi}^{-1} \hat{L} \quad \text{diagonal}.
+\]
+
+Entonces:
+
+1) Las comunalidades estimadas por máxima verosimilitud son
+    \[
+    \hat{h}_i^2 = \hat{\ell}_{i1}^2 + \hat{\ell}_{i2}^2 + \cdots + \hat{\ell}_{im}^2,
+    \qquad i=1,\ldots,p.
+    \]
+    
+2) La proporción de la varianza total de la muestra explicada por el
+    factor $j$ es
+    \[
+    \frac{
+        \hat{\ell}_{1j}^2 + \hat{\ell}_{2j}^2 + \cdots + \hat{\ell}_{pj}^2
+    }{
+        s_{11} + s_{22} + \cdots + s_{pp}
+    },
+    \]
+    donde $s_{ii}$ son los elementos diagonales de la matriz de covarianzas de
+    la muestra.
+
+::::
+
+Este resultado resume las cantidades más importantes obtenidas mediante el
+método de máxima verosimilitud: las comunalidades y la varianza explicada por
+cada factor. Aunque la maximización de la verosimilitud requiere métodos
+numéricos, las expresiones finales para la interpretación del modelo factorial
+son conceptualmente simples.
+
+**Ejemplo:**
 
 
 ## Rotación de factores
