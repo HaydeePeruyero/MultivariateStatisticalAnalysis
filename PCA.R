@@ -230,3 +230,132 @@ proporcion.acumulada_varianza
 
 ## Tarea1: Investigar porque no dan los mismos signos
 ## Tarea2: ¿Cómo decidimos con cuantas componentes trabajar?
+
+
+#----------- 
+## Aplicaciones a datos reales
+library(factoextra)
+
+library(readxl)
+records <- read_excel("D:/Users/hayde/Documents/R_sites/MultivariateStatisticalAnalysis/data/NationalTrackRecords2.xlsx")
+
+records2 <- records[,2:8]
+
+rownames(records2) <- records$...1
+
+var(records2)
+
+cor(records2)
+
+library(corrplot)
+
+res1 <- cor.mtest(records2, conf.level=0.95)
+
+res2 <- cor.mtest(records2, conf.level=0.99)
+
+cor.mat <- cor(records2, use="complete.obs")
+
+corrplot(cor.mat)
+
+cp1 <- princomp(records2, cor = TRUE)
+
+summary(cp1)
+
+cp1$loadings
+
+#Y_1 = 0.368*(100m -mean(100m)) + 0.365 *(200m - mean(200m)) +....
+
+cp1$sdev
+
+varianza.cp1 <- (cp1$sdev)^2
+varianza.cp1
+
+proporcion.varianza.cp1 <- varianza.cp1 / sum(varianza.cp1)
+proporcion.varianza.cp1
+
+porcentaje.varianza <- varianza.cp1*100 / sum(varianza.cp1)
+porcentaje.varianza
+
+proporcion.acumulada_varianza <- cumsum(proporcion.varianza.cp1)
+proporcion.acumulada_varianza
+
+
+screeplot(cp1, type = "lines")
+
+
+##Kaiser
+# Necesitamos
+
+pca_obj <- prcomp(records2, scale. = TRUE)
+
+eigenvalues <- pca_obj$sdev^2
+eigenvalues
+
+
+fviz_eig(pca_obj, addlabels = TRUE, ylim=c(0,100))
+
+componentes_kaiser <- which(eigenvalues > 1)
+componentes_kaiser
+
+
+### Horn
+
+library(psych)
+
+set.seed(123)
+
+fa.parallel(records2,
+            fa = "pc",
+            n.iter = 100,
+            show.legend = TRUE,
+            main = "Análisis Paralelo - Procedimiento de Horn")
+
+
+## eigenvalores de la matriz de correlación
+
+ev_cor <- eigen(cor.mat)
+ev_cor
+
+
+library(nFactors)
+
+
+ap <- parallel(subject = nrow(records2),
+               var = ncol(records2),
+               rep = 100,
+               cent = 0.05)
+
+ap
+
+
+num_cp <- nScree(x = ev_cor$values,
+                 aparallel = ap$eigen$qevpea,
+                 cor = TRUE)
+
+num_cp
+
+
+##Plot de visualización
+
+biplot(pca_obj, scale = 0, cex =0.8)
+
+
+
+
+
+fviz_pca_biplot(pca_obj,
+                repel = TRUE,
+                col.ind = "gray30",
+                col.var = "firebrick",
+                geom.ind = "point",
+                label = "var",
+                title = "Biplot de PCA")
+
+
+
+biplot(cp1)
+
+#Interpretarlo
+
+
+

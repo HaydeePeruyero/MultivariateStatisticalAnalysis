@@ -8,3 +8,5 @@ Curso Estadística Multivariada ENES Morelia Semestre 2026-1
 - [Plots multivariados](https://haydeeperuyero.github.io/Diapositivas_Est_Multi/plots_multivariados/plots_multivariados.html#1)
 
 - [PCA](https://haydeeperuyero.github.io/Diapositivas_Est_Multi/PCA/pca.html#1)
+
+- [PCA parte 2](https://haydeeperuyero.github.io/Diapositivas_Est_Multi/PCA2/pca.html#1)

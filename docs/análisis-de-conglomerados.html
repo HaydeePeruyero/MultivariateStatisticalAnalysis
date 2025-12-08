@@ -51,8 +51,77 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
 
+<style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <style type="text/css">
   
@@ -159,14 +228,42 @@
 <li class="chapter" data-level="4.2" data-path="04-AC.html"><a href="#m%C3%A9todos-de-estimaci%C3%B3n"><i class="fa fa-check"></i><b>4.2</b> Métodos de estimación</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="04-AC.html"><a href="#factores-m%C3%A9todo-de-componentes-principales-y-m%C3%A9todo-de-factores-principales"><i class="fa fa-check"></i><b>4.2.1</b> Factores Método de Componentes Principales y Método de Factores Principales</a></li>
-<li class="chapter" data-level="4.2.2" data-path="análisis-factorial.html"><a href="análisis-factorial.html#factores-principales-iterados"><i class="fa fa-check"></i><b>4.2.2</b> Factores principales iterados</a></li>
+<li class="chapter" data-level="4.2.2" data-path="análisis-factorial.html"><a href="análisis-factorial.html#factores-principales-iterados-un-enfoque-modificado-de-factores-principales"><i class="fa fa-check"></i><b>4.2.2</b> Factores principales iterados (un enfoque modificado de Factores principales)</a></li>
 <li class="chapter" data-level="4.2.3" data-path="04-AC.html"><a href="#factores-por-m%C3%A1xima-verosimilitud"><i class="fa fa-check"></i><b>4.2.3</b> Factores por máxima verosimilitud</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="04-AC.html"><a href="#rotaci%C3%B3n-de-factores"><i class="fa fa-check"></i><b>4.3</b> Rotación de factores</a></li>
 <li class="chapter" data-level="4.4" data-path="análisis-factorial.html"><a href="análisis-factorial.html#ejemplos-1"><i class="fa fa-check"></i><b>4.4</b> Ejemplos</a></li>
 <li class="chapter" data-level="4.5" data-path="análisis-factorial.html"><a href="análisis-factorial.html#ejercicios-5"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="04-AC.html"><a href="#an%C3%A1lisis-de-conglomerados"><i class="fa fa-check"></i><b>5</b> Análisis de Conglomerados</a></li>
+<li class="chapter" data-level="5" data-path="04-AC.html"><a href="#an%C3%A1lisis-de-conglomerados"><i class="fa fa-check"></i><b>5</b> Análisis de Conglomerados</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html"><i class="fa fa-check"></i><b>5.1</b> Distancias y disimilitudes</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#distancia-euclidiana"><i class="fa fa-check"></i><b>5.1.1</b> Distancia euclidiana</a></li>
+<li class="chapter" data-level="5.1.2" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#distancia-de-minkowski"><i class="fa fa-check"></i><b>5.1.2</b> Distancia de Minkowski</a></li>
+<li class="chapter" data-level="5.1.3" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#distancia-city-block"><i class="fa fa-check"></i><b>5.1.3</b> Distancia City block</a></li>
+<li class="chapter" data-level="5.1.4" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#disimilitud-calculando-simple-matching"><i class="fa fa-check"></i><b>5.1.4</b> Disimilitud calculando Simple Matching</a></li>
+<li class="chapter" data-level="5.1.5" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#disimilitud-calculando-el-coeficiente-de-jaccard"><i class="fa fa-check"></i><b>5.1.5</b> Disimilitud calculando el coeficiente de Jaccard</a></li>
+<li class="chapter" data-level="5.1.6" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#disimilitud-calculando-el-coeficiente-de-czekanowski"><i class="fa fa-check"></i><b>5.1.6</b> Disimilitud calculando el coeficiente de Czekanowski</a></li>
+<li class="chapter" data-level="5.1.7" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#disimilitud-de-1-coincidencias-de-sneath"><i class="fa fa-check"></i><b>5.1.7</b> Disimilitud de <span class="math inline">\(1\)</span>-coincidencias de Sneath</a></li>
+<li class="chapter" data-level="5.1.8" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#distancia-de-gower"><i class="fa fa-check"></i><b>5.1.8</b> Distancia de Gower</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="04-AC.html"><a href="#clustering-jer%C3%A1rquico"><i class="fa fa-check"></i><b>5.2</b> Clustering jerárquico</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#clustering-aglomerativo-de-la-liga-sencilla"><i class="fa fa-check"></i><b>5.2.1</b> Clustering aglomerativo de la liga sencilla</a></li>
+<li class="chapter" data-level="5.2.2" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#clustering-aglomerativo-de-la-liga-completa"><i class="fa fa-check"></i><b>5.2.2</b> Clustering aglomerativo de la liga completa</a></li>
+<li class="chapter" data-level="5.2.3" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#clustering-aglomerativo-de-la-liga-promedio"><i class="fa fa-check"></i><b>5.2.3</b> Clustering aglomerativo de la liga promedio</a></li>
+<li class="chapter" data-level="5.2.4" data-path="04-AC.html"><a href="#agrupaci%C3%B3n-de-varianza-m%C3%ADnima-de-ward"><i class="fa fa-check"></i><b>5.2.4</b> Agrupación de varianza mínima de Ward</a></li>
+<li class="chapter" data-level="5.2.5" data-path="04-AC.html"><a href="#mismos-gr%C3%A1ficos-usando-el-paquete-factoextra"><i class="fa fa-check"></i><b>5.2.5</b> Mismos gráficos usando el paquete factoextra</a></li>
+<li class="chapter" data-level="5.2.6" data-path="04-AC.html"><a href="#n%C3%BAmero-%C3%B3ptimo-de-cl%C3%BAsters"><i class="fa fa-check"></i><b>5.2.6</b> Número óptimo de clústers</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#ejercicios-6"><i class="fa fa-check"></i><b>5.3</b> Ejercicios</a></li>
+<li class="chapter" data-level="5.4" data-path="04-AC.html"><a href="#clustering-no-jer%C3%A1rquico"><i class="fa fa-check"></i><b>5.4</b> Clustering no jerárquico</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#k-means"><i class="fa fa-check"></i><b>5.4.1</b> K-means</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1"><i class="fa fa-check"></i><b>5.5</b> Tutoriales de DataCamp sugeridos</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="04-AC.html"><a href="#an%C3%A1lisis-de-discriminante"><i class="fa fa-check"></i><b>6</b> Análisis de Discriminante</a></li>
 <li class="chapter" data-level="7" data-path="04-AC.html"><a href="#ap%C3%A9ndices"><i class="fa fa-check"></i><b>7</b> Apéndices</a>
 <ul>
@@ -180,7 +277,7 @@
 <li class="chapter" data-level="7.4.3" data-path="04-AC.html"><a href="#gr%C3%A1ficos-de-paralelas"><i class="fa fa-check"></i><b>7.4.3</b> Gráficos de Paralelas</a></li>
 <li class="chapter" data-level="7.4.4" data-path="apéndices.html"><a href="apéndices.html#estrellas"><i class="fa fa-check"></i><b>7.4.4</b> Estrellas</a></li>
 <li class="chapter" data-level="7.4.5" data-path="apéndices.html"><a href="apéndices.html#plots-3d"><i class="fa fa-check"></i><b>7.4.5</b> Plots 3D</a></li>
-<li class="chapter" data-level="7.4.6" data-path="apéndices.html"><a href="apéndices.html#ejercicios-6"><i class="fa fa-check"></i><b>7.4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="7.4.6" data-path="apéndices.html"><a href="apéndices.html#ejercicios-7"><i class="fa fa-check"></i><b>7.4.6</b> Ejercicios</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -205,7 +302,1501 @@
             <section class="normal" id="section-">
 <div id="análisis-de-conglomerados" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Sección 5</span> Análisis de Conglomerados<a href="#an%C3%A1lisis-de-conglomerados" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="distancias-y-disimilitudes" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Distancias y disimilitudes<a href="análisis-de-conglomerados.html#distancias-y-disimilitudes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Antes de entrar al tema de análisis de clústers es importante introducir los conceptos de distancias y disimilitudes o similitudes.</p>
+<p>Una medida de <em>disimilitud o distancia</em> entre dos sujetos muy distintos será grande y por el contrario, una medida de <em>similitud</em> entre ellos será pequeña.</p>
+<p>Una <strong>distancia</strong> es una función <span class="math inline">\(d: \mathcal{X}\times \mathcal{X}\to \mathbb{R}\)</span> que cumple las siguientes propiedades:</p>
+<ol style="list-style-type: decimal">
+<li><p>Para cualesquiera <span class="math inline">\(x,y\in\mathcal{X}\)</span> se tiene que <span class="math inline">\(d(x,y)\geq 0\)</span>.</p></li>
+<li><p>Se cumple que <span class="math inline">\(d(x,y)=0\)</span> si y sólo si <span class="math inline">\(x=y\)</span>.</p></li>
+<li><p>Para cualesquiera <span class="math inline">\(x,y\in\mathcal{X}\)</span> se cumple que <span class="math inline">\(d(x,y) = d(y,x)\)</span> (condición de simetría).</p></li>
+<li><p>Para cualesquiera <span class="math inline">\(x,y,z\in\mathcal{X}\)</span> se cumple la desigualdad del triángulo:
+<span class="math display">\[
+       d(x,y)\leq d(x,z) + d(z,y).
+  \]</span></p></li>
+</ol>
+<p>Dos de las distancias más comunes en estadística para variables aleatorias multivariadas cuantitativas son la distancia euclidiana y la distancia de Mahalanobis:</p>
+<ol style="list-style-type: decimal">
+<li><p>Si <span class="math inline">\(\bar{x},\bar{y}\in\mathbb{R}^n\)</span>, entonces la distancia euclidiana <span class="math inline">\(d_E\)</span> entre <span class="math inline">\(\bar{x}\)</span> y <span class="math inline">\(\bar{y}\)</span> está dada por
+<span class="math display">\[
+       d_E\left( \bar{x}, \bar{y} \right) = \left[ \left(\bar{x} - \bar{y}\right)&#39;\cdot \left( \bar{x}- \bar{y} \right) \right]^{\frac{1}{2}}
+   \]</span></p></li>
+<li><p>Si <span class="math inline">\(\bar{x},\bar{y}\in\mathbb{R}^n\)</span>, entonces la distancia de Mahalanobis <span class="math inline">\(d_M\)</span> entre <span class="math inline">\(\bar{x}\)</span> y <span class="math inline">\(\bar{y}\)</span> está dada por
+<span class="math display">\[
+       d_E\left( \bar{x}, \bar{y} \right) = \left[ \left(\bar{x} - \bar{y}\right)&#39; \Sigma^{-1} \left( \bar{x}- \bar{y} \right) \right]^{\frac{1}{2}}
+   \]</span>
+donde <span class="math inline">\(\Sigma^{-1}\)</span> denota a la matriz inversa de la matriz de covarianzas de <span class="math inline">\(\bar{x}\)</span> y <span class="math inline">\(\bar{y}\)</span>.</p></li>
+</ol>
+<p>Existen otras distancias, como la distancia de Gower que puede ser utilizada para estudiar variables aleatorias con entradas cuantitativas y/o cualitativas.</p>
+<p>Informalmente, una <strong>similitud</strong> es una medida entre dos objetos de que tanto se parecen. Por lo cual entre más parecidos sean los dos objetos su medida de similitud será más grande. Usualmente toma valores positivos entre 0 y 1.</p>
+<p>Formalmente, una similitud es una función <span class="math inline">\(s: \mathcal{X}\times \mathcal{X} \to \mathbb{R}\)</span> que típicamente satisface las siguientes dos condiciones:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(s(x,y)=1\)</span> si y sólo si <span class="math inline">\(x=y\)</span>. Además <span class="math inline">\(0\leq s\leq 1\)</span>.</p></li>
+<li><p><span class="math inline">\(s(x,y)=s(y,x)\)</span> para todo <span class="math inline">\(x\)</span> y <span class="math inline">\(y\)</span> (condición de simetría).</p></li>
+</ol>
+<p>Usualmente, la función de similitud satisface <span class="math inline">\(s(x,y)\geq 0\)</span> pero existen ejemplos de similitudes que no lo satisfacen, por ejemplo: el coeficiente de correlación y los productos escalares. Sin embargo, si la función de similitud no es positiva y está acotada siempre es posible transformarla en una función de similitud positiva añadiendo una constante, es decir, podemos escribir nuestra nueva función de similitud <span class="math inline">\(\tilde{s}\)</span> como <span class="math inline">\(\tilde{s}(x,y)=s(x,y)+c\)</span>, donde <span class="math inline">\(c\)</span> es una constante positiva lo suficientemente grande.</p>
+<p>A diferencia de una distancia o una disimilitud, no existe un análogo para la desigualdad del triángulo para la similitud.</p>
+<p>Informalmente, una <strong>disimilitud</strong> entre dos objetos es una medida del grado en el cual dos objetos son diferentes. Como es de esperarse, una disimilitud debe ser baja si se consideran pares de objetos que son similares.</p>
+<p>De manera precisa, una disimilitud es una función <span class="math inline">\(d: \mathcal{X}\times \mathcal{X} \to \mathbb{R}\)</span> que satisface las siguientes dos condiciones:</p>
+<ol style="list-style-type: decimal">
+<li><p>Para cualquier <span class="math inline">\(x\in\mathcal{X}\)</span> se tiene que <span class="math inline">\(d(x,x) = 0\)</span>.</p></li>
+<li><p>Para cualesquiera <span class="math inline">\(x,y \in \mathcal{X}\)</span> se cumple que <span class="math inline">\(d(x,y)\geq 0\)</span> (condición de no negatividad).</p></li>
+<li><p>Para cualesquiera <span class="math inline">\(x,y\in\mathcal{X}\)</span> se cumple que <span class="math inline">\(d(x,y) = d(y,x)\)</span>.</p></li>
+</ol>
+<p>Es importante mencionar que, en la literatura de análisis de datos como <em>data mining</em> y algunos textos de estadística, a las disimilitudes también se les nombra <em>distancias</em>, lo cual es incorrecto. Lo que si ocurre es que toda distancia (o métrica) es una disimilitud, pero no toda disimilitud es una distancia.</p>
+<p>Algunas disimilitudes usuales de acuerdo al tipo de dato que se esté trabajando son las siguientes:</p>
+<ul>
+<li><p><strong>Tipo nominal</strong>: La disimilitud más sencilla es
+<span class="math display">\[
+  d(x,y) = \left\{
+    \begin{matrix}
+    0 &amp; \text{ si } x= y \\
+    1 &amp; \text{ si } x\neq y
+    \end{matrix}
+  \right.
+  \]</span></p></li>
+<li><p><strong>Tipo ordinal</strong>: La disimilitud más sencilla es
+<span class="math display">\[
+d(x,y) = \frac{|x-y|}{n-1}
+  \]</span>
+donde suponemos que hay <span class="math inline">\(n\)</span> datos, y a cada uno de ellos se les ha asignado un valor entero de <span class="math inline">\(0\)</span> a <span class="math inline">\(n-1\)</span>.</p></li>
+<li><p><strong>Tipo intervalo</strong>: La disimilitud más sencilla es
+<span class="math display">\[
+d(x,y) = \| x- y\|
+  \]</span>
+donde <span class="math inline">\(\| \cdot \|\)</span> denota la distancia euclidiana usual.</p></li>
+</ul>
+<p>A continuación se describen algunas de las distancias y disimilitudes más usuales entre individuos con datos numéricos, binarios, categóricos y mixtos.</p>
+<div id="distancia-euclidiana" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Distancia euclidiana<a href="análisis-de-conglomerados.html#distancia-euclidiana" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Es la distancia usual entre dos puntos en el espacio Euclidiano <span class="math inline">\(\mathcal{X}\)</span>. Cumple las siguientes propiedades:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(d(X,Y)\geq 0\)</span> para todo <span class="math inline">\(X,Y\in \mathcal{X}\)</span> y <span class="math inline">\(d(X,Y)=0\)</span> si y sólo si <span class="math inline">\(X=Y\)</span></li>
+<li><span class="math inline">\(d(X,Y)=d(Y,X)\)</span> para todo <span class="math inline">\(X,Y\in\mathcal{X}\)</span> (Simetría)</li>
+<li>$d(X,Z)d(X,Y)  + d(Y,Z) $ para todo <span class="math inline">\(X,Y,Z\in\mathcal{X}\)</span>(Desigualdad del triángulo)</li>
+</ol>
+<p><strong>Tipos de datos:</strong> Numéricos</p>
+<p><strong>Fórmula y explicación:</strong> Sea <span class="math inline">\(\mathcal{X}\)</span> el espacio euclidiano de dimensión <span class="math inline">\(n\)</span> y sean <span class="math inline">\(X,Y\in\mathcal{X}\)</span> dos puntos en el espacio con coordenadas <span class="math inline">\(X=(x_1,...,x_{n})\)</span> y <span class="math inline">\(Y=(y_{1},...,y_{n})\)</span>. Entonces su distancia euclidiana esta dada por:
+<span class="math display">\[ d(X,Y)=\sqrt{\sum_{i=1}^{n}(x_{i}-y_{i})^{2}}\]</span></p>
+</div>
+<div id="distancia-de-minkowski" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Distancia de Minkowski<a href="análisis-de-conglomerados.html#distancia-de-minkowski" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Es una generalización de la distancia euclidiana. Se llama así en honor al matemático Hermann Minkowski.</p>
+<p><strong>Tipos de datos:</strong> Numéricos.</p>
+<p><strong>Fórmula y explicación:</strong>Sean <span class="math inline">\(X,Y\in\mathcal{X}\)</span> dos puntos en el espacio con coordenadas <span class="math inline">\(X=(x_1,...,x_{n})\)</span> y <span class="math inline">\(Y=(y_{1},...,y_{n})\)</span> y sea <span class="math inline">\(p\)</span> un entero. Entonces su distancia Minkowski esta dada por:
+<span class="math display">\[ d(X,Y)=\left( \sum_{i=1}^{n} |\ x_{i}-y_{i}\ |^{p}\right)^{\frac{1}{p}}\]</span>
+Para <span class="math inline">\(p\geq 1\)</span> esta distancia es una métrica. Si <span class="math inline">\(p&lt;1\)</span> no se satisface la desigualdad del triángulo y por lo tanto no es una métrica. Si <span class="math inline">\(p=2\)</span> es la distancia euclidiana y si <span class="math inline">\(p=1\)</span> es la distancia de Manhattan(o city block).</p>
+</div>
+<div id="distancia-city-block" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> Distancia City block<a href="análisis-de-conglomerados.html#distancia-city-block" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>También se conoce como la distancia del taxista o distancia de Manhattan. Esta distancia no es única en el sentido de que hay más de un camino de distancia mínima para llegar de un punto a otro. Se le conoce como distancia del taxista o distancia de Manhattan porque hace referencia a la forma en que un automovil puede ir de un punto a otro en un diseño cuadricular de las calles de Manhattan. En la figura siguiente, podemos la distancia City block entre los puntos <span class="math inline">\(X,Y\)</span> esta representada con los colores rojo, azul y verde, los tres caminos tienen la misma longitud, mientras que la distancia en morado es la distancia euclidiana entre los puntos.</p>
+<p><strong>Tipos de datos:</strong> Numéricos</p>
+<p><strong>Fórmula y explicación:</strong> Sean <span class="math inline">\(X,Y\in\mathcal{X}\)</span> dos puntos en el espacio con coordenadas <span class="math inline">\(X=(x_1,...,x_{n})\)</span> y <span class="math inline">\(Y=(y_{1},...,y_{n})\)</span>. Entonces su distancia city block esta dada por:
+<span class="math display">\[ d_{1}(X,Y) = \parallel X - Y \ \parallel = \sum_{i=1}^{n} |\ x_{i} - y_{i}\ |  \]</span>
+En el caso de la figura, la distancia de city block (en color azul, rojo o verde) sería <span class="math inline">\(15\)</span> si consideramos que cada cuadrito tiene longitud <span class="math inline">\(1\)</span>.</p>
+</div>
+<div id="disimilitud-calculando-simple-matching" class="section level3 hasAnchor" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> Disimilitud calculando Simple Matching<a href="análisis-de-conglomerados.html#disimilitud-calculando-simple-matching" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El coeficiente de concordancia simple, llamado coeficiente <em>simple matching</em> (<span class="math inline">\(\mathrm{SMC}\)</span>) o <em>coeficiente de Rand</em> se trata de la razón de coincidencias respecto al número total de valores. Se ofrece una ponderación igual a las coincidencias y a las no coincidencias. Toma valores entre <span class="math inline">\(0\)</span> y <span class="math inline">\(1\)</span>. La disimilitud calculada vía simple matching o <em>distancia simple matching</em>, que mide la disimilitud entre las muestras, se calcula restando el <span class="math inline">\(\mathrm{SMC}\)</span> a <span class="math inline">\(1\)</span>.</p>
+<p><strong>Tipos de datos:</strong> Binarios</p>
+<p><strong>Fórmula y explicación:</strong> Consideremos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> dos objetos con <span class="math inline">\(n\)</span> atributos binarios, esto es, cada atributo vale <span class="math inline">\(0\)</span> o <span class="math inline">\(1\)</span>. El número total para cada combinación de atributos para <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> se obtiene como sigue:</p>
+<ul>
+<li><p>Denotamos <span class="math inline">\(M_{11}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> tienen un valor de <span class="math inline">\(1\)</span>.</p></li>
+<li><p>Denotamos <span class="math inline">\(M_{01}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> vale <span class="math inline">\(0\)</span> y <span class="math inline">\(B\)</span> vale <span class="math inline">\(1\)</span>.</p></li>
+<li><p>Denotamos <span class="math inline">\(M_{10}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> vale <span class="math inline">\(1\)</span> y <span class="math inline">\(B\)</span> vale <span class="math inline">\(0\)</span>.</p></li>
+<li><p>Denotamos <span class="math inline">\(M_{00}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> tienen un valor de <span class="math inline">\(0\)</span>.</p></li>
+</ul>
+<p>Entonces <span class="math inline">\(M_{00}+ M_{01} + M_{10} + M_{11} = n\)</span>. La distancia <em>simple matching</em> <span class="math inline">\(\mathrm{SMD}\)</span> entre <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> se define como
+<span class="math display">\[
+      \mathrm{SMD} = 1 - \mathrm{SMC},
+   \]</span>
+donde <span class="math inline">\(\mathrm{SMC}\)</span> es el coeficiente <em>simple matching</em> dado por
+<span class="math display">\[
+      \mathrm{SMC} = \frac{M_{00} + M_{11}}{M_{00} + M_{01} + M_{10} + M_{11}}.
+   \]</span></p>
+</div>
+<div id="disimilitud-calculando-el-coeficiente-de-jaccard" class="section level3 hasAnchor" number="5.1.5">
+<h3><span class="header-section-number">5.1.5</span> Disimilitud calculando el coeficiente de Jaccard<a href="análisis-de-conglomerados.html#disimilitud-calculando-el-coeficiente-de-jaccard" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El coeficiente de Jaccard fue presentado como <em>coefficient de communauté</em> por Paul Jaccard en 1912 y posteriormente fue formulado de manera independiente por T. Tanimoto en 1958, y toma valores entre <span class="math inline">\(0\)</span> y <span class="math inline">\(1\)</span>. Se trata de un índice en el que no se toman en cuenta las ausencias conjuntas. Se ofrece una ponderación igual a las coincidencias y a las no coincidencias. Se conoce también como <em>razón de similaridad</em>.</p>
+<p>La disimilitud de Jaccard (habitualmente conocida como <em>distancia de Jaccard</em>) se calcula restando el coeficiente de Jaccard a <span class="math inline">\(1\)</span>. La distancia de Jaccard suele usarse para calcular una matriz <span class="math inline">\(n\times n\)</span> para la agrupación y el escalamiento multidimensional de <span class="math inline">\(n\)</span> conjuntos de muestras.</p>
+<p><strong>Tipos de datos:</strong> Binarios</p>
+<p><strong>Fórmula y explicación:</strong> Consideremos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> dos objetos con <span class="math inline">\(n\)</span> atributos binarios, esto es, cada atributo vale <span class="math inline">\(0\)</span> o <span class="math inline">\(1\)</span>. El número total para cada combinación de atributos para <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> se obtiene como sigue:</p>
+<ul>
+<li><p>Denotamos <span class="math inline">\(M_{11}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> tienen un valor de <span class="math inline">\(1\)</span>.</p></li>
+<li><p>Denotamos <span class="math inline">\(M_{01}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> vale <span class="math inline">\(0\)</span> y <span class="math inline">\(B\)</span> vale <span class="math inline">\(1\)</span>.</p></li>
+<li><p>Denotamos <span class="math inline">\(M_{10}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> vale <span class="math inline">\(1\)</span> y <span class="math inline">\(B\)</span> vale <span class="math inline">\(0\)</span>.</p></li>
+<li><p>Denotamos <span class="math inline">\(M_{00}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> tienen un valor de <span class="math inline">\(0\)</span>.</p></li>
+</ul>
+<p>Entonces <span class="math inline">\(M_{00}+ M_{01} + M_{10} + M_{11} = n\)</span>. La distancia de Jaccard <span class="math inline">\(d_{J}\)</span> se define como
+<span class="math display">\[
+      d_{J} = \frac{M_{01} + M_{10}}{M_{01} + M_{10} + M_{11}}.
+   \]</span></p>
+<p>Se cumple que <span class="math inline">\(d_{J} = 1- J\)</span> donde <span class="math inline">\(J\)</span> es el índice (o coeficiente) de Jaccard dado por
+<span class="math display">\[
+      J = \frac{M_{11}}{M_{01} + M_{10} + M_{11}}.
+   \]</span></p>
+<p>También, para fines del diseño, si <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son conjuntos vacíos, entonces <span class="math inline">\(d_{J} = 0\)</span> (o equivalentemente, <span class="math inline">\(J(A,B) = 1\)</span>).</p>
+</div>
+<div id="disimilitud-calculando-el-coeficiente-de-czekanowski" class="section level3 hasAnchor" number="5.1.6">
+<h3><span class="header-section-number">5.1.6</span> Disimilitud calculando el coeficiente de Czekanowski<a href="análisis-de-conglomerados.html#disimilitud-calculando-el-coeficiente-de-czekanowski" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El coeficiente Czekanowski es uno en el que no se toman en cuenta las ausencias conjuntas y donde las coincidencias se ponderan doblemente en datos binarios. También se conoce como coeficiente de Dice, coeficiente de S{}rensen o coeficiente de S{}rensen–Dice (quienes los derivaron de manera independiente en 1948). Fue desarrollado en 1913 por Jan Czekanowski para establecer relaciones entre dialectos y lenguas, pero realmente se puede aplicar a cualquier comparación entre individuos calificados por múltiples atributos, por ejemplo, razas, especies de plantas o de animales, biocenosis, biotopos y hábitats, culturas, etc. La calificación puede ser cualitativa o cuantitativa y se basa en la comparación atributo por atributo de cada par de individuos de una colección. Este índice toma valores entre <span class="math inline">\(0\)</span> y <span class="math inline">\(1\)</span>.</p>
+<p>La disimilitud asociada al coeficiente de Czekanowski se obtiene restando dicho índice a <span class="math inline">\(1\)</span>. Contrario a la distancia de Jaccard, esta disimilitud no cumple la desigualdad del triángulo y por ello no es una distancia verdadera.</p>
+<p><strong>Tipos de datos:</strong> Binarios</p>
+<p><strong>Fórmula y explicación:</strong> Consideremos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> dos objetos con <span class="math inline">\(n\)</span> atributos binarios, esto es, cada atributo vale <span class="math inline">\(0\)</span> o <span class="math inline">\(1\)</span>. El número total para cada combinación de atributos para <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> se obtiene como sigue:</p>
+<ul>
+<li><p>Denotamos <span class="math inline">\(M_{11}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> tienen un valor de <span class="math inline">\(1\)</span>.</p></li>
+<li><p>Denotamos <span class="math inline">\(M_{01}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> vale <span class="math inline">\(0\)</span> y <span class="math inline">\(B\)</span> vale <span class="math inline">\(1\)</span>.</p></li>
+<li><p>Denotamos <span class="math inline">\(M_{10}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> vale <span class="math inline">\(1\)</span> y <span class="math inline">\(B\)</span> vale <span class="math inline">\(0\)</span>.</p></li>
+<li><p>Denotamos <span class="math inline">\(M_{00}\)</span> al número total de atributos donde <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> tienen un valor de <span class="math inline">\(0\)</span>.</p></li>
+</ul>
+<p>La disimilitud asociada al coeficiente de Czekanowski se calcula como
+<span class="math display">\[
+      d_{Cz} = 1 - \frac{2M_{11}}{2M_{11} + M_{10} + M_{01}}
+   \]</span></p>
+<p>De manera equivalente, al considerar la formulación dada por S{}ren y Dice, la disimilitud anterior se puede formular como
+<span class="math display">\[
+      d_{Cz} = 1 - \frac{2 |A\cap B|}{|A| + |B|}
+   \]</span>
+donde <span class="math inline">\(|\cdot|\)</span> denota la cardinalidad de los respectivos conjuntos.</p>
+</div>
+<div id="disimilitud-de-1-coincidencias-de-sneath" class="section level3 hasAnchor" number="5.1.7">
+<h3><span class="header-section-number">5.1.7</span> Disimilitud de <span class="math inline">\(1\)</span>-coincidencias de Sneath<a href="análisis-de-conglomerados.html#disimilitud-de-1-coincidencias-de-sneath" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Medida de disimilitud propuesta en 1958 por Sneath y Sokal para variables binarias. Cumple las propiedades de simetría entre <span class="math inline">\(a\)</span> y <span class="math inline">\(d\)</span> (atributos en que las unidades coinciden), mientras que su rango está entre 0 y 1.</p>
+<p><strong>Tipos de datos:</strong> Binarios</p>
+<p><strong>Fórmula y explicación:</strong> <span class="math display">\[
+    d_{ij} = 1 - c_{ij}
+   \]</span>
+con
+<span class="math display">\[
+      c_{ij} = \frac{a+d}{a+b+c+d}
+   \]</span>
+donde <span class="math inline">\(a\)</span> y <span class="math inline">\(d\)</span> son los atributos en que las unidades coinciden mientras el denominador es la suma de todos los valores de la tabla de contingencia.</p>
+</div>
+<div id="distancia-de-gower" class="section level3 hasAnchor" number="5.1.8">
+<h3><span class="header-section-number">5.1.8</span> Distancia de Gower<a href="análisis-de-conglomerados.html#distancia-de-gower" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El coeficiente de similitud de Gower propuesto por Gower en 1971 permite la manipulación simultánea de variables cuantitativas y cualitativas en una base de datos, mediante la aplicación de este coeficiente se logra hallar la similitud entre individuos a los cuales se les han medido una serie de características en común. Una similaridad alta, es decir cercana a 1, indicara gran homogeneidad entre los individuos; por el contrario, una similaridad cercana a cero indica que los individuos son diferentes.</p>
+<p><strong>Tipos de datos:</strong> Mixtos: variables cuantitativas y cualitativas</p>
+<p><strong>Fórmula y explicación:</strong><br />
+<span class="math display">\[
+      d_{ij}^{2} = 1-s_{ij}
+   \]</span>
+donde
+<span class="math display">\[
+      s_{i j} = \frac{\sum\limits_{h=1}^{p_1}\left(1-\frac{\left|x_{ih}-x_{jh}\right|}{G_h}\right) + a + \alpha}{p_{1}+p_{2}-d+p_{3}}
+    \]</span>
+con <span class="math inline">\(p_1\)</span> es el número de variables cuantitativas, <span class="math inline">\(a\)</span> y <span class="math inline">\(d\)</span> son el número de coincidencias en 1 (presencia de la característica) y el número de coincidencias en 0 (ausencia de la caracteristica) respectivamente para las <span class="math inline">\(p_2\)</span> variables binarias, <span class="math inline">\(\alpha\)</span> es el número de coincidencias para las <span class="math inline">\(p_3\)</span> variables cualitativas y <span class="math inline">\(G_h\)</span> es el rango de la <span class="math inline">\(h\)</span>-ésima variable cuantitativa.</p>
+</div>
+</div>
+<div id="clustering-jerárquico" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Clustering jerárquico<a href="#clustering-jer%C3%A1rquico" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En muchos problemas no es factible examinar todas las posibles particiones de un conjunto de objetos, incluso con computadoras muy rápidas. Por ello se han desarrollado algoritmos de agrupamiento que permiten obtener grupos razonables sin evaluar todas las configuraciones posibles. Entre ellos destacan los métodos de clustering jerárquico.</p>
+<p>Estos métodos generan una estructura en forma de árbol, llamada <strong>dendrograma</strong>, que muestra cómo se agrupan o dividen los objetos progresivamente, y el nivel (distancia) en el que lo hacen.</p>
+<p>Existen dos enfoques principales:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Métodos jerárquicos aglomerativos</strong>: Comienzan con cada objeto como un grupo individual. El proceso es:</li>
+</ol>
+<ul>
+<li>Cada objeto constituye inicialmente un cluster.</li>
+<li>Se calculan las distancias entre todos los clusters.</li>
+<li>Se fusionan los dos clusters más similares.</li>
+<li>Se repite el proceso hasta obtener un único cluster.</li>
+</ul>
+<p>Es decir, el algoritmo va desde varios clusters hasta uno solo.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Métodos jerárquicos divisivos</strong>: Funcionan de forma inversa:</li>
+</ol>
+<ul>
+<li>Se inicia con un único cluster que contiene a todos los objetos.</li>
+<li>Se divide el conjunto en dos subgrupos lo más disímiles posible.</li>
+<li>Se continúa dividiendo hasta llegar a clusters individuales.</li>
+</ul>
+<p>Este enfoque desciende desde un solo cluster hacia muchos.</p>
+<p>En este capítulo nos concentraremos en los métodos jerárquicos aglomeraticos, incluyendo:</p>
+<ul>
+<li><strong>Single linkage agglomerative clustering</strong> o método de la liga sencilla o del vecino más cercano.</li>
+<li><strong>Complete linkage agglomerative clustering</strong> o método de la liga completa o del vecino más lejano.</li>
+<li><strong>Average linkage agglomerative clustering</strong> o métdod de la liga promedio.</li>
+<li><strong>Ward’s minimum variance clustering</strong> o método Ward.</li>
+</ul>
+<p>El algoritmo aglomerativo paso a paso, se puede entender como sigue:</p>
+<p>Dado un conjunto de <span class="math inline">\(N\)</span> objetos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Iniciar con <span class="math inline">\(N\)</span> clusters individuales y construir una matriz de distancias
+<span class="math display">\[
+D = (d_{ij}).
+\]</span></p></li>
+<li><p>Buscar el par de clusters <span class="math inline">\((U,V)\)</span> cuya distancia <span class="math inline">\(d_{UV}\)</span> sea mínima.</p></li>
+<li><p>Fusionar los clusters <span class="math inline">\(U\)</span> y <span class="math inline">\(V\)</span> formando un nuevo cluster <span class="math inline">\((UV)\)</span>.</p></li>
+<li><p>Actualizar la matriz de distancias eliminando filas y columnas correspondientes a <span class="math inline">\(U\)</span> y <span class="math inline">\(V\)</span>, y añadiendo la distancia del nuevo cluster con respecto a los restantes.</p></li>
+<li><p>Repetir los pasos anteriores hasta obtener un único cluster.</p></li>
+</ol>
+<p>El resultado final se representa en un dendrograma, donde se observan las uniones entre clusters y los niveles (distancias) a los que estas ocurren.</p>
+<div id="clustering-aglomerativo-de-la-liga-sencilla" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Clustering aglomerativo de la liga sencilla<a href="análisis-de-conglomerados.html#clustering-aglomerativo-de-la-liga-sencilla" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El método de <strong>single linkage</strong> (enlace simple o vecinos más cercanos) utiliza como criterio de similitud entre clusters la distancia mínima entre cualquiera de los elementos de los grupos involucrados, es decir, se toma la mínima de todas las posibles distancias entre los objetos que pertenecen a distintos conglomerados. Inicialmente, debemos encontrar la distancia más pequeña <span class="math inline">\(D = \{d_{ik}\}\)</span> y unir los objetos correspondientes, es decir <span class="math inline">\(U\)</span> y <span class="math inline">\(V\)</span> para obtener el cluster <span class="math inline">\((UV)\)</span>. Después, para el paso 3 del algoritmo general, la distancia entre <span class="math inline">\((UV)\)</span> y cualquier otro cluster <span class="math inline">\(W\)</span> se calcula como:
+<span class="math display">\[
+d_{(UV),W} = \min\{d_{UW},d_{VW}\},
+\]</span></p>
+<p>donde <span class="math inline">\(d_{UW}\)</span> y <span class="math inline">\(d_{VW}\)</span> representan las distancias entre los vecinos más cercanos del cluster <span class="math inline">\(U\)</span> con respecto a los elementos de <span class="math inline">\(W\)</span>, y del cluster <span class="math inline">\(V\)</span> con respecto a los elementos de <span class="math inline">\(W\)</span>, respectivamente.</p>
+<p>El proceso de aglomeración bajo este criterio se puede visualizar en un dendrograma. En dicho diagrama, las ramas representan clusters, y los nodos donde estas ramas se unen representan fusiones. La altura a la que se unen indica la distancia a la cual se fusionaron los clusters.</p>
+<div class="float">
+<img src="img/single_linkage.png" alt="Single" />
+<div class="figcaption">Single</div>
+</div>
+<p>El resultado de la agrupación puede visualizarse como un <em>dendrograma</em>. El inconveniente del dendrograma resultante de un clustering de liga sencilla a menudo muestra el encadenamiento de las muestras. Los clústeres formados se ven forzados a unirse debido a que los elementos individuales están cerca unos de otros, mientras que muchos elementos de cada clúster pueden estar muy alejados entre sí. Otro inconveniente relevante del clustering de la liga sencilla es que podría ser difícil de interpretar en términos de particiones de los datos. Es una desventaja real del clustering de la liga sencilla porque estamos interesados en las particiones de los datos. Este método se tiende a desempeñar bien cuando hay grupos de forma elongada, conocidos como tipo cadena.</p>
+<p>Veamos un ejemplo.</p>
+<p><strong>Ejemplo 1:</strong> Consideremos la siguiente matriz de distancias
+<span class="math display">\[
+D = (d_{ik}) =
+\begin{pmatrix}
+0 &amp; 9 &amp; 3 &amp; 6 &amp; 11 \\
+9 &amp; 0 &amp; 7 &amp; 5 &amp; 10 \\
+3 &amp; 7 &amp; 0 &amp; 9 &amp; 2 \\
+6 &amp; 5 &amp; 9 &amp; 0 &amp; 8 \\
+11 &amp; 10 &amp; 2 &amp; 8 &amp; 0
+\end{pmatrix}
+\]</span></p>
+<p>Inicialmente cada objeto se considera un cluster individual. Buscamos la menor distancia en la matriz <span class="math inline">\(D\)</span>:</p>
+<p><span class="math display">\[
+\min_{i,k}(d_{ik}) = d_{53} = 2.
+\]</span></p>
+<p>Por lo tanto, los objetos <span class="math inline">\(5\)</span> y <span class="math inline">\(3\)</span> se fusionan y forman el cluster <span class="math inline">\((35)\)</span>.</p>
+<p>Ahora se debe actualizar la matriz de distancias para este nuevo cluster. La distancia entre <span class="math inline">\((35)\)</span> y los restantes objetos se calcula tomando el mínimo de las distancias existentes. Por ejemplo:</p>
+<p><span class="math display">\[
+d_{(35)1} = \min\{d_{31}, d_{51}\} = \min\{3, 11\} = 3,
+\]</span></p>
+<p><span class="math display">\[
+d_{(35)2} = \min\{d_{32}, d_{52}\} = \min\{7, 10\} = 7,
+\]</span></p>
+<p><span class="math display">\[
+d_{(35)4} = \min\{d_{34}, d_{54}\} = \min\{9, 8\} = 8.
+\]</span></p>
+<p>Eliminando filas y columnas correspondientes a <span class="math inline">\(3\)</span> y <span class="math inline">\(5\)</span>, obtenemos una nueva matriz de distancias:</p>
+<p><span class="math display">\[
+\begin{array}{c|cccc}
+N &amp; (35) &amp; 1 &amp; 2 &amp; 4 \\
+\hline
+(35) &amp; 0 &amp; 3 &amp; 7 &amp; 8 \\
+1 &amp; 3 &amp; 0 &amp; 9 &amp; 6 \\
+2 &amp; 7 &amp; 9 &amp; 0 &amp; 5 \\
+4 &amp; 8 &amp; 6 &amp; 5 &amp; 0
+\end{array}
+\]</span></p>
+<p>La distancia mínima entre estos clusters es ahora</p>
+<p><span class="math display">\[
+d_{(35)1} = 3.
+\]</span></p>
+<p>Entonces se fusiona el objeto <span class="math inline">\(1\)</span> con el cluster <span class="math inline">\((35)\)</span>, formando así <span class="math inline">\((135)\)</span>.</p>
+<p>Se actualizan nuevamente las distancias:</p>
+<p><span class="math display">\[
+d_{(135)2} = \min\{d_{(35)2}, d_{12}\} = \min\{7, 9\} = 7,
+\]</span></p>
+<p><span class="math display">\[
+d_{(135)4} = \min\{d_{(35)4}, d_{14}\} = \min\{8, 6\} = 6.
+\]</span></p>
+<p>La nueva matriz queda:</p>
+<p><span class="math display">\[
+\begin{array}{c|ccc}
+N &amp; (135) &amp; 2 &amp; 4 \\
+\hline
+(135) &amp; 0 &amp; 7 &amp; 6 \\
+2 &amp; 7 &amp; 0 &amp; 5 \\
+4 &amp; 6 &amp; 5 &amp; 0
+\end{array}
+\]</span></p>
+<p>La mínima distancia es ahora <span class="math inline">\(d_{42} = 5\)</span>, por lo que los objetos <span class="math inline">\(4\)</span> y <span class="math inline">\(2\)</span> se fusionan formando <span class="math inline">\((24)\)</span>.</p>
+<p>Finalmente, sólo quedan dos clusters: <span class="math inline">\((135)\)</span> y <span class="math inline">\((24)\)</span>. Su distancia es:</p>
+<p><span class="math display">\[
+d_{(135)(24)} = \min\{d_{(135)2}, d_{(135)4}\} = \min\{7, 6\} = 6.
+\]</span></p>
+<p>De esta manera se obtiene la última fusión, y el clustering final reúne a los cinco individuos:</p>
+<p><span class="math display">\[
+(13524).
+\]</span></p>
+<p><strong>Nota:</strong> Realicemos el dendrograma a mano primero, nos daremos cuenta de que muestra claramente las distancias a las que se produjeron las fusiones: primero a nivel <span class="math inline">\(2\)</span>, luego a <span class="math inline">\(3\)</span>, después a <span class="math inline">\(5\)</span> y finalmente a <span class="math inline">\(6\)</span>.</p>
+<p>En aplicaciones reales, es frecuente detener el proceso en un nivel intermedio del dendrograma, cuando el número de clusters resultante es interpretativamente significativo.</p>
+<p>Veamos ahora el ejemplo en R.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="análisis-de-conglomerados.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="análisis-de-conglomerados.html#cb2-1" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">9</span>,<span class="dv">3</span>,<span class="dv">6</span>,<span class="dv">11</span>)</span>
+<span id="cb2-2"><a href="análisis-de-conglomerados.html#cb2-2" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">9</span>,<span class="dv">0</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">10</span>)</span>
+<span id="cb2-3"><a href="análisis-de-conglomerados.html#cb2-3" tabindex="-1"></a>C <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">0</span>, <span class="dv">9</span>, <span class="dv">2</span>)</span>
+<span id="cb2-4"><a href="análisis-de-conglomerados.html#cb2-4" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">9</span>, <span class="dv">0</span>, <span class="dv">8</span> )</span>
+<span id="cb2-5"><a href="análisis-de-conglomerados.html#cb2-5" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">11</span>, <span class="dv">10</span>, <span class="dv">2</span>, <span class="dv">8</span>, <span class="dv">0</span>)</span>
+<span id="cb2-6"><a href="análisis-de-conglomerados.html#cb2-6" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="análisis-de-conglomerados.html#cb2-7" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(A,B,C,D,E, <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>,<span class="st">&quot;D&quot;</span>,<span class="st">&quot;E&quot;</span>))</span>
+<span id="cb2-8"><a href="análisis-de-conglomerados.html#cb2-8" tabindex="-1"></a>df <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">format =</span> <span class="st">&quot;html&quot;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+A
+</th>
+<th style="text-align:right;">
+B
+</th>
+<th style="text-align:right;">
+C
+</th>
+<th style="text-align:right;">
+D
+</th>
+<th style="text-align:right;">
+E
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+A
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+C
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+D
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+E
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="análisis-de-conglomerados.html#cb3-1" tabindex="-1"></a>dist <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(df, <span class="at">diag=</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-2"><a href="análisis-de-conglomerados.html#cb3-2" tabindex="-1"></a>cluster_single <span class="ot">&lt;-</span> <span class="fu">hclust</span> (<span class="at">d =</span> dist, <span class="at">method =</span> <span class="st">&#39;single&#39;</span>)</span>
+<span id="cb3-3"><a href="análisis-de-conglomerados.html#cb3-3" tabindex="-1"></a><span class="fu">plot</span>(cluster_single)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac3"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac3-1.png" alt="Cluster con el método single." width="80%" />
+<p class="caption">
+Figure 5.1: Cluster con el método single.
+</p>
+</div>
+</div>
+<div id="clustering-aglomerativo-de-la-liga-completa" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> Clustering aglomerativo de la liga completa<a href="análisis-de-conglomerados.html#clustering-aglomerativo-de-la-liga-completa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El método de <strong>complete linkage</strong> (o enlace completo o clustering del vecino más lejano) sigue el mismo procedimiento general que el método de enlace simple. Sin embargo, existe una diferencia fundamental: en cada etapa del algoritmo, la distancia entre dos clusters se define como la distancia (o disimilitud) máxima entre sus elementos.</p>
+<p>Iniciamos de nuevo encontrando la distancia más pequeña y creando el primer clúster <span class="math inline">\(UV\)</span>, de ahí calculamos la distancia entre un cluster formado por dos objetos <span class="math inline">\(U\)</span> y <span class="math inline">\(V\)</span> y otro cluster <span class="math inline">\(W\)</span>, como:</p>
+<p><span class="math display">\[
+d_{(UV),W} = \max\{d_{UW},\,d_{VW}\}.
+\]</span></p>
+<p>Esto significa que la similitud entre dos clusters está determinada por el par de elementos más alejados entre ellos. De esta manera, el método de enlace completo garantiza que los objetos dentro de cada cluster no difieran entre sí más allá de una distancia máxima preestablecida.</p>
+<div class="float">
+<img src="img/complete-linkage.png" alt="Complete" />
+<div class="figcaption">Complete</div>
+</div>
+<p>La agrupación de la liga completa evita el inconveniente de encadenar las muestras por el método de la liga simple. El encadenamiento completo tiende a encontrar muchos pequeños grupos separados. Este método se desempeña bien cuando los conglomerados son de forma circular.</p>
+<p><strong>Ejemplo 2:</strong> Consideremos la misma matriz del ejemplo anterior:</p>
+<p><span class="math display">\[
+D = (d_{ik}) =
+\begin{pmatrix}
+0 &amp; 9 &amp; 3 &amp; 6 &amp; 11 \\
+9 &amp; 0 &amp; 7 &amp; 5 &amp; 10 \\
+3 &amp; 7 &amp; 0 &amp; 9 &amp; 2 \\
+6 &amp; 5 &amp; 9 &amp; 0 &amp; 8 \\
+11 &amp; 10 &amp; 2 &amp; 8 &amp; 0
+\end{pmatrix}
+\]</span></p>
+<p>Identificamos los objetos más cercanos. Como antes,</p>
+<p><span class="math display">\[
+\min_{i,k}(d_{ik}) = d_{53} = 2,
+\]</span></p>
+<p>se fusionan los objetos <span class="math inline">\((3)\)</span> y <span class="math inline">\((5)\)</span> formando el cluster <span class="math inline">\((35)\)</span>.</p>
+<p>Calculamos la distancia entre el cluster <span class="math inline">\((35)\)</span> y los restantes objetos, ahora usando máximos:</p>
+<p><span class="math display">\[
+d_{(35),1} = \max\{d_{31}, d_{51}\} = \max\{3, 11\} = 11,
+\]</span></p>
+<p><span class="math display">\[
+d_{(35),2} = \max\{d_{32}, d_{52}\} = \max\{7, 10\} = 10,
+\]</span></p>
+<p><span class="math display">\[
+d_{(35),4} = \max\{d_{34}, d_{54}\} = \max\{9, 8\} = 9.
+\]</span></p>
+<p>Al eliminar filas y columnas de <span class="math inline">\(3\)</span> y <span class="math inline">\(5\)</span>, la matriz queda:</p>
+<p><span class="math display">\[
+\begin{array}{c|cccc}
+N &amp; (35) &amp; 1 &amp; 2 &amp; 4 \\
+\hline
+(35) &amp; 0 &amp; 11 &amp; 10 &amp; 9 \\
+1 &amp; 11 &amp; 0 &amp; 9 &amp; 6 \\
+2 &amp; 10 &amp; 9 &amp; 0 &amp; 5 \\
+4 &amp; 9 &amp; 6 &amp; 5 &amp; 0
+\end{array}
+\]</span></p>
+<p>La mínima distancia ahora es entre <span class="math inline">\((2)\)</span> y <span class="math inline">\((4)\)</span>:</p>
+<p><span class="math display">\[
+d_{42} = 6.
+\]</span></p>
+<p>Se fusionan para formar el nuevo cluster <span class="math inline">\((24)\)</span>.</p>
+<p>Calculamos distancias entre <span class="math inline">\((35)\)</span> y <span class="math inline">\((24)\)</span>:</p>
+<p><span class="math display">\[
+d_{(24),(35)} = \max\{d_{2,(35)}, d_{4,(35)}\} = \max\{10, 9\} = 10.
+\]</span></p>
+<p>Queda además comparar con el objeto <span class="math inline">\((1)\)</span>:</p>
+<p><span class="math display">\[
+d_{(24),1} = \max\{d_{21}, d_{41}\} = \max\{9, 6\} = 9,
+\]</span></p>
+<p>La nueva matriz queda:</p>
+<p><span class="math display">\[
+\begin{array}{c|ccc}
+N &amp; (35) &amp; (24) &amp; 1 \\
+\hline
+(35) &amp; 0 &amp; 10 &amp; 11 \\
+(24) &amp; 10 &amp; 0 &amp; 9 \\
+1 &amp; 11 &amp; 9 &amp; 0
+\end{array}
+\]</span></p>
+<p>La menor distancia es <span class="math inline">\(9\)</span>, entre <span class="math inline">\((24)\)</span> y <span class="math inline">\(1\)</span>, de modo que se forma el cluster <span class="math inline">\((124)\)</span>.</p>
+<p>Finalmente se compara con <span class="math inline">\((35)\)</span>:</p>
+<p><span class="math display">\[
+d_{(124),(35)} = \max\{ d_{1,(35)}, d_{(24),(35)}\} = \max\{11, 10\} = 11.
+\]</span></p>
+<p>Se obtiene el cluster total:</p>
+<p><span class="math display">\[
+(12345).
+\]</span></p>
+<p><strong>Nota:</strong> Representamos este resultado en el dendrograma correspondiente.</p>
+<p>Al comparar el dendrograma generado por enlace simple con el de enlace completo, se observa que la asignación del objeto <span class="math inline">\((1)\)</span> a los grupos previos difiere entre métodos. Esto se debe a que:</p>
+<ul>
+<li><strong>Single linkage</strong> prioriza la cercanía mínima entre pares de objetos.</li>
+<li><strong>Complete linkage</strong> prioriza la máxima distancia entre elementos al agrupar.</li>
+</ul>
+<p>Por ello, complete linkage tiende a formar clusters más compactos y homogéneos.</p>
+<p>Realicemos el ejemplo en R.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="análisis-de-conglomerados.html#cb4-1" tabindex="-1"></a>cluster_complete <span class="ot">&lt;-</span> <span class="fu">hclust</span> (<span class="at">d =</span> dist, <span class="at">method =</span> <span class="st">&#39;complete&#39;</span>)</span>
+<span id="cb4-2"><a href="análisis-de-conglomerados.html#cb4-2" tabindex="-1"></a><span class="fu">plot</span>(cluster_complete)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac4"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac4-1.png" alt="Cluster con el método complete." width="80%" />
+<p class="caption">
+Figure 5.2: Cluster con el método complete.
+</p>
+</div>
+</div>
+<div id="clustering-aglomerativo-de-la-liga-promedio" class="section level3 hasAnchor" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> Clustering aglomerativo de la liga promedio<a href="análisis-de-conglomerados.html#clustering-aglomerativo-de-la-liga-promedio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El método de <strong>average linkage</strong> (enlace promedio) define la distancia
+entre dos clusters como el promedio de las distancias entre todos los pares
+de objetos donde un miembro del par pertenece a cada cluster.</p>
+<p>Supongamos que tenemos un cluster <span class="math inline">\((UV)\)</span> y otro cluster <span class="math inline">\(W\)</span>. La distancia
+entre ellos se define como</p>
+<p><span class="math display">\[
+d_{(UV)W}
+= \frac{\displaystyle\sum_{i \in (UV)} \sum_{k \in W} d_{ik}}
+       {N_{(UV)}\,N_W},
+\]</span></p>
+<p>donde <span class="math inline">\(d_{ik}\)</span> es la distancia entre el objeto <span class="math inline">\(i\)</span> del cluster <span class="math inline">\((UV)\)</span> y el
+objeto <span class="math inline">\(k\)</span> del cluster <span class="math inline">\(W\)</span>, mientras que <span class="math inline">\(N_{(UV)}\)</span> y <span class="math inline">\(N_W\)</span> son las
+cardinalidades de los clusters <span class="math inline">\((UV)\)</span> y <span class="math inline">\(W\)</span>, respectivamente.</p>
+<p>El algoritmo aglomerativo procede igual que antes:</p>
+<ol style="list-style-type: decimal">
+<li><p>Cada objeto es inicialmente un cluster.</p></li>
+<li><p>Se busca el par de clusters con menor distancia.</p></li>
+<li><p>Se fusionan esos clusters y se actualiza la matriz de distancias usando la fórmula de promedio anterior.</p></li>
+<li><p>Se repiten los pasos 2 y 3 hasta que todos los objetos formen un solo cluster.</p></li>
+</ol>
+<div class="float">
+<img src="img/average_linkage.png" alt="Average" />
+<div class="figcaption">Average</div>
+</div>
+<p>El clúster resultante del dendrograma tiene un aspecto intermedio entre una agrupación de enlace simple y una completa.</p>
+<p><strong>Ejemplo 3:</strong> Consideremos la matriz de los ejemplos anteriores.</p>
+<p><span class="math display">\[
+D = (d_{ik}) =
+\begin{pmatrix}
+0 &amp; 9 &amp; 3 &amp; 6 &amp; 11 \\
+9 &amp; 0 &amp; 7 &amp; 5 &amp; 10 \\
+3 &amp; 7 &amp; 0 &amp; 9 &amp; 2 \\
+6 &amp; 5 &amp; 9 &amp; 0 &amp; 8 \\
+11 &amp; 10 &amp; 2 &amp; 8 &amp; 0
+\end{pmatrix}.
+\]</span></p>
+<p>Buscamos la distancia mínima (fuera de la diagonal). La menor entrada es</p>
+<p><span class="math display">\[
+\min_{i,k} d_{ik} = d_{35} = 2.
+\]</span></p>
+<p>Por tanto, fusionamos los objetos <span class="math inline">\(3\)</span> y <span class="math inline">\(5\)</span> para formar el cluster <span class="math inline">\((35)\)</span>.</p>
+<p>Calculamos ahora las distancias entre el cluster <span class="math inline">\((35)\)</span> y los objetos
+restantes <span class="math inline">\(1,2,4\)</span>. Como cada uno de éstos es un cluster de tamaño <span class="math inline">\(1\)</span>,
+tenemos:</p>
+<p><span class="math display">\[
+d_{(35),1}
+= \frac{d_{31} + d_{51}}{2}
+= \frac{3 + 11}{2}
+= 7,
+\]</span></p>
+<p><span class="math display">\[
+d_{(35),2}
+= \frac{d_{32} + d_{52}}{2}
+= \frac{7 + 10}{2}
+= \frac{17}{2} = 8.5,
+\]</span></p>
+<p><span class="math display">\[
+d_{(35),4}
+= \frac{d_{34} + d_{54}}{2}
+= \frac{9 + 8}{2}
+= \frac{17}{2} = 8.5.
+\]</span></p>
+<p>La nueva matriz de distancias (con clusters <span class="math inline">\((35)\)</span>, <span class="math inline">\(1\)</span>, <span class="math inline">\(2\)</span>, <span class="math inline">\(4\)</span>) es</p>
+<p><span class="math display">\[
+\begin{array}{c|cccc}
+  N   &amp; (35) &amp; 1 &amp; 2 &amp; 4 \\\hline
+(35) &amp; 0   &amp; 7   &amp; 8.5 &amp; 8.5 \\
+1    &amp; 7   &amp; 0   &amp; 9   &amp; 6   \\
+2    &amp; 8.5 &amp; 9   &amp; 0   &amp; 5   \\
+4    &amp; 8.5 &amp; 6   &amp; 5   &amp; 0
+\end{array}
+\]</span></p>
+<p>La mínima distancia ahora es</p>
+<p><span class="math display">\[
+d_{24} = 5,
+\]</span></p>
+<p>así que fusionamos los objetos <span class="math inline">\(2\)</span> y <span class="math inline">\(4\)</span> para obtener el cluster <span class="math inline">\((24)\)</span>.</p>
+<p>Calculamos las distancias entre <span class="math inline">\((24)\)</span> y los demás clusters <span class="math inline">\((35)\)</span> y <span class="math inline">\(1\)</span>.
+Recordando que <span class="math inline">\(N_{(24)} = 2\)</span>, <span class="math inline">\(N_{(35)} = 2\)</span> y <span class="math inline">\(N_1 = 1\)</span>:</p>
+<p><span class="math display">\[
+d_{(24),1}
+= \frac{d_{21} + d_{41}}{2}
+= \frac{9 + 6}{2}
+= \frac{15}{2} = 7.5,
+\]</span></p>
+<p><span class="math display">\[
+d_{(24),(35)}
+= \frac{1}{2\cdot 2}
+\left(
+d_{23} + d_{25} + d_{43} + d_{45}
+\right)
+= \frac{7 + 10 + 9 + 8}{4}
+= \frac{34}{4} = 8.5.
+\]</span></p>
+<p>Ya habíamos calculado <span class="math inline">\(d_{(35),1} = 7\)</span> en la etapa anterior. La matriz
+de distancias para los clusters <span class="math inline">\((35)\)</span>, <span class="math inline">\((24)\)</span> y <span class="math inline">\(1\)</span> es</p>
+<p><span class="math display">\[
+\begin{array}{c|ccc}
+  N   &amp; (35) &amp; (24) &amp; 1 \\
+\hline
+(35) &amp; 0   &amp; 8.5  &amp; 7   \\
+(24) &amp; 8.5 &amp; 0    &amp; 7.5 \\
+1    &amp; 7   &amp; 7.5  &amp; 0
+\end{array}
+\]</span></p>
+<p>La menor distancia es</p>
+<p><span class="math display">\[
+d_{(35),1} = 7,
+\]</span></p>
+<p>por lo que se fusionan el objeto <span class="math inline">\(1\)</span> con el cluster <span class="math inline">\((35)\)</span>, obteniendo
+el cluster <span class="math inline">\((135)\)</span>, de tamaño <span class="math inline">\(N_{(135)}=3\)</span>.</p>
+<p>Ahora sólo quedan dos clusters: <span class="math inline">\((135)\)</span> y <span class="math inline">\((24)\)</span>. Calculamos su distancia:</p>
+<p><span class="math display">\[
+d_{(135),(24)}
+= \frac{1}{3\cdot 2}
+\sum_{i \in \{1,3,5\}} \sum_{k \in \{2,4\}} d_{ik}.
+\]</span></p>
+<p>Las distancias relevantes son</p>
+<p><span class="math display">\[
+d_{12}=9,\quad d_{14}=6,\quad
+d_{32}=7,\quad d_{34}=9,\quad
+d_{52}=10,\quad d_{54}=8.
+\]</span></p>
+<p>Por lo tanto,</p>
+<p><span class="math display">\[
+\sum d_{ik} = 9 + 6 + 7 + 9 + 10 + 8 = 49,
+\]</span></p>
+<p>y</p>
+<p><span class="math display">\[
+d_{(135),(24)} = \frac{49}{6} \approx 8.17.
+\]</span></p>
+<p>Al ser el único par de clusters restante, <span class="math inline">\((135)\)</span> y <span class="math inline">\((24)\)</span> se fusionan en
+el nivel de distancia <span class="math inline">\(49/6\)</span>, produciendo el cluster final <span class="math inline">\((12345)\)</span>.</p>
+<p>El dendrograma resultante muestra fusiones sucesivas a los niveles de
+distancia
+<span class="math display">\[
+2,\quad 5,\quad 7,\quad \frac{49}{6}\approx 8.17,
+\]</span>
+correspondientes, respectivamente, a las fusiones
+<span class="math display">\[
+(3,5),\quad (2,4),\quad (1,(35)),\quad ((135),(24)).
+\]</span></p>
+<p>Este ejemplo ilustra cómo el criterio de <strong>average linkage</strong> utiliza
+el promedio de todas las distancias entre pares de objetos de dos clusters,
+lo cual suele producir grupos con un compromiso entre la compacidad de
+<strong>complete linkage</strong> y la tendencia a cadenas de <strong>single linkage</strong>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="análisis-de-conglomerados.html#cb5-1" tabindex="-1"></a>cluster_average <span class="ot">&lt;-</span> <span class="fu">hclust</span> (<span class="at">d =</span> dist, <span class="at">method =</span> <span class="st">&#39;average&#39;</span>)</span>
+<span id="cb5-2"><a href="análisis-de-conglomerados.html#cb5-2" tabindex="-1"></a><span class="fu">plot</span>(cluster_average)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac5"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac5-1.png" alt="Cluster con el método average." width="80%" />
+<p class="caption">
+Figure 5.3: Cluster con el método average.
+</p>
+</div>
+</div>
+<div id="agrupación-de-varianza-mínima-de-ward" class="section level3 hasAnchor" number="5.2.4">
+<h3><span class="header-section-number">5.2.4</span> Agrupación de varianza mínima de Ward<a href="#agrupaci%C3%B3n-de-varianza-m%C3%ADnima-de-ward" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El método jerárquico propuesto por Ward (1963) se basa en minimizar la <strong>pérdida de información</strong> que ocurre cuando se fusionan dos clusters. Dicha pérdida de información se mide normalmente como el aumento en la suma de cuadrados del error (<strong>Error Sum of Squares</strong>, ESS). Este método sea conceptualmente análogo a un análisis de la varianza.</p>
+<p>Sea <span class="math inline">\(k\)</span> un cluster cualquiera, y definamos</p>
+<p><span class="math display">\[
+ESS_k = \sum_{x_j \in k} (x_j - \bar{x}_k)&#39;(x_j - \bar{x}_k),
+\]</span></p>
+<p>es decir, la suma de las desviaciones cuadráticas de los elementos del cluster con respecto a su centroide <span class="math inline">\(\bar{x}_k\)</span>.</p>
+<p>Si actualmente existen <span class="math inline">\(K\)</span> clusters, definimos</p>
+<p><span class="math display">\[
+ESS = ESS_1 + ESS_2 + \cdots + ESS_K.
+\]</span></p>
+<p>En cada etapa del algoritmo jerárquico se considera la posible unión de todos los pares de clusters, evaluando el incremento que dicha unión produciría en el valor total de <span class="math inline">\(ESS\)</span>. El par de clusters que se fusiona es aquel cuya unión genera el menor incremento en <span class="math inline">\(ESS\)</span>. De esta forma se garantiza que cada fusión produzca la mínima pérdida de información posible.</p>
+<p><strong>Valores extremos del algoritmo:</strong></p>
+<ul>
+<li>Inicialmente, cada objeto es un cluster de tamaño uno, por lo que <span class="math inline">\(ESS_k = 0\)</span> para todos los clusters.</li>
+<li>En el otro extremo, cuando todos los objetos se encuentran en un único cluster, el valor final es
+<span class="math display">\[
+  ESS = \sum_{j=1}^N (x_j - \bar{x})&#39;(x_j - \bar{x}),
+  \]</span>
+donde <span class="math inline">\(\bar{x}\)</span> es el vector promedio de todos los elementos.</li>
+</ul>
+<p><strong>Interpretación geométrica:</strong> El método de Ward está fundamentado en la idea de que los clusters resultantes deben ser aproximadamente de forma elíptica y compacta, pues la suma de cuadrados mide dispersiones alrededor de centros promedios. Por esta razón, Ward:</p>
+<ul>
+<li>tiende a producir grupos balanceados en tamaño;</li>
+<li>evita formar cadenas largas de puntos (como ocurre con <strong>single linkage</strong>);</li>
+<li>penaliza la incorporación de puntos alejados del centro del cluster.</li>
+</ul>
+<p><strong>Representación gráfica:</strong> Los resultados de Ward pueden visualizarse mediante un dendrograma. El eje vertical actúa como escala del incremento en <span class="math inline">\(ESS\)</span> asociado a cada fusión. Las alturas de los nodos indican el costo de unión de los clusters.</p>
+<p>En resumen, el método de Ward es una versión jerárquica de técnicas de partición que buscan optimizar compactación dentro de los grupos. Es precursor directo de métodos no jerárquicos, tales como <em>k-means</em>, que minimizan variaciones internas utilizando centros promedio como referencia.</p>
+<p>Este enfoque es particularmente adecuado para variables cuantitativas, ya que opera a partir de medidas basadas en medias y varianzas. Por ello, el método de Ward no resulta tan natural cuando las variables son binarias o categóricas sin transformar. Además, en su formulación clásica, la distancia inicial entre objetos corresponde a la distancia euclidiana al cuadrado, pues bajo dicha métrica la variación intra–grupo coincide estrictamente con la suma de cuadrados dentro del cluster.</p>
+<p>Al final del proceso jerárquico, el dendrograma generado tiene como eje vertical los incrementos sucesivos en <span class="math inline">\(ESS\)</span>, ilustrando el costo de cada fusión. Debido a su criterio de minimización de varianza, Ward tiende a producir clusters más compactos y equilibrados que los derivados de criterios basados en distancias mínimas (single linkage) o máximas (complete linkage).</p>
+<div class="float">
+<img src="img/wards_linkage.png" alt="Ward" />
+<div class="figcaption">Ward</div>
+</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="análisis-de-conglomerados.html#cb6-1" tabindex="-1"></a>cluster_ward <span class="ot">&lt;-</span> <span class="fu">hclust</span> (<span class="at">d =</span> dist, <span class="at">method =</span> <span class="st">&#39;ward.D2&#39;</span>)</span>
+<span id="cb6-2"><a href="análisis-de-conglomerados.html#cb6-2" tabindex="-1"></a><span class="fu">plot</span>(cluster_ward)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac6"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac6-1.png" alt="Cluster con el método Ward." width="80%" />
+<p class="caption">
+Figure 5.4: Cluster con el método Ward.
+</p>
+</div>
+<p>Comparando los cuatro métodos:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="análisis-de-conglomerados.html#cb7-1" tabindex="-1"></a><span class="co"># Correrlo en consola para visualizarlo mejor</span></span>
+<span id="cb7-2"><a href="análisis-de-conglomerados.html#cb7-2" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb7-3"><a href="análisis-de-conglomerados.html#cb7-3" tabindex="-1"></a><span class="fu">plot</span>(cluster_single)</span>
+<span id="cb7-4"><a href="análisis-de-conglomerados.html#cb7-4" tabindex="-1"></a><span class="fu">plot</span>(cluster_complete)</span>
+<span id="cb7-5"><a href="análisis-de-conglomerados.html#cb7-5" tabindex="-1"></a><span class="fu">plot</span>(cluster_average)</span>
+<span id="cb7-6"><a href="análisis-de-conglomerados.html#cb7-6" tabindex="-1"></a><span class="fu">plot</span>(cluster_ward)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac7"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac7-1.png" alt="Comparación de los clusters con los 4 métodos." width="960" />
+<p class="caption">
+Figure 5.5: Comparación de los clusters con los 4 métodos.
+</p>
+</div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="análisis-de-conglomerados.html#cb8-1" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p>¿Qué puedes decir al respecto si comparas el desempeño de estos 4 métodos?</p>
+</div>
+<div id="mismos-gráficos-usando-el-paquete-factoextra" class="section level3 hasAnchor" number="5.2.5">
+<h3><span class="header-section-number">5.2.5</span> Mismos gráficos usando el paquete factoextra<a href="#mismos-gr%C3%A1ficos-usando-el-paquete-factoextra" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="análisis-de-conglomerados.html#cb9-1" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="análisis-de-conglomerados.html#cb9-2" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb9-3"><a href="análisis-de-conglomerados.html#cb9-3" tabindex="-1"></a><span class="fu">fviz_dist</span>(<span class="at">dist.obj =</span> dist, <span class="at">lab_size =</span> <span class="dv">8</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac8"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac8-1.png" alt="Heatmap de la matriz de distancias" width="672" />
+<p class="caption">
+Figure 5.6: Heatmap de la matriz de distancias
+</p>
+</div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="análisis-de-conglomerados.html#cb10-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb10-2"><a href="análisis-de-conglomerados.html#cb10-2" tabindex="-1"></a>hc_single <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;single&quot;</span>)</span>
+<span id="cb10-3"><a href="análisis-de-conglomerados.html#cb10-3" tabindex="-1"></a>hc_average <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;average&quot;</span>)</span>
+<span id="cb10-4"><a href="análisis-de-conglomerados.html#cb10-4" tabindex="-1"></a>hc_complete <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;complete&quot;</span>)</span>
+<span id="cb10-5"><a href="análisis-de-conglomerados.html#cb10-5" tabindex="-1"></a>hc_ward <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</span>
+<span id="cb10-6"><a href="análisis-de-conglomerados.html#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="análisis-de-conglomerados.html#cb10-7" tabindex="-1"></a><span class="do">## Otros dos métodos</span></span>
+<span id="cb10-8"><a href="análisis-de-conglomerados.html#cb10-8" tabindex="-1"></a>hc_median <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;median&quot;</span>)</span>
+<span id="cb10-9"><a href="análisis-de-conglomerados.html#cb10-9" tabindex="-1"></a>hc_centroid <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;centroid&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="análisis-de-conglomerados.html#cb11-1" tabindex="-1"></a><span class="fu">fviz_dend</span>(<span class="at">x =</span> hc_single, <span class="at">k=</span><span class="dv">3</span>,</span>
+<span id="cb11-2"><a href="análisis-de-conglomerados.html#cb11-2" tabindex="-1"></a>          <span class="at">cex =</span> <span class="fl">0.7</span>,</span>
+<span id="cb11-3"><a href="análisis-de-conglomerados.html#cb11-3" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb11-4"><a href="análisis-de-conglomerados.html#cb11-4" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">&quot;Samples&quot;</span>,</span>
+<span id="cb11-5"><a href="análisis-de-conglomerados.html#cb11-5" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Distance&quot;</span>,</span>
+<span id="cb11-6"><a href="análisis-de-conglomerados.html#cb11-6" tabindex="-1"></a>          <span class="at">sub =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb11-7"><a href="análisis-de-conglomerados.html#cb11-7" tabindex="-1"></a>          <span class="at">horiz =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb11-8"><a href="análisis-de-conglomerados.html#cb11-8" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">2.5</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac10"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac10-1.png" alt="Cluster con el método de la liga más sencilla." width="80%" />
+<p class="caption">
+Figure 5.7: Cluster con el método de la liga más sencilla.
+</p>
+</div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="análisis-de-conglomerados.html#cb12-1" tabindex="-1"></a><span class="fu">fviz_dend</span>(<span class="at">x =</span> hc_complete, <span class="at">k=</span><span class="dv">3</span>,</span>
+<span id="cb12-2"><a href="análisis-de-conglomerados.html#cb12-2" tabindex="-1"></a>          <span class="at">cex =</span> <span class="fl">0.7</span>,</span>
+<span id="cb12-3"><a href="análisis-de-conglomerados.html#cb12-3" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb12-4"><a href="análisis-de-conglomerados.html#cb12-4" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">&quot;Samples&quot;</span>,</span>
+<span id="cb12-5"><a href="análisis-de-conglomerados.html#cb12-5" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Distance&quot;</span>,</span>
+<span id="cb12-6"><a href="análisis-de-conglomerados.html#cb12-6" tabindex="-1"></a>          <span class="at">sub =</span> <span class="st">&quot;&quot;</span>,<span class="at">horiz =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb12-7"><a href="análisis-de-conglomerados.html#cb12-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">6</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac11"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac11-1.png" alt="Cluster con el método de la liga completa." width="80%" />
+<p class="caption">
+Figure 5.8: Cluster con el método de la liga completa.
+</p>
+</div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="análisis-de-conglomerados.html#cb13-1" tabindex="-1"></a><span class="fu">fviz_dend</span>(<span class="at">x =</span> hc_average, <span class="at">k=</span><span class="dv">3</span>, </span>
+<span id="cb13-2"><a href="análisis-de-conglomerados.html#cb13-2" tabindex="-1"></a>          <span class="at">cex =</span> <span class="fl">0.7</span>,</span>
+<span id="cb13-3"><a href="análisis-de-conglomerados.html#cb13-3" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb13-4"><a href="análisis-de-conglomerados.html#cb13-4" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">&quot;Samples&quot;</span>,</span>
+<span id="cb13-5"><a href="análisis-de-conglomerados.html#cb13-5" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Distance&quot;</span>,</span>
+<span id="cb13-6"><a href="análisis-de-conglomerados.html#cb13-6" tabindex="-1"></a>          <span class="at">sub =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb13-7"><a href="análisis-de-conglomerados.html#cb13-7" tabindex="-1"></a>          <span class="at">horiz =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="análisis-de-conglomerados.html#cb13-8" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">4</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) </span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac12"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac12-1.png" alt=" Cluster con el método del promedio." width="80%" />
+<p class="caption">
+Figure 5.9:  Cluster con el método del promedio.
+</p>
+</div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="análisis-de-conglomerados.html#cb14-1" tabindex="-1"></a><span class="fu">fviz_dend</span>(<span class="at">x =</span> hc_ward, <span class="at">k=</span><span class="dv">3</span>,</span>
+<span id="cb14-2"><a href="análisis-de-conglomerados.html#cb14-2" tabindex="-1"></a>          <span class="at">cex =</span> <span class="fl">0.7</span>,</span>
+<span id="cb14-3"><a href="análisis-de-conglomerados.html#cb14-3" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb14-4"><a href="análisis-de-conglomerados.html#cb14-4" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">&quot;Samples&quot;</span>,</span>
+<span id="cb14-5"><a href="análisis-de-conglomerados.html#cb14-5" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Distance&quot;</span>,</span>
+<span id="cb14-6"><a href="análisis-de-conglomerados.html#cb14-6" tabindex="-1"></a>          <span class="at">sub =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb14-7"><a href="análisis-de-conglomerados.html#cb14-7" tabindex="-1"></a>          <span class="at">horiz =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb14-8"><a href="análisis-de-conglomerados.html#cb14-8" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">6</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac13"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac13-1.png" alt=" Cluster con el método Ward." width="80%" />
+<p class="caption">
+Figure 5.10:  Cluster con el método Ward.
+</p>
+</div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="análisis-de-conglomerados.html#cb15-1" tabindex="-1"></a><span class="fu">fviz_dend</span>(<span class="at">x =</span> hc_median, <span class="at">k=</span><span class="dv">3</span>,</span>
+<span id="cb15-2"><a href="análisis-de-conglomerados.html#cb15-2" tabindex="-1"></a>          <span class="at">cex =</span> <span class="fl">0.7</span>,</span>
+<span id="cb15-3"><a href="análisis-de-conglomerados.html#cb15-3" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb15-4"><a href="análisis-de-conglomerados.html#cb15-4" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">&quot;Samples&quot;</span>,</span>
+<span id="cb15-5"><a href="análisis-de-conglomerados.html#cb15-5" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Distance&quot;</span>,</span>
+<span id="cb15-6"><a href="análisis-de-conglomerados.html#cb15-6" tabindex="-1"></a>          <span class="at">sub =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb15-7"><a href="análisis-de-conglomerados.html#cb15-7" tabindex="-1"></a>          <span class="at">horiz =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb15-8"><a href="análisis-de-conglomerados.html#cb15-8" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">5</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac14"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac14-1.png" alt=" Cluster con el método mediana." width="80%" />
+<p class="caption">
+Figure 5.11:  Cluster con el método mediana.
+</p>
+</div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="análisis-de-conglomerados.html#cb16-1" tabindex="-1"></a><span class="fu">fviz_dend</span>(<span class="at">x =</span> hc_centroid, <span class="at">k=</span><span class="dv">3</span>,</span>
+<span id="cb16-2"><a href="análisis-de-conglomerados.html#cb16-2" tabindex="-1"></a>          <span class="at">cex =</span> <span class="fl">0.7</span>,</span>
+<span id="cb16-3"><a href="análisis-de-conglomerados.html#cb16-3" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb16-4"><a href="análisis-de-conglomerados.html#cb16-4" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">&quot;Samples&quot;</span>,</span>
+<span id="cb16-5"><a href="análisis-de-conglomerados.html#cb16-5" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Distance&quot;</span>,</span>
+<span id="cb16-6"><a href="análisis-de-conglomerados.html#cb16-6" tabindex="-1"></a>          <span class="at">sub =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb16-7"><a href="análisis-de-conglomerados.html#cb16-7" tabindex="-1"></a>          <span class="at">horiz =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb16-8"><a href="análisis-de-conglomerados.html#cb16-8" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">4.7</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac15"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac15-1.png" alt=" Cluster con el método del centroide." width="80%" />
+<p class="caption">
+Figure 5.12:  Cluster con el método del centroide.
+</p>
+</div>
+<p><strong>Comentarios finales sobre los procedimientos jerárquicos</strong></p>
+<p>Además de los métodos basados en enlace simple, completo o promedio, existen muchas otras variantes de clustering jerárquico aglomerativo; sin embargo, todas siguen esencialmente el algoritmo general descrito anteriormente: partir de <span class="math inline">\(N\)</span> grupos individuales y fusionar iterativamente los más similares.</p>
+<p>Al igual que en otros procedimientos de clustering, los métodos jerárquicos pueden verse afectados por errores en los datos o por variabilidad no controlada. Esto implica que el resultado puede ser sensible a la presencia de valores atípicos o puntos ruidosos.</p>
+<p>Una característica importante del clustering jerárquico es que no existe un mecanismo explícito de reubicación de elementos una vez que se han fusionado. Si un objeto se incorpora erróneamente a un cluster en una etapa temprana, dicho error persistirá hasta el final del proceso. Por esta razón, la interpretación del dendrograma debe realizarse cuidadosamente, evaluando si la estructura de grupos es razonable.</p>
+<p>En la práctica, es recomendable aplicar diferentes métodos de clustering o utilizar distintos criterios de distancia dentro del mismo método. Si los resultados obtenidos son consistentemente similares, se puede argumentar con mayor confianza la presencia de grupos “naturales”.</p>
+<p>La <strong>estabilidad</strong> de una solución jerárquica puede evaluarse mediante pequeñas perturbaciones a los datos (por ejemplo, añadiendo ruido controlado o repitiendo mediciones). Si los grupos son bien definidos, el dendrograma resultante debe permanecer similar después de la perturbación.</p>
+<p>Finalmente, es posible que existan empates en valores de distancia entre pares de clusters, lo cual puede conducir a soluciones múltiples válidas. En estos casos, diferentes dendrogramas pueden representar distintas decisiones de fusión en niveles inferiores del árbol. Esto no necesariamente indica un problema metodológico, sino que refleja ambigüedad legítima en la estructura de similitudes del conjunto de datos. El usuario debe estar consciente de ello para interpretar adecuadamente las posibles estructuras de agrupamiento.</p>
+</div>
+<div id="número-óptimo-de-clústers" class="section level3 hasAnchor" number="5.2.6">
+<h3><span class="header-section-number">5.2.6</span> Número óptimo de clústers<a href="#n%C3%BAmero-%C3%B3ptimo-de-cl%C3%BAsters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para seleccionar la partición más adecuada de los datos, primero comparamos distintos métodos de agrupamiento jerárquico a partir de la calidad del dendrograma que generan. Dicha calidad se evaluó calculando el coeficiente de correlación cofenético entre la matriz de distancias original y las distancias cofenéticas derivadas del dendrograma correspondiente (véase Cuadro 5.1). Valores cercanos a 1 indican que la estructura jerárquica preserva adecuadamente las relaciones de proximidad originales entre las observaciones, por lo que el dendrograma constituye una buena representación de los datos.</p>
+<p>Una vez seleccionado el dendrograma que mejor reproduce la estructura de distancias, el número óptimo de clústers se determinó mediante la inspección del dendrograma y la identificación de incrementos marcados en los niveles de fusión, los cuales sugieren separaciones naturales entre grupos. Adicionalmente, se evaluaron distintas particiones mediante criterios de validación interna, tales como el coeficiente de silhouette promedio, con el fin de corroborar la estabilidad y coherencia de la estructura obtenida.</p>
+<p>Con este procedimiento combinado (fidelidad del dendrograma y evaluación de cohesión/separación) se seleccionó el número final de clústers a reportar.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="análisis-de-conglomerados.html#cb17-1" tabindex="-1"></a><span class="co">#install.packages(c(&quot;purrr&quot;, &quot;kableExtra&quot;))</span></span>
+<span id="cb17-2"><a href="análisis-de-conglomerados.html#cb17-2" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb17-3"><a href="análisis-de-conglomerados.html#cb17-3" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code></pre></div>
+<pre><code>## 
+## Adjuntando el paquete: &#39;kableExtra&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     group_rows</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="análisis-de-conglomerados.html#cb20-1" tabindex="-1"></a><span class="co"># vector con nombre de los métodos</span></span>
+<span id="cb20-2"><a href="análisis-de-conglomerados.html#cb20-2" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;average&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;complete&quot;</span>, <span class="st">&quot;ward.D2&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;centroid&quot;</span>)</span>
+<span id="cb20-3"><a href="análisis-de-conglomerados.html#cb20-3" tabindex="-1"></a><span class="fu">names</span>(m) <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;average&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;complete&quot;</span>, <span class="st">&quot;ward.D2&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;centroid&quot;</span>)</span>
+<span id="cb20-4"><a href="análisis-de-conglomerados.html#cb20-4" tabindex="-1"></a><span class="co"># Función para calcular el coeficiente de correlación</span></span>
+<span id="cb20-5"><a href="análisis-de-conglomerados.html#cb20-5" tabindex="-1"></a>coef_cor <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb20-6"><a href="análisis-de-conglomerados.html#cb20-6" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">x=</span>dist, <span class="fu">cophenetic</span>(<span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> x)))</span>
+<span id="cb20-7"><a href="análisis-de-conglomerados.html#cb20-7" tabindex="-1"></a>}</span>
+<span id="cb20-8"><a href="análisis-de-conglomerados.html#cb20-8" tabindex="-1"></a><span class="co"># Tabla comparativa</span></span>
+<span id="cb20-9"><a href="análisis-de-conglomerados.html#cb20-9" tabindex="-1"></a>coef_tabla <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(m, coef_cor) </span>
+<span id="cb20-10"><a href="análisis-de-conglomerados.html#cb20-10" tabindex="-1"></a></span>
+<span id="cb20-11"><a href="análisis-de-conglomerados.html#cb20-11" tabindex="-1"></a><span class="fu">kbl</span>(coef_tabla, <span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">align =</span> <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb20-12"><a href="análisis-de-conglomerados.html#cb20-12" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&quot;Cuadro comparativo de los coeficientes de correlación&quot;</span>,</span>
+<span id="cb20-13"><a href="análisis-de-conglomerados.html#cb20-13" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">rownames</span>(coef_tabla)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-14"><a href="análisis-de-conglomerados.html#cb20-14" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">position =</span> <span class="st">&quot;center&quot;</span>,</span>
+<span id="cb20-15"><a href="análisis-de-conglomerados.html#cb20-15" tabindex="-1"></a>                <span class="at">latex_options =</span> <span class="fu">c</span>(<span class="st">&quot;repeat_header&quot;</span>, <span class="st">&quot;hold_position&quot;</span>),</span>
+<span id="cb20-16"><a href="análisis-de-conglomerados.html#cb20-16" tabindex="-1"></a>                <span class="at">font_size =</span> <span class="dv">9</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb20-17"><a href="análisis-de-conglomerados.html#cb20-17" tabindex="-1"></a>  <span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">&quot;Método&quot;</span>, <span class="st">&quot;Coeficiente de correlación&quot;</span>))</span></code></pre></div>
+<table class="table" style="font-size: 9px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Método
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Coeficiente de correlación
+</div>
+</th>
+</tr>
+</thead>
+<caption style="font-size: initial !important;">
+<span id="tab:ac16">Table 5.1: </span>Cuadro comparativo de los coeficientes de correlación
+</caption>
+<tbody>
+<tr>
+<td style="text-align:left;">
+average
+</td>
+<td style="text-align:center;">
+0.6816035
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+single
+</td>
+<td style="text-align:center;">
+0.5139962
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+complete
+</td>
+<td style="text-align:center;">
+0.6521790
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ward.D2
+</td>
+<td style="text-align:center;">
+0.6349740
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+median
+</td>
+<td style="text-align:center;">
+0.5333157
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+centroid
+</td>
+<td style="text-align:center;">
+0.5676691
+</td>
+</tr>
+</tbody>
+</table>
+<p>A partir de los coeficientes de correlación cofenética (Cuadro 5.1), observamos que el dendrograma obtenido mediante el método <code>average</code> es el que mejor preserva la estructura de similitudes original entre las observaciones, seguido por el método <code>median</code>. Por este motivo, utilizamos el dendrograma generado con <code>average</code> como base para determinar la partición final.</p>
+<p>Posteriormente, para determinar el número adecuado de clústers, utilizamos dos enfoques complementarios: el método del codo aplicado a la variación explicada y el paquete <code>NbClust</code>. Este último permite evaluar de manera simultánea un conjunto amplio de índices de validación (por ejemplo, Calinski–Harabasz, Dunn, Silhouette, entre otros), con el fin de sugerir el número de clústers más adecuado dentro de un rango especificado. Con base en la concordancia entre ambos enfoques, seleccionamos el número final de grupos a analizar.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="análisis-de-conglomerados.html#cb21-1" tabindex="-1"></a><span class="co">#install.packages(&quot;NbClust&quot;)</span></span>
+<span id="cb21-2"><a href="análisis-de-conglomerados.html#cb21-2" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ac18"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/ac18-1.png" alt="Número óbtimo de clusters usando el método del codo" width="1344" />
+<p class="caption">
+Figure 5.13: Número óbtimo de clusters usando el método del codo
+</p>
+</div>
+<p>Podemos observar en la gráfica de codo que en 2 es donde se forma el codo, así que esto nos diría que debemos considerar 2 clústers.</p>
+<p>Usando el paquete ‘NbClust’ se pueden obtener una comparación del número óptimo de clústers. Para el ejemplo que hemos estado realizando, no es posible aplicarle esto, pero lo que deberíamos de realizar es lo siguiente.</p>
+</div>
+</div>
+<div id="ejercicios-6" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Ejercicios<a href="análisis-de-conglomerados.html#ejercicios-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Ejercicio 1 (Ejemplo 12.2, Johnsonn y Wichern):</strong> Ssimilitud entre 11 lenguas.</p>
+<p>El significado de las palabras cambia a lo largo de la historia; sin embargo, el significado de los números <span class="math inline">\(1,2,3,\dots\)</span> se mantiene notablemente estable. Esto permite comparar lenguas utilizando únicamente las palabras para los numerales.</p>
+<p>En la tabla siguiente se muestran las palabras que representan los números del 1 al 10 en once lenguas europeas modernas: inglés, noruego, danés, neerlandés, alemán, francés, español, italiano, polaco, húngaro y finés.</p>
+<p>(Únicamente se consideran lenguas que usan el alfabeto romano; se omiten acentos, diéresis, cedillas, etc.)</p>
+<p>Una inspección rápida de la tabla sugiere que las primeras cinco lenguas (inglés, noruego, danés, neerlandés y alemán) son muy parecidas entre sí.</p>
+<p>Las lenguas francesa, española e italiana parecen guardar una similitud aún mayor entre ellas.
+Húngaro y finés parecen más aisladas, y el polaco comparte características con las lenguas de ambos subgrupos mayores.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="análisis-de-conglomerados.html#cb22-1" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb22-2"><a href="análisis-de-conglomerados.html#cb22-2" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="análisis-de-conglomerados.html#cb22-3" tabindex="-1"></a>tabla1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb22-4"><a href="análisis-de-conglomerados.html#cb22-4" tabindex="-1"></a>  <span class="at">Ingles =</span> <span class="fu">c</span>(<span class="st">&quot;one&quot;</span>,<span class="st">&quot;two&quot;</span>,<span class="st">&quot;three&quot;</span>,<span class="st">&quot;four&quot;</span>,<span class="st">&quot;five&quot;</span>,<span class="st">&quot;six&quot;</span>,<span class="st">&quot;seven&quot;</span>,<span class="st">&quot;eight&quot;</span>,<span class="st">&quot;nine&quot;</span>,<span class="st">&quot;ten&quot;</span>),</span>
+<span id="cb22-5"><a href="análisis-de-conglomerados.html#cb22-5" tabindex="-1"></a>  <span class="at">Noruego =</span> <span class="fu">c</span>(<span class="st">&quot;en&quot;</span>,<span class="st">&quot;to&quot;</span>,<span class="st">&quot;tre&quot;</span>,<span class="st">&quot;fire&quot;</span>,<span class="st">&quot;fem&quot;</span>,<span class="st">&quot;seks&quot;</span>,<span class="st">&quot;sju&quot;</span>,<span class="st">&quot;atte&quot;</span>,<span class="st">&quot;ni&quot;</span>,<span class="st">&quot;ti&quot;</span>),</span>
+<span id="cb22-6"><a href="análisis-de-conglomerados.html#cb22-6" tabindex="-1"></a>  <span class="at">Danes =</span> <span class="fu">c</span>(<span class="st">&quot;en&quot;</span>,<span class="st">&quot;to&quot;</span>,<span class="st">&quot;tre&quot;</span>,<span class="st">&quot;fire&quot;</span>,<span class="st">&quot;fem&quot;</span>,<span class="st">&quot;seks&quot;</span>,<span class="st">&quot;syv&quot;</span>,<span class="st">&quot;otte&quot;</span>,<span class="st">&quot;ni&quot;</span>,<span class="st">&quot;ti&quot;</span>),</span>
+<span id="cb22-7"><a href="análisis-de-conglomerados.html#cb22-7" tabindex="-1"></a>  <span class="at">Neerlandes =</span> <span class="fu">c</span>(<span class="st">&quot;een&quot;</span>,<span class="st">&quot;twee&quot;</span>,<span class="st">&quot;drie&quot;</span>,<span class="st">&quot;vier&quot;</span>,<span class="st">&quot;vijf&quot;</span>,<span class="st">&quot;zes&quot;</span>,<span class="st">&quot;zeven&quot;</span>,<span class="st">&quot;acht&quot;</span>,<span class="st">&quot;negen&quot;</span>,<span class="st">&quot;tien&quot;</span>),</span>
+<span id="cb22-8"><a href="análisis-de-conglomerados.html#cb22-8" tabindex="-1"></a>  <span class="at">Aleman =</span> <span class="fu">c</span>(<span class="st">&quot;eins&quot;</span>,<span class="st">&quot;zwei&quot;</span>,<span class="st">&quot;drei&quot;</span>,<span class="st">&quot;vier&quot;</span>,<span class="st">&quot;funf&quot;</span>,<span class="st">&quot;sechs&quot;</span>,<span class="st">&quot;sieben&quot;</span>,<span class="st">&quot;acht&quot;</span>,<span class="st">&quot;neun&quot;</span>,<span class="st">&quot;zehn&quot;</span>),</span>
+<span id="cb22-9"><a href="análisis-de-conglomerados.html#cb22-9" tabindex="-1"></a>  <span class="at">Frances =</span> <span class="fu">c</span>(<span class="st">&quot;un&quot;</span>,<span class="st">&quot;deux&quot;</span>,<span class="st">&quot;trois&quot;</span>,<span class="st">&quot;quatre&quot;</span>,<span class="st">&quot;cinq&quot;</span>,<span class="st">&quot;six&quot;</span>,<span class="st">&quot;sept&quot;</span>,<span class="st">&quot;huit&quot;</span>,<span class="st">&quot;neuf&quot;</span>,<span class="st">&quot;dix&quot;</span>),</span>
+<span id="cb22-10"><a href="análisis-de-conglomerados.html#cb22-10" tabindex="-1"></a>  <span class="at">Espanol =</span> <span class="fu">c</span>(<span class="st">&quot;uno&quot;</span>,<span class="st">&quot;dos&quot;</span>,<span class="st">&quot;tres&quot;</span>,<span class="st">&quot;cuatro&quot;</span>,<span class="st">&quot;cinco&quot;</span>,<span class="st">&quot;seis&quot;</span>,<span class="st">&quot;siete&quot;</span>,<span class="st">&quot;ocho&quot;</span>,<span class="st">&quot;nueve&quot;</span>,<span class="st">&quot;diez&quot;</span>),</span>
+<span id="cb22-11"><a href="análisis-de-conglomerados.html#cb22-11" tabindex="-1"></a>  <span class="at">Italiano =</span> <span class="fu">c</span>(<span class="st">&quot;uno&quot;</span>,<span class="st">&quot;due&quot;</span>,<span class="st">&quot;tre&quot;</span>,<span class="st">&quot;quattro&quot;</span>,<span class="st">&quot;cinque&quot;</span>,<span class="st">&quot;sei&quot;</span>,<span class="st">&quot;sette&quot;</span>,<span class="st">&quot;otto&quot;</span>,<span class="st">&quot;nove&quot;</span>,<span class="st">&quot;dieci&quot;</span>),</span>
+<span id="cb22-12"><a href="análisis-de-conglomerados.html#cb22-12" tabindex="-1"></a>  <span class="at">Polaco =</span> <span class="fu">c</span>(<span class="st">&quot;jeden&quot;</span>,<span class="st">&quot;dwa&quot;</span>,<span class="st">&quot;trzy&quot;</span>,<span class="st">&quot;cztery&quot;</span>,<span class="st">&quot;piec&quot;</span>,<span class="st">&quot;szesc&quot;</span>,<span class="st">&quot;siedem&quot;</span>,<span class="st">&quot;osiem&quot;</span>,<span class="st">&quot;dziewiec&quot;</span>,<span class="st">&quot;dziesiec&quot;</span>),</span>
+<span id="cb22-13"><a href="análisis-de-conglomerados.html#cb22-13" tabindex="-1"></a>  <span class="at">Hungaro =</span> <span class="fu">c</span>(<span class="st">&quot;egy&quot;</span>,<span class="st">&quot;ketto&quot;</span>,<span class="st">&quot;harom&quot;</span>,<span class="st">&quot;negy&quot;</span>,<span class="st">&quot;ot&quot;</span>,<span class="st">&quot;hat&quot;</span>,<span class="st">&quot;het&quot;</span>,<span class="st">&quot;nyolc&quot;</span>,<span class="st">&quot;kilenc&quot;</span>,<span class="st">&quot;tiz&quot;</span>),</span>
+<span id="cb22-14"><a href="análisis-de-conglomerados.html#cb22-14" tabindex="-1"></a>  <span class="at">Fines =</span> <span class="fu">c</span>(<span class="st">&quot;yksi&quot;</span>,<span class="st">&quot;kaksi&quot;</span>,<span class="st">&quot;kolme&quot;</span>,<span class="st">&quot;neljä&quot;</span>,<span class="st">&quot;viisi&quot;</span>,<span class="st">&quot;kuusi&quot;</span>,<span class="st">&quot;seitsemän&quot;</span>,<span class="st">&quot;kahdeksan&quot;</span>,<span class="st">&quot;yhdeksän&quot;</span>,<span class="st">&quot;kymmenen&quot;</span>)</span>
+<span id="cb22-15"><a href="análisis-de-conglomerados.html#cb22-15" tabindex="-1"></a>)</span>
+<span id="cb22-16"><a href="análisis-de-conglomerados.html#cb22-16" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="análisis-de-conglomerados.html#cb22-17" tabindex="-1"></a><span class="fu">kable</span>(tabla1, <span class="at">caption =</span> <span class="st">&quot;Numerales del 1 al 10 en 11 lenguas europeas&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:ac20">Table 5.2: </span>Numerales del 1 al 10 en 11 lenguas europeas</caption>
+<colgroup>
+<col width="7%" />
+<col width="8%" />
+<col width="6%" />
+<col width="12%" />
+<col width="7%" />
+<col width="8%" />
+<col width="8%" />
+<col width="9%" />
+<col width="9%" />
+<col width="8%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Ingles</th>
+<th align="left">Noruego</th>
+<th align="left">Danes</th>
+<th align="left">Neerlandes</th>
+<th align="left">Aleman</th>
+<th align="left">Frances</th>
+<th align="left">Espanol</th>
+<th align="left">Italiano</th>
+<th align="left">Polaco</th>
+<th align="left">Hungaro</th>
+<th align="left">Fines</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">one</td>
+<td align="left">en</td>
+<td align="left">en</td>
+<td align="left">een</td>
+<td align="left">eins</td>
+<td align="left">un</td>
+<td align="left">uno</td>
+<td align="left">uno</td>
+<td align="left">jeden</td>
+<td align="left">egy</td>
+<td align="left">yksi</td>
+</tr>
+<tr class="even">
+<td align="left">two</td>
+<td align="left">to</td>
+<td align="left">to</td>
+<td align="left">twee</td>
+<td align="left">zwei</td>
+<td align="left">deux</td>
+<td align="left">dos</td>
+<td align="left">due</td>
+<td align="left">dwa</td>
+<td align="left">ketto</td>
+<td align="left">kaksi</td>
+</tr>
+<tr class="odd">
+<td align="left">three</td>
+<td align="left">tre</td>
+<td align="left">tre</td>
+<td align="left">drie</td>
+<td align="left">drei</td>
+<td align="left">trois</td>
+<td align="left">tres</td>
+<td align="left">tre</td>
+<td align="left">trzy</td>
+<td align="left">harom</td>
+<td align="left">kolme</td>
+</tr>
+<tr class="even">
+<td align="left">four</td>
+<td align="left">fire</td>
+<td align="left">fire</td>
+<td align="left">vier</td>
+<td align="left">vier</td>
+<td align="left">quatre</td>
+<td align="left">cuatro</td>
+<td align="left">quattro</td>
+<td align="left">cztery</td>
+<td align="left">negy</td>
+<td align="left">neljä</td>
+</tr>
+<tr class="odd">
+<td align="left">five</td>
+<td align="left">fem</td>
+<td align="left">fem</td>
+<td align="left">vijf</td>
+<td align="left">funf</td>
+<td align="left">cinq</td>
+<td align="left">cinco</td>
+<td align="left">cinque</td>
+<td align="left">piec</td>
+<td align="left">ot</td>
+<td align="left">viisi</td>
+</tr>
+<tr class="even">
+<td align="left">six</td>
+<td align="left">seks</td>
+<td align="left">seks</td>
+<td align="left">zes</td>
+<td align="left">sechs</td>
+<td align="left">six</td>
+<td align="left">seis</td>
+<td align="left">sei</td>
+<td align="left">szesc</td>
+<td align="left">hat</td>
+<td align="left">kuusi</td>
+</tr>
+<tr class="odd">
+<td align="left">seven</td>
+<td align="left">sju</td>
+<td align="left">syv</td>
+<td align="left">zeven</td>
+<td align="left">sieben</td>
+<td align="left">sept</td>
+<td align="left">siete</td>
+<td align="left">sette</td>
+<td align="left">siedem</td>
+<td align="left">het</td>
+<td align="left">seitsemän</td>
+</tr>
+<tr class="even">
+<td align="left">eight</td>
+<td align="left">atte</td>
+<td align="left">otte</td>
+<td align="left">acht</td>
+<td align="left">acht</td>
+<td align="left">huit</td>
+<td align="left">ocho</td>
+<td align="left">otto</td>
+<td align="left">osiem</td>
+<td align="left">nyolc</td>
+<td align="left">kahdeksan</td>
+</tr>
+<tr class="odd">
+<td align="left">nine</td>
+<td align="left">ni</td>
+<td align="left">ni</td>
+<td align="left">negen</td>
+<td align="left">neun</td>
+<td align="left">neuf</td>
+<td align="left">nueve</td>
+<td align="left">nove</td>
+<td align="left">dziewiec</td>
+<td align="left">kilenc</td>
+<td align="left">yhdeksän</td>
+</tr>
+<tr class="even">
+<td align="left">ten</td>
+<td align="left">ti</td>
+<td align="left">ti</td>
+<td align="left">tien</td>
+<td align="left">zehn</td>
+<td align="left">dix</td>
+<td align="left">diez</td>
+<td align="left">dieci</td>
+<td align="left">dziesiec</td>
+<td align="left">tiz</td>
+<td align="left">kymmenen</td>
+</tr>
+</tbody>
+</table>
+<p>Para cuantificar la similitud entre dos lenguas podemos fijarnos únicamente en <em>la primera letra</em> de cada palabra.
+Diremos que dos palabras para el mismo número en dos lenguas distintas son <em>concordantes</em> si tienen la misma letra inicial y <em>discordantes</em> en caso contrario.</p>
+<p>A partir de la Tabla anterior podemos construir una tabla de <em>concordancias</em> entre lenguas: para cada par de lenguas contamos cuántas veces (sobre los 10 numerales) coinciden las letras iniciales de sus palabras.
+El resultado se resume en la Tabla siguiente. Por ejemplo, el valor 8 en la celda <span class="math inline">\((\text{E},\text{N})\)</span> indica que inglés y noruego comparten la misma letra inicial en 8 de los 10 numerales.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="análisis-de-conglomerados.html#cb23-1" tabindex="-1"></a>tabla2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb23-2"><a href="análisis-de-conglomerados.html#cb23-2" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">&quot;E&quot;</span>,<span class="st">&quot;N&quot;</span>,<span class="st">&quot;Da&quot;</span>,<span class="st">&quot;Du&quot;</span>,<span class="st">&quot;G&quot;</span>,<span class="st">&quot;Fr&quot;</span>,<span class="st">&quot;Sp&quot;</span>,<span class="st">&quot;I&quot;</span>,<span class="st">&quot;P&quot;</span>,<span class="st">&quot;H&quot;</span>,<span class="st">&quot;Fi&quot;</span>),</span>
+<span id="cb23-3"><a href="análisis-de-conglomerados.html#cb23-3" tabindex="-1"></a>  <span class="at">E  =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb23-4"><a href="análisis-de-conglomerados.html#cb23-4" tabindex="-1"></a>  <span class="at">N  =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>),</span>
+<span id="cb23-5"><a href="análisis-de-conglomerados.html#cb23-5" tabindex="-1"></a>  <span class="at">Da =</span> <span class="fu">c</span>(<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">1</span>),</span>
+<span id="cb23-6"><a href="análisis-de-conglomerados.html#cb23-6" tabindex="-1"></a>  <span class="at">Du =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">1</span>),</span>
+<span id="cb23-7"><a href="análisis-de-conglomerados.html#cb23-7" tabindex="-1"></a>  <span class="at">G  =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>),</span>
+<span id="cb23-8"><a href="análisis-de-conglomerados.html#cb23-8" tabindex="-1"></a>  <span class="at">Fr =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">10</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">5</span>,<span class="dv">0</span>,<span class="dv">1</span>),</span>
+<span id="cb23-9"><a href="análisis-de-conglomerados.html#cb23-9" tabindex="-1"></a>  <span class="at">Sp =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">0</span>,<span class="dv">1</span>),</span>
+<span id="cb23-10"><a href="análisis-de-conglomerados.html#cb23-10" tabindex="-1"></a>  <span class="at">I  =</span> <span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">9</span>,<span class="dv">9</span>,<span class="dv">10</span>,<span class="dv">6</span>,<span class="dv">0</span>,<span class="dv">1</span>),</span>
+<span id="cb23-11"><a href="análisis-de-conglomerados.html#cb23-11" tabindex="-1"></a>  <span class="at">P  =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">6</span>,<span class="dv">10</span>,<span class="dv">0</span>,<span class="dv">2</span>),</span>
+<span id="cb23-12"><a href="análisis-de-conglomerados.html#cb23-12" tabindex="-1"></a>  <span class="at">H  =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">10</span>,<span class="dv">1</span>),</span>
+<span id="cb23-13"><a href="análisis-de-conglomerados.html#cb23-13" tabindex="-1"></a>  <span class="at">Fi =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">10</span>)</span>
+<span id="cb23-14"><a href="análisis-de-conglomerados.html#cb23-14" tabindex="-1"></a>)</span>
+<span id="cb23-15"><a href="análisis-de-conglomerados.html#cb23-15" tabindex="-1"></a><span class="fu">kable</span>(tabla2, <span class="at">caption =</span> <span class="st">&quot;Concordancias entre primeras letras de los numerales (1--10)&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:ac21">Table 5.3: </span>Concordancias entre primeras letras de los numerales (1–10)</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">E</th>
+<th align="right">N</th>
+<th align="right">Da</th>
+<th align="right">Du</th>
+<th align="right">G</th>
+<th align="right">Fr</th>
+<th align="right">Sp</th>
+<th align="right">I</th>
+<th align="right">P</th>
+<th align="right">H</th>
+<th align="right">Fi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">E</td>
+<td align="right">10</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">N</td>
+<td align="right">8</td>
+<td align="right">10</td>
+<td align="right">9</td>
+<td align="right">5</td>
+<td align="right">6</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Da</td>
+<td align="right">8</td>
+<td align="right">9</td>
+<td align="right">10</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Du</td>
+<td align="right">3</td>
+<td align="right">5</td>
+<td align="right">4</td>
+<td align="right">10</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">G</td>
+<td align="right">4</td>
+<td align="right">6</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">10</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Fr</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">10</td>
+<td align="right">8</td>
+<td align="right">9</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Sp</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">8</td>
+<td align="right">10</td>
+<td align="right">9</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">I</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">9</td>
+<td align="right">9</td>
+<td align="right">10</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">P</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="right">6</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">H</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">10</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Fi</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">1</td>
+<td align="right">10</td>
+</tr>
+</tbody>
+</table>
+<p>Los resultados de la Tabla anterior confirman la impresión visual de la primer tabla: inglés, noruego, danés, neerlandés y alemán parecen formar un grupo; francés, español, italiano y polaco podrían agruparse juntos, mientras que húngaro y finés parecen más aislados.</p>
+<ol style="list-style-type: decimal">
+<li><p>A partir de la tabla de concordancias
+<span class="math inline">\(\big(c_{ij}\big)\)</span> de la Tabla ,
+construyan una matriz de <em>disimilitudes</em> definiendo, por ejemplo,
+<span class="math display">\[
+        d_{ij} = 10 - c_{ij},
+     \]</span>
+para <span class="math inline">\(i \neq j\)</span>, y <span class="math inline">\(d_{ii} = 0\)</span>.
+(Es decir, mientras mayor sea el número de diferencias en las letras iniciales, mayor será la disimilitud entre las lenguas <span class="math inline">\(i\)</span> y <span class="math inline">\(j\)</span>.)</p></li>
+<li><p>Apliquen métodos de clustering jerárquico aglomerativo utilizando al menos los siguientes criterios de enlace:</p></li>
+</ol>
+<ul>
+<li><p>enlace simple,</p></li>
+<li><p>enlace completo,</p></li>
+<li><p>enlace promedio,</p></li>
+<li><p>método de Ward.</p></li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Para cada método de enlace:</li>
+</ol>
+<ul>
+<li><p>Generen el dendrograma correspondiente a la matriz de disimilitudes <span class="math inline">\(D = (d_{ij})\)</span>.</p></li>
+<li><p>Calcule el coeficiente de correlación cofenético entre la matriz de disimilitudes original y las distancias cofenéticas del dendrograma.</p></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Comparen los dendrogramas obtenidos y los valores de correlación cofenética. ¿Qué método produce el dendrograma que mejor preserva la estructura de similitudes entre las lenguas?</p></li>
+<li><p>Usando el dendrograma seleccionado en el punto anterior:</p></li>
+</ol>
+<ul>
+<li><p>Exploren distintos cortes del árbol para obtener diferentes números de clústers (<span class="math inline">\(k=2,3,\dots\)</span>).</p></li>
+<li><p>Utilicen el método del codo (basado en la suma de cuadrados intra–grupo) y, si lo desean, índices adicionales de validación interna (por ejemplo, silhouette promedio) para determinar el número más adecuado de clústers.</p></li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>Finalmente, interpreten los clústers obtenidos:</li>
+</ol>
+<ul>
+<li><p>¿Qué lenguas quedan agrupadas en cada clúster?</p></li>
+<li><p>¿Coinciden los grupos encontrados con la impresión inicial basada en las dos tablas?</p></li>
+</ul>
+<p><strong>Ejercicio 2:</strong> Carga la base de datos USArrests. Obtén los dendrogramas y compara cuales realizan una mejor agrupación. ¿Cuál es el número óptimo de clusters?</p>
+</div>
+<div id="clustering-no-jerárquico" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Clustering no jerárquico<a href="#clustering-no-jer%C3%A1rquico" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Los métodos de clustering no jerárquicos están diseñados para agrupar (ítems), más que variables, en una colección de <span class="math inline">\(K\)</span> clústers. El número de clústers <span class="math inline">\(K\)</span> puede fijarse de antemano o bien determinarse como parte del procedimiento de agrupamiento.</p>
+<p>A diferencia de los métodos jerárquicos, en los métodos no jerárquicos no es necesario trabajar explícitamente con una matriz completa de distancias (o similitudes), ni almacenarla durante todo el proceso de cómputo. Esto permite aplicar estos métodos a conjuntos de datos mucho más grandes que los que suelen manejarse con técnicas jerárquicas.</p>
+<p>En general, los métodos no jerárquicos parten de:</p>
+<ol style="list-style-type: decimal">
+<li><p>una partición inicial de los ítems en grupos, o</p></li>
+<li><p>un conjunto inicial de ``puntos semilla’’, que funcionarán como núcleos de los clústers.</p></li>
+</ol>
+<p>Una buena elección de la configuración inicial es importante y, en la medida de lo posible, debe evitar sesgos evidentes. Una estrategia simple consiste en elegir aleatoriamente los puntos semilla entre las observaciones, o bien asignar aleatoriamente los ítems a grupos iniciales.</p>
+<p>En esta sección consideramos uno de los procedimientos no jerárquicos más populares: el método de <strong><span class="math inline">\(k\)</span>-means</strong>.</p>
+<div id="k-means" class="section level3 hasAnchor" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> K-means<a href="análisis-de-conglomerados.html#k-means" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>MacQueen introdujo el término <em><span class="math inline">\(k\)</span>-means</em> para describir un algoritmo que asigna cada observación al clúster cuyo centroide (media) sea más cercano. En su versión más simple, el proceso consta de los siguientes pasos:</p>
+<ol style="list-style-type: decimal">
+<li><p><em>Partición inicial:</em> Dividir las observaciones en <span class="math inline">\(K\)</span> clústers iniciales (o bien elegir <span class="math inline">\(K\)</span> centroides iniciales).</p></li>
+<li><p><em>Asignación</em>: Recorrer la lista de observaciones y asignar cada una al clúster cuyo centroide esté más cerca. La distancia suele ser la euclidiana, usando ya sea datos estandarizados o sin estandarizar.</p></li>
+<li><p><em>Actualización:</em> Recalcular el centroide de cada clúster a partir de las observaciones que contiene tras la nueva asignación.</p></li>
+<li><p><em>Iteración</em>: Repetir los pasos 2 y 3 hasta que no se produzcan reasignaciones (o los cambios sean despreciables).</p></li>
+</ol>
+<p>En lugar de comenzar con una partición inicial de todos los ítems en <span class="math inline">\(K\)</span> grupos (Paso 1), también es posible especificar directamente <span class="math inline">\(K\)</span> centroides iniciales (puntos semilla) y empezar el algoritmo a partir del Paso 2.</p>
+<p>La asignación final de las observaciones a los clústers depende, en cierta medida, de la partición o de los centroides iniciales elegidos. La experiencia indica que la mayoría de los cambios importantes en la asignación ocurren durante las primeras iteraciones, y posteriormente el algoritmo tiende a estabilizarse.</p>
+<p><strong>Ejemplo 1:</strong> Supongamos que medimos dos variables <span class="math inline">\(X_1\)</span> y <span class="math inline">\(X_2\)</span> para cuatro ítems: A, B, C y D. Los datos se muestran en la tabla siguiente:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Ítem</th>
+<th>x1</th>
+<th>x2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>5</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>-1</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>1</td>
+<td>-2</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>-3</td>
+<td>-2</td>
+</tr>
+</tbody>
+</table>
+<p>El objetivo consiste en dividir estos ítems en <span class="math inline">\(K = 2\)</span> clústers, de modo que los elementos dentro de un clúster sean más similares entre sí que respecto a los elementos del otro clúster.</p>
+<p>Para implementar el método <span class="math inline">\(k\)</span>-means con <span class="math inline">\(K=2\)</span>, iniciamos con una partición arbitraria. Supongamos que asignamos inicialmente:
+<span class="math display">\[
+\text{Cluster 1: } (A,B), \qquad \text{Cluster 2: } (C,D).
+\]</span></p>
+<p>Entonces, el paso 1 sería calcular los centroides iniciales. Después, la reasignación usando distancia euclidiana y el nuevo cálculo de centroides, hasta terminar el proceso.</p>
+</div>
+</div>
+<div id="tutoriales-de-datacamp-sugeridos-1" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Tutoriales de DataCamp sugeridos<a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p><a href="http://app.datacamp.com/learn/courses/cluster-analysis-in-python">Análisis de conglomerados en Python</a></p></li>
+<li><p><a href="https://app.datacamp.com/learn/courses/cluster-analysis-in-r">Cluster Analysis in R</a></p></li>
+</ol>
+<p><em>Otro material sugerido:</em> <a href="https://github.com/biotrain-latam/BiotrAIn-pilot-course/tree/main/Module%202%20Clustering">BiotrAIn course: Concepts, approaches and applications of Artificial Intelligence in bioscience</a></p>
 
+</div>
 </div>
             </section>
 

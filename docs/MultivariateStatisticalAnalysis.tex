@@ -134,6 +134,20 @@
 %  coltext=white,
 %  boxsep=5pt,
 %  arc=4pt}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -5891,14 +5905,14 @@ Aunque el análisis de factores está relacionado con el análisis de componente
 El vector aleatorio observable \(X\), con \(p\) componentes, tiene media \(\mu\) y matriz de covarianzas \(\Sigma\). El modelo de factores quiere explicar las relaciones entre las variables manifiestas \(X=(X_1, \dots, X_p)\) a través de \(m\) variables latentes \(f_1, \dots, f_m\), llamadas \textbf{factores comunes} y \(p\) fuentes adicionales de variación \(e_1,...,e_p\) llamados \emph{errores} o \emph{factores específicos}:
 
 \[
-X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j, \quad j = 1, \dots, p.
+X_j = \mu_j + \ell_{j1} f_1 + \dots + \ell_{jm} f_m + e_j, \quad j = 1, \dots, p.
 \]
 
 \begin{itemize}
 \item
-  \(\mu_j\) y \(\lambda_{ji}\) son constantes.
+  \(\mu_j\) y \(\ell_{ji}\) son constantes.
 \item
-  Los \(\lambda_{ji}\) se llaman también las cargas (\emph{loadings}) de la j-ésima variable en el factor i-ésimo.
+  Los \(\ell_{ji}\) se llaman también las cargas (\emph{loadings}) de la j-ésima variable en el factor i-ésimo.
 \item
   \(e_j\) y los \(f_i\) son variables aleatorias.
 \item
@@ -5916,14 +5930,13 @@ X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j, \quad j = 1, \d
 
 En forma matricial, el modelo se escribe como:
 
-\[
-X = \mu + \Lambda F + e,
+\[ X = \mu_{p\times 1} + L_{p\times m} F_{m\times 1} + e_{p\times 1},
 \]
 
 o, centrando la variable,
 
 \[
-X - \mu = \Lambda F + e,
+X - \mu = L F + e,
 \]
 
 donde:
@@ -5936,15 +5949,15 @@ donde:
 \item
   \(F^\top = (f_1, \dots, f_m)\),
 \item
-  \(\Lambda\) es una matriz de constantes:
+  \(L\) es una matriz de constantes:
 \end{itemize}
 
 \[
-\Lambda =
+L =
 \begin{pmatrix}
-\lambda_{11} & \cdots & \lambda_{1m} \\
+\ell_{11} & \cdots & \ell_{1m} \\
 \vdots       &        & \vdots       \\
-\lambda_{p1} & \cdots & \lambda_{pm}
+\ell_{p1} & \cdots & \ell_{pm}
 \end{pmatrix}.
 \]
 
@@ -5971,45 +5984,45 @@ Como los \(e_j\) son no correlacionados entre sí, \(\Psi\) es \textbf{diagonal}
 Supongamos que la matriz de varianzas y covarianzas de \(F\) es \(\Gamma\). Si \(\Gamma\) no es diagonal (i.e., las entradas son correlacionadas), como es simétrica y semidefinida positiva, puede escribirse como:
 
 \[
-\Gamma = LL^\top.
+\Gamma = TT^\top.
 \]
 
 Sea ahora el vector
 
 \[
-F^* = L^{-1} F
+F^* = T^\top F
 \]
 
 Entonces:
 
 \begin{itemize}
 \item
-  \(E(F^*) = L^{-1} E(F) = 0\),
+  \(\mathbb{E}(F^*) = T^{\top} \mathbb{E}(F) = 0\),
 \item
-  \(\operatorname{var}(F^*) = L^{-1} \Gamma L^{-1\top}
-  = L^{-1} LL^\top L^{-1\top} = I\).
+  \(\operatorname{var}(F^*) = T^{\top} \Gamma T
+  = T^\top T = I\).
 \end{itemize}
 
 Es decir, \(F^*\) tiene entradas \textbf{no correlacionadas}.
 
-Además
+Además,
 
 \begin{itemize}
 \tightlist
 \item
-  \(\operatorname{cov}(e, F) = \mathbb{E}(eF^\top) = 0\).
+  \(\operatorname{cov}(e, F) = \mathbb{E}(eF^\top) = 0_{p\times m}\).
 \end{itemize}
 
-Si definimos \(\Lambda^* = \Lambda L\), se tiene:
+Si definimos \(L^* = L T\), se tiene:
 
 \[
-\Lambda^* F^* = \Lambda L L^{-1} F = \Lambda F.
+L^* F^* = L T T^\top F = L F.
 \]
 
 Sustituyendo en el modelo:
 
 \[
-X = \mu + \Lambda^* F^* + e = \mu + \Lambda^* LL^{-1}F + e = \mu + \Lambda F + e.
+X = \mu + L^* F^* + e = \mu + L^* TT^{\top}F + e = \mu + L F + e.
 \]
 
 El modelo con factores no correlacionados \(F^*\) es \textbf{indistinguible} del modelo original con factores correlacionados \(F\). Por sencillez, se consideran los factores comunes como \textbf{no correlacionados}.
@@ -6017,16 +6030,16 @@ El modelo con factores no correlacionados \(F^*\) es \textbf{indistinguible} del
 Para ver las varianzas de las variables originales, partimos de:
 
 \[
-X_j = \mu_j + \lambda_{j1} f_1 + \dots + \lambda_{jm} f_m + e_j.
+X_j = \mu_j + \ell_{j1} f_1 + \dots + \ell_{jm} f_m + e_j.
 \]
 
 Como factores comunes y específicos son no correlacionados, al calcular la varianza:
 
 \[
 \operatorname{var}(X_j) = 
-\sum_{k=1}^m \lambda_{jk}^2
+\sum_{k=1}^m \ell_{jk}^2
 \;\;+\;\; \operatorname{var}(e_j)
-= \underbrace{\sum_{k=1}^m \lambda_{jk}^2}_{\text{comunalidad}}
+= \underbrace{\sum_{k=1}^m \ell_{jk}^2}_{\text{comunalidad}}
 + \underbrace{\psi_j^2}_{\text{especificidad}}.
 \]
 
@@ -6034,27 +6047,27 @@ Las covarianzas entre variables quedan:
 
 \[
 \operatorname{cov}(X_i, X_j)
-= \sum_{k=1}^m \lambda_{ik} \lambda_{jk}.
+= \sum_{k=1}^m \ell_{ik} \ell_{jk}.
 \]
 
 En forma matricial, la matriz de varianzas y covarianzas de \(X\) se escribe como:
 
 \[
-\Sigma = \Lambda \Lambda^\top + \Psi.
+\Sigma = LL^\top + \Psi.
 \]
 
 Al calcular la covarianza entre los factores comunes y las variables originales se tiene:
 
 \[
 \operatorname{cov}(X, F)
-= E\big[(\Lambda F + e) F^\top\big]
-= \Lambda E(FF^\top) + E(eF^\top)
-= \Lambda,
+= \mathbb{E}\big[(L F + e) F^\top\big]
+= L \mathbb{E}(FF^\top) + \mathbb{E}(eF^\top)
+= L,
 \]
 
-porque \(E(FF^\top) = I\) y \(E(eF^\top) = 0\).
+porque \(\mathbb{E}(FF^\top) = I\) y \(\mathbb{E}(eF^\top) = 0\).
 
-Por tanto, las cargas \(\lambda_{ij}\) pueden interpretarse como la \textbf{covarianza} entre la variable original \(X_i\) y el factor \(f_j\).
+Por tanto, las cargas \(\ell_{ij}\) pueden interpretarse como la \textbf{covarianza} entre la variable original \(X_i\) y el factor \(f_j\).
 
 \textbf{Diferencias entre Análisis de Componentes Principales (PCA) y Análisis de Factores (AF)}
 
@@ -6074,7 +6087,7 @@ Por tanto, las cargas \(\lambda_{ij}\) pueden interpretarse como la \textbf{cova
   En PCA las cargas se obtienen a través de eigenvalores y eigenvectores (direcciones de máxima varianza).
 \end{itemize}
 
-En AF, las cargas \(\lambda_{ij}\) se pueden calcular por tres métodos principales:
+En AF, las cargas \(\ell_{ij}\) se pueden calcular por tres métodos principales:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6087,7 +6100,7 @@ En AF, las cargas \(\lambda_{ij}\) se pueden calcular por tres métodos principa
   \textbf{Factores por máxima verosimilitud}.
 \end{enumerate}
 
-\textbf{Ejemplo:} Verificar que \(Σ= \Lambda\Lambda^\top+\Psi\).
+\textbf{Ejemplo:} Verificar que \(\Sigma= LL^\top+\Psi\).
 
 Consideremos la matriz de covarianzas
 
@@ -6103,11 +6116,11 @@ Consideremos la matriz de covarianzas
 
 Queremos verificar que esta matriz puede escribirse como:
 
-\[Σ= \Lambda\Lambda^\top+\Psi\]
+\[\Sigma= LL^\top+\Psi\]
 
 para un modelo factorial ortogonal con \(m=2\) factores.
 
-Vamos a considerar las siguientes matrices de cargas \(\Lambda\) y de varianzas específicas \(\Psi\):
+Vamos a considerar las siguientes matrices de cargas \(L\) y de varianzas específicas \(\Psi\):
 
 \[
 L =
@@ -6189,7 +6202,7 @@ y
 
 Cálculo de la comunalidad de \(X_1\):
 
-\[h_1^2 = \lambda_{11}^2 + \lambda_{12}^2 = 4^2 + 1^2 = 17\]
+\[h_1^2 = \ell_{11}^2 + \ell_{12}^2 = 4^2 + 1^2 = 17\]
 
 En R:
 
@@ -6206,7 +6219,7 @@ En R:
 
 Descomposición de la varianza de \(X_1\):
 
-\[\sigma_{11} = (\lambda_{11}^2 + \lambda_{12}^2) + \psi_1 = h_{1}^2 + \psi_1 \]
+\[\sigma_{11} = (\ell_{11}^2 + \ell_{12}^2) + \psi_1 = h_{1}^2 + \psi_1 \]
 
 \[
 \underbrace{19}_{\text{varianza}}
@@ -6220,13 +6233,13 @@ Descomposición de la varianza de \(X_1\):
 
 Este ejemplo muestra que:
 
-\[\Sigma= \Lambda\Lambda^\top+\Psi\]
+\[\Sigma= LL^\top+\Psi\]
 
 sí representa un modelo factorial ortogonal con 2 factores, pues toda la matriz \(\Sigma\) puede reconstruirse exactamente usando:
 
 \begin{itemize}
 \item
-  las cargas factoriales en \(\Lambda\),
+  las cargas factoriales en \(L\),
 \item
   las varianzas específicas en \(\Psi\).
 \end{itemize}
@@ -6243,7 +6256,7 @@ Si las correlaciones entre variables son muy pequeñas, no vale la pena hacer un
 
 Si la matriz de covarianzas no parece diagonal, entonces es razonable intentar un modelo factorial.
 
-El paso central es estimar las cargas factoriales \(\lambda_{ij}\) y las varianzas específicas \(\psi_i\).
+El paso central es estimar las cargas factoriales \(\ell_{ij}\) y las varianzas específicas \(\psi_i\).
 
 Los métodos de estimación más usados son:
 
@@ -6262,18 +6275,14 @@ La estimación y la rotación requieren algoritmos iterativos, por lo que se uti
 
 \subsection{Factores Método de Componentes Principales y Método de Factores Principales}\label{factores-muxe9todo-de-componentes-principales-y-muxe9todo-de-factores-principales}
 
-El punto de partida es la matriz de covarianzas poblacional \(\Sigma\).
-Por teoría de álgebra lineal, toda matriz simétrica y semidefinida positiva
-puede escribirse mediante su descomposición espectral. Existen pares
-autovalor--autovector \((\lambda_i, e_i)\), con
-\(\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_p\), que permiten escribir:
+El punto de partida es la matriz de covarianzas poblacional \(\Sigma\). Sabemos que toda matriz simétrica y semidefinida positiva puede escribirse mediante su descomposición espectral. Existen pares autovalor--autovector \((\lambda_i, e_i)\), con \(\lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_p\), que permiten escribir:
 
 \[
 \Sigma 
-= \lambda_1 e_1 e_1' 
-+ \lambda_2 e_2 e_2' 
+= \lambda_1 e_1 e_1^\top 
++ \lambda_2 e_2 e_2^\top 
 + \cdots 
-+ \lambda_p e_p e_p'.
++ \lambda_p e_p e_p^\top.
 \]
 
 Esta representación puede reescribirse como
@@ -6289,33 +6298,30 @@ Esta representación puede reescribirse como
 \right]
 \left[
 \begin{array}{c}
-\sqrt{\lambda_1} e_1' \\
-\sqrt{\lambda_2} e_2' \\
+\sqrt{\lambda_1} e_1^\top \\
+\sqrt{\lambda_2} e_2^\top \\
 \vdots \\
-\sqrt{\lambda_p} e_p'
+\sqrt{\lambda_p} e_p^\top
 \end{array}
 \right]
-= \Lambda\Lambda^\top,
+= L_{p\times p}L_{p\times p}^\top + 0_{p\times p} = LL^\top,
 \]
 
-donde \(\Lambda\) es la matriz cuyas columnas son \(\sqrt{\lambda_j} e_j\).\\
-Esta expresión coincide exactamente con la estructura del modelo factorial
-ortogonal
+donde \(L\) es la matriz cuyas columnas son \(\sqrt{\lambda_j} e_j\).\\
+Esta expresión coincide exactamente con la estructura del modelo factorial ortogonal
 
 \[
-\Sigma = \Lambda\Lambda^{\top} + \Psi,
+\Sigma = LL^{\top} + \Psi,
 \]
 
 donde en este caso \(\Psi = 0\) y el número de factores es \(m = p\).\\
-Aunque esta representación es exacta, no es útil para la reducción de
-dimensión porque emplea tantos factores como variables.
+Aunque esta representación es exacta, no es útil para la reducción de dimensión porque emplea tantos factores como variables.
 
-Si los últimos \(p-m\) autovalores son pequeños, puede ignorarse su contribución
-y aproximar:
+Si los últimos \(p-m\) autovalores son pequeños, puede ignorarse su contribucióny aproximar:
 
 \[
 \Sigma \approx 
-\lambda_1 e_1 e_1' + \cdots + \lambda_m e_m e_m'.
+\lambda_1 e_1 e_1^{\top} + \cdots + \lambda_m e_m e_m^{\top}.
 \]
 
 En forma matricial:
@@ -6330,32 +6336,29 @@ En forma matricial:
 \right]
 \left[
 \begin{array}{c}
-\sqrt{\lambda_1} e_1' \\
-\sqrt{\lambda_2} e_2' \\
+\sqrt{\lambda_1} e_1^{\top} \\
+\sqrt{\lambda_2} e_2^{\top} \\
 \vdots \\
-\sqrt{\lambda_m} e_m'
+\sqrt{\lambda_m} e_m^{\top}
 \end{array}
 \right]
-= \Lambda\Lambda^\top,
+= L_{p\times m}L_{m\times p}^\top,
 \]
 
-donde \(\Lambda\) es ahora una matriz \(p \times m\).\\
-Esta es la base del método de \textit{factores principales}: aproximar la
-covariación usando sólo los \(m\) factores más importantes.
+Esta es la base del método de \textit{factores principales}: aproximar la covariación usando sólo los \(m\) factores más importantes.
 
-El modelo factorial considera, además, un término de varianza específica
-\(\psi_i\) para cada variable. Para obtenerlo, se define:
+El modelo factorial considera, además, un término de varianza específica \(\psi_i\) para cada variable. Para obtenerlo, se define:
 
 \[
-\psi_i = \sigma_{ii} - \sum_{j=1}^m \ \lambda_{ij}^2, 
+\psi_i = \sigma_{ii} - \sum_{j=1}^m \ \ell_{ij}^2, 
 \qquad i = 1,\dots,p,
 \]
 
-donde \(\lambda_{ij}\) es la carga factorial correspondiente.\\
+donde \(\ell_{ij}\) es la carga factorial correspondiente.\\
 La aproximación factorial completa se escribe entonces como
 
 \[
-\Sigma \approx \Lambda\Lambda^\top + \Psi,
+\Sigma \approx LL^\top + \Psi,
 \]
 
 donde \(\Psi\) es diagonal con las varianzas específicas.
@@ -6372,11 +6375,9 @@ x_{jp} - \bar{x}_p
 \end{pmatrix}.
 \]
 
-La matriz de covarianzas de estas observaciones centradas es la matriz de
-covarianzas muestral \(S\).
+La matriz de covarianzas de estas observaciones centradas es la matriz de covarianzas muestral \(S\).
 
-Cuando las variables no están en las mismas unidades, se recomienda
-estandarizarlas:
+Cuando las variables no están en las mismas unidades, se recomienda estandarizarlas:
 
 \[
 z_j =
@@ -6388,22 +6389,17 @@ z_j =
 \end{pmatrix}.
 \]
 
-La matriz de covarianzas de los \(z_j\) es la matriz de correlaciones muestral \(R\).\\
-Estandarizar evita que una variable con varianza anormalmente grande influya de
-manera indebida en la estimación de las cargas.
+La matriz de covarianzas de los \(z_j\) es la matriz de correlaciones muestral \(R\). Estandarizar evita que una variable con varianza anormalmente grande influya de manera indebida en la estimación de las cargas.
 
 Aplicar la aproximación
 
 \[
-\Sigma \approx \Lambda\Lambda^\top + \Psi
+\Sigma \approx LL^\top + \Psi
 \]
 
-a \(S\) (o a \(R\) si se trabaja con variables estandarizadas), usando los
-autovalores y autovectores de \(S\) o \(R\), produce la llamada
-\textbf{solución de componentes principales} del análisis factorial.\\
-El nombre proviene de que las cargas factoriales \(\lambda_{ij}\) se derivan de los
-coeficientes de las primeras componentes principales, reescaladas por
-\(\sqrt{\lambda_j}\).
+a \(S\) (o a \(R\) si se trabaja con variables estandarizadas), usando los autovalores y autovectores de \(S\) o \(R\), produce la llamada \textbf{solución de componentes principales} del análisis factorial.
+
+El nombre proviene de que las cargas factoriales \(\ell_{ij}\) se derivan de los coeficientes de las primeras componentes principales, reescaladas por \(\sqrt{\lambda_j}\).
 
 \begin{blackbox}
 
@@ -6414,8 +6410,7 @@ coeficientes de las primeras componentes principales, reescaladas por
 
 \end{center}
 
-El análisis factorial por componentes principales de la matriz de covarianzas muestral \(S\)
-se basa en sus pares autovalor--autovector estimados
+El análisis factorial por componentes principales de la matriz de covarianzas muestral \(S\) se basa en sus pares autovalor--autovector estimados
 \[
 (\hat{\lambda}_1, \hat{e}_1),\; (\hat{\lambda}_2, \hat{e}_2),\; \dots,\; (\hat{\lambda}_p, \hat{e}_p),
 \]
@@ -6425,10 +6420,10 @@ donde
 \]
 
 Sea \(m < p\) el número de factores comunes elegidos.\\
-La matriz de cargas factoriales \(\{\widetilde{\lambda}_{i,j}\}\) estimadas está dada por
+La matriz de cargas factoriales \(\{\widetilde{\ell}_{i,j}\}\) estimadas está dada por
 
 \[
-\widetilde{\Lambda}
+\widetilde{L}
 =
 \left[
 \sqrt{\hat{\lambda}_1}\,\hat{e}_1
@@ -6443,7 +6438,7 @@ La matriz de cargas factoriales \(\{\widetilde{\lambda}_{i,j}\}\) estimadas est�
 
 Las varianzas específicas se obtienen como los elementos diagonales de
 \[
-S - \widetilde{\Lambda}\,\widetilde{\Lambda}^\top,
+S - \widetilde{L}\,\widetilde{L}^\top,
 \]
 es decir,
 
@@ -6461,7 +6456,7 @@ es decir,
 \qquad
 \tilde{\psi}_i
 =
-s_{ii} - \sum_{j=1}^m \tilde{\lambda}_{ij}^{\,2}.
+s_{ii} - \sum_{j=1}^m \tilde{\ell}_{ij}^{\,2}.
 \]
 
 La comunalidad estimada de la variable \(i\) es
@@ -6469,23 +6464,494 @@ La comunalidad estimada de la variable \(i\) es
 \[
 \tilde{h}_i^{\,2}
 =
-\tilde{\lambda}_{i1}^{\,2}
+\tilde{\ell}_{i1}^{\,2}
 +
-\tilde{\lambda}_{i2}^{\,2}
+\tilde{\ell}_{i2}^{\,2}
 +
 \cdots
 +
-\tilde{\lambda}_{im}^{\,2}.
+\tilde{\ell}_{im}^{\,2}.
 \]
 
-La solución por componentes principales del análisis factorial basada en la matriz de
-correlaciones se obtiene sustituyendo \(R\) en lugar de \(S\) y aplicando las mismas fórmulas.
+La solución por componentes principales del análisis factorial basada en la matriz de correlaciones se obtiene sustituyendo \(R\) en lugar de \(S\) y aplicando las mismas fórmulas.
 
 \end{blackbox}
 
-\subsection{Factores principales iterados}\label{factores-principales-iterados}
+\subsubsection{Selección del número de factores en la solución por componentes principales}\label{selecciuxf3n-del-nuxfamero-de-factores-en-la-soluciuxf3n-por-componentes-principales}
+
+En la solución por componentes principales del modelo factorial, las cargas estimadas para un factor dado \emph{no cambian} cuando se aumenta el número total de factores \(m\).
+
+Por ejemplo, si \(m = 1\), la matriz de cargas estimadas es
+\[
+\widetilde{L} = [\,\sqrt{\hat{\lambda}_1}\,\hat{e}_1\,],
+\]
+y si \(m = 2\),
+\[
+\widetilde{L} = 
+\big[\,\sqrt{\hat{\lambda}_1}\,\hat{e}_1 
+\;\; \sqrt{\hat{\lambda}_2}\,\hat{e}_2\,\big],
+\]
+donde \((\hat{\lambda}_1,\hat{e}_1)\) y \((\hat{\lambda}_2,\hat{e}_2)\) son los dos primeros pares autovalor--autovector de la matriz de covarianzas muestral \(S\) (o de la matriz de correlaciones muestral \(R\)).
+
+Por definición de las varianzas específicas estimadas \(\tilde{\psi}_i\), los elementos diagonales de \(S\) coinciden con los elementos diagonales de
+\[
+\widetilde{L}\,\widetilde{L}^\top + \widetilde{\Psi}.
+\]
+Sin embargo, los elementos \emph{fuera de la diagonal} de \(S\) normalmente no se reproducen exactamente por \(\widetilde{L}\,\widetilde{L}^\top + \widetilde{\Psi}\).
+
+Esto plantea la pregunta: \textbf{¿cómo seleccionar el número de factores comunes \(m\)?}
+
+Si el número de factores \(m\) no está determinado \textbf{a priori} (por teoría, por estudios previos, etc.), entonces puede elegirse con base en los autovalores estimados, de manera análoga a como se hace en el análisis de componentes principales.
+
+Para ello se considera la \textbf{matriz residual}
+\[
+S - (\widetilde{L}\,\widetilde{L}^{\top} + \widetilde{\Psi})
+\]
+que resulta de aproximar \(S\) mediante la solución de componentes principales. Los elementos diagonales de esta matriz residual son cero (por construcción), y si los elementos fuera de la diagonal son también pequeños, se puede considerar que el modelo con \(m\) factores es adecuado.
+
+Analíticamente, se tiene que la suma de cuadrados de los elementos de la matriz residual está acotada por la suma de los autovalores \textbf{no utilizados}:
+\[
+\text{Suma de cuadrados de las entradas de }
+\bigl(S - (\widetilde{L}\,\widetilde{L}^\top + \widetilde{\Psi})\bigr)
+\;\;\le\;\;
+\hat{\lambda}_{m+1}^2 + \cdots + \hat{\lambda}_p^2.
+\]
+Por tanto, si los autovalores \(\hat{\lambda}_{m+1},\dots,\hat{\lambda}_p\) son pequeños, el error de aproximación también lo será.
+
+Idealmente, las contribuciones de los primeros factores a las varianzas muestrales de las variables deberían ser grandes. La contribución del \textbf{primer factor} común a la varianza de la variable \(X_i\) viene dada por el cuadrado de su carga, \(\tilde{\ell}_{i1}^2\). La contribución del primer factor a la \textbf{varianza muestral total}
+\[
+s_{11} + s_{22} + \cdots + s_{pp} = \operatorname{tr}(S),
+\]
+es entonces
+\[
+\tilde{\ell}_{11}^2 + \tilde{\ell}_{21}^2 + \cdots + \tilde{\ell}_{p1}^2
+= (\sqrt{\hat{\lambda}_1}\,\hat{e}_1)^\top
+(\sqrt{\hat{\lambda}_1}\,\hat{e}_1)
+= \hat{\lambda}_1,
+\]
+pues el autovector \(\hat{e}_1\) tiene norma unitaria.
+
+En general, la \textbf{proporción de varianza muestral total explicada por el factor \(j\)} viene dada por
+\[\begin{array}{c}
+\text{Proporción de la varianza} \\
+\text{ muestral total explicada} \\
+\text{por el factor $j$}
+\end{array}
+= 
+\begin{cases}
+\dfrac{\hat{\lambda}_j}{s_{11} + s_{22} + \cdots + s_{pp}},
+  & \text{si se factoriza } S, \\[8pt]
+\dfrac{\hat{\lambda}_j}{p},
+  & \text{si se factoriza } R.
+\end{cases}
+\]
+ya que en el caso de la matriz de correlaciones \(R\) la traza es \(p\).
+
+El criterio anterior se utiliza frecuentemente como una \emph{regla heurística} para determinar el número adecuado de factores comunes: se incrementa \(m\) hasta que se alcanza una \emph{proporción razonable} de varianza explicada (por ejemplo, 70\%, 80\%, etc.).
+
+Otra convención, muy habitual en programas estadísticos, consiste en fijar \(m\) igual al número de autovalores de \(R\) \emph{mayores que uno} (cuando se factoriza la matriz de correlaciones), o igual al número de autovalores positivos de \(S\) (cuando se factoriza la matriz de covarianzas). Estas reglas no deben aplicarse indiscriminadamente. Por ejemplo, si se usa la regla de los autovalores positivos de \(S\), para muestras grandes los autovalores tienden a ser todos positivos, y se podría terminar eligiendo \(m = p\).
+
+El enfoque más recomendable es retener un número relativamente pequeño de factores, siempre que:
+
+\begin{itemize}
+\item
+  proporcionen una interpretación razonable de los datos, y
+\item
+  ajusten de manera satisfactoria a \(S\) o a \(R\) (errores residuales pequeños).
+\end{itemize}
+
+\textbf{Ejemplo(Ej 9.3 Johnson and Wichern):} Se encuestó a una muestra de clientes para calificar, en una escala de 7 puntos,
+los siguientes atributos de un producto:
+- Taste (sabor)
+
+\begin{itemize}
+\item
+  Good buy for money (buena compra por el dinero)
+\item
+  Flavor (sabor/aroma)
+\item
+  Suitable for snack (adecuado como botana)
+\item
+  Provides lots of energy (aporta mucha energía)
+\end{itemize}
+
+A partir de las calificaciones se construyó la matriz de correlaciones
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}
+  \FloatTok{1.00}\NormalTok{, }\FloatTok{0.02}\NormalTok{, }\FloatTok{0.96}\NormalTok{, }\FloatTok{0.42}\NormalTok{, }\FloatTok{0.01}\NormalTok{,}
+  \FloatTok{0.02}\NormalTok{, }\FloatTok{1.00}\NormalTok{, }\FloatTok{0.13}\NormalTok{, }\FloatTok{0.71}\NormalTok{, }\FloatTok{0.85}\NormalTok{,}
+  \FloatTok{0.96}\NormalTok{, }\FloatTok{0.13}\NormalTok{, }\FloatTok{1.00}\NormalTok{, }\FloatTok{0.50}\NormalTok{, }\FloatTok{0.11}\NormalTok{,}
+  \FloatTok{0.42}\NormalTok{, }\FloatTok{0.71}\NormalTok{, }\FloatTok{0.50}\NormalTok{, }\FloatTok{1.00}\NormalTok{, }\FloatTok{0.79}\NormalTok{,}
+  \FloatTok{0.01}\NormalTok{, }\FloatTok{0.85}\NormalTok{, }\FloatTok{0.11}\NormalTok{, }\FloatTok{0.79}\NormalTok{, }\FloatTok{1.00}
+\NormalTok{), }\AttributeTok{nrow =} \DecValTok{5}\NormalTok{, }\AttributeTok{byrow =} \ConstantTok{TRUE}\NormalTok{)}
+
+\FunctionTok{colnames}\NormalTok{(R) }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(R) }\OtherTok{\textless{}{-}}
+  \FunctionTok{c}\NormalTok{(}\StringTok{"Taste"}\NormalTok{, }\StringTok{"GoodBuy"}\NormalTok{, }\StringTok{"Flavor"}\NormalTok{, }\StringTok{"Snack"}\NormalTok{, }\StringTok{"Energy"}\NormalTok{)}
+
+\NormalTok{R}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Taste GoodBuy Flavor Snack Energy
+## Taste    1.00    0.02   0.96  0.42   0.01
+## GoodBuy  0.02    1.00   0.13  0.71   0.85
+## Flavor   0.96    0.13   1.00  0.50   0.11
+## Snack    0.42    0.71   0.50  1.00   0.79
+## Energy   0.01    0.85   0.11  0.79   1.00
+\end{verbatim}
+
+Las correlaciones altas entre las variables (1,3) y (2,5), así como las correlaciones de la variable 4 con 2 y 5, sugieren la presencia de dos grupos de atributos. Por ello, vamos a considerar un modelo con \(m=2\) factores comunes.
+
+Calculemos los eigenvalores de \(R\):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eig }\OtherTok{\textless{}{-}} \FunctionTok{eigen}\NormalTok{(R)}
+\NormalTok{eig}\SpecialCharTok{$}\NormalTok{values          }\CommentTok{\# eigenvalores (en orden decreciente)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.85309042 1.80633245 0.20449022 0.10240947 0.03367744
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{eig}\SpecialCharTok{$}\NormalTok{vectors         }\CommentTok{\# eigenvectores}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           [,1]        [,2]        [,3]       [,4]         [,5]
+## [1,] 0.3314539 -0.60721643  0.09848524  0.1386643  0.701783012
+## [2,] 0.4601593  0.39003172  0.74256408 -0.2821170  0.071674637
+## [3,] 0.3820572 -0.55650828  0.16840896  0.1170037 -0.708716714
+## [4,] 0.5559769  0.07806457 -0.60158211 -0.5682357  0.001656352
+## [5,] 0.4725608  0.40418799 -0.22053713  0.7513990  0.009012569
+\end{verbatim}
+
+Sólo los dos primeros son mayores que 1, de modo que se toma \(m=2\) factores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{m }\OtherTok{\textless{}{-}} \DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+La proporción de varianza total explicada por estos dos factores es \(\frac{\hat\lambda_1 + \hat\lambda_2}{p}=\) 0.9318846.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(eig}\SpecialCharTok{$}\NormalTok{values)}
+\NormalTok{lambda }\OtherTok{\textless{}{-}}\NormalTok{ eig}\SpecialCharTok{$}\NormalTok{values[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{m]}
+\FunctionTok{sum}\NormalTok{(lambda)}\SpecialCharTok{/}\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9318846
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{E }\OtherTok{\textless{}{-}}\NormalTok{ eig}\SpecialCharTok{$}\NormalTok{vectors[, }\DecValTok{1}\SpecialCharTok{:}\NormalTok{m]}
+\end{Highlighting}
+\end{Shaded}
+
+Consideremos los pares de autovalores y autovectores de la matriz de correlación \(R\)
+\[
+(\hat{\lambda}_1, \hat{e}_1),\; (\hat{\lambda}_2, \hat{e}_2),\; \dots,\; (\hat{\lambda}_p, \hat{e}_p),
+\]
+Para el método de componentes principales, las cargas factoriales iniciales se obtienen como
+
+\[
+\tilde{\ell_ij} = \sqrt{\hat{\lambda_i}}\hat{e_i} ,
+ \]
+
+Para este ejemplo se obtiene
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L }\OtherTok{\textless{}{-}}\NormalTok{ E }\SpecialCharTok{\%*\%} \FunctionTok{diag}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(lambda))}
+\FunctionTok{round}\NormalTok{(L, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1]  [,2]
+## [1,] 0.56 -0.82
+## [2,] 0.78  0.52
+## [3,] 0.65 -0.75
+## [4,] 0.94  0.10
+## [5,] 0.80  0.54
+\end{verbatim}
+
+Donde cada columna corresponde a los factores \(f_i\).
+
+La comunialidad de la variable \(i\) es
+\[
+\tilde{h}_i^2 = \sum_{j=1}^m \tilde{\ell}_{ij}^2,
+\]
+y, dado que trabajamos con variables estandarizadas, la varianza
+específica es
+\[
+\tilde{\psi}_i = 1 - \tilde{h}_i^2.
+\]
+
+Las comunialidades y varianzas específicas se obtienen de la siguiente forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{h2  }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(L}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{psi }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ h2}
+
+\FunctionTok{round}\NormalTok{(h2, }\DecValTok{2}\NormalTok{)        }\CommentTok{\# comunialidades}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.98 0.88 0.98 0.89 0.93
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{round}\NormalTok{(psi, }\DecValTok{2}\NormalTok{)       }\CommentTok{\# varianzas específicas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.02 0.12 0.02 0.11 0.07
+\end{verbatim}
+
+El modelo factorial implicaría que
+\[
+R \approx \tilde{L}\tilde{L}^{\top} + \tilde{\Psi},
+\]
+donde \(\tilde{\Psi}\) es una matriz diagonal con las varianzas específicas \(\tilde{\psi}_i\) en la diagonal.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R\_hat }\OtherTok{\textless{}{-}}\NormalTok{ L }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(L) }\SpecialCharTok{+} \FunctionTok{diag}\NormalTok{(psi)}
+\FunctionTok{round}\NormalTok{(R\_hat, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,] 1.00 0.01 0.97 0.44 0.00
+## [2,] 0.01 1.00 0.11 0.78 0.91
+## [3,] 0.97 0.11 1.00 0.53 0.11
+## [4,] 0.44 0.78 0.53 1.00 0.81
+## [5,] 0.00 0.91 0.11 0.81 1.00
+\end{verbatim}
+
+Para este ejemplo, la matriz \(\tilde{L}\tilde{L}^{\top} + \tilde{\Psi}\) es muy cercana a \(R\), por lo que el modelo de dos factores proporciona un buen ajuste descriptivo a los datos. Además, las comunialidades indican que el modelo de dos factores alcanza un porcentaje alto de la varianza total explicada de cada variable.
+
+\subsection{Factores principales iterados (un enfoque modificado de Factores principales)}\label{factores-principales-iterados-un-enfoque-modificado-de-factores-principales}
+
+Este proceso se puede realizar tanto sobre \(R\) como \(S\). Lo siguiente será en función de la matriz \(R\).
+
+Si el modelo de factores \(\rho = LL^\top + \Psi\) está correctamente especificado, los \(m\) factores comunes
+
+En el análisis factorial partimos del modelo
+\[
+\rho = LL^{\top} + \Psi,
+\]
+donde \(\rho\) es la matriz de correlaciones poblacional, \(L\) contiene las cargas
+factoriales y \(\Psi\) es la matriz diagonal de varianzas específicas. Dado que las
+variables están estandarizadas, cada diagonal cumple
+\[
+\rho_{ii} = 1 = h_i^2 + \psi_i,
+\]
+donde \(h_i^2\) es la comunalidad de la variable \(i\) y \(\psi_i\) su varianza
+específica.
+
+Si removemos la contribución específica \(\psi_i\) de la diagonal, o
+equivalentemente reemplazamos el 1 por \(h_i^2\), obtenemos la matriz
+\[
+\rho - \Psi = LL^\top.
+\]
+
+Supongamos ahora que tenemos estimaciones iniciales \(\psi_i^*\) de las varianzas
+específicas. Entonces la \(i\)-ésima diagonal de \(\rho\) se reemplaza por
+\[
+h_i^{*2} = 1 - \psi_i^*,
+\]
+con lo cual obtenemos la \emph{matriz de correlaciones reducida}
+\[
+R_r =
+\begin{pmatrix}
+h_1^{*2} & r_{12} & \cdots & r_{1p} \\
+r_{12} & h_2^{*2} & \cdots & r_{2p} \\
+\vdots & \vdots & \ddots & \vdots \\
+r_{1p} & r_{2p} & \cdots & h_p^{*2}
+\end{pmatrix}.
+\]
+
+Supondremos que toda la estructura de correlación en \(R_r\) puede explicarse por
+\(m\) factores comunes. Por ello, factorizamos
+\[
+R_r \approx L^* {L^*}^\top,
+\]
+donde \(L^* = (\ell_{ij}^*)\) contiene las \emph{cargas factoriales estimadas}.
+
+El método de factores principales utiliza para \(L^*\) la expresión
+\[
+L^* = 
+\left[
+\sqrt{\hat{\lambda}_1^*}\, \hat{e}_1^* \,:\:
+\sqrt{\hat{\lambda}_2^*}\, \hat{e}_2^* \,:\:
+\cdots \,:\:
+\sqrt{\hat{\lambda}_m^*}\, \hat{e}_m^*
+\right],
+\]
+donde \((\hat{\lambda}_i^*, \hat{e}_i^*)\) son los \(m\) mayores pares
+autovalor-autovector obtenidos de la matriz reducida \(R_r\).
+
+Dadas estas cargas, las comunalidades se reestiman mediante
+\[
+\tilde{h}_i^2 = \sum_{j=1}^m \ell_{ij}^{*2}. 
+\]
+
+El procedimiento se puede iterar: las comunalidades estimadas reemplazan a las
+anteriores en la diagonal de \(R_r\), y se recalculan autovalores y cargas.
+
+De forma similar al método de componentes principales, los autovalores
+\[
+\hat{\lambda}_1^*,\ \hat{\lambda}_2^*,\ \ldots,\ \hat{\lambda}_p^*
+\]
+de la matriz reducida ayudan a decidir cuántos factores retener. Sin embargo,
+debido al uso de comunalidades estimadas, algunos autovalores pueden ser
+negativos, lo cual complica la elección del número de factores. Idealmente,
+retendríamos tantos factores como el rango de la matriz poblacional reducida.
+
+Para comenzar el algoritmo se requieren valores iniciales \(\psi_i^*\). Una
+elección muy común, cuando se trabaja con matrices de correlación, es
+\[
+\psi_i^* = \frac{1}{r^{ii}},
+\]
+donde \(r^{ii}\) es el elemento diagonal \(i\) de \(R^{-1}\). Las comunalidades
+iniciales serían entonces
+\[
+h_i^{*2} = 1 - \psi_i^* = 1 - \frac{1}{r^{ii}}. 
+\]
+
+Este valor coincide con el cuadrado del coeficiente de correlación múltiple entre
+\(X_i\) y las restantes \(p-1\) variables.
+
+Aunque el método de componentes principales puede verse como un caso especial del
+método de factores principales (si se toman las comunalidades iniciales iguales a
+1), ambos enfoques tienen diferencias filosóficas y geométricas importantes. En la
+práctica, las dos técnicas producen con frecuencia cargas factoriales similares,
+especialmente cuando:
+
+\begin{itemize}
+\item
+  el número de variables es grande,
+\item
+  el número de factores comunes es pequeño.
+\end{itemize}
 
 \subsection{Factores por máxima verosimilitud}\label{factores-por-muxe1xima-verosimilitud}
+
+En el análisis factorial, si asumimos que los factores comunes \(F\) y los factores
+específicos \(\varepsilon\) están normalmente distribuidos, entonces es posible
+obtener estimadores de máxima verosimilitud para las cargas factoriales y las
+varianzas específicas.
+
+Sea el modelo factorial
+\[
+X_j - \mu = L F_j + \varepsilon_j,
+\]
+donde \(X_j\) es el vector de observaciones de la variable \(j\), \(L\) es la matriz de
+cargas y \(\Psi\) es la matriz diagonal de varianzas específicas. Si tanto
+\(F_j\) como \(\varepsilon_j\) son normales, entonces cada \(X_j\) es normal con matriz
+de covarianza
+\[
+\Sigma = LL^{\top} + \Psi.
+\]
+
+Suponiendo una muestra aleatoria \(X_1, X_2, \ldots, X_n\) de
+\(\mathcal{N}_p(\mu, \Sigma)\), la verosimilitud viene dada por
+\[
+L(\mu,\Sigma)
+= (2\pi)^{-\frac{np}{2}} |\Sigma|^{-\frac{n}{2}}
+\exp\left(
+    -\frac{1}{2}\texttt{tr}\left[\sum \ ^{-1} \left(\sum_{j=1}^{n} (X_j -\bar{X})(X_j -\bar{X})^{\top} +
+    n(\bar{X} - \mu)(\bar{X} - \mu)^{\top} \right)\right]
+\right),
+\]
+es decir, depende de \(L\) y \(\Psi\) únicamente a través de \(\Sigma = LL^{\top} + \Psi\).
+
+Debido a que múltiples matrices \(L\) producen la misma matriz \(\Sigma\) mediante
+rotaciones ortogonales, el modelo no está completamente identificado. Para
+resolver esta indeterminación, se impone la siguiente condición de unicidad:
+\[
+L^{\top}\Psi^{-1} L = \Delta,
+\]
+donde \(\Delta\) es una matriz diagonal. Esta restricción fija una
+orientación conveniente para los factores.
+
+En la práctica, los estimadores de máxima verosimilitud \(\hat{L}\) y \(\hat{\Psi}\)
+se obtienen mediante algoritmos numéricos, ya que maximizar explícitamente la
+verosimilitud es algebraicamente complejo. Existen hoy en día programas de
+computadora que realizan estas estimaciones de manera eficiente.
+
+\begin{blackbox}
+
+\begin{center}
+\textbf{Método de Máxima Verosimilitud (Maximum Likelihood Method)}
+
+\end{center}
+
+\textbf{Proposición: } Sea \(X_1, X_2, \ldots, X_n\) una muestra aleatoria de \(\mathcal{N}_p(\mu,\Sigma)\),
+donde
+\[
+\Sigma = LL^{\top} + \Psi
+\]
+es la matriz de covarianzas bajo el modelo factorial con \(m\) factores comunes.
+Sean \(\hat{L}\) y \(\hat{\Psi}\) los estimadores de máxima verosimilitud que
+maximizan la verosimilitud sujeta a la condición
+\[
+\hat{L}^{\top} \hat{\Psi}^{-1} \hat{L} \quad \text{diagonal}.
+\]
+
+Entonces:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Las comunalidades estimadas por máxima verosimilitud son
+  \[
+   \hat{h}_i^2 = \hat{\ell}_{i1}^2 + \hat{\ell}_{i2}^2 + \cdots + \hat{\ell}_{im}^2,
+   \qquad i=1,\ldots,p.
+   \]
+\item
+  La proporción de la varianza total de la muestra explicada por el
+  factor \(j\) es
+  \[
+   \frac{
+       \hat{\ell}_{1j}^2 + \hat{\ell}_{2j}^2 + \cdots + \hat{\ell}_{pj}^2
+   }{
+       s_{11} + s_{22} + \cdots + s_{pp}
+   },
+   \]
+  donde \(s_{ii}\) son los elementos diagonales de la matriz de covarianzas de
+  la muestra.
+\end{enumerate}
+
+\end{blackbox}
+
+Este resultado resume las cantidades más importantes obtenidas mediante el
+método de máxima verosimilitud: las comunalidades y la varianza explicada por
+cada factor. Aunque la maximización de la verosimilitud requiere métodos
+numéricos, las expresiones finales para la interpretación del modelo factorial
+son conceptualmente simples.
+
+\textbf{Ejemplo:}
 
 \section{Rotación de factores}\label{rotaciuxf3n-de-factores}
 
@@ -6494,6 +6960,1596 @@ correlaciones se obtiene sustituyendo \(R\) en lugar de \(S\) y aplicando las mi
 \section{Ejercicios}\label{ejercicios-5}
 
 \chapter{Análisis de Conglomerados}\label{anuxe1lisis-de-conglomerados}
+
+\section{Distancias y disimilitudes}\label{distancias-y-disimilitudes}
+
+Antes de entrar al tema de análisis de clústers es importante introducir los conceptos de distancias y disimilitudes o similitudes.
+
+Una medida de \emph{disimilitud o distancia} entre dos sujetos muy distintos será grande y por el contrario, una medida de \emph{similitud} entre ellos será pequeña.
+
+Una \textbf{distancia} es una función \(d: \mathcal{X}\times \mathcal{X}\to \mathbb{R}\) que cumple las siguientes propiedades:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Para cualesquiera \(x,y\in\mathcal{X}\) se tiene que \(d(x,y)\geq 0\).
+\item
+  Se cumple que \(d(x,y)=0\) si y sólo si \(x=y\).
+\item
+  Para cualesquiera \(x,y\in\mathcal{X}\) se cumple que \(d(x,y) = d(y,x)\) (condición de simetría).
+\item
+  Para cualesquiera \(x,y,z\in\mathcal{X}\) se cumple la desigualdad del triángulo:
+  \[
+         d(x,y)\leq d(x,z) + d(z,y).
+    \]
+\end{enumerate}
+
+Dos de las distancias más comunes en estadística para variables aleatorias multivariadas cuantitativas son la distancia euclidiana y la distancia de Mahalanobis:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Si \(\bar{x},\bar{y}\in\mathbb{R}^n\), entonces la distancia euclidiana \(d_E\) entre \(\bar{x}\) y \(\bar{y}\) está dada por
+  \[
+         d_E\left( \bar{x}, \bar{y} \right) = \left[ \left(\bar{x} - \bar{y}\right)'\cdot \left( \bar{x}- \bar{y} \right) \right]^{\frac{1}{2}}
+     \]
+\item
+  Si \(\bar{x},\bar{y}\in\mathbb{R}^n\), entonces la distancia de Mahalanobis \(d_M\) entre \(\bar{x}\) y \(\bar{y}\) está dada por
+  \[
+         d_E\left( \bar{x}, \bar{y} \right) = \left[ \left(\bar{x} - \bar{y}\right)' \Sigma^{-1} \left( \bar{x}- \bar{y} \right) \right]^{\frac{1}{2}}
+     \]
+  donde \(\Sigma^{-1}\) denota a la matriz inversa de la matriz de covarianzas de \(\bar{x}\) y \(\bar{y}\).
+\end{enumerate}
+
+Existen otras distancias, como la distancia de Gower que puede ser utilizada para estudiar variables aleatorias con entradas cuantitativas y/o cualitativas.
+
+Informalmente, una \textbf{similitud} es una medida entre dos objetos de que tanto se parecen. Por lo cual entre más parecidos sean los dos objetos su medida de similitud será más grande. Usualmente toma valores positivos entre 0 y 1.
+
+Formalmente, una similitud es una función \(s: \mathcal{X}\times \mathcal{X} \to \mathbb{R}\) que típicamente satisface las siguientes dos condiciones:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \(s(x,y)=1\) si y sólo si \(x=y\). Además \(0\leq s\leq 1\).
+\item
+  \(s(x,y)=s(y,x)\) para todo \(x\) y \(y\) (condición de simetría).
+\end{enumerate}
+
+Usualmente, la función de similitud satisface \(s(x,y)\geq 0\) pero existen ejemplos de similitudes que no lo satisfacen, por ejemplo: el coeficiente de correlación y los productos escalares. Sin embargo, si la función de similitud no es positiva y está acotada siempre es posible transformarla en una función de similitud positiva añadiendo una constante, es decir, podemos escribir nuestra nueva función de similitud \(\tilde{s}\) como \(\tilde{s}(x,y)=s(x,y)+c\), donde \(c\) es una constante positiva lo suficientemente grande.
+
+A diferencia de una distancia o una disimilitud, no existe un análogo para la desigualdad del triángulo para la similitud.
+
+Informalmente, una \textbf{disimilitud} entre dos objetos es una medida del grado en el cual dos objetos son diferentes. Como es de esperarse, una disimilitud debe ser baja si se consideran pares de objetos que son similares.
+
+De manera precisa, una disimilitud es una función \(d: \mathcal{X}\times \mathcal{X} \to \mathbb{R}\) que satisface las siguientes dos condiciones:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Para cualquier \(x\in\mathcal{X}\) se tiene que \(d(x,x) = 0\).
+\item
+  Para cualesquiera \(x,y \in \mathcal{X}\) se cumple que \(d(x,y)\geq 0\) (condición de no negatividad).
+\item
+  Para cualesquiera \(x,y\in\mathcal{X}\) se cumple que \(d(x,y) = d(y,x)\).
+\end{enumerate}
+
+Es importante mencionar que, en la literatura de análisis de datos como \emph{data mining} y algunos textos de estadística, a las disimilitudes también se les nombra \emph{distancias}, lo cual es incorrecto. Lo que si ocurre es que toda distancia (o métrica) es una disimilitud, pero no toda disimilitud es una distancia.
+
+Algunas disimilitudes usuales de acuerdo al tipo de dato que se esté trabajando son las siguientes:
+
+\begin{itemize}
+\item
+  \textbf{Tipo nominal}: La disimilitud más sencilla es
+  \[
+    d(x,y) = \left\{
+      \begin{matrix}
+      0 & \text{ si } x= y \\
+      1 & \text{ si } x\neq y
+      \end{matrix}
+    \right.
+    \]
+\item
+  \textbf{Tipo ordinal}: La disimilitud más sencilla es
+  \[
+  d(x,y) = \frac{|x-y|}{n-1}
+    \]
+  donde suponemos que hay \(n\) datos, y a cada uno de ellos se les ha asignado un valor entero de \(0\) a \(n-1\).
+\item
+  \textbf{Tipo intervalo}: La disimilitud más sencilla es
+  \[
+  d(x,y) = \| x- y\|
+    \]
+  donde \(\| \cdot \|\) denota la distancia euclidiana usual.
+\end{itemize}
+
+A continuación se describen algunas de las distancias y disimilitudes más usuales entre individuos con datos numéricos, binarios, categóricos y mixtos.
+
+\subsection{Distancia euclidiana}\label{distancia-euclidiana}
+
+Es la distancia usual entre dos puntos en el espacio Euclidiano \(\mathcal{X}\). Cumple las siguientes propiedades:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  \(d(X,Y)\geq 0\) para todo \(X,Y\in \mathcal{X}\) y \(d(X,Y)=0\) si y sólo si \(X=Y\)
+\item
+  \(d(X,Y)=d(Y,X)\) para todo \(X,Y\in\mathcal{X}\) (Simetría)
+\item
+  \$d(X,Z)\leq d(X,Y) ~+~d(Y,Z) \$ para todo \(X,Y,Z\in\mathcal{X}\)(Desigualdad del triángulo)
+\end{enumerate}
+
+\textbf{Tipos de datos:} Numéricos
+
+\textbf{Fórmula y explicación:} Sea \(\mathcal{X}\) el espacio euclidiano de dimensión \(n\) y sean \(X,Y\in\mathcal{X}\) dos puntos en el espacio con coordenadas \(X=(x_1,...,x_{n})\) y \(Y=(y_{1},...,y_{n})\). Entonces su distancia euclidiana esta dada por:
+\[ d(X,Y)=\sqrt{\sum_{i=1}^{n}(x_{i}-y_{i})^{2}}\]
+
+\subsection{Distancia de Minkowski}\label{distancia-de-minkowski}
+
+Es una generalización de la distancia euclidiana. Se llama así en honor al matemático Hermann Minkowski.
+
+\textbf{Tipos de datos:} Numéricos.
+
+\textbf{Fórmula y explicación:}Sean \(X,Y\in\mathcal{X}\) dos puntos en el espacio con coordenadas \(X=(x_1,...,x_{n})\) y \(Y=(y_{1},...,y_{n})\) y sea \(p\) un entero. Entonces su distancia Minkowski esta dada por:
+\[ d(X,Y)=\left( \sum_{i=1}^{n} |\ x_{i}-y_{i}\ |^{p}\right)^{\frac{1}{p}}\]
+Para \(p\geq 1\) esta distancia es una métrica. Si \(p<1\) no se satisface la desigualdad del triángulo y por lo tanto no es una métrica. Si \(p=2\) es la distancia euclidiana y si \(p=1\) es la distancia de Manhattan(o city block).
+
+\subsection{Distancia City block}\label{distancia-city-block}
+
+También se conoce como la distancia del taxista o distancia de Manhattan. Esta distancia no es única en el sentido de que hay más de un camino de distancia mínima para llegar de un punto a otro. Se le conoce como distancia del taxista o distancia de Manhattan porque hace referencia a la forma en que un automovil puede ir de un punto a otro en un diseño cuadricular de las calles de Manhattan. En la figura siguiente, podemos la distancia City block entre los puntos \(X,Y\) esta representada con los colores rojo, azul y verde, los tres caminos tienen la misma longitud, mientras que la distancia en morado es la distancia euclidiana entre los puntos.
+
+\textbf{Tipos de datos:} Numéricos
+
+\textbf{Fórmula y explicación:} Sean \(X,Y\in\mathcal{X}\) dos puntos en el espacio con coordenadas \(X=(x_1,...,x_{n})\) y \(Y=(y_{1},...,y_{n})\). Entonces su distancia city block esta dada por:
+\[ d_{1}(X,Y) = \parallel X - Y \ \parallel = \sum_{i=1}^{n} |\ x_{i} - y_{i}\ |  \]
+En el caso de la figura, la distancia de city block (en color azul, rojo o verde) sería \(15\) si consideramos que cada cuadrito tiene longitud \(1\).
+
+\subsection{Disimilitud calculando Simple Matching}\label{disimilitud-calculando-simple-matching}
+
+El coeficiente de concordancia simple, llamado coeficiente \emph{simple matching} (\(\mathrm{SMC}\)) o \emph{coeficiente de Rand} se trata de la razón de coincidencias respecto al número total de valores. Se ofrece una ponderación igual a las coincidencias y a las no coincidencias. Toma valores entre \(0\) y \(1\). La disimilitud calculada vía simple matching o \emph{distancia simple matching}, que mide la disimilitud entre las muestras, se calcula restando el \(\mathrm{SMC}\) a \(1\).
+
+\textbf{Tipos de datos:} Binarios
+
+\textbf{Fórmula y explicación:} Consideremos \(A\) y \(B\) dos objetos con \(n\) atributos binarios, esto es, cada atributo vale \(0\) o \(1\). El número total para cada combinación de atributos para \(A\) y \(B\) se obtiene como sigue:
+
+\begin{itemize}
+\item
+  Denotamos \(M_{11}\) al número total de atributos donde \(A\) y \(B\) tienen un valor de \(1\).
+\item
+  Denotamos \(M_{01}\) al número total de atributos donde \(A\) vale \(0\) y \(B\) vale \(1\).
+\item
+  Denotamos \(M_{10}\) al número total de atributos donde \(A\) vale \(1\) y \(B\) vale \(0\).
+\item
+  Denotamos \(M_{00}\) al número total de atributos donde \(A\) y \(B\) tienen un valor de \(0\).
+\end{itemize}
+
+Entonces \(M_{00}+ M_{01} + M_{10} + M_{11} = n\). La distancia \emph{simple matching} \(\mathrm{SMD}\) entre \(A\) y \(B\) se define como
+\[
+      \mathrm{SMD} = 1 - \mathrm{SMC},
+   \]
+donde \(\mathrm{SMC}\) es el coeficiente \emph{simple matching} dado por
+\[
+      \mathrm{SMC} = \frac{M_{00} + M_{11}}{M_{00} + M_{01} + M_{10} + M_{11}}.
+   \]
+
+\subsection{Disimilitud calculando el coeficiente de Jaccard}\label{disimilitud-calculando-el-coeficiente-de-jaccard}
+
+El coeficiente de Jaccard fue presentado como \emph{coefficient de communauté} por Paul Jaccard en 1912 y posteriormente fue formulado de manera independiente por T. Tanimoto en 1958, y toma valores entre \(0\) y \(1\). Se trata de un índice en el que no se toman en cuenta las ausencias conjuntas. Se ofrece una ponderación igual a las coincidencias y a las no coincidencias. Se conoce también como \emph{razón de similaridad}.
+
+La disimilitud de Jaccard (habitualmente conocida como \emph{distancia de Jaccard}) se calcula restando el coeficiente de Jaccard a \(1\). La distancia de Jaccard suele usarse para calcular una matriz \(n\times n\) para la agrupación y el escalamiento multidimensional de \(n\) conjuntos de muestras.
+
+\textbf{Tipos de datos:} Binarios
+
+\textbf{Fórmula y explicación:} Consideremos \(A\) y \(B\) dos objetos con \(n\) atributos binarios, esto es, cada atributo vale \(0\) o \(1\). El número total para cada combinación de atributos para \(A\) y \(B\) se obtiene como sigue:
+
+\begin{itemize}
+\item
+  Denotamos \(M_{11}\) al número total de atributos donde \(A\) y \(B\) tienen un valor de \(1\).
+\item
+  Denotamos \(M_{01}\) al número total de atributos donde \(A\) vale \(0\) y \(B\) vale \(1\).
+\item
+  Denotamos \(M_{10}\) al número total de atributos donde \(A\) vale \(1\) y \(B\) vale \(0\).
+\item
+  Denotamos \(M_{00}\) al número total de atributos donde \(A\) y \(B\) tienen un valor de \(0\).
+\end{itemize}
+
+Entonces \(M_{00}+ M_{01} + M_{10} + M_{11} = n\). La distancia de Jaccard \(d_{J}\) se define como
+\[
+      d_{J} = \frac{M_{01} + M_{10}}{M_{01} + M_{10} + M_{11}}.
+   \]
+
+Se cumple que \(d_{J} = 1- J\) donde \(J\) es el índice (o coeficiente) de Jaccard dado por
+\[
+      J = \frac{M_{11}}{M_{01} + M_{10} + M_{11}}.
+   \]
+
+También, para fines del diseño, si \(A\) y \(B\) son conjuntos vacíos, entonces \(d_{J} = 0\) (o equivalentemente, \(J(A,B) = 1\)).
+
+\subsection{Disimilitud calculando el coeficiente de Czekanowski}\label{disimilitud-calculando-el-coeficiente-de-czekanowski}
+
+El coeficiente Czekanowski es uno en el que no se toman en cuenta las ausencias conjuntas y donde las coincidencias se ponderan doblemente en datos binarios. También se conoce como coeficiente de Dice, coeficiente de S\{\o\}rensen o coeficiente de S\{\o\}rensen--Dice (quienes los derivaron de manera independiente en 1948). Fue desarrollado en 1913 por Jan Czekanowski para establecer relaciones entre dialectos y lenguas, pero realmente se puede aplicar a cualquier comparación entre individuos calificados por múltiples atributos, por ejemplo, razas, especies de plantas o de animales, biocenosis, biotopos y hábitats, culturas, etc. La calificación puede ser cualitativa o cuantitativa y se basa en la comparación atributo por atributo de cada par de individuos de una colección. Este índice toma valores entre \(0\) y \(1\).
+
+La disimilitud asociada al coeficiente de Czekanowski se obtiene restando dicho índice a \(1\). Contrario a la distancia de Jaccard, esta disimilitud no cumple la desigualdad del triángulo y por ello no es una distancia verdadera.
+
+\textbf{Tipos de datos:} Binarios
+
+\textbf{Fórmula y explicación:} Consideremos \(A\) y \(B\) dos objetos con \(n\) atributos binarios, esto es, cada atributo vale \(0\) o \(1\). El número total para cada combinación de atributos para \(A\) y \(B\) se obtiene como sigue:
+
+\begin{itemize}
+\item
+  Denotamos \(M_{11}\) al número total de atributos donde \(A\) y \(B\) tienen un valor de \(1\).
+\item
+  Denotamos \(M_{01}\) al número total de atributos donde \(A\) vale \(0\) y \(B\) vale \(1\).
+\item
+  Denotamos \(M_{10}\) al número total de atributos donde \(A\) vale \(1\) y \(B\) vale \(0\).
+\item
+  Denotamos \(M_{00}\) al número total de atributos donde \(A\) y \(B\) tienen un valor de \(0\).
+\end{itemize}
+
+La disimilitud asociada al coeficiente de Czekanowski se calcula como
+\[
+      d_{Cz} = 1 - \frac{2M_{11}}{2M_{11} + M_{10} + M_{01}}
+   \]
+
+De manera equivalente, al considerar la formulación dada por S\{\o\}ren y Dice, la disimilitud anterior se puede formular como
+\[
+      d_{Cz} = 1 - \frac{2 |A\cap B|}{|A| + |B|}
+   \]
+donde \(|\cdot|\) denota la cardinalidad de los respectivos conjuntos.
+
+\subsection{\texorpdfstring{Disimilitud de \(1\)-coincidencias de Sneath}{Disimilitud de 1-coincidencias de Sneath}}\label{disimilitud-de-1-coincidencias-de-sneath}
+
+Medida de disimilitud propuesta en 1958 por Sneath y Sokal para variables binarias. Cumple las propiedades de simetría entre \(a\) y \(d\) (atributos en que las unidades coinciden), mientras que su rango está entre 0 y 1.
+
+\textbf{Tipos de datos:} Binarios
+
+\textbf{Fórmula y explicación:} \[
+    d_{ij} = 1 - c_{ij}
+   \]
+con
+\[
+      c_{ij} = \frac{a+d}{a+b+c+d}
+   \]
+donde \(a\) y \(d\) son los atributos en que las unidades coinciden mientras el denominador es la suma de todos los valores de la tabla de contingencia.
+
+\subsection{Distancia de Gower}\label{distancia-de-gower}
+
+El coeficiente de similitud de Gower propuesto por Gower en 1971 permite la manipulación simultánea de variables cuantitativas y cualitativas en una base de datos, mediante la aplicación de este coeficiente se logra hallar la similitud entre individuos a los cuales se les han medido una serie de características en común. Una similaridad alta, es decir cercana a 1, indicara gran homogeneidad entre los individuos; por el contrario, una similaridad cercana a cero indica que los individuos son diferentes.
+
+\textbf{Tipos de datos:} Mixtos: variables cuantitativas y cualitativas
+
+\textbf{Fórmula y explicación:}\\
+\[
+      d_{ij}^{2} = 1-s_{ij}
+   \]
+donde
+\[
+      s_{i j} = \frac{\sum\limits_{h=1}^{p_1}\left(1-\frac{\left|x_{ih}-x_{jh}\right|}{G_h}\right) + a + \alpha}{p_{1}+p_{2}-d+p_{3}}
+    \]
+con \(p_1\) es el número de variables cuantitativas, \(a\) y \(d\) son el número de coincidencias en 1 (presencia de la característica) y el número de coincidencias en 0 (ausencia de la caracteristica) respectivamente para las \(p_2\) variables binarias, \(\alpha\) es el número de coincidencias para las \(p_3\) variables cualitativas y \(G_h\) es el rango de la \(h\)-ésima variable cuantitativa.
+
+\section{Clustering jerárquico}\label{clustering-jeruxe1rquico}
+
+En muchos problemas no es factible examinar todas las posibles particiones de un conjunto de objetos, incluso con computadoras muy rápidas. Por ello se han desarrollado algoritmos de agrupamiento que permiten obtener grupos razonables sin evaluar todas las configuraciones posibles. Entre ellos destacan los métodos de clustering jerárquico.
+
+Estos métodos generan una estructura en forma de árbol, llamada \textbf{dendrograma}, que muestra cómo se agrupan o dividen los objetos progresivamente, y el nivel (distancia) en el que lo hacen.
+
+Existen dos enfoques principales:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\tightlist
+\item
+  \textbf{Métodos jerárquicos aglomerativos}: Comienzan con cada objeto como un grupo individual. El proceso es:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Cada objeto constituye inicialmente un cluster.
+\item
+  Se calculan las distancias entre todos los clusters.
+\item
+  Se fusionan los dos clusters más similares.
+\item
+  Se repite el proceso hasta obtener un único cluster.
+\end{itemize}
+
+Es decir, el algoritmo va desde varios clusters hasta uno solo.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  \textbf{Métodos jerárquicos divisivos}: Funcionan de forma inversa:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Se inicia con un único cluster que contiene a todos los objetos.
+\item
+  Se divide el conjunto en dos subgrupos lo más disímiles posible.
+\item
+  Se continúa dividiendo hasta llegar a clusters individuales.
+\end{itemize}
+
+Este enfoque desciende desde un solo cluster hacia muchos.
+
+En este capítulo nos concentraremos en los métodos jerárquicos aglomeraticos, incluyendo:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Single linkage agglomerative clustering} o método de la liga sencilla o del vecino más cercano.
+\item
+  \textbf{Complete linkage agglomerative clustering} o método de la liga completa o del vecino más lejano.
+\item
+  \textbf{Average linkage agglomerative clustering} o métdod de la liga promedio.
+\item
+  \textbf{Ward's minimum variance clustering} o método Ward.
+\end{itemize}
+
+El algoritmo aglomerativo paso a paso, se puede entender como sigue:
+
+Dado un conjunto de \(N\) objetos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Iniciar con \(N\) clusters individuales y construir una matriz de distancias
+  \[
+   D = (d_{ij}).
+   \]
+\item
+  Buscar el par de clusters \((U,V)\) cuya distancia \(d_{UV}\) sea mínima.
+\item
+  Fusionar los clusters \(U\) y \(V\) formando un nuevo cluster \((UV)\).
+\item
+  Actualizar la matriz de distancias eliminando filas y columnas correspondientes a \(U\) y \(V\), y añadiendo la distancia del nuevo cluster con respecto a los restantes.
+\item
+  Repetir los pasos anteriores hasta obtener un único cluster.
+\end{enumerate}
+
+El resultado final se representa en un dendrograma, donde se observan las uniones entre clusters y los niveles (distancias) a los que estas ocurren.
+
+\subsection{Clustering aglomerativo de la liga sencilla}\label{clustering-aglomerativo-de-la-liga-sencilla}
+
+El método de \textbf{single linkage} (enlace simple o vecinos más cercanos) utiliza como criterio de similitud entre clusters la distancia mínima entre cualquiera de los elementos de los grupos involucrados, es decir, se toma la mínima de todas las posibles distancias entre los objetos que pertenecen a distintos conglomerados. Inicialmente, debemos encontrar la distancia más pequeña \(D = \{d_{ik}\}\) y unir los objetos correspondientes, es decir \(U\) y \(V\) para obtener el cluster \((UV)\). Después, para el paso 3 del algoritmo general, la distancia entre \((UV)\) y cualquier otro cluster \(W\) se calcula como:
+\[
+d_{(UV),W} = \min\{d_{UW},d_{VW}\},
+\]
+
+donde \(d_{UW}\) y \(d_{VW}\) representan las distancias entre los vecinos más cercanos del cluster \(U\) con respecto a los elementos de \(W\), y del cluster \(V\) con respecto a los elementos de \(W\), respectivamente.
+
+El proceso de aglomeración bajo este criterio se puede visualizar en un dendrograma. En dicho diagrama, las ramas representan clusters, y los nodos donde estas ramas se unen representan fusiones. La altura a la que se unen indica la distancia a la cual se fusionaron los clusters.
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{img/single_linkage.png}}
+\caption{Single}
+\end{figure}
+
+El resultado de la agrupación puede visualizarse como un \emph{dendrograma}. El inconveniente del dendrograma resultante de un clustering de liga sencilla a menudo muestra el encadenamiento de las muestras. Los clústeres formados se ven forzados a unirse debido a que los elementos individuales están cerca unos de otros, mientras que muchos elementos de cada clúster pueden estar muy alejados entre sí. Otro inconveniente relevante del clustering de la liga sencilla es que podría ser difícil de interpretar en términos de particiones de los datos. Es una desventaja real del clustering de la liga sencilla porque estamos interesados en las particiones de los datos. Este método se tiende a desempeñar bien cuando hay grupos de forma elongada, conocidos como tipo cadena.
+
+Veamos un ejemplo.
+
+\textbf{Ejemplo 1:} Consideremos la siguiente matriz de distancias
+\[
+D = (d_{ik}) =
+\begin{pmatrix}
+0 & 9 & 3 & 6 & 11 \\
+9 & 0 & 7 & 5 & 10 \\
+3 & 7 & 0 & 9 & 2 \\
+6 & 5 & 9 & 0 & 8 \\
+11 & 10 & 2 & 8 & 0
+\end{pmatrix}
+\]
+
+Inicialmente cada objeto se considera un cluster individual. Buscamos la menor distancia en la matriz \(D\):
+
+\[
+\min_{i,k}(d_{ik}) = d_{53} = 2.
+\]
+
+Por lo tanto, los objetos \(5\) y \(3\) se fusionan y forman el cluster \((35)\).
+
+Ahora se debe actualizar la matriz de distancias para este nuevo cluster. La distancia entre \((35)\) y los restantes objetos se calcula tomando el mínimo de las distancias existentes. Por ejemplo:
+
+\[
+d_{(35)1} = \min\{d_{31}, d_{51}\} = \min\{3, 11\} = 3,
+\]
+
+\[
+d_{(35)2} = \min\{d_{32}, d_{52}\} = \min\{7, 10\} = 7,
+\]
+
+\[
+d_{(35)4} = \min\{d_{34}, d_{54}\} = \min\{9, 8\} = 8.
+\]
+
+Eliminando filas y columnas correspondientes a \(3\) y \(5\), obtenemos una nueva matriz de distancias:
+
+\[
+\begin{array}{c|cccc}
+N & (35) & 1 & 2 & 4 \\
+\hline
+(35) & 0 & 3 & 7 & 8 \\
+1 & 3 & 0 & 9 & 6 \\
+2 & 7 & 9 & 0 & 5 \\
+4 & 8 & 6 & 5 & 0
+\end{array}
+\]
+
+La distancia mínima entre estos clusters es ahora
+
+\[
+d_{(35)1} = 3.
+\]
+
+Entonces se fusiona el objeto \(1\) con el cluster \((35)\), formando así \((135)\).
+
+Se actualizan nuevamente las distancias:
+
+\[
+d_{(135)2} = \min\{d_{(35)2}, d_{12}\} = \min\{7, 9\} = 7,
+\]
+
+\[
+d_{(135)4} = \min\{d_{(35)4}, d_{14}\} = \min\{8, 6\} = 6.
+\]
+
+La nueva matriz queda:
+
+\[
+\begin{array}{c|ccc}
+N & (135) & 2 & 4 \\
+\hline
+(135) & 0 & 7 & 6 \\
+2 & 7 & 0 & 5 \\
+4 & 6 & 5 & 0
+\end{array}
+\]
+
+La mínima distancia es ahora \(d_{42} = 5\), por lo que los objetos \(4\) y \(2\) se fusionan formando \((24)\).
+
+Finalmente, sólo quedan dos clusters: \((135)\) y \((24)\). Su distancia es:
+
+\[
+d_{(135)(24)} = \min\{d_{(135)2}, d_{(135)4}\} = \min\{7, 6\} = 6.
+\]
+
+De esta manera se obtiene la última fusión, y el clustering final reúne a los cinco individuos:
+
+\[
+(13524).
+\]
+
+\textbf{Nota:} Realicemos el dendrograma a mano primero, nos daremos cuenta de que muestra claramente las distancias a las que se produjeron las fusiones: primero a nivel \(2\), luego a \(3\), después a \(5\) y finalmente a \(6\).
+
+En aplicaciones reales, es frecuente detener el proceso en un nivel intermedio del dendrograma, cuando el número de clusters resultante es interpretativamente significativo.
+
+Veamos ahora el ejemplo en R.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{11}\NormalTok{)}
+\NormalTok{B }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{9}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{10}\NormalTok{)}
+\NormalTok{C }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{D }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{8}\NormalTok{ )}
+\NormalTok{E }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{11}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+
+\NormalTok{df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(A,B,C,D,E, }\AttributeTok{row.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{,}\StringTok{"B"}\NormalTok{,}\StringTok{"C"}\NormalTok{,}\StringTok{"D"}\NormalTok{,}\StringTok{"E"}\NormalTok{))}
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(}\AttributeTok{format =} \StringTok{"html"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+A
+
+B
+
+C
+
+D
+
+E
+
+A
+
+0
+
+9
+
+3
+
+6
+
+11
+
+B
+
+9
+
+0
+
+7
+
+5
+
+10
+
+C
+
+3
+
+7
+
+0
+
+9
+
+2
+
+D
+
+6
+
+5
+
+9
+
+0
+
+8
+
+E
+
+11
+
+10
+
+2
+
+8
+
+0
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dist }\OtherTok{\textless{}{-}} \FunctionTok{as.dist}\NormalTok{(df, }\AttributeTok{diag=} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{cluster\_single }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{ (}\AttributeTok{d =}\NormalTok{ dist, }\AttributeTok{method =} \StringTok{\textquotesingle{}single\textquotesingle{}}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(cluster\_single)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac3-1} 
+
+}
+
+\caption{Cluster con el método single.}\label{fig:ac3}
+\end{figure}
+
+\subsection{Clustering aglomerativo de la liga completa}\label{clustering-aglomerativo-de-la-liga-completa}
+
+El método de \textbf{complete linkage} (o enlace completo o clustering del vecino más lejano) sigue el mismo procedimiento general que el método de enlace simple. Sin embargo, existe una diferencia fundamental: en cada etapa del algoritmo, la distancia entre dos clusters se define como la distancia (o disimilitud) máxima entre sus elementos.
+
+Iniciamos de nuevo encontrando la distancia más pequeña y creando el primer clúster \(UV\), de ahí calculamos la distancia entre un cluster formado por dos objetos \(U\) y \(V\) y otro cluster \(W\), como:
+
+\[
+d_{(UV),W} = \max\{d_{UW},\,d_{VW}\}.
+\]
+
+Esto significa que la similitud entre dos clusters está determinada por el par de elementos más alejados entre ellos. De esta manera, el método de enlace completo garantiza que los objetos dentro de cada cluster no difieran entre sí más allá de una distancia máxima preestablecida.
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{img/complete-linkage.png}}
+\caption{Complete}
+\end{figure}
+
+La agrupación de la liga completa evita el inconveniente de encadenar las muestras por el método de la liga simple. El encadenamiento completo tiende a encontrar muchos pequeños grupos separados. Este método se desempeña bien cuando los conglomerados son de forma circular.
+
+\textbf{Ejemplo 2:} Consideremos la misma matriz del ejemplo anterior:
+
+\[
+D = (d_{ik}) =
+\begin{pmatrix}
+0 & 9 & 3 & 6 & 11 \\
+9 & 0 & 7 & 5 & 10 \\
+3 & 7 & 0 & 9 & 2 \\
+6 & 5 & 9 & 0 & 8 \\
+11 & 10 & 2 & 8 & 0
+\end{pmatrix}
+\]
+
+Identificamos los objetos más cercanos. Como antes,
+
+\[
+\min_{i,k}(d_{ik}) = d_{53} = 2,
+\]
+
+se fusionan los objetos \((3)\) y \((5)\) formando el cluster \((35)\).
+
+Calculamos la distancia entre el cluster \((35)\) y los restantes objetos, ahora usando máximos:
+
+\[
+d_{(35),1} = \max\{d_{31}, d_{51}\} = \max\{3, 11\} = 11,
+\]
+
+\[
+d_{(35),2} = \max\{d_{32}, d_{52}\} = \max\{7, 10\} = 10,
+\]
+
+\[
+d_{(35),4} = \max\{d_{34}, d_{54}\} = \max\{9, 8\} = 9.
+\]
+
+Al eliminar filas y columnas de \(3\) y \(5\), la matriz queda:
+
+\[
+\begin{array}{c|cccc}
+N & (35) & 1 & 2 & 4 \\
+\hline
+(35) & 0 & 11 & 10 & 9 \\
+1 & 11 & 0 & 9 & 6 \\
+2 & 10 & 9 & 0 & 5 \\
+4 & 9 & 6 & 5 & 0
+\end{array}
+\]
+
+La mínima distancia ahora es entre \((2)\) y \((4)\):
+
+\[
+d_{42} = 6.
+\]
+
+Se fusionan para formar el nuevo cluster \((24)\).
+
+Calculamos distancias entre \((35)\) y \((24)\):
+
+\[
+d_{(24),(35)} = \max\{d_{2,(35)}, d_{4,(35)}\} = \max\{10, 9\} = 10.
+\]
+
+Queda además comparar con el objeto \((1)\):
+
+\[
+d_{(24),1} = \max\{d_{21}, d_{41}\} = \max\{9, 6\} = 9,
+\]
+
+La nueva matriz queda:
+
+\[
+\begin{array}{c|ccc}
+ N & (35) & (24) & 1 \\
+\hline
+(35) & 0 & 10 & 11 \\
+(24) & 10 & 0 & 9 \\
+1 & 11 & 9 & 0
+\end{array}
+\]
+
+La menor distancia es \(9\), entre \((24)\) y \(1\), de modo que se forma el cluster \((124)\).
+
+Finalmente se compara con \((35)\):
+
+\[
+d_{(124),(35)} = \max\{ d_{1,(35)}, d_{(24),(35)}\} = \max\{11, 10\} = 11.
+\]
+
+Se obtiene el cluster total:
+
+\[
+(12345).
+\]
+
+\textbf{Nota:} Representamos este resultado en el dendrograma correspondiente.
+
+Al comparar el dendrograma generado por enlace simple con el de enlace completo, se observa que la asignación del objeto \((1)\) a los grupos previos difiere entre métodos. Esto se debe a que:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Single linkage} prioriza la cercanía mínima entre pares de objetos.
+\item
+  \textbf{Complete linkage} prioriza la máxima distancia entre elementos al agrupar.
+\end{itemize}
+
+Por ello, complete linkage tiende a formar clusters más compactos y homogéneos.
+
+Realicemos el ejemplo en R.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cluster\_complete }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{ (}\AttributeTok{d =}\NormalTok{ dist, }\AttributeTok{method =} \StringTok{\textquotesingle{}complete\textquotesingle{}}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(cluster\_complete)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac4-1} 
+
+}
+
+\caption{Cluster con el método complete.}\label{fig:ac4}
+\end{figure}
+
+\subsection{Clustering aglomerativo de la liga promedio}\label{clustering-aglomerativo-de-la-liga-promedio}
+
+El método de \textbf{average linkage} (enlace promedio) define la distancia
+entre dos clusters como el promedio de las distancias entre todos los pares
+de objetos donde un miembro del par pertenece a cada cluster.
+
+Supongamos que tenemos un cluster \((UV)\) y otro cluster \(W\). La distancia
+entre ellos se define como
+
+\[
+d_{(UV)W}
+= \frac{\displaystyle\sum_{i \in (UV)} \sum_{k \in W} d_{ik}}
+       {N_{(UV)}\,N_W},
+\]
+
+donde \(d_{ik}\) es la distancia entre el objeto \(i\) del cluster \((UV)\) y el
+objeto \(k\) del cluster \(W\), mientras que \(N_{(UV)}\) y \(N_W\) son las
+cardinalidades de los clusters \((UV)\) y \(W\), respectivamente.
+
+El algoritmo aglomerativo procede igual que antes:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  Cada objeto es inicialmente un cluster.
+\item
+  Se busca el par de clusters con menor distancia.
+\item
+  Se fusionan esos clusters y se actualiza la matriz de distancias usando la fórmula de promedio anterior.
+\item
+  Se repiten los pasos 2 y 3 hasta que todos los objetos formen un solo cluster.
+\end{enumerate}
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{img/average_linkage.png}}
+\caption{Average}
+\end{figure}
+
+El clúster resultante del dendrograma tiene un aspecto intermedio entre una agrupación de enlace simple y una completa.
+
+\textbf{Ejemplo 3:} Consideremos la matriz de los ejemplos anteriores.
+
+\[
+D = (d_{ik}) =
+\begin{pmatrix}
+0 & 9 & 3 & 6 & 11 \\
+9 & 0 & 7 & 5 & 10 \\
+3 & 7 & 0 & 9 & 2 \\
+6 & 5 & 9 & 0 & 8 \\
+11 & 10 & 2 & 8 & 0
+\end{pmatrix}.
+\]
+
+Buscamos la distancia mínima (fuera de la diagonal). La menor entrada es
+
+\[
+\min_{i,k} d_{ik} = d_{35} = 2.
+\]
+
+Por tanto, fusionamos los objetos \(3\) y \(5\) para formar el cluster \((35)\).
+
+Calculamos ahora las distancias entre el cluster \((35)\) y los objetos
+restantes \(1,2,4\). Como cada uno de éstos es un cluster de tamaño \(1\),
+tenemos:
+
+\[
+d_{(35),1}
+= \frac{d_{31} + d_{51}}{2}
+= \frac{3 + 11}{2}
+= 7,
+\]
+
+\[
+d_{(35),2}
+= \frac{d_{32} + d_{52}}{2}
+= \frac{7 + 10}{2}
+= \frac{17}{2} = 8.5,
+\]
+
+\[
+d_{(35),4}
+= \frac{d_{34} + d_{54}}{2}
+= \frac{9 + 8}{2}
+= \frac{17}{2} = 8.5.
+\]
+
+La nueva matriz de distancias (con clusters \((35)\), \(1\), \(2\), \(4\)) es
+
+\[
+\begin{array}{c|cccc}
+  N   & (35) & 1 & 2 & 4 \\\hline
+(35) & 0   & 7   & 8.5 & 8.5 \\
+1    & 7   & 0   & 9   & 6   \\
+2    & 8.5 & 9   & 0   & 5   \\
+4    & 8.5 & 6   & 5   & 0
+\end{array}
+\]
+
+La mínima distancia ahora es
+
+\[
+d_{24} = 5,
+\]
+
+así que fusionamos los objetos \(2\) y \(4\) para obtener el cluster \((24)\).
+
+Calculamos las distancias entre \((24)\) y los demás clusters \((35)\) y \(1\).
+Recordando que \(N_{(24)} = 2\), \(N_{(35)} = 2\) y \(N_1 = 1\):
+
+\[
+d_{(24),1}
+= \frac{d_{21} + d_{41}}{2}
+= \frac{9 + 6}{2}
+= \frac{15}{2} = 7.5,
+\]
+
+\[
+d_{(24),(35)}
+= \frac{1}{2\cdot 2}
+\left(
+d_{23} + d_{25} + d_{43} + d_{45}
+\right)
+= \frac{7 + 10 + 9 + 8}{4}
+= \frac{34}{4} = 8.5.
+\]
+
+Ya habíamos calculado \(d_{(35),1} = 7\) en la etapa anterior. La matriz
+de distancias para los clusters \((35)\), \((24)\) y \(1\) es
+
+\[
+\begin{array}{c|ccc}
+  N   & (35) & (24) & 1 \\
+\hline
+(35) & 0   & 8.5  & 7   \\
+(24) & 8.5 & 0    & 7.5 \\
+1    & 7   & 7.5  & 0
+\end{array}
+\]
+
+La menor distancia es
+
+\[
+d_{(35),1} = 7,
+\]
+
+por lo que se fusionan el objeto \(1\) con el cluster \((35)\), obteniendo
+el cluster \((135)\), de tamaño \(N_{(135)}=3\).
+
+Ahora sólo quedan dos clusters: \((135)\) y \((24)\). Calculamos su distancia:
+
+\[
+d_{(135),(24)}
+= \frac{1}{3\cdot 2}
+\sum_{i \in \{1,3,5\}} \sum_{k \in \{2,4\}} d_{ik}.
+\]
+
+Las distancias relevantes son
+
+\[
+d_{12}=9,\quad d_{14}=6,\quad
+d_{32}=7,\quad d_{34}=9,\quad
+d_{52}=10,\quad d_{54}=8.
+\]
+
+Por lo tanto,
+
+\[
+\sum d_{ik} = 9 + 6 + 7 + 9 + 10 + 8 = 49,
+\]
+
+y
+
+\[
+d_{(135),(24)} = \frac{49}{6} \approx 8.17.
+\]
+
+Al ser el único par de clusters restante, \((135)\) y \((24)\) se fusionan en
+el nivel de distancia \(49/6\), produciendo el cluster final \((12345)\).
+
+El dendrograma resultante muestra fusiones sucesivas a los niveles de
+distancia
+\[
+2,\quad 5,\quad 7,\quad \frac{49}{6}\approx 8.17,
+\]
+correspondientes, respectivamente, a las fusiones
+\[
+(3,5),\quad (2,4),\quad (1,(35)),\quad ((135),(24)).
+\]
+
+Este ejemplo ilustra cómo el criterio de \textbf{average linkage} utiliza
+el promedio de todas las distancias entre pares de objetos de dos clusters,
+lo cual suele producir grupos con un compromiso entre la compacidad de
+\textbf{complete linkage} y la tendencia a cadenas de \textbf{single linkage}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cluster\_average }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{ (}\AttributeTok{d =}\NormalTok{ dist, }\AttributeTok{method =} \StringTok{\textquotesingle{}average\textquotesingle{}}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(cluster\_average)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac5-1} 
+
+}
+
+\caption{Cluster con el método average.}\label{fig:ac5}
+\end{figure}
+
+\subsection{Agrupación de varianza mínima de Ward}\label{agrupaciuxf3n-de-varianza-muxednima-de-ward}
+
+El método jerárquico propuesto por Ward (1963) se basa en minimizar la \textbf{pérdida de información} que ocurre cuando se fusionan dos clusters. Dicha pérdida de información se mide normalmente como el aumento en la suma de cuadrados del error (\textbf{Error Sum of Squares}, ESS). Este método sea conceptualmente análogo a un análisis de la varianza.
+
+Sea \(k\) un cluster cualquiera, y definamos
+
+\[
+ESS_k = \sum_{x_j \in k} (x_j - \bar{x}_k)'(x_j - \bar{x}_k),
+\]
+
+es decir, la suma de las desviaciones cuadráticas de los elementos del cluster con respecto a su centroide \(\bar{x}_k\).
+
+Si actualmente existen \(K\) clusters, definimos
+
+\[
+ESS = ESS_1 + ESS_2 + \cdots + ESS_K.
+\]
+
+En cada etapa del algoritmo jerárquico se considera la posible unión de todos los pares de clusters, evaluando el incremento que dicha unión produciría en el valor total de \(ESS\). El par de clusters que se fusiona es aquel cuya unión genera el menor incremento en \(ESS\). De esta forma se garantiza que cada fusión produzca la mínima pérdida de información posible.
+
+\textbf{Valores extremos del algoritmo:}
+
+\begin{itemize}
+\tightlist
+\item
+  Inicialmente, cada objeto es un cluster de tamaño uno, por lo que \(ESS_k = 0\) para todos los clusters.
+\item
+  En el otro extremo, cuando todos los objetos se encuentran en un único cluster, el valor final es
+  \[
+    ESS = \sum_{j=1}^N (x_j - \bar{x})'(x_j - \bar{x}),
+    \]
+  donde \(\bar{x}\) es el vector promedio de todos los elementos.
+\end{itemize}
+
+\textbf{Interpretación geométrica:} El método de Ward está fundamentado en la idea de que los clusters resultantes deben ser aproximadamente de forma elíptica y compacta, pues la suma de cuadrados mide dispersiones alrededor de centros promedios. Por esta razón, Ward:
+
+\begin{itemize}
+\tightlist
+\item
+  tiende a producir grupos balanceados en tamaño;
+\item
+  evita formar cadenas largas de puntos (como ocurre con \textbf{single linkage});
+\item
+  penaliza la incorporación de puntos alejados del centro del cluster.
+\end{itemize}
+
+\textbf{Representación gráfica:} Los resultados de Ward pueden visualizarse mediante un dendrograma. El eje vertical actúa como escala del incremento en \(ESS\) asociado a cada fusión. Las alturas de los nodos indican el costo de unión de los clusters.
+
+En resumen, el método de Ward es una versión jerárquica de técnicas de partición que buscan optimizar compactación dentro de los grupos. Es precursor directo de métodos no jerárquicos, tales como \textit{k-means}, que minimizan variaciones internas utilizando centros promedio como referencia.
+
+Este enfoque es particularmente adecuado para variables cuantitativas, ya que opera a partir de medidas basadas en medias y varianzas. Por ello, el método de Ward no resulta tan natural cuando las variables son binarias o categóricas sin transformar. Además, en su formulación clásica, la distancia inicial entre objetos corresponde a la distancia euclidiana al cuadrado, pues bajo dicha métrica la variación intra--grupo coincide estrictamente con la suma de cuadrados dentro del cluster.
+
+Al final del proceso jerárquico, el dendrograma generado tiene como eje vertical los incrementos sucesivos en \(ESS\), ilustrando el costo de cada fusión. Debido a su criterio de minimización de varianza, Ward tiende a producir clusters más compactos y equilibrados que los derivados de criterios basados en distancias mínimas (single linkage) o máximas (complete linkage).
+
+\begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio]{img/wards_linkage.png}}
+\caption{Ward}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cluster\_ward }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{ (}\AttributeTok{d =}\NormalTok{ dist, }\AttributeTok{method =} \StringTok{\textquotesingle{}ward.D2\textquotesingle{}}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(cluster\_ward)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac6-1} 
+
+}
+
+\caption{Cluster con el método Ward.}\label{fig:ac6}
+\end{figure}
+
+Comparando los cuatro métodos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Correrlo en consola para visualizarlo mejor}
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(cluster\_single)}
+\FunctionTok{plot}\NormalTok{(cluster\_complete)}
+\FunctionTok{plot}\NormalTok{(cluster\_average)}
+\FunctionTok{plot}\NormalTok{(cluster\_ward)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{MultivariateStatisticalAnalysis_files/figure-latex/ac7-1} 
+
+}
+
+\caption{Comparación de los clusters con los 4 métodos.}\label{fig:ac7}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{ (}\AttributeTok{mfrow =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+¿Qué puedes decir al respecto si comparas el desempeño de estos 4 métodos?
+
+\subsection{\texorpdfstring{Mismos gráficos usando el paquete \texttt{factoextra}}{Mismos gráficos usando el paquete factoextra}}\label{mismos-gruxe1ficos-usando-el-paquete-factoextra}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\FunctionTok{library}\NormalTok{(factoextra)}
+\FunctionTok{fviz\_dist}\NormalTok{(}\AttributeTok{dist.obj =}\NormalTok{ dist, }\AttributeTok{lab\_size =} \DecValTok{8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{MultivariateStatisticalAnalysis_files/figure-latex/ac8-1} 
+
+}
+
+\caption{Heatmap de la matriz de distancias}\label{fig:ac8}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{12345}\NormalTok{)}
+\NormalTok{hc\_single }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\AttributeTok{d=}\NormalTok{dist, }\AttributeTok{method =} \StringTok{"single"}\NormalTok{)}
+\NormalTok{hc\_average }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\AttributeTok{d=}\NormalTok{dist, }\AttributeTok{method =} \StringTok{"average"}\NormalTok{)}
+\NormalTok{hc\_complete }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\AttributeTok{d=}\NormalTok{dist, }\AttributeTok{method =} \StringTok{"complete"}\NormalTok{)}
+\NormalTok{hc\_ward }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\AttributeTok{d=}\NormalTok{dist, }\AttributeTok{method =} \StringTok{"ward.D2"}\NormalTok{)}
+
+\DocumentationTok{\#\# Otros dos métodos}
+\NormalTok{hc\_median }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\AttributeTok{d=}\NormalTok{dist, }\AttributeTok{method =} \StringTok{"median"}\NormalTok{)}
+\NormalTok{hc\_centroid }\OtherTok{\textless{}{-}} \FunctionTok{hclust}\NormalTok{(}\AttributeTok{d=}\NormalTok{dist, }\AttributeTok{method =} \StringTok{"centroid"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_dend}\NormalTok{(}\AttributeTok{x =}\NormalTok{ hc\_single, }\AttributeTok{k=}\DecValTok{3}\NormalTok{,}
+          \AttributeTok{cex =} \FloatTok{0.7}\NormalTok{,}
+          \AttributeTok{main =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{xlab =} \StringTok{"Samples"}\NormalTok{,}
+          \AttributeTok{ylab =} \StringTok{"Distance"}\NormalTok{,}
+          \AttributeTok{sub =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{horiz =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \FloatTok{2.5}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac10-1} 
+
+}
+
+\caption{Cluster con el método de la liga más sencilla.}\label{fig:ac10}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_dend}\NormalTok{(}\AttributeTok{x =}\NormalTok{ hc\_complete, }\AttributeTok{k=}\DecValTok{3}\NormalTok{,}
+          \AttributeTok{cex =} \FloatTok{0.7}\NormalTok{,}
+          \AttributeTok{main =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{xlab =} \StringTok{"Samples"}\NormalTok{,}
+          \AttributeTok{ylab =} \StringTok{"Distance"}\NormalTok{,}
+          \AttributeTok{sub =} \StringTok{""}\NormalTok{,}\AttributeTok{horiz =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{6}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac11-1} 
+
+}
+
+\caption{Cluster con el método de la liga completa.}\label{fig:ac11}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_dend}\NormalTok{(}\AttributeTok{x =}\NormalTok{ hc\_average, }\AttributeTok{k=}\DecValTok{3}\NormalTok{, }
+          \AttributeTok{cex =} \FloatTok{0.7}\NormalTok{,}
+          \AttributeTok{main =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{xlab =} \StringTok{"Samples"}\NormalTok{,}
+          \AttributeTok{ylab =} \StringTok{"Distance"}\NormalTok{,}
+          \AttributeTok{sub =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{horiz =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{4}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac12-1} 
+
+}
+
+\caption{ Cluster con el método del promedio.}\label{fig:ac12}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_dend}\NormalTok{(}\AttributeTok{x =}\NormalTok{ hc\_ward, }\AttributeTok{k=}\DecValTok{3}\NormalTok{,}
+          \AttributeTok{cex =} \FloatTok{0.7}\NormalTok{,}
+          \AttributeTok{main =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{xlab =} \StringTok{"Samples"}\NormalTok{,}
+          \AttributeTok{ylab =} \StringTok{"Distance"}\NormalTok{,}
+          \AttributeTok{sub =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{horiz =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{6}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac13-1} 
+
+}
+
+\caption{ Cluster con el método Ward.}\label{fig:ac13}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_dend}\NormalTok{(}\AttributeTok{x =}\NormalTok{ hc\_median, }\AttributeTok{k=}\DecValTok{3}\NormalTok{,}
+          \AttributeTok{cex =} \FloatTok{0.7}\NormalTok{,}
+          \AttributeTok{main =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{xlab =} \StringTok{"Samples"}\NormalTok{,}
+          \AttributeTok{ylab =} \StringTok{"Distance"}\NormalTok{,}
+          \AttributeTok{sub =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{horiz =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{5}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac14-1} 
+
+}
+
+\caption{ Cluster con el método mediana.}\label{fig:ac14}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{fviz\_dend}\NormalTok{(}\AttributeTok{x =}\NormalTok{ hc\_centroid, }\AttributeTok{k=}\DecValTok{3}\NormalTok{,}
+          \AttributeTok{cex =} \FloatTok{0.7}\NormalTok{,}
+          \AttributeTok{main =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{xlab =} \StringTok{"Samples"}\NormalTok{,}
+          \AttributeTok{ylab =} \StringTok{"Distance"}\NormalTok{,}
+          \AttributeTok{sub =} \StringTok{""}\NormalTok{,}
+          \AttributeTok{horiz =} \ConstantTok{TRUE}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \FloatTok{4.7}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=0.8\linewidth]{MultivariateStatisticalAnalysis_files/figure-latex/ac15-1} 
+
+}
+
+\caption{ Cluster con el método del centroide.}\label{fig:ac15}
+\end{figure}
+
+\subsection{Comentarios finales sobre los procedimientos jerárquicos}\label{comentarios-finales-sobre-los-procedimientos-jeruxe1rquicos}
+
+Además de los métodos basados en enlace simple, completo o promedio, existen muchas otras variantes de clustering jerárquico aglomerativo; sin embargo, todas siguen esencialmente el algoritmo general descrito anteriormente: partir de \(N\) grupos individuales y fusionar iterativamente los más similares.
+
+Al igual que en otros procedimientos de clustering, los métodos jerárquicos pueden verse afectados por errores en los datos o por variabilidad no controlada. Esto implica que el resultado puede ser sensible a la presencia de valores atípicos o puntos ruidosos.
+
+Una característica importante del clustering jerárquico es que no existe un mecanismo explícito de reubicación de elementos una vez que se han fusionado. Si un objeto se incorpora erróneamente a un cluster en una etapa temprana, dicho error persistirá hasta el final del proceso. Por esta razón, la interpretación del dendrograma debe realizarse cuidadosamente, evaluando si la estructura de grupos es razonable.
+
+En la práctica, es recomendable aplicar diferentes métodos de clustering o utilizar distintos criterios de distancia dentro del mismo método. Si los resultados obtenidos son consistentemente similares, se puede argumentar con mayor confianza la presencia de grupos ``naturales''.
+
+La \textbf{estabilidad} de una solución jerárquica puede evaluarse mediante pequeñas perturbaciones a los datos (por ejemplo, añadiendo ruido controlado o repitiendo mediciones). Si los grupos son bien definidos, el dendrograma resultante debe permanecer similar después de la perturbación.
+
+Finalmente, es posible que existan empates en valores de distancia entre pares de clusters, lo cual puede conducir a soluciones múltiples válidas. En estos casos, diferentes dendrogramas pueden representar distintas decisiones de fusión en niveles inferiores del árbol. Esto no necesariamente indica un problema metodológico, sino que refleja ambigüedad legítima en la estructura de similitudes del conjunto de datos. El usuario debe estar consciente de ello para interpretar adecuadamente las posibles estructuras de agrupamiento.
+
+\subsection{Número óptimo de clústers}\label{nuxfamero-uxf3ptimo-de-cluxfasters}
+
+Para seleccionar la partición más adecuada de los datos, primero comparamos distintos métodos de agrupamiento jerárquico a partir de la calidad del dendrograma que generan. Dicha calidad se evaluó calculando el coeficiente de correlación cofenético entre la matriz de distancias original y las distancias cofenéticas derivadas del dendrograma correspondiente (véase Cuadro 5.1). Valores cercanos a 1 indican que la estructura jerárquica preserva adecuadamente las relaciones de proximidad originales entre las observaciones, por lo que el dendrograma constituye una buena representación de los datos.
+
+Una vez seleccionado el dendrograma que mejor reproduce la estructura de distancias, el número óptimo de clústers se determinó mediante la inspección del dendrograma y la identificación de incrementos marcados en los niveles de fusión, los cuales sugieren separaciones naturales entre grupos. Adicionalmente, se evaluaron distintas particiones mediante criterios de validación interna, tales como el coeficiente de silhouette promedio, con el fin de corroborar la estabilidad y coherencia de la estructura obtenida.
+
+Con este procedimiento combinado (fidelidad del dendrograma y evaluación de cohesión/separación) se seleccionó el número final de clústers a reportar.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages(c("purrr", "kableExtra"))}
+\FunctionTok{library}\NormalTok{(purrr)}
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Adjuntando el paquete: 'kableExtra'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     group_rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# vector con nombre de los métodos}
+\NormalTok{m }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{( }\StringTok{"average"}\NormalTok{, }\StringTok{"single"}\NormalTok{, }\StringTok{"complete"}\NormalTok{, }\StringTok{"ward.D2"}\NormalTok{, }\StringTok{"median"}\NormalTok{, }\StringTok{"centroid"}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(m) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{( }\StringTok{"average"}\NormalTok{, }\StringTok{"single"}\NormalTok{, }\StringTok{"complete"}\NormalTok{, }\StringTok{"ward.D2"}\NormalTok{, }\StringTok{"median"}\NormalTok{, }\StringTok{"centroid"}\NormalTok{)}
+\CommentTok{\# Función para calcular el coeficiente de correlación}
+\NormalTok{coef\_cor }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+  \FunctionTok{cor}\NormalTok{(}\AttributeTok{x=}\NormalTok{dist, }\FunctionTok{cophenetic}\NormalTok{(}\FunctionTok{hclust}\NormalTok{(}\AttributeTok{d=}\NormalTok{dist, }\AttributeTok{method =}\NormalTok{ x)))}
+\NormalTok{\}}
+\CommentTok{\# Tabla comparativa}
+\NormalTok{coef\_tabla }\OtherTok{\textless{}{-}} \FunctionTok{map\_dbl}\NormalTok{(m, coef\_cor) }
+
+\FunctionTok{kbl}\NormalTok{(coef\_tabla, }\AttributeTok{booktabs =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{align =} \StringTok{"c"}\NormalTok{,}
+    \AttributeTok{caption =} \StringTok{"Cuadro comparativo de los coeficientes de correlación"}\NormalTok{,}
+    \AttributeTok{col.names =} \FunctionTok{rownames}\NormalTok{(coef\_tabla)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{kable\_styling}\NormalTok{(}\AttributeTok{position =} \StringTok{"center"}\NormalTok{,}
+                \AttributeTok{latex\_options =} \FunctionTok{c}\NormalTok{(}\StringTok{"repeat\_header"}\NormalTok{, }\StringTok{"hold\_position"}\NormalTok{),}
+                \AttributeTok{font\_size =} \DecValTok{9}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{add\_header\_above}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"Método"}\NormalTok{, }\StringTok{"Coeficiente de correlación"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[!h]
+\centering
+\caption{\label{tab:ac16}Cuadro comparativo de los coeficientes de correlación}
+\centering
+\fontsize{9}{11}\selectfont
+\begin{tabular}[t]{lc}
+\toprule
+\multicolumn{1}{c}{Método} & \multicolumn{1}{c}{Coeficiente de correlación} \\
+\cmidrule(l{3pt}r{3pt}){1-1} \cmidrule(l{3pt}r{3pt}){2-2}
+average & 0.6816035\\
+single & 0.5139962\\
+complete & 0.6521790\\
+ward.D2 & 0.6349740\\
+median & 0.5333157\\
+\addlinespace
+centroid & 0.5676691\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A partir de los coeficientes de correlación cofenética (Cuadro 5.1), observamos que el dendrograma obtenido mediante el método \texttt{average} es el que mejor preserva la estructura de similitudes original entre las observaciones, seguido por el método \texttt{median}. Por este motivo, utilizamos el dendrograma generado con \texttt{average} como base para determinar la partición final.
+
+Posteriormente, para determinar el número adecuado de clústers, utilizamos dos enfoques complementarios: el método del codo aplicado a la variación explicada y el paquete \texttt{NbClust}. Este último permite evaluar de manera simultánea un conjunto amplio de índices de validación (por ejemplo, Calinski--Harabasz, Dunn, Silhouette, entre otros), con el fin de sugerir el número de clústers más adecuado dentro de un rango especificado. Con base en la concordancia entre ambos enfoques, seleccionamos el número final de grupos a analizar.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("NbClust")}
+\FunctionTok{library}\NormalTok{(NbClust)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+{\centering \includegraphics{MultivariateStatisticalAnalysis_files/figure-latex/ac18-1} 
+
+}
+
+\caption{Número óbtimo de clusters usando el método del codo}\label{fig:ac18}
+\end{figure}
+
+Podemos observar en la gráfica de codo que en 2 es donde se forma el codo, así que esto nos diría que debemos considerar 2 clústers.
+
+Usando el paquete `NbClust' se pueden obtener una comparación del número óptimo de clústers. Para el ejemplo que hemos estado realizando, no es posible aplicarle esto, pero lo que deberíamos de realizar es lo siguiente.
+
+\subsection{Ejercicios}\label{ejercicios-6}
+
+\textbf{Ejercicio 1 (Ejemplo 12.2, Johnsonn y Wichern):} Ssimilitud entre 11 lenguas.
+
+El significado de las palabras cambia a lo largo de la historia; sin embargo, el significado de los números \(1,2,3,\dots\) se mantiene notablemente estable. Esto permite comparar lenguas utilizando únicamente las palabras para los numerales.
+
+En la tabla siguiente se muestran las palabras que representan los números del 1 al 10 en once lenguas europeas modernas: inglés, noruego, danés, neerlandés, alemán, francés, español, italiano, polaco, húngaro y finés.
+
+(Únicamente se consideran lenguas que usan el alfabeto romano; se omiten acentos, diéresis, cedillas, etc.)
+
+Una inspección rápida de la tabla sugiere que las primeras cinco lenguas (inglés, noruego, danés, neerlandés y alemán) son muy parecidas entre sí.
+
+Las lenguas francesa, española e italiana parecen guardar una similitud aún mayor entre ellas.
+Húngaro y finés parecen más aisladas, y el polaco comparte características con las lenguas de ambos subgrupos mayores.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(knitr)}
+
+\NormalTok{tabla1 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{Ingles =} \FunctionTok{c}\NormalTok{(}\StringTok{"one"}\NormalTok{,}\StringTok{"two"}\NormalTok{,}\StringTok{"three"}\NormalTok{,}\StringTok{"four"}\NormalTok{,}\StringTok{"five"}\NormalTok{,}\StringTok{"six"}\NormalTok{,}\StringTok{"seven"}\NormalTok{,}\StringTok{"eight"}\NormalTok{,}\StringTok{"nine"}\NormalTok{,}\StringTok{"ten"}\NormalTok{),}
+  \AttributeTok{Noruego =} \FunctionTok{c}\NormalTok{(}\StringTok{"en"}\NormalTok{,}\StringTok{"to"}\NormalTok{,}\StringTok{"tre"}\NormalTok{,}\StringTok{"fire"}\NormalTok{,}\StringTok{"fem"}\NormalTok{,}\StringTok{"seks"}\NormalTok{,}\StringTok{"sju"}\NormalTok{,}\StringTok{"atte"}\NormalTok{,}\StringTok{"ni"}\NormalTok{,}\StringTok{"ti"}\NormalTok{),}
+  \AttributeTok{Danes =} \FunctionTok{c}\NormalTok{(}\StringTok{"en"}\NormalTok{,}\StringTok{"to"}\NormalTok{,}\StringTok{"tre"}\NormalTok{,}\StringTok{"fire"}\NormalTok{,}\StringTok{"fem"}\NormalTok{,}\StringTok{"seks"}\NormalTok{,}\StringTok{"syv"}\NormalTok{,}\StringTok{"otte"}\NormalTok{,}\StringTok{"ni"}\NormalTok{,}\StringTok{"ti"}\NormalTok{),}
+  \AttributeTok{Neerlandes =} \FunctionTok{c}\NormalTok{(}\StringTok{"een"}\NormalTok{,}\StringTok{"twee"}\NormalTok{,}\StringTok{"drie"}\NormalTok{,}\StringTok{"vier"}\NormalTok{,}\StringTok{"vijf"}\NormalTok{,}\StringTok{"zes"}\NormalTok{,}\StringTok{"zeven"}\NormalTok{,}\StringTok{"acht"}\NormalTok{,}\StringTok{"negen"}\NormalTok{,}\StringTok{"tien"}\NormalTok{),}
+  \AttributeTok{Aleman =} \FunctionTok{c}\NormalTok{(}\StringTok{"eins"}\NormalTok{,}\StringTok{"zwei"}\NormalTok{,}\StringTok{"drei"}\NormalTok{,}\StringTok{"vier"}\NormalTok{,}\StringTok{"funf"}\NormalTok{,}\StringTok{"sechs"}\NormalTok{,}\StringTok{"sieben"}\NormalTok{,}\StringTok{"acht"}\NormalTok{,}\StringTok{"neun"}\NormalTok{,}\StringTok{"zehn"}\NormalTok{),}
+  \AttributeTok{Frances =} \FunctionTok{c}\NormalTok{(}\StringTok{"un"}\NormalTok{,}\StringTok{"deux"}\NormalTok{,}\StringTok{"trois"}\NormalTok{,}\StringTok{"quatre"}\NormalTok{,}\StringTok{"cinq"}\NormalTok{,}\StringTok{"six"}\NormalTok{,}\StringTok{"sept"}\NormalTok{,}\StringTok{"huit"}\NormalTok{,}\StringTok{"neuf"}\NormalTok{,}\StringTok{"dix"}\NormalTok{),}
+  \AttributeTok{Espanol =} \FunctionTok{c}\NormalTok{(}\StringTok{"uno"}\NormalTok{,}\StringTok{"dos"}\NormalTok{,}\StringTok{"tres"}\NormalTok{,}\StringTok{"cuatro"}\NormalTok{,}\StringTok{"cinco"}\NormalTok{,}\StringTok{"seis"}\NormalTok{,}\StringTok{"siete"}\NormalTok{,}\StringTok{"ocho"}\NormalTok{,}\StringTok{"nueve"}\NormalTok{,}\StringTok{"diez"}\NormalTok{),}
+  \AttributeTok{Italiano =} \FunctionTok{c}\NormalTok{(}\StringTok{"uno"}\NormalTok{,}\StringTok{"due"}\NormalTok{,}\StringTok{"tre"}\NormalTok{,}\StringTok{"quattro"}\NormalTok{,}\StringTok{"cinque"}\NormalTok{,}\StringTok{"sei"}\NormalTok{,}\StringTok{"sette"}\NormalTok{,}\StringTok{"otto"}\NormalTok{,}\StringTok{"nove"}\NormalTok{,}\StringTok{"dieci"}\NormalTok{),}
+  \AttributeTok{Polaco =} \FunctionTok{c}\NormalTok{(}\StringTok{"jeden"}\NormalTok{,}\StringTok{"dwa"}\NormalTok{,}\StringTok{"trzy"}\NormalTok{,}\StringTok{"cztery"}\NormalTok{,}\StringTok{"piec"}\NormalTok{,}\StringTok{"szesc"}\NormalTok{,}\StringTok{"siedem"}\NormalTok{,}\StringTok{"osiem"}\NormalTok{,}\StringTok{"dziewiec"}\NormalTok{,}\StringTok{"dziesiec"}\NormalTok{),}
+  \AttributeTok{Hungaro =} \FunctionTok{c}\NormalTok{(}\StringTok{"egy"}\NormalTok{,}\StringTok{"ketto"}\NormalTok{,}\StringTok{"harom"}\NormalTok{,}\StringTok{"negy"}\NormalTok{,}\StringTok{"ot"}\NormalTok{,}\StringTok{"hat"}\NormalTok{,}\StringTok{"het"}\NormalTok{,}\StringTok{"nyolc"}\NormalTok{,}\StringTok{"kilenc"}\NormalTok{,}\StringTok{"tiz"}\NormalTok{),}
+  \AttributeTok{Fines =} \FunctionTok{c}\NormalTok{(}\StringTok{"yksi"}\NormalTok{,}\StringTok{"kaksi"}\NormalTok{,}\StringTok{"kolme"}\NormalTok{,}\StringTok{"neljä"}\NormalTok{,}\StringTok{"viisi"}\NormalTok{,}\StringTok{"kuusi"}\NormalTok{,}\StringTok{"seitsemän"}\NormalTok{,}\StringTok{"kahdeksan"}\NormalTok{,}\StringTok{"yhdeksän"}\NormalTok{,}\StringTok{"kymmenen"}\NormalTok{)}
+\NormalTok{)}
+
+\FunctionTok{kable}\NormalTok{(tabla1, }\AttributeTok{caption =} \StringTok{"Numerales del 1 al 10 en 11 lenguas europeas"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:ac20}Numerales del 1 al 10 en 11 lenguas europeas}
+\centering
+\begin{tabular}[t]{l|l|l|l|l|l|l|l|l|l|l}
+\hline
+Ingles & Noruego & Danes & Neerlandes & Aleman & Frances & Espanol & Italiano & Polaco & Hungaro & Fines\\
+\hline
+one & en & en & een & eins & un & uno & uno & jeden & egy & yksi\\
+\hline
+two & to & to & twee & zwei & deux & dos & due & dwa & ketto & kaksi\\
+\hline
+three & tre & tre & drie & drei & trois & tres & tre & trzy & harom & kolme\\
+\hline
+four & fire & fire & vier & vier & quatre & cuatro & quattro & cztery & negy & neljä\\
+\hline
+five & fem & fem & vijf & funf & cinq & cinco & cinque & piec & ot & viisi\\
+\hline
+six & seks & seks & zes & sechs & six & seis & sei & szesc & hat & kuusi\\
+\hline
+seven & sju & syv & zeven & sieben & sept & siete & sette & siedem & het & seitsemän\\
+\hline
+eight & atte & otte & acht & acht & huit & ocho & otto & osiem & nyolc & kahdeksan\\
+\hline
+nine & ni & ni & negen & neun & neuf & nueve & nove & dziewiec & kilenc & yhdeksän\\
+\hline
+ten & ti & ti & tien & zehn & dix & diez & dieci & dziesiec & tiz & kymmenen\\
+\hline
+\end{tabular}
+\end{table}
+
+Para cuantificar la similitud entre dos lenguas podemos fijarnos únicamente en \emph{la primera letra} de cada palabra.
+Diremos que dos palabras para el mismo número en dos lenguas distintas son \emph{concordantes} si tienen la misma letra inicial y \emph{discordantes} en caso contrario.
+
+A partir de la Tabla anterior podemos construir una tabla de \emph{concordancias} entre lenguas: para cada par de lenguas contamos cuántas veces (sobre los 10 numerales) coinciden las letras iniciales de sus palabras.
+El resultado se resume en la Tabla siguiente. Por ejemplo, el valor 8 en la celda \((\text{E},\text{N})\) indica que inglés y noruego comparten la misma letra inicial en 8 de los 10 numerales.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tabla2 }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+  \AttributeTok{row.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"E"}\NormalTok{,}\StringTok{"N"}\NormalTok{,}\StringTok{"Da"}\NormalTok{,}\StringTok{"Du"}\NormalTok{,}\StringTok{"G"}\NormalTok{,}\StringTok{"Fr"}\NormalTok{,}\StringTok{"Sp"}\NormalTok{,}\StringTok{"I"}\NormalTok{,}\StringTok{"P"}\NormalTok{,}\StringTok{"H"}\NormalTok{,}\StringTok{"Fi"}\NormalTok{),}
+  \AttributeTok{E  =} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{N  =} \FunctionTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{Da =} \FunctionTok{c}\NormalTok{(}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{Du =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{G  =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{Fr =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{Sp =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{I  =} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{P  =} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{5}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{),}
+  \AttributeTok{H  =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{10}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+  \AttributeTok{Fi =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{10}\NormalTok{)}
+\NormalTok{)}
+\FunctionTok{kable}\NormalTok{(tabla2, }\AttributeTok{caption =} \StringTok{"Concordancias entre primeras letras de los numerales (1{-}{-}10)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}
+
+\caption{\label{tab:ac21}Concordancias entre primeras letras de los numerales (1--10)}
+\centering
+\begin{tabular}[t]{l|r|r|r|r|r|r|r|r|r|r|r}
+\hline
+  & E & N & Da & Du & G & Fr & Sp & I & P & H & Fi\\
+\hline
+E & 10 & 8 & 8 & 3 & 4 & 4 & 4 & 4 & 3 & 1 & 1\\
+\hline
+N & 8 & 10 & 9 & 5 & 6 & 4 & 4 & 4 & 3 & 2 & 1\\
+\hline
+Da & 8 & 9 & 10 & 4 & 5 & 4 & 5 & 5 & 4 & 2 & 1\\
+\hline
+Du & 3 & 5 & 4 & 10 & 5 & 1 & 1 & 1 & 0 & 2 & 1\\
+\hline
+G & 4 & 6 & 5 & 5 & 10 & 3 & 3 & 3 & 2 & 1 & 1\\
+\hline
+Fr & 4 & 4 & 4 & 1 & 3 & 10 & 8 & 9 & 5 & 0 & 1\\
+\hline
+Sp & 4 & 4 & 5 & 1 & 3 & 8 & 10 & 9 & 7 & 0 & 1\\
+\hline
+I & 4 & 4 & 5 & 1 & 3 & 9 & 9 & 10 & 6 & 0 & 1\\
+\hline
+P & 3 & 3 & 4 & 0 & 2 & 5 & 7 & 6 & 10 & 0 & 2\\
+\hline
+H & 1 & 2 & 2 & 2 & 1 & 0 & 0 & 0 & 0 & 10 & 1\\
+\hline
+Fi & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 2 & 1 & 10\\
+\hline
+\end{tabular}
+\end{table}
+
+Los resultados de la Tabla anterior confirman la impresión visual de la primer tabla: inglés, noruego, danés, neerlandés y alemán parecen formar un grupo; francés, español, italiano y polaco podrían agruparse juntos, mientras que húngaro y finés parecen más aislados.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  A partir de la tabla de concordancias
+  \(\big(c_{ij}\big)\) de la Tabla ,
+  construyan una matriz de \emph{disimilitudes} definiendo, por ejemplo,
+  \[
+          d_{ij} = 10 - c_{ij},
+       \]
+  para \(i \neq j\), y \(d_{ii} = 0\).
+  (Es decir, mientras mayor sea el número de diferencias en las letras iniciales, mayor será la disimilitud entre las lenguas \(i\) y \(j\).)
+\item
+  Apliquen métodos de clustering jerárquico aglomerativo utilizando al menos los siguientes criterios de enlace:
+\end{enumerate}
+
+\begin{itemize}
+\item
+  enlace simple,
+\item
+  enlace completo,
+\item
+  enlace promedio,
+\item
+  método de Ward.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Para cada método de enlace:
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Generen el dendrograma correspondiente a la matriz de disimilitudes \(D = (d_{ij})\).
+\item
+  Calcule el coeficiente de correlación cofenético entre la matriz de disimilitudes original y las distancias cofenéticas del dendrograma.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{3}
+\item
+  Comparen los dendrogramas obtenidos y los valores de correlación cofenética. ¿Qué método produce el dendrograma que mejor preserva la estructura de similitudes entre las lenguas?
+\item
+  Usando el dendrograma seleccionado en el punto anterior:
+\end{enumerate}
+
+\begin{itemize}
+\item
+  Exploren distintos cortes del árbol para obtener diferentes números de clústers (\(k=2,3,\dots\)).
+\item
+  Utilicen el método del codo (basado en la suma de cuadrados intra--grupo) y, si lo desean, índices adicionales de validación interna (por ejemplo, silhouette promedio) para determinar el número más adecuado de clústers.
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Finalmente, interpreten los clústers obtenidos:
+\end{enumerate}
+
+\begin{itemize}
+\item
+  ¿Qué lenguas quedan agrupadas en cada clúster?
+\item
+  ¿Coinciden los grupos encontrados con la impresión inicial basada en las dos tablas?
+\end{itemize}
+
+\textbf{Ejercicio 2:} Carga la base de datos USArrests. Obtén los dendrogramas y compara cuales realizan una mejor agrupación. ¿Cuál es el número óptimo de clusters?
+
+\section{Clustering no jerárquico}\label{clustering-no-jeruxe1rquico}
+
+Los métodos de clustering no jerárquicos están diseñados para agrupar \emph{observaciones} (ítems), más que variables, en una colección de \(K\) clústers. El número de clústers \(K\) puede fijarse de antemano o bien determinarse como parte del procedimiento de agrupamiento.
+
+A diferencia de los métodos jerárquicos, en los métodos no jerárquicos no es necesario trabajar explícitamente con una matriz completa de distancias (o similitudes), ni almacenarla durante todo el proceso de cómputo. Esto permite aplicar estos métodos a conjuntos de datos mucho más grandes que los que suelen manejarse con técnicas jerárquicas.
+
+En general, los métodos no jerárquicos parten de:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  una partición inicial de los ítems en grupos, o
+\item
+  un conjunto inicial de ``puntos semilla'\,', que funcionarán como núcleos de los clústers.
+\end{enumerate}
+
+Una buena elección de la configuración inicial es importante y, en la medida de lo posible, debe evitar sesgos evidentes. Una estrategia simple consiste en elegir aleatoriamente los puntos semilla entre las observaciones, o bien asignar aleatoriamente los ítems a grupos iniciales.
+
+En esta sección consideramos uno de los procedimientos no jerárquicos más populares: el método de \textbf{\(k\)-means}.
+
+\subsection{K-means}\label{k-means}
+
+MacQueen introdujo el término \emph{\(k\)-means} para describir un algoritmo que asigna cada observación al clúster cuyo centroide (media) sea más cercano. En su versión más simple, el proceso consta de los siguientes pasos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \emph{Partición inicial:} Dividir las observaciones en \(K\) clústers iniciales (o bien elegir \(K\) centroides iniciales).
+\item
+  \emph{Asignación}: Recorrer la lista de observaciones y asignar cada una al clúster cuyo centroide esté más cerca. La distancia suele ser la euclidiana, usando ya sea datos estandarizados o sin estandarizar.
+\item
+  \emph{Actualización:} Recalcular el centroide de cada clúster a partir de las observaciones que contiene tras la nueva asignación.
+\item
+  \emph{Iteración}: Repetir los pasos 2 y 3 hasta que no se produzcan reasignaciones (o los cambios sean despreciables).
+\end{enumerate}
+
+En lugar de comenzar con una partición inicial de todos los ítems en \(K\) grupos (Paso 1), también es posible especificar directamente \(K\) centroides iniciales (puntos semilla) y empezar el algoritmo a partir del Paso 2.
+
+La asignación final de las observaciones a los clústers depende, en cierta medida, de la partición o de los centroides iniciales elegidos. La experiencia indica que la mayoría de los cambios importantes en la asignación ocurren durante las primeras iteraciones, y posteriormente el algoritmo tiende a estabilizarse.
+
+\textbf{Ejemplo 1:} Supongamos que medimos dos variables \(X_1\) y \(X_2\) para cuatro ítems: A, B, C y D. Los datos se muestran en la tabla siguiente:
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule\noalign{}
+Ítem & x1 & x2 \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+A & 5 & 3 \\
+B & -1 & 1 \\
+C & 1 & -2 \\
+D & -3 & -2 \\
+\end{longtable}
+
+El objetivo consiste en dividir estos ítems en \(K = 2\) clústers, de modo que los elementos dentro de un clúster sean más similares entre sí que respecto a los elementos del otro clúster.
+
+Para implementar el método \(k\)-means con \(K=2\), iniciamos con una partición arbitraria. Supongamos que asignamos inicialmente:
+\[
+\text{Cluster 1: } (A,B), \qquad \text{Cluster 2: } (C,D).
+\]
+
+Entonces, el paso 1 sería calcular los centroides iniciales. Después, la reasignación usando distancia euclidiana y el nuevo cálculo de centroides, hasta terminar el proceso.
+
+\section{Tutoriales de DataCamp sugeridos}\label{tutoriales-de-datacamp-sugeridos-1}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi})}
+\item
+  \href{http://app.datacamp.com/learn/courses/cluster-analysis-in-python}{Análisis de conglomerados en Python}
+\item
+  \href{https://app.datacamp.com/learn/courses/cluster-analysis-in-r}{Cluster Analysis in R}
+\end{enumerate}
+
+\emph{Otro material sugerido:} \href{https://github.com/biotrain-latam/BiotrAIn-pilot-course/tree/main/Module\%202\%20Clustering}{BiotrAIn course: Concepts, approaches and applications of Artificial Intelligence in bioscience}
 
 \chapter{Análisis de Discriminante}\label{anuxe1lisis-de-discriminante}
 
@@ -6827,7 +8883,7 @@ También se puede realizar un plot de radar.
 
 \pandocbounded{\includegraphics[keepaspectratio]{MultivariateStatisticalAnalysis_files/figure-latex/a18-1.pdf}}
 
-\subsection{Ejercicios}\label{ejercicios-6}
+\subsection{Ejercicios}\label{ejercicios-7}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}

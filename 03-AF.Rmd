@@ -683,7 +683,7 @@ Sólo los dos primeros son mayores que 1, de modo que se toma $m=2$ factores.
 m <- 2
 ```
 
-La proporción de varianza total explicada por estos dos factores es $\frac{\hat\lambda_1 + \hat\lambda_2}{p}=$`r sum(eig$values[1:2])/5`.
+La proporción de varianza total explicada por estos dos factores es $\frac{\hat\lambda_1 + \hat\lambda_2}{p}=$ `r sum(eig$values[1:2])/5`.
 
 
 ```{r af5}
