@@ -1120,7 +1120,7 @@ Los resultados de la Tabla anterior confirman la impresión visual de la primer 
 
 **Ejercicio 2:** Carga la base de datos USArrests. Obtén los dendrogramas y compara cuales realizan una mejor agrupación. ¿Cuál es el número óptimo de clusters?
 
-```{r ac22, include=FALSE, echo= FALSE, eval=FALSE}
+```{r ac22, eval=FALSE}
 #Código de la clase
 
 library(tidyverse)
@@ -1259,7 +1259,7 @@ tanglegram(rank_branches(hc_single),rank_branches(hc_complete),
 
 ## Clustering no jerárquico
 
-Los métodos de clustering no jerárquicos están diseñados para agrupar \emph{observaciones} (ítems), más que variables, en una colección de $K$ clústers. El número de clústers $K$ puede fijarse de antemano o bien determinarse como parte del procedimiento de agrupamiento.
+Los métodos de clustering no jerárquicos están diseñados para agrupar *observaciones* (ítems), más que variables, en una colección de $K$ clústers. El número de clústers $K$ puede fijarse de antemano o bien determinarse como parte del procedimiento de agrupamiento.
 
 A diferencia de los métodos jerárquicos, en los métodos no jerárquicos no es necesario trabajar explícitamente con una matriz completa de distancias (o similitudes), ni almacenarla durante todo el proceso de cómputo. Esto permite aplicar estos métodos a conjuntos de datos mucho más grandes que los que suelen manejarse con técnicas jerárquicas.
 
@@ -1267,7 +1267,7 @@ En general, los métodos no jerárquicos parten de:
 
 1) una partición inicial de los ítems en grupos, o
 
-2) un conjunto inicial de ``puntos semilla'', que funcionarán como núcleos de los clústers.
+2) un conjunto inicial de "puntos semilla", que funcionarán como núcleos de los clústers.
 
 Una buena elección de la configuración inicial es importante y, en la medida de lo posible, debe evitar sesgos evidentes. Una estrategia simple consiste en elegir aleatoriamente los puntos semilla entre las observaciones, o bien asignar aleatoriamente los ítems a grupos iniciales.
 
@@ -1310,6 +1310,598 @@ Para implementar el método $k$-means con $K=2$, iniciamos con una partición ar
 
 Entonces, el paso 1 sería calcular los centroides iniciales. Después, la reasignación usando distancia euclidiana y el nuevo cálculo de centroides, hasta terminar el proceso.
 
+**Paso 1: Cálculo de centroides iniciales**
+
+Calculamos los centroides (promedios) de cada clúster.
+
+Para el clúster $(A,B)$:
+\[
+\bar{x}_1 = \frac{5 + (-1)}{2} = 2, 
+\qquad
+\bar{x}_2 = \frac{3 + 1}{2} = 2
+\]
+Por tanto, el centroide es:
+\[
+m_{AB} = (2,\,2).
+\]
+
+Para el clúster $(C,D)$:
+\[
+\bar{x}_1 = \frac{1 + (-3)}{2} = -1,
+\qquad
+\bar{x}_2 = \frac{-2 + (-2)}{2} = -2
+\]
+Por tanto, el centroide es:
+\[
+m_{CD} = (-1,\,-2).
+\]
+
+**Paso 2: Reasignación usando distancia euclidiana**
+
+En el Paso 2, calculamos la distancia euclidiana de cada ítem al centroide de los grupos y reasignamos cada ítem al grupo más cercano. Si un ítem se mueve de la configuración inicial, los centroides deben actualizarse antes de continuar. La coordenada $i$-ésima del centroide, $i = 1,2,\dots,p$, se actualiza fácilmente usando las siguientes fórmulas:
+
+\[
+\bar{x}_{i, \text{new}} = \frac{n \bar{x}_i + x_{ji}}{n + 1}
+\qquad
+\text{si el ítem } j \text{ es añadido a un grupo},
+\]
+
+\[
+\bar{x}_{i, \text{new}} = \frac{n \bar{x}_i - x_{ji}}{n - 1}
+\qquad
+\text{si el ítem } j \text{ es removido de un grupo}.
+\]
+
+Aquí $n$ es el número de ítems en el “grupo antiguo”, cuyo centroide es 
+\[
+\bar{x}' = (\bar{x}_1, \bar{x}_2,\dots, \bar{x}_p).
+\]
+
+Consideremos los clústers iniciales $(AB)$ y $(CD)$. Las coordenadas iniciales de los centroides eran $(2,2)$ y $(-1,-2)$ respectivamente. Supongamos que el ítem $A=(5,3)$ se mueve al grupo $(CD)$. Los nuevos grupos son $(B)$ y $(ACD)$ con centroides actualizados.
+
+Para el grupo $(B)$ se tiene:
+
+\[
+\bar{x}_{1,\text{new}} = \frac{2(2) - 5}{2 - 1} = -1,
+\qquad
+\bar{x}_{2,\text{new}} = \frac{2(2) - 3}{2 - 1} = 1.
+\]
+
+Por lo tanto, las coordenadas del centroide de $(B)$ son:
+\[
+(-1,\,1).
+\]
+
+
+Para el grupo $(ACD)$ se obtiene:
+
+\[
+\bar{x}_{1,\text{new}} = \frac{2(-1) + 5}{2 + 1} = 1,
+\qquad
+\bar{x}_{2,\text{new}} = \frac{2(-2) + 3}{2 + 1} = -0.33.
+\]
+
+Así, las nuevas coordenadas del centroide de $(ACD)$ son:
+\[
+(1,\,-0.33).
+\]
+
+
+Volviendo a la asignación inicial del Paso 1, ahora calculamos las distancias al cuadrado:
+
+\[
+d^2(A,(AB)) = (5-2)^2 + (3-2)^2 = 10,
+\]
+si $A$ no se mueve.
+
+\[
+d^2(A,(CD)) = (5+1)^2 + (3+2)^2 = 61,
+\]
+si $A$ se moviera al grupo $(CD)$.
+
+\[
+d^2(A,(B)) = (5-(-1))^2 + (3-1)^2 = 40,
+\]
+si $A$ se moviera al nuevo grupo $(B).
+
+\[
+d^2(A,(ACD)) = (5-1)^2 + (3+0.33)^2 = 27.09.
+\]
+
+Como $A$ está más cerca del centro de $(AB)$ que del centro de $(ACD)$, no se reasigna.
+
+
+Para el ítem $B$ se obtiene:
+
+\[
+d^2(B,(AB)) = (-1-2)^2 + (1-2)^2 = 10,
+\]
+si B no se mueve.
+
+\[
+d^2(B,(CD)) = (-1+1)^2 + (1+2)^2 = 9,
+\]
+si B se moviera a $(CD).
+\]
+
+\[
+d^2(B,(A)) = (-1-5)^2 + (1-3)^2 = 40,
+\]
+
+\[
+d^2(B,(BCD)) = (-1+1)^2 + (1+1)^2 = 4.
+\]
+
+Como $B$ está más cerca del centro de $(BCD)$ que del de $(AB)$, $B$ es reasignado al grupo $(CD)$.
+
+
+Verificamos si $C$ debe reasignarse:
+
+\[
+d^2(C,(A)) = (1-5)^2 + (-2-3)^2 = 41,
+\]
+
+\[
+d^2(C,(BCD)) = (1+1)^2 + (-2+1)^2 = 5.
+\]
+
+\[
+d^2(C,(A)) = (1-3)^2 + (-2-5)^2 = 102.25,
+\]
+
+\[
+d^2(C,(BCD)) = (1+2)^2 + (-2+5)^2 = 11.25.
+\]
+
+Como $C$ está más cerca del centro de $(BCD)$ que del centro de $(A)$, no se mueve.
+
+Continuando de esta manera, no se producen más reasignaciones y los clústers finales son $(A)$ y $(BCD)$.
+
+Tabla final de distancias al cuadrado al centroide
+
+| Cluster | A  | B  | C  | D  |
+|---------|----|----|----|----|
+| A       | 0  | 40 | 41 | 89 |
+| (BCD)   | 52 | 4  | 5  | 5  |
+
+
+La suma total de cuadrados dentro de los clústers (WSS) es:
+
+Para el clúster A:
+\[
+0
+\]
+
+Para el clúster (BCD):
+\[
+4 + 5 + 5 = 14.
+\]
+
+Equivalentemente, podemos determinar $K=2$ clústers usando el criterio:
+
+\[
+\min E = \sum_{i} d^2_{i,c(i)},
+\]
+
+donde la suma es sobre todos los ítems y $d^2_{i,c(i)}$ es la distancia al cuadrado entre el ítem $i$ y el centroide del clúster asignado.
+
+En este ejemplo existen siete posibilidades de partición para $K = 2$ clústers:
+
+A , (BCD)  
+B , (ACD)  
+C , (ABD)  
+D , (ABC)  
+(AB) , (CD)  
+(AC) , (BD)  
+(AD) , (BC)  
+
+
+Para la partición $A,(BCD)$ se tiene:
+
+\[
+d^2_{A,c(A)} = 0,
+\]
+
+para $(BCD)$:
+
+\[
+d^2_{B,c(B)} + d^2_{C,c(C)} + d^2_{D,c(D)} = 4 + 5 + 5 = 14.
+\]
+
+Entonces:
+
+\[
+\sum_i d^2_{i,c(i)} = 0 + 14 = 14.
+\]
+
+Para las restantes particiones se tiene:
+
+B,(ACD) \quad $\sum d^2_{i,c(i)} = 48.7$
+
+C,(ABD) \quad $\sum d^2_{i,c(i)} = 27.7$
+
+D,(ABC) \quad $\sum d^2_{i,c(i)} = 31.3$
+
+(AB),(CD) \quad $\sum d^2_{i,c(i)} = 28$
+
+(AC),(BD) \quad $\sum d^2_{i,c(i)} = 27$
+
+(AD),(BC) \quad $\sum d^2_{i,c(i)} = 51.3$
+
+Dado que la suma mínima $\sum d^2_{i,c(i)}$ ocurre para los grupos $(A)$ y $(BCD)$, esta es la solución final.
+
+
+Veamos unos ejemplos en R.
+
+**Ejemplo 1**: Usaremos la matriz del ejemplo pasado.
+
+```{r ac23}
+df <- data.frame(
+  x1 = c(5, -1, 1, -3),
+  x2 = c(3,  1, -2, -2),
+  row.names = c("A", "B", "C", "D")
+)
+
+df
+
+```
+
+Para realiazar kmeans en R, usamos la función `kmenas`.
+```{r ac24}
+set.seed(123)  # para reproducibilidad
+
+km2 <- kmeans(df, centers = 2, nstart = 20)  
+```
+
+El parámetro `nstart = 20` indica que intenta 20 configuraciones iniciales y se queda con la mejor.
+
+La variable `km2` tiene guardada toda la información de este algoritmo.
+
+```{r ac25}
+km2
+
+km2$cluster   # a qué cluster quedó asignado cada punto
+km2$centers   # coordenadas de los centroides
+km2$withinss  # suma de cuadrados dentro de cada cluster
+km2$tot.withinss  # suma total de cuadrados dentro de los clusters
+```
+
+Podemos hacer un plot de estos clústers.
+
+```{r ac26}
+data.frame(
+  Item    = rownames(df),
+  x1      = df$x1,
+  x2      = df$x2,
+  Cluster = km2$cluster
+)
+
+# Especificamos colores por cluster
+cols <- c("steelblue", "tomato")[km2$cluster]
+
+# Usando R base
+plot(df$x1, df$x2,
+     col = cols,
+     pch = 19,
+     xlab = "x1", ylab = "x2",
+     main = "Clustering k-means con K = 2")
+text(df$x1, df$x2, labels = rownames(df),
+     pos = 3)
+
+# Podemos añadir centroides
+points(km2$centers[,1], km2$centers[,2],
+       pch = 8, cex = 2, lwd = 2)
+```
+
+Otra forma de hacerlo, es con el paquete `factoextra`.
+
+```{r ac27}
+library(factoextra)
+# debemos asegurarnos que nuestro df tenga como rownames los nombres de los items
+
+#df_named <- df
+#df_named$label <- rownames(df_named)
+
+fviz_cluster(
+  km2, 
+  data = df, #df_named
+  repel = TRUE,
+  labelsize = 6,
+  main = "Clusters k-means con etiquetas"
+) 
+```
+
+
+**Ejemplo 2:** En este ejemplo se aplicará el algoritmo de K-means utilizando el conjunto de datos USArrests, disponible en R. Antes de realizar la agrupación, es necesario preparar el conjunto de datos asegurando que solo incluya variables numéricas continuas, ya que el método de K-means se basa en promedios y distancias entre observaciones. 
+Además, para evitar que las diferencias en escala entre las variables influyan en la formación de los grupos, por ejemplo, debido a que algunas variables se miden en unidades mucho mayores que otras, los datos se estandarizan utilizando la función `scale()` de R. Esta transformación permite que todas las variables contribuyan de manera equitativa al proceso de agrupación.
+
+
+```{r ac28}
+data("USArrests")      
+df <- scale(USArrests) # escalamos los datos 
+df
+```
+
+
+La función `kmeans()` es la encargada de ejecutar el algoritmo de K-means en R. Los principales argumentos de entrada:
+
+- `x`: Conjunto de datos a utilizar para la agrupación. Puede ser una matriz numérica, un data frame numérico o un vector numérico.
+
+- `centers`: Indica el número de clústers deseados (k) o bien un conjunto de centroides iniciales. Si se especifica un número, el algoritmo selecciona aleatoriamente filas distintas de x como centroides iniciales.
+
+- `iter.max`: Número máximo de iteraciones permitidas para la ejecución del algoritmo. Su valor por defecto es 10.
+
+- `nstart`: Cantidad de asignaciones iniciales aleatorias que se generan cuando centers es un número. Se recomienda usar un valor mayor que 1 para obtener soluciones más estables.
+
+```{r ac29}
+library(ggplot2)
+library(factoextra)
+```
+
+Vamos a estimar primero la cantidad óptima de clústers usando el método del codo.
+
+```{r ac30}
+fviz_nbclust(df, kmeans, method = "wss") + 
+  geom_vline(xintercept = 4, linetype = 2)
+```
+
+El gráfico anterior representa cómo cambia la variabilidad interna de los grupos conforme aumenta el número de clústers $k$. Como es esperable, al incrementar el número de clústers la variación dentro de cada grupo disminuye. No obstante, se identifica un punto de inflexión alrededor de $k=4$, donde la reducción de la varianza deja de ser tan significativa. Este punto, conocido como el método del codo, sugiere que a partir de $k=4$ añadir más clústers no aporta mejoras sustanciales en la homogeneidad interna. Por ello, se considera que el valor adecuado de $k$ para estos datos es aproximadamente 4.
+
+Como al inicializar el algoritmo, se seleccionan al aleatoriamente los centroides, debemos inicializar una semilla.
+
+```{r ac31}
+set.seed(123)
+km.res <- kmeans(df, 4, nstart = 25)
+```
+
+Al establecer `nstart = 25`, R realizará 25 asignaciones de inicio aleatorias y luego seleccionará los resultados que correspondan a la asignación con la variación más baja dentro de los clusters. El valor predeterminado de `nstart` es 1, lo que significa que solo se realiza una asignación aleatoria inicial.
+
+```{r ac32}
+print(km.res)
+```
+
+Calculemos la media de cada variable para cada cluster utilizando los datos originales.
+
+```{r ac33}
+aggregate(USArrests, by=list(cluster=km.res$cluster), mean)
+```
+
+Podemos agregarle a la base de datos originales una columna que nos indique en que clúster quedó cada observación.
+
+```{r ac34}
+dd <- cbind(USArrests, cluster = km.res$cluster)
+head(dd)
+```
+
+Cuando se trabaja con más de dos variables, una forma de visualizar los grupos obtenidos mediante clustering es reducir la dimensionalidad con un método como el Análisis de Componentes Principales. 
+
+Usando las dos primeras componentes principales como ejes, es posible construir un diagrama de dispersión en dos dimensiones y colorear los puntos según el clúster asignado. Esta visualización facilita interpretar la estructura de los datos, comparar distintas particiones y evaluar si el número de clústers elegido resulta apropiado.
+
+```{r ac35}
+fviz_cluster(km.res, data = df,
+             palette = c("#FF0000", "#0000FF", "#000000", "#C870FF"),
+             ellipse.type = "euclid", # Agregar elipses
+             star.plot = TRUE, # Añadir segmentos desde los centroides a los datos
+             repel = TRUE, # que no se sobrelapen
+             ggtheme = theme_minimal())
+```
+
+
+### Ejercicios
+
+**Ejercicio 1:** Los siguientes datos fueron colectados en 22 compañías públicas de EU en 1975. Estandarizar las variables. Ajustar modelos k-means para 4 y 5 clústers. Reportar: tamaño de cada clúster, empresas en cada clúster, distancias entre centroides y proporción de variación explicada. Comparar la calidad de la partición (dentro vs. entre clústers). Puedes comentar cuál de los dos K “separa mejor” (ratio más grande) y si esa mejora justifica pasar de 4 a 5 clústers. Busca el “codo” de la curva y comenta si K=4 o K=5 son valores razonables. Interpretar los clústers: ¿qué variables parecen distinguir más los grupos? ¿qué tipo de empresas se agrupan juntas (por tamaño, porcentaje nuclear, ventas, etc.)?
+
+
+| ID | Company | X1 | X2 | X3 | X4 | X5 | X6 | X7 | X8 |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | Arizona Public Service | 1.06 | 9.2 | 151 | 54.4 | 1.6 | 9077 | 0   | 0.628 |
+| 2 | Boston Edison Co. | 0.89 | 10.3 | 202 | 57.9 | 2.2 | 5088 | 25.3 | 1.555 |
+| 3 | Central Louisiana Electric Co. | 1.43 | 15.4 | 113 | 53.0 | 3.4 | 9212 | 0   | 1.058 |
+| 4 | Commonwealth Edison Co. | 1.02 | 11.2 | 168 | 56.0 | 0.3 | 6423 | 34.3 | 0.700 |
+| 5 | Consolidated Edison Co. (N.Y.) | 1.49 | 8.8 | 192 | 51.2 | 1.0 | 3300 | 15.6 | 2.044 |
+| 6 | Florida Power & Light Co. | 1.32 | 13.5 | 111 | 60.0 | -2.2 | 11127 | 22.5 | 1.241 |
+| 7 | Hawaiian Electric Co. | 1.22 | 12.2 | 175 | 67.6 | 2.2 | 7642 | 0   | 1.652 |
+| 8 | Idaho Power Co. | 1.10 | 9.2 | 245 | 57.0 | 3.3 | 13082 | 0   | 0.309 |
+| 9 | Kentucky Utilities Co. | 1.34 | 13.0 | 168 | 60.4 | 7.2 | 8406 | 0   | 0.862 |
+| 10 | Madison Gas & Electric Co. | 1.12 | 12.4 | 197 | 53.0 | 2.7 | 6455 | 39.2 | 0.623 |
+| 11 | Nevada Power Co. | 0.75 | 7.5 | 173 | 51.5 | 6.5 | 17441 | 0   | 0.768 |
+| 12 | New England Electric Co. | 1.13 | 10.9 | 178 | 62.0 | 3.7 | 6154 | 0   | 1.897 |
+| 13 | Northern States Power Co. | 1.15 | 12.7 | 199 | 53.7 | 6.4 | 7179 | 50.2 | 0.527 |
+| 14 | Oklahoma Gas & Electric Co. | 1.09 | 12.0 | 96  | 49.8 | 1.4 | 9673 | 0   | 0.588 |
+| 15 | Pacific Gas & Electric Co. | 0.96 | 7.6 | 164 | 62.2 | -0.1 | 6468 | 0.9 | 1.400 |
+| 16 | Puget Sound Power & Light Co. | 1.16 | 9.9 | 252 | 56.0 | 9.2 | 15991 | 0   | 0.620 |
+| 17 | San Diego Gas & Electric Co. | 0.76 | 6.4 | 136 | 61.9 | 9.0 | 5714 | 8.3 | 1.920 |
+| 18 | The Southern Co. | 1.05 | 12.6 | 150 | 56.7 | 2.7 | 10140 | 0   | 1.108 |
+| 19 | Texas Utilities Co. | 1.16 | 11.7 | 104 | 54.0 | -2.1 | 13507 | 0   | 0.636 |
+| 20 | Wisconsin Electric Power Co. | 1.20 | 11.8 | 148 | 59.9 | 3.5 | 7287 | 41.1 | 0.702 |
+| 21 | United Illuminating Co. | 1.04 | 8.6 | 204 | 61.0 | 3.5 | 6650 | 0   | 2.116 |
+| 22 | Virginia Electric & Power Co. | 1.07 | 9.3 | 174 | 54.3 | 5.9 | 10093 | 26.6 | 1.306 |
+
+
+Clave de variables:
+
+$X_1$: Razón de cobertura de cargos fijos (ingreso/deuda).
+
+$X_2$: Tasa de retorno sobre el capital.
+
+$X_3$: Costo por kW de capacidad instalada.
+
+$X_4$: Factor de carga anual.
+
+$X_5$: Crecimiento máximo de demanda en kWh de 1974 a 1975.
+
+$X_6$: Ventas (kWh utilizadas por año).
+
+$X_7$: Porcentaje de generación nuclear.
+
+$X_8$: Costo total de combustible (centavos por kWh).
+
+
+```{r ac36}
+utilities <- data.frame(
+  ID = 1:22,
+  Company = c(
+    "Arizona Public Service",
+    "Boston Edison Co.",
+    "Central Louisiana Electric Co.",
+    "Commonwealth Edison Co.",
+    "Consolidated Edison Co. (N.Y.)",
+    "Florida Power & Light Co.",
+    "Hawaiian Electric Co.",
+    "Idaho Power Co.",
+    "Kentucky Utilities Co.",
+    "Madison Gas & Electric Co.",
+    "Nevada Power Co.",
+    "New England Electric Co.",
+    "Northern States Power Co.",
+    "Oklahoma Gas & Electric Co.",
+    "Pacific Gas & Electric Co.",
+    "Puget Sound Power & Light Co.",
+    "San Diego Gas & Electric Co.",
+    "The Southern Co.",
+    "Texas Utilities Co.",
+    "Wisconsin Electric Power Co.",
+    "United Illuminating Co.",
+    "Virginia Electric & Power Co."
+  ),
+  X1 = c(1.06, 0.89, 1.43, 1.02, 1.49, 1.32, 1.22, 1.10, 1.34, 1.12,
+         0.75, 1.13, 1.15, 1.09, 0.96, 1.16, 0.76, 1.05, 1.16, 1.20,
+         1.04, 1.07),
+  X2 = c(9.2, 10.3, 15.4, 11.2, 8.8, 13.5, 12.2, 9.2, 13.0, 12.4,
+         7.5, 10.9, 12.7, 12.0, 7.6, 9.9, 6.4, 12.6, 11.7, 11.8,
+         8.6, 9.3),
+  X3 = c(151, 202, 113, 168, 192, 111, 175, 245, 168, 197,
+         173, 178, 199, 96, 164, 252, 136, 150, 104, 148,
+         204, 174),
+  X4 = c(54.4, 57.9, 53.0, 56.0, 51.2, 60.0, 67.6, 57.0, 60.4, 53.0,
+         51.5, 62.0, 53.7, 49.8, 62.2, 56.0, 61.9, 56.7, 54.0, 59.9,
+         61.0, 54.3),
+  X5 = c(1.6, 2.2, 3.4, 0.3, 1.0, -2.2, 2.2, 3.3, 7.2, 2.7,
+         6.5, 3.7, 6.4, 1.4, -0.1, 9.2, 9.0, 2.7, -2.1, 3.5,
+         3.5, 5.9),
+  X6 = c(9077, 5088, 9212, 6423, 3300, 11127, 7642, 13082, 8406, 6455,
+         17441, 6154, 7179, 9673, 6468, 15991, 5714, 10140, 13507, 7287,
+         6650, 10093),
+  X7 = c(0.0, 25.3, 0.0, 34.3, 15.6, 22.5, 0.0, 0.0, 0.0, 39.2,
+         0.0, 0.0, 50.2, 0.0, 0.9, 0.0, 8.3, 0.0, 0.0, 41.1,
+         0.0, 26.6),
+  X8 = c(0.628, 1.555, 1.058, 0.700, 2.044, 1.241, 1.652, 0.309, 0.862, 0.623,
+         0.768, 1.897, 0.527, 0.588, 1.400, 0.620, 1.920, 1.108, 0.636, 0.702,
+         2.116, 1.306)
+)
+
+```
+
+**Ejercicio 2:**
+
+
+**Ejercicio 3:**
+
+
+## Ejemplo Completo
+
+Según el diccionario de la Real Academia Española (RAE, 2014), bienestar proviene de la unión de las palabras bien y estar. Es el conjunto de las cosas necesarias para vivir bien. También lo define como vida holgada o abastecida de cuanto conduce a pasarlo bien y con tranquilidad. 
+
+El presente trabajo tiene por objetivo analizar el bienestar de manera multivariante y territorial, para tal cometido se ha tomado varias dimensiones que afectan al bienestar como la marginación, la pobreza, la desigualdad.  Adicionamente se toma en consideración al desarrollo humano que es una medida que favorece al bienestar.  
+
+A nivel territorial se ha tomado los datos de Ecuador provenientes del Censo de Población y Vivienda 2010.  Se  usará por tanto una base de datos denominada `base.csv` que contiene las diferentes dimensiones a ser estudiadas. 
+
+Usaremos la base de datos `base.csv` con las siguientes variables:
+  
+- Región natural: Costa, Sierra, Amazonía y Galápagos.
+
+- Estado: 24 estados.
+
+- Municipio: 24 capitales de estados. 
+
+-	Dimensión 1: Porcentaje de población de 15 años o más analfabeta.
+
+-	Dimensión 2: Porcentaje de población de 15 años o más sin primaria completa.
+
+-	Dimensión 3: Porcentaje de ocupantes en viviendas particulares habitadas sin drenaje ni servicio sanitario.
+
+-	Dimensión 4: Porcentaje de ocupantes en viviendas particulares habitadas sin energía eléctrica.
+
+-	Dimensión 5: Porcentaje de ocupantes en viviendas particulares habitadas sin agua entubada.
+
+-	Dimensión 6: Porcentaje de viviendas particulares habitadas con algún nivel de hacinamiento.
+
+-	Dimensión 7: Porcentaje de ocupantes de viviendas particulares habitadas con piso de tierra.
+
+-	Dimensión 8: Porcentaje de población ocupada con ingresos de hasta dos salarios mínimos
+
+-	Densidad poblacional: habitantes por $Km^{2}$
+  
+- IDH: Índice de Desarrollo Humano
+
+- Pobre: pobreza por consumo (%)
+
+- Gini: Índice de desigualdad
+
+Para iniciar con nuestros análisis, cargamos la base de datos que utilizaremos.
+
+```{r base_datos, message=FALSE, warning=FALSE}
+library(readr)
+base <- read_csv("D:/Users/hayde/Documents/R_sites/MultivariateStatisticalAnalysis/data/base.csv")
+
+base2 <- base[,c(2,4:16)]
+```
+
+en esta sección se describen gráficos multivariados. Se muestran las gráficas paralelas, que representa correlación entre variables, donde cada línea es una observación o individuo. 
+
+Dado que en Ecuador existen cuatro regiones, a saber: la Sierra, Amazonía, la Costa e Insular, cada una se colorea con distintos tonos, a fin de visualizar los cambios por variable. Se aprecia que  la variable sobre la proporción de piso de tierra es la que tiene la tasa más baja, seguida por el porcentaje de población sin educación primaria completa.
+
+Así mismo, se vislumbra que la región con el porcentaje más bajo de variables que reflejan vulnerabilidad es la Insular, seguida por la región de Sierra. Mientras que la Amazonía es la región con mayor vulnerabilidad, al presentar porcentajes más altos. 
+
+Por otra parte, se distingue que hay correlación entre las variables de pobreza, piso de tierra, al menos dos salarios mínimos, y las relativas a la educación. Esto se ve ya que hay líneas paralelas, lo que implica un patrón en el país. En contraste, hay cruce entre líneas entre las vairables de porcentaje de población sin primaria completa, el índice de gini, y el Índice de Desarrollo humano. 
+
+```{r, parellel plot, include = TRUE, echo = TRUE,  fig.pos = 'H', fig.dim = c(9,7), out.width="80%", fig.align = "center", message=FALSE, fig.cap = 'Gráfico de paralelas'}
+library(GGally)
+ggparcoord(base, columns = c(8, 9, 16, 7, 15, 10, 14, 13, 6, 11, 5, 12),  
+           groupColumn = 2, showPoints = TRUE, 
+           title = "",
+           alphaLines = 1, scale = "uniminmax"
+#           order = "Outlying"
+) 
+
+```
+
+Se muestra otro tipo de esquema. En las gráficas de estrellas, cada una es un estado, y la longitud de los "brazos" implica el rango de la variable. Se aprecia que aquellas regiones con estrellas más grandes en variables de marginación (i1-i8), son las mismas con estrellas más pequeñas para variables que expresan bienestas (como el índice de gini, idh, y densidad  poblacional).
+
+```{r, grafica estrellas, include = TRUE, echo = FALSE,  fig.pos = 'H', fig.dim = c(9,7), out.width="99%", fig.align = "center", message=FALSE, fig.cap = 'Gráfico de estrellas'}
+par(mfrow= c(2,2))#cuatro tipos de gráficas
+
+#Se segmenta a las variables en función del factor que expresan. 
+stars(base2[, 3:7],len = 1.3, key.loc = c(-1,11), lwd = 1, col.segments = T, col.lines = 1:24, )
+stars(base2[, c(7:10, 13)],len = 1.3, key.loc = c(-1,11), lwd = 1, col.segments = T, col.lines = 1:24, )
+stars(base2[, c(11:12,14)], scale = T, len = 1.3, key.loc = c(-1,11), lwd = 1, col.segments = T, col.lines = 1:24)
+```
+
+El siguiente gráfico muestra la correlación entre variables. Se ha tachado las variables que no son significantes. 
+
+```{r, include = TRUE, echo = FALSE, fig.pos = 'H', fig.dim = c(8,5), fig.align = "center", message=FALSE, fig.cap = 'Correlograma con significancia'}
+library(corrplot)
+cor_base <- cor(base2[,3:14], use="complete.obs")
+
+cor.mtest <- function(mat, ...) {
+    mat <- as.matrix(mat)
+    n <- ncol(mat)
+    p.mat<- matrix(NA, n, n)
+    diag(p.mat) <- 0
+    for (i in 1:(n - 1)) {
+        for (j in (i + 1):n) {
+            tmp <- cor.test(mat[, i], mat[, j], ...)
+            p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
+        }
+    }
+  colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
+  p.mat
+}
+# matrix of the p-value of the correlation
+p.mat <- cor.mtest(cor_base)
+
+corrplot(cor_base, type = "upper", order = "hclust", tl.col = "black", tl.srt = 45, p.mat = p.mat, sig.level = 0.05)
+```
 
 
 ## Tutoriales de DataCamp sugeridos

@@ -261,8 +261,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4" data-path="04-AC.html"><a href="#clustering-no-jer%C3%A1rquico"><i class="fa fa-check"></i><b>5.4</b> Clustering no jerárquico</a>
 <ul>
 <li class="chapter" data-level="5.4.1" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#k-means"><i class="fa fa-check"></i><b>5.4.1</b> K-means</a></li>
+<li class="chapter" data-level="5.4.2" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#ejercicios-7"><i class="fa fa-check"></i><b>5.4.2</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1"><i class="fa fa-check"></i><b>5.5</b> Tutoriales de DataCamp sugeridos</a></li>
+<li class="chapter" data-level="5.5" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#ejemplo-completo"><i class="fa fa-check"></i><b>5.5</b> Ejemplo Completo</a></li>
+<li class="chapter" data-level="5.6" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1"><i class="fa fa-check"></i><b>5.6</b> Tutoriales de DataCamp sugeridos</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="04-AC.html"><a href="#an%C3%A1lisis-de-discriminante"><i class="fa fa-check"></i><b>6</b> Análisis de Discriminante</a></li>
 <li class="chapter" data-level="7" data-path="04-AC.html"><a href="#ap%C3%A9ndices"><i class="fa fa-check"></i><b>7</b> Apéndices</a>
@@ -277,7 +279,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.3" data-path="04-AC.html"><a href="#gr%C3%A1ficos-de-paralelas"><i class="fa fa-check"></i><b>7.4.3</b> Gráficos de Paralelas</a></li>
 <li class="chapter" data-level="7.4.4" data-path="apéndices.html"><a href="apéndices.html#estrellas"><i class="fa fa-check"></i><b>7.4.4</b> Estrellas</a></li>
 <li class="chapter" data-level="7.4.5" data-path="apéndices.html"><a href="apéndices.html#plots-3d"><i class="fa fa-check"></i><b>7.4.5</b> Plots 3D</a></li>
-<li class="chapter" data-level="7.4.6" data-path="apéndices.html"><a href="apéndices.html#ejercicios-7"><i class="fa fa-check"></i><b>7.4.6</b> Ejercicios</a></li>
+<li class="chapter" data-level="7.4.6" data-path="apéndices.html"><a href="apéndices.html#ejercicios-8"><i class="fa fa-check"></i><b>7.4.6</b> Ejercicios</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -1725,15 +1727,146 @@ para <span class="math inline">\(i \neq j\)</span>, y <span class="math inline">
 <li><p>¿Coinciden los grupos encontrados con la impresión inicial basada en las dos tablas?</p></li>
 </ul>
 <p><strong>Ejercicio 2:</strong> Carga la base de datos USArrests. Obtén los dendrogramas y compara cuales realizan una mejor agrupación. ¿Cuál es el número óptimo de clusters?</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="análisis-de-conglomerados.html#cb24-1" tabindex="-1"></a><span class="co">#Código de la clase</span></span>
+<span id="cb24-2"><a href="análisis-de-conglomerados.html#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="análisis-de-conglomerados.html#cb24-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb24-4"><a href="análisis-de-conglomerados.html#cb24-4" tabindex="-1"></a><span class="fu">library</span>(cluster)</span>
+<span id="cb24-5"><a href="análisis-de-conglomerados.html#cb24-5" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb24-6"><a href="análisis-de-conglomerados.html#cb24-6" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb24-7"><a href="análisis-de-conglomerados.html#cb24-7" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb24-8"><a href="análisis-de-conglomerados.html#cb24-8" tabindex="-1"></a><span class="fu">library</span>(NbClust)</span>
+<span id="cb24-9"><a href="análisis-de-conglomerados.html#cb24-9" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="análisis-de-conglomerados.html#cb24-10" tabindex="-1"></a><span class="co"># Cargar datos y analizar varianzas y correlaciones</span></span>
+<span id="cb24-11"><a href="análisis-de-conglomerados.html#cb24-11" tabindex="-1"></a></span>
+<span id="cb24-12"><a href="análisis-de-conglomerados.html#cb24-12" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;USArrests&quot;</span>)</span>
+<span id="cb24-13"><a href="análisis-de-conglomerados.html#cb24-13" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(USArrests))</span>
+<span id="cb24-14"><a href="análisis-de-conglomerados.html#cb24-14" tabindex="-1"></a><span class="fu">summary</span>(USArrests)</span>
+<span id="cb24-15"><a href="análisis-de-conglomerados.html#cb24-15" tabindex="-1"></a><span class="fu">dim</span>(USArrests)</span>
+<span id="cb24-16"><a href="análisis-de-conglomerados.html#cb24-16" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="análisis-de-conglomerados.html#cb24-17" tabindex="-1"></a><span class="fu">var</span>(<span class="fu">data.matrix</span>(USArrests))</span>
+<span id="cb24-18"><a href="análisis-de-conglomerados.html#cb24-18" tabindex="-1"></a>cor.mat_all <span class="ot">&lt;-</span> <span class="fu">cor</span>(<span class="fu">data.matrix</span>(USArrests), <span class="at">use=</span><span class="st">&quot;complete.obs&quot;</span>)</span>
+<span id="cb24-19"><a href="análisis-de-conglomerados.html#cb24-19" tabindex="-1"></a>cor.mat_all</span>
+<span id="cb24-20"><a href="análisis-de-conglomerados.html#cb24-20" tabindex="-1"></a></span>
+<span id="cb24-21"><a href="análisis-de-conglomerados.html#cb24-21" tabindex="-1"></a></span>
+<span id="cb24-22"><a href="análisis-de-conglomerados.html#cb24-22" tabindex="-1"></a><span class="co"># Escalar datos</span></span>
+<span id="cb24-23"><a href="análisis-de-conglomerados.html#cb24-23" tabindex="-1"></a>US_df <span class="ot">&lt;-</span> <span class="fu">scale</span>(USArrests)</span>
+<span id="cb24-24"><a href="análisis-de-conglomerados.html#cb24-24" tabindex="-1"></a><span class="fu">var</span>(US_df)</span>
+<span id="cb24-25"><a href="análisis-de-conglomerados.html#cb24-25" tabindex="-1"></a></span>
+<span id="cb24-26"><a href="análisis-de-conglomerados.html#cb24-26" tabindex="-1"></a><span class="co"># Calcular distancias</span></span>
+<span id="cb24-27"><a href="análisis-de-conglomerados.html#cb24-27" tabindex="-1"></a>dist <span class="ot">&lt;-</span> <span class="fu">dist</span>(US_df, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>)</span>
+<span id="cb24-28"><a href="análisis-de-conglomerados.html#cb24-28" tabindex="-1"></a><span class="fu">head</span>(dist)</span>
+<span id="cb24-29"><a href="análisis-de-conglomerados.html#cb24-29" tabindex="-1"></a></span>
+<span id="cb24-30"><a href="análisis-de-conglomerados.html#cb24-30" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="análisis-de-conglomerados.html#cb24-31" tabindex="-1"></a><span class="co"># Realizar clusters</span></span>
+<span id="cb24-32"><a href="análisis-de-conglomerados.html#cb24-32" tabindex="-1"></a>cluster_single <span class="ot">&lt;-</span> <span class="fu">hclust</span> (<span class="at">d =</span> dist, <span class="at">method =</span> <span class="st">&#39;single&#39;</span>)</span>
+<span id="cb24-33"><a href="análisis-de-conglomerados.html#cb24-33" tabindex="-1"></a><span class="fu">plot</span>(cluster_single,<span class="at">cex=</span><span class="fl">0.7</span>, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb24-34"><a href="análisis-de-conglomerados.html#cb24-34" tabindex="-1"></a></span>
+<span id="cb24-35"><a href="análisis-de-conglomerados.html#cb24-35" tabindex="-1"></a>cluster_complete <span class="ot">&lt;-</span> <span class="fu">hclust</span> (<span class="at">d =</span> dist, <span class="at">method =</span> <span class="st">&#39;complete&#39;</span>)</span>
+<span id="cb24-36"><a href="análisis-de-conglomerados.html#cb24-36" tabindex="-1"></a><span class="fu">plot</span>(cluster_complete, <span class="at">cex=</span><span class="fl">0.7</span>, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb24-37"><a href="análisis-de-conglomerados.html#cb24-37" tabindex="-1"></a></span>
+<span id="cb24-38"><a href="análisis-de-conglomerados.html#cb24-38" tabindex="-1"></a>cluster_average <span class="ot">&lt;-</span> <span class="fu">hclust</span> (<span class="at">d =</span> dist, <span class="at">method =</span> <span class="st">&#39;average&#39;</span>)</span>
+<span id="cb24-39"><a href="análisis-de-conglomerados.html#cb24-39" tabindex="-1"></a><span class="fu">plot</span>(cluster_average, <span class="at">cex=</span><span class="fl">0.7</span>, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb24-40"><a href="análisis-de-conglomerados.html#cb24-40" tabindex="-1"></a></span>
+<span id="cb24-41"><a href="análisis-de-conglomerados.html#cb24-41" tabindex="-1"></a>cluster_ward <span class="ot">&lt;-</span> <span class="fu">hclust</span> (<span class="at">d =</span> dist, <span class="at">method =</span> <span class="st">&#39;ward.D2&#39;</span>)</span>
+<span id="cb24-42"><a href="análisis-de-conglomerados.html#cb24-42" tabindex="-1"></a><span class="fu">plot</span>(cluster_ward,<span class="at">cex=</span><span class="fl">0.7</span>, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb24-43"><a href="análisis-de-conglomerados.html#cb24-43" tabindex="-1"></a></span>
+<span id="cb24-44"><a href="análisis-de-conglomerados.html#cb24-44" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span>
+<span id="cb24-45"><a href="análisis-de-conglomerados.html#cb24-45" tabindex="-1"></a><span class="fu">plot</span>(cluster_single,<span class="at">cex=</span><span class="fl">0.7</span>, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb24-46"><a href="análisis-de-conglomerados.html#cb24-46" tabindex="-1"></a><span class="fu">plot</span>(cluster_complete,<span class="at">cex=</span><span class="fl">0.7</span>, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb24-47"><a href="análisis-de-conglomerados.html#cb24-47" tabindex="-1"></a><span class="fu">plot</span>(cluster_average,<span class="at">cex=</span><span class="fl">0.7</span>, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb24-48"><a href="análisis-de-conglomerados.html#cb24-48" tabindex="-1"></a><span class="fu">plot</span>(cluster_ward,<span class="at">cex=</span><span class="fl">0.7</span>, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb24-49"><a href="análisis-de-conglomerados.html#cb24-49" tabindex="-1"></a></span>
+<span id="cb24-50"><a href="análisis-de-conglomerados.html#cb24-50" tabindex="-1"></a><span class="fu">par</span> (<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb24-51"><a href="análisis-de-conglomerados.html#cb24-51" tabindex="-1"></a></span>
+<span id="cb24-52"><a href="análisis-de-conglomerados.html#cb24-52" tabindex="-1"></a></span>
+<span id="cb24-53"><a href="análisis-de-conglomerados.html#cb24-53" tabindex="-1"></a><span class="co"># Comparar coeficiente de correlación de los métodos</span></span>
+<span id="cb24-54"><a href="análisis-de-conglomerados.html#cb24-54" tabindex="-1"></a><span class="co"># vector con nombre de los métodos</span></span>
+<span id="cb24-55"><a href="análisis-de-conglomerados.html#cb24-55" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;average&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;complete&quot;</span>, <span class="st">&quot;ward.D2&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;centroid&quot;</span>)</span>
+<span id="cb24-56"><a href="análisis-de-conglomerados.html#cb24-56" tabindex="-1"></a><span class="fu">names</span>(m) <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="st">&quot;average&quot;</span>, <span class="st">&quot;single&quot;</span>, <span class="st">&quot;complete&quot;</span>, <span class="st">&quot;ward.D2&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;centroid&quot;</span>)</span>
+<span id="cb24-57"><a href="análisis-de-conglomerados.html#cb24-57" tabindex="-1"></a><span class="co"># Función para calcular el coeficiente de correlación</span></span>
+<span id="cb24-58"><a href="análisis-de-conglomerados.html#cb24-58" tabindex="-1"></a>coef_cor <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb24-59"><a href="análisis-de-conglomerados.html#cb24-59" tabindex="-1"></a>  <span class="fu">cor</span>(<span class="at">x=</span>dist, <span class="fu">cophenetic</span>(<span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> x)))</span>
+<span id="cb24-60"><a href="análisis-de-conglomerados.html#cb24-60" tabindex="-1"></a>}</span>
+<span id="cb24-61"><a href="análisis-de-conglomerados.html#cb24-61" tabindex="-1"></a><span class="co"># Tabla comparativa</span></span>
+<span id="cb24-62"><a href="análisis-de-conglomerados.html#cb24-62" tabindex="-1"></a>coef_tabla <span class="ot">&lt;-</span> <span class="fu">map_dbl</span>(m, coef_cor) </span>
+<span id="cb24-63"><a href="análisis-de-conglomerados.html#cb24-63" tabindex="-1"></a>coef_tabla</span>
+<span id="cb24-64"><a href="análisis-de-conglomerados.html#cb24-64" tabindex="-1"></a></span>
+<span id="cb24-65"><a href="análisis-de-conglomerados.html#cb24-65" tabindex="-1"></a></span>
+<span id="cb24-66"><a href="análisis-de-conglomerados.html#cb24-66" tabindex="-1"></a><span class="co"># Calcular número óptimo de clusters</span></span>
+<span id="cb24-67"><a href="análisis-de-conglomerados.html#cb24-67" tabindex="-1"></a><span class="co"># Método del codo</span></span>
+<span id="cb24-68"><a href="análisis-de-conglomerados.html#cb24-68" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(<span class="at">x =</span> US_df, <span class="at">FUNcluster =</span> hcut, <span class="at">method =</span> <span class="st">&quot;wss&quot;</span>, <span class="at">diss =</span> dist, <span class="at">k.max =</span> <span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb24-69"><a href="análisis-de-conglomerados.html#cb24-69" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Número óptimo de clusters&quot;</span>) <span class="sc">+</span></span>
+<span id="cb24-70"><a href="análisis-de-conglomerados.html#cb24-70" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Número de clústers&quot;</span>)</span>
+<span id="cb24-71"><a href="análisis-de-conglomerados.html#cb24-71" tabindex="-1"></a></span>
+<span id="cb24-72"><a href="análisis-de-conglomerados.html#cb24-72" tabindex="-1"></a><span class="co"># Aplicar todos los índices y métodos</span></span>
+<span id="cb24-73"><a href="análisis-de-conglomerados.html#cb24-73" tabindex="-1"></a>res.nbclust <span class="ot">&lt;-</span> <span class="fu">NbClust</span>(US_df, <span class="at">distance =</span> <span class="st">&quot;euclidean&quot;</span>,</span>
+<span id="cb24-74"><a href="análisis-de-conglomerados.html#cb24-74" tabindex="-1"></a>                       <span class="at">min.nc =</span> <span class="dv">3</span>, <span class="at">max.nc =</span> <span class="dv">6</span>, </span>
+<span id="cb24-75"><a href="análisis-de-conglomerados.html#cb24-75" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">&quot;average&quot;</span>, <span class="at">index =</span><span class="st">&quot;all&quot;</span>)</span>
+<span id="cb24-76"><a href="análisis-de-conglomerados.html#cb24-76" tabindex="-1"></a></span>
+<span id="cb24-77"><a href="análisis-de-conglomerados.html#cb24-77" tabindex="-1"></a><span class="co"># Realizar plot con el número óptimo de cluster y marcar los grupos</span></span>
+<span id="cb24-78"><a href="análisis-de-conglomerados.html#cb24-78" tabindex="-1"></a><span class="fu">plot</span>(cluster_average, <span class="at">cex =</span> <span class="fl">0.6</span>, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
+<span id="cb24-79"><a href="análisis-de-conglomerados.html#cb24-79" tabindex="-1"></a><span class="fu">rect.hclust</span>(cluster_average, <span class="at">k =</span> <span class="dv">4</span>, <span class="at">border =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">8</span>)</span>
+<span id="cb24-80"><a href="análisis-de-conglomerados.html#cb24-80" tabindex="-1"></a></span>
+<span id="cb24-81"><a href="análisis-de-conglomerados.html#cb24-81" tabindex="-1"></a><span class="co">#fviz_nbclust(res.nbclust) + </span></span>
+<span id="cb24-82"><a href="análisis-de-conglomerados.html#cb24-82" tabindex="-1"></a><span class="co">#  theme_minimal() + </span></span>
+<span id="cb24-83"><a href="análisis-de-conglomerados.html#cb24-83" tabindex="-1"></a><span class="co">#  ggtitle(&quot;Número óbtimo de clusters con NbClust&quot;)</span></span>
+<span id="cb24-84"><a href="análisis-de-conglomerados.html#cb24-84" tabindex="-1"></a></span>
+<span id="cb24-85"><a href="análisis-de-conglomerados.html#cb24-85" tabindex="-1"></a></span>
+<span id="cb24-86"><a href="análisis-de-conglomerados.html#cb24-86" tabindex="-1"></a><span class="co"># Con Factoextra</span></span>
+<span id="cb24-87"><a href="análisis-de-conglomerados.html#cb24-87" tabindex="-1"></a></span>
+<span id="cb24-88"><a href="análisis-de-conglomerados.html#cb24-88" tabindex="-1"></a><span class="co"># Matriz de distancias</span></span>
+<span id="cb24-89"><a href="análisis-de-conglomerados.html#cb24-89" tabindex="-1"></a><span class="fu">fviz_dist</span>(<span class="at">dist.obj =</span> dist, <span class="at">lab_size =</span> <span class="dv">8</span>)</span>
+<span id="cb24-90"><a href="análisis-de-conglomerados.html#cb24-90" tabindex="-1"></a></span>
+<span id="cb24-91"><a href="análisis-de-conglomerados.html#cb24-91" tabindex="-1"></a><span class="co"># Clusters</span></span>
+<span id="cb24-92"><a href="análisis-de-conglomerados.html#cb24-92" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12345</span>)</span>
+<span id="cb24-93"><a href="análisis-de-conglomerados.html#cb24-93" tabindex="-1"></a>hc_single <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;single&quot;</span>)</span>
+<span id="cb24-94"><a href="análisis-de-conglomerados.html#cb24-94" tabindex="-1"></a>hc_average <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;average&quot;</span>)</span>
+<span id="cb24-95"><a href="análisis-de-conglomerados.html#cb24-95" tabindex="-1"></a>hc_complete <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;complete&quot;</span>)</span>
+<span id="cb24-96"><a href="análisis-de-conglomerados.html#cb24-96" tabindex="-1"></a>hc_ward <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;ward.D2&quot;</span>)</span>
+<span id="cb24-97"><a href="análisis-de-conglomerados.html#cb24-97" tabindex="-1"></a>hc_median <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;median&quot;</span>)</span>
+<span id="cb24-98"><a href="análisis-de-conglomerados.html#cb24-98" tabindex="-1"></a>hc_centroid <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dist, <span class="at">method =</span> <span class="st">&quot;centroid&quot;</span>)</span>
+<span id="cb24-99"><a href="análisis-de-conglomerados.html#cb24-99" tabindex="-1"></a></span>
+<span id="cb24-100"><a href="análisis-de-conglomerados.html#cb24-100" tabindex="-1"></a></span>
+<span id="cb24-101"><a href="análisis-de-conglomerados.html#cb24-101" tabindex="-1"></a></span>
+<span id="cb24-102"><a href="análisis-de-conglomerados.html#cb24-102" tabindex="-1"></a><span class="fu">fviz_dend</span>(<span class="at">x =</span> hc_complete, <span class="at">k=</span><span class="dv">4</span>,</span>
+<span id="cb24-103"><a href="análisis-de-conglomerados.html#cb24-103" tabindex="-1"></a>          <span class="at">cex =</span> <span class="fl">0.7</span>,</span>
+<span id="cb24-104"><a href="análisis-de-conglomerados.html#cb24-104" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">&quot;Cluster método complete&quot;</span>,</span>
+<span id="cb24-105"><a href="análisis-de-conglomerados.html#cb24-105" tabindex="-1"></a>          <span class="at">xlab =</span> <span class="st">&quot;Ciudades&quot;</span>,</span>
+<span id="cb24-106"><a href="análisis-de-conglomerados.html#cb24-106" tabindex="-1"></a>          <span class="at">ylab =</span> <span class="st">&quot;Distancias&quot;</span>,</span>
+<span id="cb24-107"><a href="análisis-de-conglomerados.html#cb24-107" tabindex="-1"></a>          <span class="at">type=</span> <span class="st">&quot;rectangle&quot;</span>,</span>
+<span id="cb24-108"><a href="análisis-de-conglomerados.html#cb24-108" tabindex="-1"></a>          <span class="at">sub =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb24-109"><a href="análisis-de-conglomerados.html#cb24-109" tabindex="-1"></a>          <span class="at">horiz =</span> <span class="cn">TRUE</span>)<span class="sc">+</span></span>
+<span id="cb24-110"><a href="análisis-de-conglomerados.html#cb24-110" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">3.8</span>, <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>)</span>
+<span id="cb24-111"><a href="análisis-de-conglomerados.html#cb24-111" tabindex="-1"></a></span>
+<span id="cb24-112"><a href="análisis-de-conglomerados.html#cb24-112" tabindex="-1"></a></span>
+<span id="cb24-113"><a href="análisis-de-conglomerados.html#cb24-113" tabindex="-1"></a>sub_grp <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hc_complete, <span class="at">k =</span> <span class="dv">4</span>)</span>
+<span id="cb24-114"><a href="análisis-de-conglomerados.html#cb24-114" tabindex="-1"></a><span class="fu">table</span>(sub_grp)</span>
+<span id="cb24-115"><a href="análisis-de-conglomerados.html#cb24-115" tabindex="-1"></a></span>
+<span id="cb24-116"><a href="análisis-de-conglomerados.html#cb24-116" tabindex="-1"></a></span>
+<span id="cb24-117"><a href="análisis-de-conglomerados.html#cb24-117" tabindex="-1"></a><span class="fu">fviz_cluster</span>(<span class="fu">list</span>(<span class="at">data =</span> US_df, <span class="at">cluster =</span> sub_grp))</span>
+<span id="cb24-118"><a href="análisis-de-conglomerados.html#cb24-118" tabindex="-1"></a></span>
+<span id="cb24-119"><a href="análisis-de-conglomerados.html#cb24-119" tabindex="-1"></a></span>
+<span id="cb24-120"><a href="análisis-de-conglomerados.html#cb24-120" tabindex="-1"></a><span class="co"># Comparar dendrogramas</span></span>
+<span id="cb24-121"><a href="análisis-de-conglomerados.html#cb24-121" tabindex="-1"></a><span class="fu">library</span>(dendextend)</span>
+<span id="cb24-122"><a href="análisis-de-conglomerados.html#cb24-122" tabindex="-1"></a></span>
+<span id="cb24-123"><a href="análisis-de-conglomerados.html#cb24-123" tabindex="-1"></a>hc_single <span class="ot">&lt;-</span> <span class="fu">agnes</span>(US_df, <span class="at">method =</span> <span class="st">&quot;single&quot;</span>) </span>
+<span id="cb24-124"><a href="análisis-de-conglomerados.html#cb24-124" tabindex="-1"></a>hc_complete <span class="ot">&lt;-</span> <span class="fu">agnes</span>(US_df, <span class="at">method =</span> <span class="st">&quot;complete&quot;</span>)</span>
+<span id="cb24-125"><a href="análisis-de-conglomerados.html#cb24-125" tabindex="-1"></a></span>
+<span id="cb24-126"><a href="análisis-de-conglomerados.html#cb24-126" tabindex="-1"></a>hc_single <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_single) </span>
+<span id="cb24-127"><a href="análisis-de-conglomerados.html#cb24-127" tabindex="-1"></a>hc_complete <span class="ot">&lt;-</span> <span class="fu">as.dendrogram</span>(hc_complete)</span>
+<span id="cb24-128"><a href="análisis-de-conglomerados.html#cb24-128" tabindex="-1"></a></span>
+<span id="cb24-129"><a href="análisis-de-conglomerados.html#cb24-129" tabindex="-1"></a><span class="fu">tanglegram</span>(<span class="fu">rank_branches</span>(hc_single),<span class="fu">rank_branches</span>(hc_complete),</span>
+<span id="cb24-130"><a href="análisis-de-conglomerados.html#cb24-130" tabindex="-1"></a>           <span class="at">main_left =</span> <span class="st">&quot;Single&quot;</span>,</span>
+<span id="cb24-131"><a href="análisis-de-conglomerados.html#cb24-131" tabindex="-1"></a>           <span class="at">main_right =</span> <span class="st">&quot;Complete&quot;</span>, <span class="at">lab.cex=</span> <span class="fl">0.7</span>, <span class="at">margin_inner =</span> <span class="dv">5</span>, <span class="at">k_branches =</span> <span class="dv">4</span>)</span></code></pre></div>
 </div>
 <div id="clustering-no-jerárquico" class="section level2 hasAnchor" number="5.4">
 <h2><span class="header-section-number">5.4</span> Clustering no jerárquico<a href="#clustering-no-jer%C3%A1rquico" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Los métodos de clustering no jerárquicos están diseñados para agrupar (ítems), más que variables, en una colección de <span class="math inline">\(K\)</span> clústers. El número de clústers <span class="math inline">\(K\)</span> puede fijarse de antemano o bien determinarse como parte del procedimiento de agrupamiento.</p>
+<p>Los métodos de clustering no jerárquicos están diseñados para agrupar <em>observaciones</em> (ítems), más que variables, en una colección de <span class="math inline">\(K\)</span> clústers. El número de clústers <span class="math inline">\(K\)</span> puede fijarse de antemano o bien determinarse como parte del procedimiento de agrupamiento.</p>
 <p>A diferencia de los métodos jerárquicos, en los métodos no jerárquicos no es necesario trabajar explícitamente con una matriz completa de distancias (o similitudes), ni almacenarla durante todo el proceso de cómputo. Esto permite aplicar estos métodos a conjuntos de datos mucho más grandes que los que suelen manejarse con técnicas jerárquicas.</p>
 <p>En general, los métodos no jerárquicos parten de:</p>
 <ol style="list-style-type: decimal">
 <li><p>una partición inicial de los ítems en grupos, o</p></li>
-<li><p>un conjunto inicial de ``puntos semilla’’, que funcionarán como núcleos de los clústers.</p></li>
+<li><p>un conjunto inicial de “puntos semilla”, que funcionarán como núcleos de los clústers.</p></li>
 </ol>
 <p>Una buena elección de la configuración inicial es importante y, en la medida de lo posible, debe evitar sesgos evidentes. Una estrategia simple consiste en elegir aleatoriamente los puntos semilla entre las observaciones, o bien asignar aleatoriamente los ítems a grupos iniciales.</p>
 <p>En esta sección consideramos uno de los procedimientos no jerárquicos más populares: el método de <strong><span class="math inline">\(k\)</span>-means</strong>.</p>
@@ -1786,10 +1919,848 @@ para <span class="math inline">\(i \neq j\)</span>, y <span class="math inline">
 \text{Cluster 1: } (A,B), \qquad \text{Cluster 2: } (C,D).
 \]</span></p>
 <p>Entonces, el paso 1 sería calcular los centroides iniciales. Después, la reasignación usando distancia euclidiana y el nuevo cálculo de centroides, hasta terminar el proceso.</p>
+<p><strong>Paso 1: Cálculo de centroides iniciales</strong></p>
+<p>Calculamos los centroides (promedios) de cada clúster.</p>
+<p>Para el clúster <span class="math inline">\((A,B)\)</span>:
+<span class="math display">\[
+\bar{x}_1 = \frac{5 + (-1)}{2} = 2,
+\qquad
+\bar{x}_2 = \frac{3 + 1}{2} = 2
+\]</span>
+Por tanto, el centroide es:
+<span class="math display">\[
+m_{AB} = (2,\,2).
+\]</span></p>
+<p>Para el clúster <span class="math inline">\((C,D)\)</span>:
+<span class="math display">\[
+\bar{x}_1 = \frac{1 + (-3)}{2} = -1,
+\qquad
+\bar{x}_2 = \frac{-2 + (-2)}{2} = -2
+\]</span>
+Por tanto, el centroide es:
+<span class="math display">\[
+m_{CD} = (-1,\,-2).
+\]</span></p>
+<p><strong>Paso 2: Reasignación usando distancia euclidiana</strong></p>
+<p>En el Paso 2, calculamos la distancia euclidiana de cada ítem al centroide de los grupos y reasignamos cada ítem al grupo más cercano. Si un ítem se mueve de la configuración inicial, los centroides deben actualizarse antes de continuar. La coordenada <span class="math inline">\(i\)</span>-ésima del centroide, <span class="math inline">\(i = 1,2,\dots,p\)</span>, se actualiza fácilmente usando las siguientes fórmulas:</p>
+<p><span class="math display">\[
+\bar{x}_{i, \text{new}} = \frac{n \bar{x}_i + x_{ji}}{n + 1}
+\qquad
+\text{si el ítem } j \text{ es añadido a un grupo},
+\]</span></p>
+<p><span class="math display">\[
+\bar{x}_{i, \text{new}} = \frac{n \bar{x}_i - x_{ji}}{n - 1}
+\qquad
+\text{si el ítem } j \text{ es removido de un grupo}.
+\]</span></p>
+<p>Aquí <span class="math inline">\(n\)</span> es el número de ítems en el “grupo antiguo”, cuyo centroide es
+<span class="math display">\[
+\bar{x}&#39; = (\bar{x}_1, \bar{x}_2,\dots, \bar{x}_p).
+\]</span></p>
+<p>Consideremos los clústers iniciales <span class="math inline">\((AB)\)</span> y <span class="math inline">\((CD)\)</span>. Las coordenadas iniciales de los centroides eran <span class="math inline">\((2,2)\)</span> y <span class="math inline">\((-1,-2)\)</span> respectivamente. Supongamos que el ítem <span class="math inline">\(A=(5,3)\)</span> se mueve al grupo <span class="math inline">\((CD)\)</span>. Los nuevos grupos son <span class="math inline">\((B)\)</span> y <span class="math inline">\((ACD)\)</span> con centroides actualizados.</p>
+<p>Para el grupo <span class="math inline">\((B)\)</span> se tiene:</p>
+<p><span class="math display">\[
+\bar{x}_{1,\text{new}} = \frac{2(2) - 5}{2 - 1} = -1,
+\qquad
+\bar{x}_{2,\text{new}} = \frac{2(2) - 3}{2 - 1} = 1.
+\]</span></p>
+<p>Por lo tanto, las coordenadas del centroide de <span class="math inline">\((B)\)</span> son:
+<span class="math display">\[
+(-1,\,1).
+\]</span></p>
+<p>Para el grupo <span class="math inline">\((ACD)\)</span> se obtiene:</p>
+<p><span class="math display">\[
+\bar{x}_{1,\text{new}} = \frac{2(-1) + 5}{2 + 1} = 1,
+\qquad
+\bar{x}_{2,\text{new}} = \frac{2(-2) + 3}{2 + 1} = -0.33.
+\]</span></p>
+<p>Así, las nuevas coordenadas del centroide de <span class="math inline">\((ACD)\)</span> son:
+<span class="math display">\[
+(1,\,-0.33).
+\]</span></p>
+<p>Volviendo a la asignación inicial del Paso 1, ahora calculamos las distancias al cuadrado:</p>
+<p><span class="math display">\[
+d^2(A,(AB)) = (5-2)^2 + (3-2)^2 = 10,
+\]</span>
+si <span class="math inline">\(A\)</span> no se mueve.</p>
+<p><span class="math display">\[
+d^2(A,(CD)) = (5+1)^2 + (3+2)^2 = 61,
+\]</span>
+si <span class="math inline">\(A\)</span> se moviera al grupo <span class="math inline">\((CD)\)</span>.</p>
+<p><span class="math display">\[
+d^2(A,(B)) = (5-(-1))^2 + (3-1)^2 = 40,
+\]</span>
+si <span class="math inline">\(A\)</span> se moviera al nuevo grupo $(B).</p>
+<p><span class="math display">\[
+d^2(A,(ACD)) = (5-1)^2 + (3+0.33)^2 = 27.09.
+\]</span></p>
+<p>Como <span class="math inline">\(A\)</span> está más cerca del centro de <span class="math inline">\((AB)\)</span> que del centro de <span class="math inline">\((ACD)\)</span>, no se reasigna.</p>
+<p>Para el ítem <span class="math inline">\(B\)</span> se obtiene:</p>
+<p><span class="math display">\[
+d^2(B,(AB)) = (-1-2)^2 + (1-2)^2 = 10,
+\]</span>
+si B no se mueve.</p>
+<p><span class="math display">\[
+d^2(B,(CD)) = (-1+1)^2 + (1+2)^2 = 9,
+\]</span>
+si B se moviera a $(CD).
+]</p>
+<p><span class="math display">\[
+d^2(B,(A)) = (-1-5)^2 + (1-3)^2 = 40,
+\]</span></p>
+<p><span class="math display">\[
+d^2(B,(BCD)) = (-1+1)^2 + (1+1)^2 = 4.
+\]</span></p>
+<p>Como <span class="math inline">\(B\)</span> está más cerca del centro de <span class="math inline">\((BCD)\)</span> que del de <span class="math inline">\((AB)\)</span>, <span class="math inline">\(B\)</span> es reasignado al grupo <span class="math inline">\((CD)\)</span>.</p>
+<p>Verificamos si <span class="math inline">\(C\)</span> debe reasignarse:</p>
+<p><span class="math display">\[
+d^2(C,(A)) = (1-5)^2 + (-2-3)^2 = 41,
+\]</span></p>
+<p><span class="math display">\[
+d^2(C,(BCD)) = (1+1)^2 + (-2+1)^2 = 5.
+\]</span></p>
+<p><span class="math display">\[
+d^2(C,(A)) = (1-3)^2 + (-2-5)^2 = 102.25,
+\]</span></p>
+<p><span class="math display">\[
+d^2(C,(BCD)) = (1+2)^2 + (-2+5)^2 = 11.25.
+\]</span></p>
+<p>Como <span class="math inline">\(C\)</span> está más cerca del centro de <span class="math inline">\((BCD)\)</span> que del centro de <span class="math inline">\((A)\)</span>, no se mueve.</p>
+<p>Continuando de esta manera, no se producen más reasignaciones y los clústers finales son <span class="math inline">\((A)\)</span> y <span class="math inline">\((BCD)\)</span>.</p>
+<p>Tabla final de distancias al cuadrado al centroide</p>
+<table>
+<thead>
+<tr class="header">
+<th>Cluster</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>0</td>
+<td>40</td>
+<td>41</td>
+<td>89</td>
+</tr>
+<tr class="even">
+<td>(BCD)</td>
+<td>52</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>La suma total de cuadrados dentro de los clústers (WSS) es:</p>
+<p>Para el clúster A:
+<span class="math display">\[
+0
+\]</span></p>
+<p>Para el clúster (BCD):
+<span class="math display">\[
+4 + 5 + 5 = 14.
+\]</span></p>
+<p>Equivalentemente, podemos determinar <span class="math inline">\(K=2\)</span> clústers usando el criterio:</p>
+<p><span class="math display">\[
+\min E = \sum_{i} d^2_{i,c(i)},
+\]</span></p>
+<p>donde la suma es sobre todos los ítems y <span class="math inline">\(d^2_{i,c(i)}\)</span> es la distancia al cuadrado entre el ítem <span class="math inline">\(i\)</span> y el centroide del clúster asignado.</p>
+<p>En este ejemplo existen siete posibilidades de partición para <span class="math inline">\(K = 2\)</span> clústers:</p>
+<p>A , (BCD)<br />
+B , (ACD)<br />
+C , (ABD)<br />
+D , (ABC)<br />
+(AB) , (CD)<br />
+(AC) , (BD)<br />
+(AD) , (BC)</p>
+<p>Para la partición <span class="math inline">\(A,(BCD)\)</span> se tiene:</p>
+<p><span class="math display">\[
+d^2_{A,c(A)} = 0,
+\]</span></p>
+<p>para <span class="math inline">\((BCD)\)</span>:</p>
+<p><span class="math display">\[
+d^2_{B,c(B)} + d^2_{C,c(C)} + d^2_{D,c(D)} = 4 + 5 + 5 = 14.
+\]</span></p>
+<p>Entonces:</p>
+<p><span class="math display">\[
+\sum_i d^2_{i,c(i)} = 0 + 14 = 14.
+\]</span></p>
+<p>Para las restantes particiones se tiene:</p>
+<p>B,(ACD) <span class="math inline">\(\sum d^2_{i,c(i)} = 48.7\)</span></p>
+<p>C,(ABD) <span class="math inline">\(\sum d^2_{i,c(i)} = 27.7\)</span></p>
+<p>D,(ABC) <span class="math inline">\(\sum d^2_{i,c(i)} = 31.3\)</span></p>
+<p>(AB),(CD) <span class="math inline">\(\sum d^2_{i,c(i)} = 28\)</span></p>
+<p>(AC),(BD) <span class="math inline">\(\sum d^2_{i,c(i)} = 27\)</span></p>
+<p>(AD),(BC) <span class="math inline">\(\sum d^2_{i,c(i)} = 51.3\)</span></p>
+<p>Dado que la suma mínima <span class="math inline">\(\sum d^2_{i,c(i)}\)</span> ocurre para los grupos <span class="math inline">\((A)\)</span> y <span class="math inline">\((BCD)\)</span>, esta es la solución final.</p>
+<p>Veamos unos ejemplos en R.</p>
+<p><strong>Ejemplo 1</strong>: Usaremos la matriz del ejemplo pasado.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="análisis-de-conglomerados.html#cb25-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb25-2"><a href="análisis-de-conglomerados.html#cb25-2" tabindex="-1"></a>  <span class="at">x1 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">3</span>),</span>
+<span id="cb25-3"><a href="análisis-de-conglomerados.html#cb25-3" tabindex="-1"></a>  <span class="at">x2 =</span> <span class="fu">c</span>(<span class="dv">3</span>,  <span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>),</span>
+<span id="cb25-4"><a href="análisis-de-conglomerados.html#cb25-4" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>)</span>
+<span id="cb25-5"><a href="análisis-de-conglomerados.html#cb25-5" tabindex="-1"></a>)</span>
+<span id="cb25-6"><a href="análisis-de-conglomerados.html#cb25-6" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="análisis-de-conglomerados.html#cb25-7" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##   x1 x2
+## A  5  3
+## B -1  1
+## C  1 -2
+## D -3 -2</code></pre>
+<p>Para realiazar kmeans en R, usamos la función <code>kmenas</code>.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="análisis-de-conglomerados.html#cb27-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># para reproducibilidad</span></span>
+<span id="cb27-2"><a href="análisis-de-conglomerados.html#cb27-2" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="análisis-de-conglomerados.html#cb27-3" tabindex="-1"></a>km2 <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="at">centers =</span> <span class="dv">2</span>, <span class="at">nstart =</span> <span class="dv">20</span>)  </span></code></pre></div>
+<p>El parámetro <code>nstart = 20</code> indica que intenta 20 configuraciones iniciales y se queda con la mejor.</p>
+<p>La variable <code>km2</code> tiene guardada toda la información de este algoritmo.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="análisis-de-conglomerados.html#cb28-1" tabindex="-1"></a>km2</span></code></pre></div>
+<pre><code>## K-means clustering with 2 clusters of sizes 1, 3
+## 
+## Cluster means:
+##   x1 x2
+## 1  5  3
+## 2 -1 -1
+## 
+## Clustering vector:
+## A B C D 
+## 1 2 2 2 
+## 
+## Within cluster sum of squares by cluster:
+## [1]  0 14
+##  (between_SS / total_SS =  73.6 %)
+## 
+## Available components:
+## 
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
+## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="análisis-de-conglomerados.html#cb30-1" tabindex="-1"></a>km2<span class="sc">$</span>cluster   <span class="co"># a qué cluster quedó asignado cada punto</span></span></code></pre></div>
+<pre><code>## A B C D 
+## 1 2 2 2</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="análisis-de-conglomerados.html#cb32-1" tabindex="-1"></a>km2<span class="sc">$</span>centers   <span class="co"># coordenadas de los centroides</span></span></code></pre></div>
+<pre><code>##   x1 x2
+## 1  5  3
+## 2 -1 -1</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="análisis-de-conglomerados.html#cb34-1" tabindex="-1"></a>km2<span class="sc">$</span>withinss  <span class="co"># suma de cuadrados dentro de cada cluster</span></span></code></pre></div>
+<pre><code>## [1]  0 14</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="análisis-de-conglomerados.html#cb36-1" tabindex="-1"></a>km2<span class="sc">$</span>tot.withinss  <span class="co"># suma total de cuadrados dentro de los clusters</span></span></code></pre></div>
+<pre><code>## [1] 14</code></pre>
+<p>Podemos hacer un plot de estos clústers.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="análisis-de-conglomerados.html#cb38-1" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb38-2"><a href="análisis-de-conglomerados.html#cb38-2" tabindex="-1"></a>  <span class="at">Item    =</span> <span class="fu">rownames</span>(df),</span>
+<span id="cb38-3"><a href="análisis-de-conglomerados.html#cb38-3" tabindex="-1"></a>  <span class="at">x1      =</span> df<span class="sc">$</span>x1,</span>
+<span id="cb38-4"><a href="análisis-de-conglomerados.html#cb38-4" tabindex="-1"></a>  <span class="at">x2      =</span> df<span class="sc">$</span>x2,</span>
+<span id="cb38-5"><a href="análisis-de-conglomerados.html#cb38-5" tabindex="-1"></a>  <span class="at">Cluster =</span> km2<span class="sc">$</span>cluster</span>
+<span id="cb38-6"><a href="análisis-de-conglomerados.html#cb38-6" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>##   Item x1 x2 Cluster
+## A    A  5  3       1
+## B    B -1  1       2
+## C    C  1 -2       2
+## D    D -3 -2       2</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="análisis-de-conglomerados.html#cb40-1" tabindex="-1"></a><span class="co"># Especificamos colores por cluster</span></span>
+<span id="cb40-2"><a href="análisis-de-conglomerados.html#cb40-2" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;steelblue&quot;</span>, <span class="st">&quot;tomato&quot;</span>)[km2<span class="sc">$</span>cluster]</span>
+<span id="cb40-3"><a href="análisis-de-conglomerados.html#cb40-3" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="análisis-de-conglomerados.html#cb40-4" tabindex="-1"></a><span class="co"># Usando R base</span></span>
+<span id="cb40-5"><a href="análisis-de-conglomerados.html#cb40-5" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>x1, df<span class="sc">$</span>x2,</span>
+<span id="cb40-6"><a href="análisis-de-conglomerados.html#cb40-6" tabindex="-1"></a>     <span class="at">col =</span> cols,</span>
+<span id="cb40-7"><a href="análisis-de-conglomerados.html#cb40-7" tabindex="-1"></a>     <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb40-8"><a href="análisis-de-conglomerados.html#cb40-8" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;x1&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;x2&quot;</span>,</span>
+<span id="cb40-9"><a href="análisis-de-conglomerados.html#cb40-9" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Clustering k-means con K = 2&quot;</span>)</span>
+<span id="cb40-10"><a href="análisis-de-conglomerados.html#cb40-10" tabindex="-1"></a><span class="fu">text</span>(df<span class="sc">$</span>x1, df<span class="sc">$</span>x2, <span class="at">labels =</span> <span class="fu">rownames</span>(df),</span>
+<span id="cb40-11"><a href="análisis-de-conglomerados.html#cb40-11" tabindex="-1"></a>     <span class="at">pos =</span> <span class="dv">3</span>)</span>
+<span id="cb40-12"><a href="análisis-de-conglomerados.html#cb40-12" tabindex="-1"></a></span>
+<span id="cb40-13"><a href="análisis-de-conglomerados.html#cb40-13" tabindex="-1"></a><span class="co"># Podemos añadir centroides</span></span>
+<span id="cb40-14"><a href="análisis-de-conglomerados.html#cb40-14" tabindex="-1"></a><span class="fu">points</span>(km2<span class="sc">$</span>centers[,<span class="dv">1</span>], km2<span class="sc">$</span>centers[,<span class="dv">2</span>],</span>
+<span id="cb40-15"><a href="análisis-de-conglomerados.html#cb40-15" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">8</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/ac26-1.png" width="672" /></p>
+<p>Otra forma de hacerlo, es con el paquete <code>factoextra</code>.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="análisis-de-conglomerados.html#cb41-1" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb41-2"><a href="análisis-de-conglomerados.html#cb41-2" tabindex="-1"></a><span class="co"># debemos asegurarnos que nuestro df tenga como rownames los nombres de los items</span></span>
+<span id="cb41-3"><a href="análisis-de-conglomerados.html#cb41-3" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="análisis-de-conglomerados.html#cb41-4" tabindex="-1"></a><span class="co">#df_named &lt;- df</span></span>
+<span id="cb41-5"><a href="análisis-de-conglomerados.html#cb41-5" tabindex="-1"></a><span class="co">#df_named$label &lt;- rownames(df_named)</span></span>
+<span id="cb41-6"><a href="análisis-de-conglomerados.html#cb41-6" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="análisis-de-conglomerados.html#cb41-7" tabindex="-1"></a><span class="fu">fviz_cluster</span>(</span>
+<span id="cb41-8"><a href="análisis-de-conglomerados.html#cb41-8" tabindex="-1"></a>  km2, </span>
+<span id="cb41-9"><a href="análisis-de-conglomerados.html#cb41-9" tabindex="-1"></a>  <span class="at">data =</span> df, <span class="co">#df_named</span></span>
+<span id="cb41-10"><a href="análisis-de-conglomerados.html#cb41-10" tabindex="-1"></a>  <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb41-11"><a href="análisis-de-conglomerados.html#cb41-11" tabindex="-1"></a>  <span class="at">labelsize =</span> <span class="dv">6</span>,</span>
+<span id="cb41-12"><a href="análisis-de-conglomerados.html#cb41-12" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;Clusters k-means con etiquetas&quot;</span></span>
+<span id="cb41-13"><a href="análisis-de-conglomerados.html#cb41-13" tabindex="-1"></a>) </span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/ac27-1.png" width="672" /></p>
+<p><strong>Ejemplo 2:</strong> En este ejemplo se aplicará el algoritmo de K-means utilizando el conjunto de datos USArrests, disponible en R. Antes de realizar la agrupación, es necesario preparar el conjunto de datos asegurando que solo incluya variables numéricas continuas, ya que el método de K-means se basa en promedios y distancias entre observaciones.
+Además, para evitar que las diferencias en escala entre las variables influyan en la formación de los grupos, por ejemplo, debido a que algunas variables se miden en unidades mucho mayores que otras, los datos se estandarizan utilizando la función <code>scale()</code> de R. Esta transformación permite que todas las variables contribuyan de manera equitativa al proceso de agrupación.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="análisis-de-conglomerados.html#cb42-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;USArrests&quot;</span>)      </span>
+<span id="cb42-2"><a href="análisis-de-conglomerados.html#cb42-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">scale</span>(USArrests) <span class="co"># escalamos los datos </span></span>
+<span id="cb42-3"><a href="análisis-de-conglomerados.html#cb42-3" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##                     Murder     Assault    UrbanPop         Rape
+## Alabama         1.24256408  0.78283935 -0.52090661 -0.003416473
+## Alaska          0.50786248  1.10682252 -1.21176419  2.484202941
+## Arizona         0.07163341  1.47880321  0.99898006  1.042878388
+## Arkansas        0.23234938  0.23086801 -1.07359268 -0.184916602
+## California      0.27826823  1.26281442  1.75892340  2.067820292
+## Colorado        0.02571456  0.39885929  0.86080854  1.864967207
+## Connecticut    -1.03041900 -0.72908214  0.79172279 -1.081740768
+## Delaware       -0.43347395  0.80683810  0.44629400 -0.579946294
+## Florida         1.74767144  1.97077766  0.99898006  1.138966691
+## Georgia         2.20685994  0.48285493 -0.38273510  0.487701523
+## Hawaii         -0.57123050 -1.49704226  1.20623733 -0.110181255
+## Idaho          -1.19113497 -0.60908837 -0.79724965 -0.750769945
+## Illinois        0.59970018  0.93883125  1.20623733  0.295524916
+## Indiana        -0.13500142 -0.69308401 -0.03730631 -0.024769429
+## Iowa           -1.28297267 -1.37704849 -0.58999237 -1.060387812
+## Kansas         -0.41051452 -0.66908525  0.03177945 -0.345063775
+## Kentucky        0.43898421 -0.74108152 -0.93542116 -0.526563903
+## Louisiana       1.74767144  0.93883125  0.03177945  0.103348309
+## Maine          -1.30593210 -1.05306531 -1.00450692 -1.434064548
+## Maryland        0.80633501  1.55079947  0.10086521  0.701231086
+## Massachusetts  -0.77786532 -0.26110644  1.34440885 -0.526563903
+## Michigan        0.99001041  1.01082751  0.58446551  1.480613993
+## Minnesota      -1.16817555 -1.18505846  0.03177945 -0.676034598
+## Mississippi     1.90838741  1.05882502 -1.48810723 -0.441152078
+## Missouri        0.27826823  0.08687549  0.30812248  0.743936999
+## Montana        -0.41051452 -0.74108152 -0.86633540 -0.515887425
+## Nebraska       -0.80082475 -0.82507715 -0.24456358 -0.505210947
+## Nevada          1.01296983  0.97482938  1.06806582  2.644350114
+## New Hampshire  -1.30593210 -1.36504911 -0.65907813 -1.252564419
+## New Jersey     -0.08908257 -0.14111267  1.62075188 -0.259651949
+## New Mexico      0.82929443  1.37080881  0.30812248  1.160319648
+## New York        0.76041616  0.99882813  1.41349461  0.519730957
+## North Carolina  1.19664523  1.99477641 -1.41902147 -0.547916860
+## North Dakota   -1.60440462 -1.50904164 -1.48810723 -1.487446939
+## Ohio           -0.11204199 -0.60908837  0.65355127  0.017936483
+## Oklahoma       -0.27275797 -0.23710769  0.16995096 -0.131534211
+## Oregon         -0.66306820 -0.14111267  0.10086521  0.861378259
+## Pennsylvania   -0.34163624 -0.77707965  0.44629400 -0.676034598
+## Rhode Island   -1.00745957  0.03887798  1.48258036 -1.380682157
+## South Carolina  1.51807718  1.29881255 -1.21176419  0.135377743
+## South Dakota   -0.91562187 -1.01706718 -1.41902147 -0.900240639
+## Tennessee       1.24256408  0.20686926 -0.45182086  0.605142783
+## Texas           1.12776696  0.36286116  0.99898006  0.455672088
+## Utah           -1.05337842 -0.60908837  0.99898006  0.178083656
+## Vermont        -1.28297267 -1.47304350 -2.31713632 -1.071064290
+## Virginia        0.16347111 -0.17711080 -0.17547783 -0.056798864
+## Washington     -0.86970302 -0.30910395  0.51537975  0.530407436
+## West Virginia  -0.47939280 -1.07706407 -1.83353601 -1.273917376
+## Wisconsin      -1.19113497 -1.41304662  0.03177945 -1.113770203
+## Wyoming        -0.22683912 -0.11711392 -0.38273510 -0.601299251
+## attr(,&quot;scaled:center&quot;)
+##   Murder  Assault UrbanPop     Rape 
+##    7.788  170.760   65.540   21.232 
+## attr(,&quot;scaled:scale&quot;)
+##    Murder   Assault  UrbanPop      Rape 
+##  4.355510 83.337661 14.474763  9.366385</code></pre>
+<p>La función <code>kmeans()</code> es la encargada de ejecutar el algoritmo de K-means en R. Los principales argumentos de entrada:</p>
+<ul>
+<li><p><code>x</code>: Conjunto de datos a utilizar para la agrupación. Puede ser una matriz numérica, un data frame numérico o un vector numérico.</p></li>
+<li><p><code>centers</code>: Indica el número de clústers deseados (k) o bien un conjunto de centroides iniciales. Si se especifica un número, el algoritmo selecciona aleatoriamente filas distintas de x como centroides iniciales.</p></li>
+<li><p><code>iter.max</code>: Número máximo de iteraciones permitidas para la ejecución del algoritmo. Su valor por defecto es 10.</p></li>
+<li><p><code>nstart</code>: Cantidad de asignaciones iniciales aleatorias que se generan cuando centers es un número. Se recomienda usar un valor mayor que 1 para obtener soluciones más estables.</p></li>
+</ul>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="análisis-de-conglomerados.html#cb44-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb44-2"><a href="análisis-de-conglomerados.html#cb44-2" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span></code></pre></div>
+<p>Vamos a estimar primero la cantidad óptima de clústers usando el método del codo.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="análisis-de-conglomerados.html#cb45-1" tabindex="-1"></a><span class="fu">fviz_nbclust</span>(df, kmeans, <span class="at">method =</span> <span class="st">&quot;wss&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb45-2"><a href="análisis-de-conglomerados.html#cb45-2" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">4</span>, <span class="at">linetype =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/ac30-1.png" width="672" /></p>
+<p>El gráfico anterior representa cómo cambia la variabilidad interna de los grupos conforme aumenta el número de clústers <span class="math inline">\(k\)</span>. Como es esperable, al incrementar el número de clústers la variación dentro de cada grupo disminuye. No obstante, se identifica un punto de inflexión alrededor de <span class="math inline">\(k=4\)</span>, donde la reducción de la varianza deja de ser tan significativa. Este punto, conocido como el método del codo, sugiere que a partir de <span class="math inline">\(k=4\)</span> añadir más clústers no aporta mejoras sustanciales en la homogeneidad interna. Por ello, se considera que el valor adecuado de <span class="math inline">\(k\)</span> para estos datos es aproximadamente 4.</p>
+<p>Como al inicializar el algoritmo, se seleccionan al aleatoriamente los centroides, debemos inicializar una semilla.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="análisis-de-conglomerados.html#cb46-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb46-2"><a href="análisis-de-conglomerados.html#cb46-2" tabindex="-1"></a>km.res <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(df, <span class="dv">4</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span></code></pre></div>
+<p>Al establecer <code>nstart = 25</code>, R realizará 25 asignaciones de inicio aleatorias y luego seleccionará los resultados que correspondan a la asignación con la variación más baja dentro de los clusters. El valor predeterminado de <code>nstart</code> es 1, lo que significa que solo se realiza una asignación aleatoria inicial.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="análisis-de-conglomerados.html#cb47-1" tabindex="-1"></a><span class="fu">print</span>(km.res)</span></code></pre></div>
+<pre><code>## K-means clustering with 4 clusters of sizes 8, 13, 16, 13
+## 
+## Cluster means:
+##       Murder    Assault   UrbanPop        Rape
+## 1  1.4118898  0.8743346 -0.8145211  0.01927104
+## 2 -0.9615407 -1.1066010 -0.9301069 -0.96676331
+## 3 -0.4894375 -0.3826001  0.5758298 -0.26165379
+## 4  0.6950701  1.0394414  0.7226370  1.27693964
+## 
+## Clustering vector:
+##        Alabama         Alaska        Arizona       Arkansas     California 
+##              1              4              4              1              4 
+##       Colorado    Connecticut       Delaware        Florida        Georgia 
+##              4              3              3              4              1 
+##         Hawaii          Idaho       Illinois        Indiana           Iowa 
+##              3              2              4              3              2 
+##         Kansas       Kentucky      Louisiana          Maine       Maryland 
+##              3              2              1              2              4 
+##  Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+##              3              4              2              1              4 
+##        Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+##              2              2              4              2              3 
+##     New Mexico       New York North Carolina   North Dakota           Ohio 
+##              4              4              1              2              3 
+##       Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+##              3              3              3              3              1 
+##   South Dakota      Tennessee          Texas           Utah        Vermont 
+##              2              1              4              3              2 
+##       Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+##              3              3              2              2              3 
+## 
+## Within cluster sum of squares by cluster:
+## [1]  8.316061 11.952463 16.212213 19.922437
+##  (between_SS / total_SS =  71.2 %)
+## 
+## Available components:
+## 
+## [1] &quot;cluster&quot;      &quot;centers&quot;      &quot;totss&quot;        &quot;withinss&quot;     &quot;tot.withinss&quot;
+## [6] &quot;betweenss&quot;    &quot;size&quot;         &quot;iter&quot;         &quot;ifault&quot;</code></pre>
+<p>Calculemos la media de cada variable para cada cluster utilizando los datos originales.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="análisis-de-conglomerados.html#cb49-1" tabindex="-1"></a><span class="fu">aggregate</span>(USArrests, <span class="at">by=</span><span class="fu">list</span>(<span class="at">cluster=</span>km.res<span class="sc">$</span>cluster), mean)</span></code></pre></div>
+<pre><code>##   cluster   Murder   Assault UrbanPop     Rape
+## 1       1 13.93750 243.62500 53.75000 21.41250
+## 2       2  3.60000  78.53846 52.07692 12.17692
+## 3       3  5.65625 138.87500 73.87500 18.78125
+## 4       4 10.81538 257.38462 76.00000 33.19231</code></pre>
+<p>Podemos agregarle a la base de datos originales una columna que nos indique en que clúster quedó cada observación.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="análisis-de-conglomerados.html#cb51-1" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">cbind</span>(USArrests, <span class="at">cluster =</span> km.res<span class="sc">$</span>cluster)</span>
+<span id="cb51-2"><a href="análisis-de-conglomerados.html#cb51-2" tabindex="-1"></a><span class="fu">head</span>(dd)</span></code></pre></div>
+<pre><code>##            Murder Assault UrbanPop Rape cluster
+## Alabama      13.2     236       58 21.2       1
+## Alaska       10.0     263       48 44.5       4
+## Arizona       8.1     294       80 31.0       4
+## Arkansas      8.8     190       50 19.5       1
+## California    9.0     276       91 40.6       4
+## Colorado      7.9     204       78 38.7       4</code></pre>
+<p>Cuando se trabaja con más de dos variables, una forma de visualizar los grupos obtenidos mediante clustering es reducir la dimensionalidad con un método como el Análisis de Componentes Principales.</p>
+<p>Usando las dos primeras componentes principales como ejes, es posible construir un diagrama de dispersión en dos dimensiones y colorear los puntos según el clúster asignado. Esta visualización facilita interpretar la estructura de los datos, comparar distintas particiones y evaluar si el número de clústers elegido resulta apropiado.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="análisis-de-conglomerados.html#cb53-1" tabindex="-1"></a><span class="fu">fviz_cluster</span>(km.res, <span class="at">data =</span> df,</span>
+<span id="cb53-2"><a href="análisis-de-conglomerados.html#cb53-2" tabindex="-1"></a>             <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">&quot;#FF0000&quot;</span>, <span class="st">&quot;#0000FF&quot;</span>, <span class="st">&quot;#000000&quot;</span>, <span class="st">&quot;#C870FF&quot;</span>),</span>
+<span id="cb53-3"><a href="análisis-de-conglomerados.html#cb53-3" tabindex="-1"></a>             <span class="at">ellipse.type =</span> <span class="st">&quot;euclid&quot;</span>, <span class="co"># Agregar elipses</span></span>
+<span id="cb53-4"><a href="análisis-de-conglomerados.html#cb53-4" tabindex="-1"></a>             <span class="at">star.plot =</span> <span class="cn">TRUE</span>, <span class="co"># Añadir segmentos desde los centroides a los datos</span></span>
+<span id="cb53-5"><a href="análisis-de-conglomerados.html#cb53-5" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>, <span class="co"># que no se sobrelapen</span></span>
+<span id="cb53-6"><a href="análisis-de-conglomerados.html#cb53-6" tabindex="-1"></a>             <span class="at">ggtheme =</span> <span class="fu">theme_minimal</span>())</span></code></pre></div>
+<p><img src="MultivariateStatisticalAnalysis_files/figure-html/ac35-1.png" width="672" /></p>
+</div>
+<div id="ejercicios-7" class="section level3 hasAnchor" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> Ejercicios<a href="análisis-de-conglomerados.html#ejercicios-7" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Ejercicio 1:</strong> Los siguientes datos fueron colectados en 22 compañías públicas de EU en 1975. Estandarizar las variables. Ajustar modelos k-means para 4 y 5 clústers. Reportar: tamaño de cada clúster, empresas en cada clúster, distancias entre centroides y proporción de variación explicada. Comparar la calidad de la partición (dentro vs. entre clústers). Puedes comentar cuál de los dos K “separa mejor” (ratio más grande) y si esa mejora justifica pasar de 4 a 5 clústers. Busca el “codo” de la curva y comenta si K=4 o K=5 son valores razonables. Interpretar los clústers: ¿qué variables parecen distinguir más los grupos? ¿qué tipo de empresas se agrupan juntas (por tamaño, porcentaje nuclear, ventas, etc.)?</p>
+<table style="width:100%;">
+<colgroup>
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Company</th>
+<th>X1</th>
+<th>X2</th>
+<th>X3</th>
+<th>X4</th>
+<th>X5</th>
+<th>X6</th>
+<th>X7</th>
+<th>X8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Arizona Public Service</td>
+<td>1.06</td>
+<td>9.2</td>
+<td>151</td>
+<td>54.4</td>
+<td>1.6</td>
+<td>9077</td>
+<td>0</td>
+<td>0.628</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Boston Edison Co.</td>
+<td>0.89</td>
+<td>10.3</td>
+<td>202</td>
+<td>57.9</td>
+<td>2.2</td>
+<td>5088</td>
+<td>25.3</td>
+<td>1.555</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Central Louisiana Electric Co.</td>
+<td>1.43</td>
+<td>15.4</td>
+<td>113</td>
+<td>53.0</td>
+<td>3.4</td>
+<td>9212</td>
+<td>0</td>
+<td>1.058</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Commonwealth Edison Co.</td>
+<td>1.02</td>
+<td>11.2</td>
+<td>168</td>
+<td>56.0</td>
+<td>0.3</td>
+<td>6423</td>
+<td>34.3</td>
+<td>0.700</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Consolidated Edison Co. (N.Y.)</td>
+<td>1.49</td>
+<td>8.8</td>
+<td>192</td>
+<td>51.2</td>
+<td>1.0</td>
+<td>3300</td>
+<td>15.6</td>
+<td>2.044</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Florida Power &amp; Light Co.</td>
+<td>1.32</td>
+<td>13.5</td>
+<td>111</td>
+<td>60.0</td>
+<td>-2.2</td>
+<td>11127</td>
+<td>22.5</td>
+<td>1.241</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Hawaiian Electric Co.</td>
+<td>1.22</td>
+<td>12.2</td>
+<td>175</td>
+<td>67.6</td>
+<td>2.2</td>
+<td>7642</td>
+<td>0</td>
+<td>1.652</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Idaho Power Co.</td>
+<td>1.10</td>
+<td>9.2</td>
+<td>245</td>
+<td>57.0</td>
+<td>3.3</td>
+<td>13082</td>
+<td>0</td>
+<td>0.309</td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td>Kentucky Utilities Co.</td>
+<td>1.34</td>
+<td>13.0</td>
+<td>168</td>
+<td>60.4</td>
+<td>7.2</td>
+<td>8406</td>
+<td>0</td>
+<td>0.862</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Madison Gas &amp; Electric Co.</td>
+<td>1.12</td>
+<td>12.4</td>
+<td>197</td>
+<td>53.0</td>
+<td>2.7</td>
+<td>6455</td>
+<td>39.2</td>
+<td>0.623</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Nevada Power Co.</td>
+<td>0.75</td>
+<td>7.5</td>
+<td>173</td>
+<td>51.5</td>
+<td>6.5</td>
+<td>17441</td>
+<td>0</td>
+<td>0.768</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>New England Electric Co.</td>
+<td>1.13</td>
+<td>10.9</td>
+<td>178</td>
+<td>62.0</td>
+<td>3.7</td>
+<td>6154</td>
+<td>0</td>
+<td>1.897</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Northern States Power Co.</td>
+<td>1.15</td>
+<td>12.7</td>
+<td>199</td>
+<td>53.7</td>
+<td>6.4</td>
+<td>7179</td>
+<td>50.2</td>
+<td>0.527</td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td>Oklahoma Gas &amp; Electric Co.</td>
+<td>1.09</td>
+<td>12.0</td>
+<td>96</td>
+<td>49.8</td>
+<td>1.4</td>
+<td>9673</td>
+<td>0</td>
+<td>0.588</td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>Pacific Gas &amp; Electric Co.</td>
+<td>0.96</td>
+<td>7.6</td>
+<td>164</td>
+<td>62.2</td>
+<td>-0.1</td>
+<td>6468</td>
+<td>0.9</td>
+<td>1.400</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>Puget Sound Power &amp; Light Co.</td>
+<td>1.16</td>
+<td>9.9</td>
+<td>252</td>
+<td>56.0</td>
+<td>9.2</td>
+<td>15991</td>
+<td>0</td>
+<td>0.620</td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td>San Diego Gas &amp; Electric Co.</td>
+<td>0.76</td>
+<td>6.4</td>
+<td>136</td>
+<td>61.9</td>
+<td>9.0</td>
+<td>5714</td>
+<td>8.3</td>
+<td>1.920</td>
+</tr>
+<tr class="even">
+<td>18</td>
+<td>The Southern Co.</td>
+<td>1.05</td>
+<td>12.6</td>
+<td>150</td>
+<td>56.7</td>
+<td>2.7</td>
+<td>10140</td>
+<td>0</td>
+<td>1.108</td>
+</tr>
+<tr class="odd">
+<td>19</td>
+<td>Texas Utilities Co.</td>
+<td>1.16</td>
+<td>11.7</td>
+<td>104</td>
+<td>54.0</td>
+<td>-2.1</td>
+<td>13507</td>
+<td>0</td>
+<td>0.636</td>
+</tr>
+<tr class="even">
+<td>20</td>
+<td>Wisconsin Electric Power Co.</td>
+<td>1.20</td>
+<td>11.8</td>
+<td>148</td>
+<td>59.9</td>
+<td>3.5</td>
+<td>7287</td>
+<td>41.1</td>
+<td>0.702</td>
+</tr>
+<tr class="odd">
+<td>21</td>
+<td>United Illuminating Co.</td>
+<td>1.04</td>
+<td>8.6</td>
+<td>204</td>
+<td>61.0</td>
+<td>3.5</td>
+<td>6650</td>
+<td>0</td>
+<td>2.116</td>
+</tr>
+<tr class="even">
+<td>22</td>
+<td>Virginia Electric &amp; Power Co.</td>
+<td>1.07</td>
+<td>9.3</td>
+<td>174</td>
+<td>54.3</td>
+<td>5.9</td>
+<td>10093</td>
+<td>26.6</td>
+<td>1.306</td>
+</tr>
+</tbody>
+</table>
+<p>Clave de variables:</p>
+<p><span class="math inline">\(X_1\)</span>: Razón de cobertura de cargos fijos (ingreso/deuda).</p>
+<p><span class="math inline">\(X_2\)</span>: Tasa de retorno sobre el capital.</p>
+<p><span class="math inline">\(X_3\)</span>: Costo por kW de capacidad instalada.</p>
+<p><span class="math inline">\(X_4\)</span>: Factor de carga anual.</p>
+<p><span class="math inline">\(X_5\)</span>: Crecimiento máximo de demanda en kWh de 1974 a 1975.</p>
+<p><span class="math inline">\(X_6\)</span>: Ventas (kWh utilizadas por año).</p>
+<p><span class="math inline">\(X_7\)</span>: Porcentaje de generación nuclear.</p>
+<p><span class="math inline">\(X_8\)</span>: Costo total de combustible (centavos por kWh).</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="análisis-de-conglomerados.html#cb54-1" tabindex="-1"></a>utilities <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb54-2"><a href="análisis-de-conglomerados.html#cb54-2" tabindex="-1"></a>  <span class="at">ID =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>,</span>
+<span id="cb54-3"><a href="análisis-de-conglomerados.html#cb54-3" tabindex="-1"></a>  <span class="at">Company =</span> <span class="fu">c</span>(</span>
+<span id="cb54-4"><a href="análisis-de-conglomerados.html#cb54-4" tabindex="-1"></a>    <span class="st">&quot;Arizona Public Service&quot;</span>,</span>
+<span id="cb54-5"><a href="análisis-de-conglomerados.html#cb54-5" tabindex="-1"></a>    <span class="st">&quot;Boston Edison Co.&quot;</span>,</span>
+<span id="cb54-6"><a href="análisis-de-conglomerados.html#cb54-6" tabindex="-1"></a>    <span class="st">&quot;Central Louisiana Electric Co.&quot;</span>,</span>
+<span id="cb54-7"><a href="análisis-de-conglomerados.html#cb54-7" tabindex="-1"></a>    <span class="st">&quot;Commonwealth Edison Co.&quot;</span>,</span>
+<span id="cb54-8"><a href="análisis-de-conglomerados.html#cb54-8" tabindex="-1"></a>    <span class="st">&quot;Consolidated Edison Co. (N.Y.)&quot;</span>,</span>
+<span id="cb54-9"><a href="análisis-de-conglomerados.html#cb54-9" tabindex="-1"></a>    <span class="st">&quot;Florida Power &amp; Light Co.&quot;</span>,</span>
+<span id="cb54-10"><a href="análisis-de-conglomerados.html#cb54-10" tabindex="-1"></a>    <span class="st">&quot;Hawaiian Electric Co.&quot;</span>,</span>
+<span id="cb54-11"><a href="análisis-de-conglomerados.html#cb54-11" tabindex="-1"></a>    <span class="st">&quot;Idaho Power Co.&quot;</span>,</span>
+<span id="cb54-12"><a href="análisis-de-conglomerados.html#cb54-12" tabindex="-1"></a>    <span class="st">&quot;Kentucky Utilities Co.&quot;</span>,</span>
+<span id="cb54-13"><a href="análisis-de-conglomerados.html#cb54-13" tabindex="-1"></a>    <span class="st">&quot;Madison Gas &amp; Electric Co.&quot;</span>,</span>
+<span id="cb54-14"><a href="análisis-de-conglomerados.html#cb54-14" tabindex="-1"></a>    <span class="st">&quot;Nevada Power Co.&quot;</span>,</span>
+<span id="cb54-15"><a href="análisis-de-conglomerados.html#cb54-15" tabindex="-1"></a>    <span class="st">&quot;New England Electric Co.&quot;</span>,</span>
+<span id="cb54-16"><a href="análisis-de-conglomerados.html#cb54-16" tabindex="-1"></a>    <span class="st">&quot;Northern States Power Co.&quot;</span>,</span>
+<span id="cb54-17"><a href="análisis-de-conglomerados.html#cb54-17" tabindex="-1"></a>    <span class="st">&quot;Oklahoma Gas &amp; Electric Co.&quot;</span>,</span>
+<span id="cb54-18"><a href="análisis-de-conglomerados.html#cb54-18" tabindex="-1"></a>    <span class="st">&quot;Pacific Gas &amp; Electric Co.&quot;</span>,</span>
+<span id="cb54-19"><a href="análisis-de-conglomerados.html#cb54-19" tabindex="-1"></a>    <span class="st">&quot;Puget Sound Power &amp; Light Co.&quot;</span>,</span>
+<span id="cb54-20"><a href="análisis-de-conglomerados.html#cb54-20" tabindex="-1"></a>    <span class="st">&quot;San Diego Gas &amp; Electric Co.&quot;</span>,</span>
+<span id="cb54-21"><a href="análisis-de-conglomerados.html#cb54-21" tabindex="-1"></a>    <span class="st">&quot;The Southern Co.&quot;</span>,</span>
+<span id="cb54-22"><a href="análisis-de-conglomerados.html#cb54-22" tabindex="-1"></a>    <span class="st">&quot;Texas Utilities Co.&quot;</span>,</span>
+<span id="cb54-23"><a href="análisis-de-conglomerados.html#cb54-23" tabindex="-1"></a>    <span class="st">&quot;Wisconsin Electric Power Co.&quot;</span>,</span>
+<span id="cb54-24"><a href="análisis-de-conglomerados.html#cb54-24" tabindex="-1"></a>    <span class="st">&quot;United Illuminating Co.&quot;</span>,</span>
+<span id="cb54-25"><a href="análisis-de-conglomerados.html#cb54-25" tabindex="-1"></a>    <span class="st">&quot;Virginia Electric &amp; Power Co.&quot;</span></span>
+<span id="cb54-26"><a href="análisis-de-conglomerados.html#cb54-26" tabindex="-1"></a>  ),</span>
+<span id="cb54-27"><a href="análisis-de-conglomerados.html#cb54-27" tabindex="-1"></a>  <span class="at">X1 =</span> <span class="fu">c</span>(<span class="fl">1.06</span>, <span class="fl">0.89</span>, <span class="fl">1.43</span>, <span class="fl">1.02</span>, <span class="fl">1.49</span>, <span class="fl">1.32</span>, <span class="fl">1.22</span>, <span class="fl">1.10</span>, <span class="fl">1.34</span>, <span class="fl">1.12</span>,</span>
+<span id="cb54-28"><a href="análisis-de-conglomerados.html#cb54-28" tabindex="-1"></a>         <span class="fl">0.75</span>, <span class="fl">1.13</span>, <span class="fl">1.15</span>, <span class="fl">1.09</span>, <span class="fl">0.96</span>, <span class="fl">1.16</span>, <span class="fl">0.76</span>, <span class="fl">1.05</span>, <span class="fl">1.16</span>, <span class="fl">1.20</span>,</span>
+<span id="cb54-29"><a href="análisis-de-conglomerados.html#cb54-29" tabindex="-1"></a>         <span class="fl">1.04</span>, <span class="fl">1.07</span>),</span>
+<span id="cb54-30"><a href="análisis-de-conglomerados.html#cb54-30" tabindex="-1"></a>  <span class="at">X2 =</span> <span class="fu">c</span>(<span class="fl">9.2</span>, <span class="fl">10.3</span>, <span class="fl">15.4</span>, <span class="fl">11.2</span>, <span class="fl">8.8</span>, <span class="fl">13.5</span>, <span class="fl">12.2</span>, <span class="fl">9.2</span>, <span class="fl">13.0</span>, <span class="fl">12.4</span>,</span>
+<span id="cb54-31"><a href="análisis-de-conglomerados.html#cb54-31" tabindex="-1"></a>         <span class="fl">7.5</span>, <span class="fl">10.9</span>, <span class="fl">12.7</span>, <span class="fl">12.0</span>, <span class="fl">7.6</span>, <span class="fl">9.9</span>, <span class="fl">6.4</span>, <span class="fl">12.6</span>, <span class="fl">11.7</span>, <span class="fl">11.8</span>,</span>
+<span id="cb54-32"><a href="análisis-de-conglomerados.html#cb54-32" tabindex="-1"></a>         <span class="fl">8.6</span>, <span class="fl">9.3</span>),</span>
+<span id="cb54-33"><a href="análisis-de-conglomerados.html#cb54-33" tabindex="-1"></a>  <span class="at">X3 =</span> <span class="fu">c</span>(<span class="dv">151</span>, <span class="dv">202</span>, <span class="dv">113</span>, <span class="dv">168</span>, <span class="dv">192</span>, <span class="dv">111</span>, <span class="dv">175</span>, <span class="dv">245</span>, <span class="dv">168</span>, <span class="dv">197</span>,</span>
+<span id="cb54-34"><a href="análisis-de-conglomerados.html#cb54-34" tabindex="-1"></a>         <span class="dv">173</span>, <span class="dv">178</span>, <span class="dv">199</span>, <span class="dv">96</span>, <span class="dv">164</span>, <span class="dv">252</span>, <span class="dv">136</span>, <span class="dv">150</span>, <span class="dv">104</span>, <span class="dv">148</span>,</span>
+<span id="cb54-35"><a href="análisis-de-conglomerados.html#cb54-35" tabindex="-1"></a>         <span class="dv">204</span>, <span class="dv">174</span>),</span>
+<span id="cb54-36"><a href="análisis-de-conglomerados.html#cb54-36" tabindex="-1"></a>  <span class="at">X4 =</span> <span class="fu">c</span>(<span class="fl">54.4</span>, <span class="fl">57.9</span>, <span class="fl">53.0</span>, <span class="fl">56.0</span>, <span class="fl">51.2</span>, <span class="fl">60.0</span>, <span class="fl">67.6</span>, <span class="fl">57.0</span>, <span class="fl">60.4</span>, <span class="fl">53.0</span>,</span>
+<span id="cb54-37"><a href="análisis-de-conglomerados.html#cb54-37" tabindex="-1"></a>         <span class="fl">51.5</span>, <span class="fl">62.0</span>, <span class="fl">53.7</span>, <span class="fl">49.8</span>, <span class="fl">62.2</span>, <span class="fl">56.0</span>, <span class="fl">61.9</span>, <span class="fl">56.7</span>, <span class="fl">54.0</span>, <span class="fl">59.9</span>,</span>
+<span id="cb54-38"><a href="análisis-de-conglomerados.html#cb54-38" tabindex="-1"></a>         <span class="fl">61.0</span>, <span class="fl">54.3</span>),</span>
+<span id="cb54-39"><a href="análisis-de-conglomerados.html#cb54-39" tabindex="-1"></a>  <span class="at">X5 =</span> <span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">2.2</span>, <span class="fl">3.4</span>, <span class="fl">0.3</span>, <span class="fl">1.0</span>, <span class="sc">-</span><span class="fl">2.2</span>, <span class="fl">2.2</span>, <span class="fl">3.3</span>, <span class="fl">7.2</span>, <span class="fl">2.7</span>,</span>
+<span id="cb54-40"><a href="análisis-de-conglomerados.html#cb54-40" tabindex="-1"></a>         <span class="fl">6.5</span>, <span class="fl">3.7</span>, <span class="fl">6.4</span>, <span class="fl">1.4</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">9.2</span>, <span class="fl">9.0</span>, <span class="fl">2.7</span>, <span class="sc">-</span><span class="fl">2.1</span>, <span class="fl">3.5</span>,</span>
+<span id="cb54-41"><a href="análisis-de-conglomerados.html#cb54-41" tabindex="-1"></a>         <span class="fl">3.5</span>, <span class="fl">5.9</span>),</span>
+<span id="cb54-42"><a href="análisis-de-conglomerados.html#cb54-42" tabindex="-1"></a>  <span class="at">X6 =</span> <span class="fu">c</span>(<span class="dv">9077</span>, <span class="dv">5088</span>, <span class="dv">9212</span>, <span class="dv">6423</span>, <span class="dv">3300</span>, <span class="dv">11127</span>, <span class="dv">7642</span>, <span class="dv">13082</span>, <span class="dv">8406</span>, <span class="dv">6455</span>,</span>
+<span id="cb54-43"><a href="análisis-de-conglomerados.html#cb54-43" tabindex="-1"></a>         <span class="dv">17441</span>, <span class="dv">6154</span>, <span class="dv">7179</span>, <span class="dv">9673</span>, <span class="dv">6468</span>, <span class="dv">15991</span>, <span class="dv">5714</span>, <span class="dv">10140</span>, <span class="dv">13507</span>, <span class="dv">7287</span>,</span>
+<span id="cb54-44"><a href="análisis-de-conglomerados.html#cb54-44" tabindex="-1"></a>         <span class="dv">6650</span>, <span class="dv">10093</span>),</span>
+<span id="cb54-45"><a href="análisis-de-conglomerados.html#cb54-45" tabindex="-1"></a>  <span class="at">X7 =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">25.3</span>, <span class="fl">0.0</span>, <span class="fl">34.3</span>, <span class="fl">15.6</span>, <span class="fl">22.5</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">39.2</span>,</span>
+<span id="cb54-46"><a href="análisis-de-conglomerados.html#cb54-46" tabindex="-1"></a>         <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">50.2</span>, <span class="fl">0.0</span>, <span class="fl">0.9</span>, <span class="fl">0.0</span>, <span class="fl">8.3</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">41.1</span>,</span>
+<span id="cb54-47"><a href="análisis-de-conglomerados.html#cb54-47" tabindex="-1"></a>         <span class="fl">0.0</span>, <span class="fl">26.6</span>),</span>
+<span id="cb54-48"><a href="análisis-de-conglomerados.html#cb54-48" tabindex="-1"></a>  <span class="at">X8 =</span> <span class="fu">c</span>(<span class="fl">0.628</span>, <span class="fl">1.555</span>, <span class="fl">1.058</span>, <span class="fl">0.700</span>, <span class="fl">2.044</span>, <span class="fl">1.241</span>, <span class="fl">1.652</span>, <span class="fl">0.309</span>, <span class="fl">0.862</span>, <span class="fl">0.623</span>,</span>
+<span id="cb54-49"><a href="análisis-de-conglomerados.html#cb54-49" tabindex="-1"></a>         <span class="fl">0.768</span>, <span class="fl">1.897</span>, <span class="fl">0.527</span>, <span class="fl">0.588</span>, <span class="fl">1.400</span>, <span class="fl">0.620</span>, <span class="fl">1.920</span>, <span class="fl">1.108</span>, <span class="fl">0.636</span>, <span class="fl">0.702</span>,</span>
+<span id="cb54-50"><a href="análisis-de-conglomerados.html#cb54-50" tabindex="-1"></a>         <span class="fl">2.116</span>, <span class="fl">1.306</span>)</span>
+<span id="cb54-51"><a href="análisis-de-conglomerados.html#cb54-51" tabindex="-1"></a>)</span></code></pre></div>
+<p><strong>Ejercicio 2:</strong></p>
+<p><strong>Ejercicio 3:</strong></p>
 </div>
 </div>
-<div id="tutoriales-de-datacamp-sugeridos-1" class="section level2 hasAnchor" number="5.5">
-<h2><span class="header-section-number">5.5</span> Tutoriales de DataCamp sugeridos<a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="ejemplo-completo" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Ejemplo Completo<a href="análisis-de-conglomerados.html#ejemplo-completo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Según el diccionario de la Real Academia Española (RAE, 2014), bienestar proviene de la unión de las palabras bien y estar. Es el conjunto de las cosas necesarias para vivir bien. También lo define como vida holgada o abastecida de cuanto conduce a pasarlo bien y con tranquilidad.</p>
+<p>El presente trabajo tiene por objetivo analizar el bienestar de manera multivariante y territorial, para tal cometido se ha tomado varias dimensiones que afectan al bienestar como la marginación, la pobreza, la desigualdad. Adicionamente se toma en consideración al desarrollo humano que es una medida que favorece al bienestar.</p>
+<p>A nivel territorial se ha tomado los datos de Ecuador provenientes del Censo de Población y Vivienda 2010. Se usará por tanto una base de datos denominada <code>base.csv</code> que contiene las diferentes dimensiones a ser estudiadas.</p>
+<p>Usaremos la base de datos <code>base.csv</code> con las siguientes variables:</p>
+<ul>
+<li><p>Región natural: Costa, Sierra, Amazonía y Galápagos.</p></li>
+<li><p>Estado: 24 estados.</p></li>
+<li><p>Municipio: 24 capitales de estados.</p></li>
+<li><p>Dimensión 1: Porcentaje de población de 15 años o más analfabeta.</p></li>
+<li><p>Dimensión 2: Porcentaje de población de 15 años o más sin primaria completa.</p></li>
+<li><p>Dimensión 3: Porcentaje de ocupantes en viviendas particulares habitadas sin drenaje ni servicio sanitario.</p></li>
+<li><p>Dimensión 4: Porcentaje de ocupantes en viviendas particulares habitadas sin energía eléctrica.</p></li>
+<li><p>Dimensión 5: Porcentaje de ocupantes en viviendas particulares habitadas sin agua entubada.</p></li>
+<li><p>Dimensión 6: Porcentaje de viviendas particulares habitadas con algún nivel de hacinamiento.</p></li>
+<li><p>Dimensión 7: Porcentaje de ocupantes de viviendas particulares habitadas con piso de tierra.</p></li>
+<li><p>Dimensión 8: Porcentaje de población ocupada con ingresos de hasta dos salarios mínimos</p></li>
+<li><p>Densidad poblacional: habitantes por <span class="math inline">\(Km^{2}\)</span></p></li>
+<li><p>IDH: Índice de Desarrollo Humano</p></li>
+<li><p>Pobre: pobreza por consumo (%)</p></li>
+<li><p>Gini: Índice de desigualdad</p></li>
+</ul>
+<p>Para iniciar con nuestros análisis, cargamos la base de datos que utilizaremos.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="análisis-de-conglomerados.html#cb55-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb55-2"><a href="análisis-de-conglomerados.html#cb55-2" tabindex="-1"></a>base <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;D:/Users/hayde/Documents/R_sites/MultivariateStatisticalAnalysis/data/base.csv&quot;</span>)</span>
+<span id="cb55-3"><a href="análisis-de-conglomerados.html#cb55-3" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="análisis-de-conglomerados.html#cb55-4" tabindex="-1"></a>base2 <span class="ot">&lt;-</span> base[,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span><span class="sc">:</span><span class="dv">16</span>)]</span></code></pre></div>
+<p>en esta sección se describen gráficos multivariados. Se muestran las gráficas paralelas, que representa correlación entre variables, donde cada línea es una observación o individuo.</p>
+<p>Dado que en Ecuador existen cuatro regiones, a saber: la Sierra, Amazonía, la Costa e Insular, cada una se colorea con distintos tonos, a fin de visualizar los cambios por variable. Se aprecia que la variable sobre la proporción de piso de tierra es la que tiene la tasa más baja, seguida por el porcentaje de población sin educación primaria completa.</p>
+<p>Así mismo, se vislumbra que la región con el porcentaje más bajo de variables que reflejan vulnerabilidad es la Insular, seguida por la región de Sierra. Mientras que la Amazonía es la región con mayor vulnerabilidad, al presentar porcentajes más altos.</p>
+<p>Por otra parte, se distingue que hay correlación entre las variables de pobreza, piso de tierra, al menos dos salarios mínimos, y las relativas a la educación. Esto se ve ya que hay líneas paralelas, lo que implica un patrón en el país. En contraste, hay cruce entre líneas entre las vairables de porcentaje de población sin primaria completa, el índice de gini, y el Índice de Desarrollo humano.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="análisis-de-conglomerados.html#cb56-1" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb56-2"><a href="análisis-de-conglomerados.html#cb56-2" tabindex="-1"></a><span class="fu">ggparcoord</span>(base, <span class="at">columns =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">16</span>, <span class="dv">7</span>, <span class="dv">15</span>, <span class="dv">10</span>, <span class="dv">14</span>, <span class="dv">13</span>, <span class="dv">6</span>, <span class="dv">11</span>, <span class="dv">5</span>, <span class="dv">12</span>),  </span>
+<span id="cb56-3"><a href="análisis-de-conglomerados.html#cb56-3" tabindex="-1"></a>           <span class="at">groupColumn =</span> <span class="dv">2</span>, <span class="at">showPoints =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb56-4"><a href="análisis-de-conglomerados.html#cb56-4" tabindex="-1"></a>           <span class="at">title =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb56-5"><a href="análisis-de-conglomerados.html#cb56-5" tabindex="-1"></a>           <span class="at">alphaLines =</span> <span class="dv">1</span>, <span class="at">scale =</span> <span class="st">&quot;uniminmax&quot;</span></span>
+<span id="cb56-6"><a href="análisis-de-conglomerados.html#cb56-6" tabindex="-1"></a><span class="co">#           order = &quot;Outlying&quot;</span></span>
+<span id="cb56-7"><a href="análisis-de-conglomerados.html#cb56-7" tabindex="-1"></a>) </span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="MultivariateStatisticalAnalysis_files/figure-html/parellel%20plot-1.png" alt="Gráfico de paralelas" width="80%" />
+<p class="caption">
+(#fig:parellel plot)Gráfico de paralelas
+</p>
+</div>
+<p>Se muestra otro tipo de esquema. En las gráficas de estrellas, cada una es un estado, y la longitud de los “brazos” implica el rango de la variable. Se aprecia que aquellas regiones con estrellas más grandes en variables de marginación (i1-i8), son las mismas con estrellas más pequeñas para variables que expresan bienestas (como el índice de gini, idh, y densidad poblacional).</p>
+<div class="figure" style="text-align: center">
+<img src="MultivariateStatisticalAnalysis_files/figure-html/grafica%20estrellas-1.png" alt="Gráfico de estrellas" width="99%" />
+<p class="caption">
+(#fig:grafica estrellas)Gráfico de estrellas
+</p>
+</div>
+<p>El siguiente gráfico muestra la correlación entre variables. Se ha tachado las variables que no son significantes.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="MultivariateStatisticalAnalysis_files/figure-html/unnamed-chunk-2-1.png" alt="Correlograma con significancia" width="768" />
+<p class="caption">
+Figure 5.14: Correlograma con significancia
+</p>
+</div>
+</div>
+<div id="tutoriales-de-datacamp-sugeridos-1" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Tutoriales de DataCamp sugeridos<a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li><p><a href="http://app.datacamp.com/learn/courses/cluster-analysis-in-python">Análisis de conglomerados en Python</a></p></li>
 <li><p><a href="https://app.datacamp.com/learn/courses/cluster-analysis-in-r">Cluster Analysis in R</a></p></li>

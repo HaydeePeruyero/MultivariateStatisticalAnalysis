@@ -116,3 +116,6 @@ gráficos-de-paralelas
 estrellas
 plots-3d
 ejercicios-7
+fig:unnamed-chunk-2
+ejemplo-completo
+ejercicios-8
