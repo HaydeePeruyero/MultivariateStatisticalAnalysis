@@ -119,3 +119,14 @@ ejercicios-7
 fig:unnamed-chunk-2
 ejemplo-completo
 ejercicios-8
+fig:unnamed-chunk-3
+fig:unnamed-chunk-4
+fig:unnamed-chunk-5
+fig:unnamed-chunk-13-1
+fig:unnamed-chunk-13-2
+fig:pca-grupos
+análisis-de-componentes-principales-1
+análisis-de-clústers
+fig:unnamed-chunk-6
+fig:unnamed-chunk-16-1
+fig:unnamed-chunk-16-2

@@ -2,6 +2,7 @@
 
 ```{r setup4, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+library(reticulate)
 ```
 
 ```{r, include=FALSE}
@@ -1792,17 +1793,70 @@ utilities <- data.frame(
 
 ```
 
-**Ejercicio 2:**
+**Ejercicio 2:** Utilizando el conjunto de datos `mtcars`, incluido por defecto en R, que contiene información sobre distintas características de automóviles: consumo de gasolina, cilindrada, caballos de fuerza, peso, etc. Aplica k-means para identificar posibles grupos de automóviles con características mecánicas similares.
 
 
-**Ejercicio 3:**
 
+**Ejercicio 3:** El conjunto de datos Iris es un clásico en biología y machine learning.  Incluye mediciones de tres especies de flores del género Iris: Setosa, versicolor y virginica. Consta de 4 variables: sepal length, sepal width, petal length, petal width. Aplicar k-means para identificar patrones naturales en las mediciones de las flores y compararlos con las especies reales.
+
+<details>
+<summary><b>Solución en Python</b></summary>
+```{python, eval=FALSE}
+from sklearn.datasets import load_iris
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Cargar dataset 
+iris = load_iris()
+X = iris.data
+y = iris.target
+feature_names = iris.feature_names
+
+# Convertir a DataFrame
+df = pd.DataFrame(X, columns=feature_names)
+df["species"] = y
+
+# Escalar
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Aplicar K-means con k=3
+kmeans = KMeans(n_clusters=3, n_init=20, random_state=42)
+labels = kmeans.fit_predict(X_scaled)
+
+df["cluster"] = labels
+
+print("Centros de los clusters (estandarizados):")
+print(kmeans.cluster_centers_)
+
+print("\nTamaño de cada cluster:")
+print(df["cluster"].value_counts())
+
+# Visualización
+plt.figure(figsize=(7,5))
+scatter = plt.scatter(
+    df["sepal length (cm)"],
+    df["petal length (cm)"],
+    c=df["cluster"], s=80
+)
+
+plt.xlabel("Largo del sépalo")
+plt.ylabel("Largo del pétalo")
+plt.title("k-means en el dataset Iris (k = 3)")
+plt.colorbar(scatter, label="Cluster")
+plt.tight_layout()
+plt.show()
+```
+
+</details>
 
 ## Ejemplo Completo
 
 Según el diccionario de la Real Academia Española (RAE, 2014), bienestar proviene de la unión de las palabras bien y estar. Es el conjunto de las cosas necesarias para vivir bien. También lo define como vida holgada o abastecida de cuanto conduce a pasarlo bien y con tranquilidad. 
 
-El presente trabajo tiene por objetivo analizar el bienestar de manera multivariante y territorial, para tal cometido se ha tomado varias dimensiones que afectan al bienestar como la marginación, la pobreza, la desigualdad.  Adicionamente se toma en consideración al desarrollo humano que es una medida que favorece al bienestar.  
+El presente trabajo tiene por objetivo analizar el bienestar de manera multivariante y territorial, para tal cometido se ha tomado varias dimensiones que afectan al bienestar como la marginación, la pobreza, la desigualdad.  Adicionalmente se toma en consideración al desarrollo humano que es una medida que favorece al bienestar.  
 
 A nivel territorial se ha tomado los datos de Ecuador provenientes del Censo de Población y Vivienda 2010.  Se  usará por tanto una base de datos denominada `base.csv` que contiene las diferentes dimensiones a ser estudiadas. 
 
@@ -1855,6 +1909,8 @@ Así mismo, se vislumbra que la región con el porcentaje más bajo de variables
 
 Por otra parte, se distingue que hay correlación entre las variables de pobreza, piso de tierra, al menos dos salarios mínimos, y las relativas a la educación. Esto se ve ya que hay líneas paralelas, lo que implica un patrón en el país. En contraste, hay cruce entre líneas entre las vairables de porcentaje de población sin primaria completa, el índice de gini, y el Índice de Desarrollo humano. 
 
+<details>
+<summary><b>Plot de paralelas</b></summary>
 ```{r, parellel plot, include = TRUE, echo = TRUE,  fig.pos = 'H', fig.dim = c(9,7), out.width="80%", fig.align = "center", message=FALSE, fig.cap = 'Gráfico de paralelas'}
 library(GGally)
 ggparcoord(base, columns = c(8, 9, 16, 7, 15, 10, 14, 13, 6, 11, 5, 12),  
@@ -1865,10 +1921,13 @@ ggparcoord(base, columns = c(8, 9, 16, 7, 15, 10, 14, 13, 6, 11, 5, 12),
 ) 
 
 ```
+</details>
 
-Se muestra otro tipo de esquema. En las gráficas de estrellas, cada una es un estado, y la longitud de los "brazos" implica el rango de la variable. Se aprecia que aquellas regiones con estrellas más grandes en variables de marginación (i1-i8), son las mismas con estrellas más pequeñas para variables que expresan bienestas (como el índice de gini, idh, y densidad  poblacional).
+Se muestra otro tipo de esquema. En las gráficas de estrellas, cada una es un estado, y la longitud de los "brazos" implica el rango de la variable. Se aprecia que aquellas regiones con estrellas más grandes en variables de marginación (i1-i8), son las mismas con estrellas más pequeñas para variables que expresan bienestar (como el índice de gini, idh, y densidad  poblacional).
 
-```{r, grafica estrellas, include = TRUE, echo = FALSE,  fig.pos = 'H', fig.dim = c(9,7), out.width="99%", fig.align = "center", message=FALSE, fig.cap = 'Gráfico de estrellas'}
+<details>
+<summary><b>Plot de estrellas</b></summary>
+```{r, grafica estrellas, include = TRUE, echo = TRUE,  fig.pos = 'H', fig.dim = c(9,7), out.width="99%", fig.align = "center", message=FALSE, fig.cap = 'Gráfico de estrellas'}
 par(mfrow= c(2,2))#cuatro tipos de gráficas
 
 #Se segmenta a las variables en función del factor que expresan. 
@@ -1876,10 +1935,11 @@ stars(base2[, 3:7],len = 1.3, key.loc = c(-1,11), lwd = 1, col.segments = T, col
 stars(base2[, c(7:10, 13)],len = 1.3, key.loc = c(-1,11), lwd = 1, col.segments = T, col.lines = 1:24, )
 stars(base2[, c(11:12,14)], scale = T, len = 1.3, key.loc = c(-1,11), lwd = 1, col.segments = T, col.lines = 1:24)
 ```
+</details>
 
 El siguiente gráfico muestra la correlación entre variables. Se ha tachado las variables que no son significantes. 
 
-```{r, include = TRUE, echo = FALSE, fig.pos = 'H', fig.dim = c(8,5), fig.align = "center", message=FALSE, fig.cap = 'Correlograma con significancia'}
+```{r, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(8,5), fig.align = "center", message=FALSE, fig.cap = 'Correlograma con significancia'}
 library(corrplot)
 cor_base <- cor(base2[,3:14], use="complete.obs")
 
@@ -1903,6 +1963,414 @@ p.mat <- cor.mtest(cor_base)
 corrplot(cor_base, type = "upper", order = "hclust", tl.col = "black", tl.srt = 45, p.mat = p.mat, sig.level = 0.05)
 ```
 
+### Análisis de componentes principales
+
+
+El análisis de componenetes principales tiene como objetivo reducir la dimensión y conservar en lo posible su estructura, es decir la ”forma” de la nube de datos para esto el primer paro es obtener la matriz de correlaciones y la matriz de covarianzas.
+
+Cuando se trabaja con distintas unidades de medición, conviene hacer el análisis de componentes principales haciendo los cálculos con la matriz R de correlaciones. 
+
+Calculamos primero la matriz de correlación.
+
+```{r, include = TRUE, echo = TRUE, fig.cap="Gráfico de correlaciones", out.width = '70%', fig.pos = 'H', fig.align = "center"}
+base.cp1 <- data.matrix(base2)
+res1 <- cor.mtest(base.cp1, conf.level= .95)
+res2 <- cor.mtest(base.cp1, conf.level= .99)
+cor.mat <- cor(base2[,c(3:14)], use="complete.obs")
+
+corrplot(cor.mat)
+
+```
+
+La prueba de Kaiser-Meyer-Olkin (KMO) es una medida de qué tan adecuados son sus datos para el análisis factorial . La prueba mide la adecuación del muestreo para cada variable en el modelo y para el modelo completo. La estadística es una medida de la proporción de varianza entre variables que podrían ser varianza común.
+
+Como referencia, Kaiser puso los siguientes valores en los resultados:
+
+0.00 a 0.49 inaceptable.
+0.50 a 0.59 miserable.
+0,60 a 0,69 mediocre.
+0.70 a 0.79 medio.
+0,80 a 0,89 meritorio.
+0.90 a 1.00 maravilloso.
+
+En nuestro caso observamos que al remover las variables "dp", "gini", "i2" e "i7" el valor del test KMO sube de 0.62 a 0.79, por este motivo decidimos remover estas variables para los análisis siguientes, ademas en la grafica de la matriz de correlaciones podemos observar que para las variables i7 i2 no se observa correlación con la mayoría de las otras variables.
+
+```{r, include = TRUE, echo = TRUE}
+library(psych)
+library(dplyr)
+base.cp1 <- base2[, 3:14]
+kmo.1 <-KMO(base.cp1)
+kmo.1
+base.cp1 <- base.cp1 %>%
+    dplyr::select(-i2, -i7, -dp, -gini)
+
+kmo.2 <- KMO(base.cp1)
+kmo.2
+```
+
+```{r, include = TRUE, echo = TRUE, fig.cap="Gráfico de correlaciones ajustado", out.width = '70%', fig.pos = 'H', fig.align = "center"}
+cor.mat.aj <- cor(base.cp1, use = "complete.obs")
+corrplot(cor.mat.aj)
+```
+Vamos a proceder a realizar el análisis de componentes principales.
+
+
+```{r, include = TRUE, echo = TRUE}
+nombre.mun <- base2$municipio
+
+rownames(base.cp1)<- nombre.mun
+data.matrix(base.cp1) 
+cp1 <- princomp(base.cp1, cor=TRUE)
+summary(cp1)
+
+```
+Con la instrucción `loadings` lo que obtenemos son las cargas de los componentes principales. Es decir, lo que obtenemos son los coeficientes que se usarán en las combinaciones lineales para calcular cada componente principal. Por ejemplo, para un conjunto de datos $X_1, X_2,..., X_p$ la primera columna que está denotada por `Comp.1` tiene los coeficientes $\phi_{11}, \phi_{21},... ,\phi_{p1}$ de la combinación lineal con la que se obtiene la primera componente principal:
+$$Z_1=\phi_{11}X_1+\phi_{21}X_2+... +\phi_{p1}X_p$$ 
+Esta primera componente principal será la que refleje la mayor variabilidad de los datos. 
+
+```{r loadings, include = TRUE, echo = TRUE}
+load.base.cp1 <- cp1$loadings
+load.base.cp1
+```
+
+En la primera fila de la instrucción `summary` tenemos la desviación estándar, para calcular la varianza debemos elevar al cuadrado cada una de las entradas. 
+
+```{r varianza, include = TRUE, echo = TRUE}
+varianza.cp1 <- (cp1$sdev)^2
+varianza.cp1
+```
+
+
+Para obtener la proporción de la varianza que explica cada componente lo que tenemos que hacer es dividir el valor de la varianza de la componente $j$ entre la suma de las varianzas de todas las componentes. 
+El siguiente código muestra como realizarlo. Además, en la instrucción `summary` vemos que estos valores coinciden con los de la segunda fila.
+
+```{r proporcion_varianza, include = TRUE, echo = TRUE}
+proporcion.varianza.cp1 <- (cp1$sdev)^2/sum((cp1$sdev)^2)
+proporcion.varianza.cp1
+```
+
+```{r porcentaje_varianza_total_cada_cp, include = TRUE, echo = TRUE}
+#si lo que queremos es el porcentaje, entonces solo hay que multiplicar por 100
+porcentaje_varianza <- (cp1$sdev)^2*100/sum((cp1$sdev)^2)
+```
+
+Para encontrar la proporción de varianza acumulada, lo que tenemos que hacer es dividir la suma de los primeros $j-$ésimos eigenvalores entre entre la suma de todos los eigenvalores. 
+
+```{r acumulada_varianza, include = TRUE, echo = TRUE}
+proporcion_acumulada_varianza <- cumsum(proporcion.varianza.cp1)
+```
+
+
+
+```{r, include = TRUE, echo = TRUE}
+eigen_base <- (eigen(cor.mat.aj)) #cálculamos eigen de la matriz cuadrada de correlación
+```
+
+La varianza de las Componentes Principales, es igual a los eigenvalores. 
+Es decir, la desviación estándar de las componentes, es igual a la raiz de los valores propios. 
+```{r, include = TRUE, echo = TRUE}
+ desv_base <- cp1$sdev
+
+desv_rounded_base <- round(cp1$sdev, 1)
+```
+
+```{r, include = TRUE, echo = TRUE}
+round(sqrt(eigen_base$values),1) == desv_rounded_base
+```
+
+Por otra parte, se puede afirmar que la traza de la matriz lambda es igual a la suma de la varianza de cada valor observado.
+```{r, include = TRUE, echo = TRUE}
+lambda_matriz <- round(diag(eigen_base$values), 2)
+lambda_matriz
+traza_lambda <- sum(diag(lambda_matriz))
+traza_lambda
+```
+
+Además, el porcentaje de la varianza generalizada que es explicado por la componente $j$-ésima es igual a la relación que hay entre los  eigenvalores divididos por la suma de la diagonal de eigenvalores (que la traza es igual a 8). Es decir, esto es igual al porcentaje de varianza acumulada por la función `summary`, y hecho a mano con la suma acumulada de los valores propios.
+
+```{r, include = TRUE, echo = TRUE}
+cumsum(eigen_base$values/traza_lambda) 
+```
+
+
+Esta matriz es la diagonal con los eigenvalores.
+```{r, include = TRUE, echo = TRUE}
+lambda_matriz <- round(diag(eigen_base$values), 2)
+lambda_matriz
+```
+
+
+La traza de la matriz $\Lambda$ es igual a la suma de las varianzas acumuladas por los Componentes.
+```{r, include = TRUE, echo = TRUE}
+traza_lambda <- sum(diag(lambda_matriz))
+traza_lambda
+```
+
+
+
+```{r grafico_codo_pca, include = TRUE, echo = TRUE, fig.cap="Gráfico de codo", out.width = '60%', fig.pos = 'H', fig.align = "center"}
+library(factoextra)
+
+res.pca <- prcomp(base.cp1)
+
+fviz_eig(res.pca)
+```
+
+Recordemos que la regla de Kaiser consiste en tomar todas las componentes cuya varianza sea mayor a 1. Esto se debe a que si consideramos variables son independientes, entonces las componentes principales serán las mismas que las de las variables originales y para el caso de la matriz de correlación todas tendrán varianza 1. Entonces cualquier componente con varianza menor a 1 tiene menos información que las variables originales. 
+
+La librería `nFactors` tiene implementada la regla de Kaiser.
+```{r, include = TRUE, echo = TRUE}
+library(nFactors)
+ev_cor <- eigen(cor.mat.aj)
+ap <- parallel(subject=nrow(base.cp1),var=ncol(base.cp1),
+               rep=100,cent=.05)
+num_cp <- nScree(x=ev_cor$values, aparallel=ap$eigen$qevpea, cor = TRUE)
+num_cp
+```
+
+Bajo la regla de Kaiser nos quedamos con 2 componentes unicamente.
+
+```{r, include = TRUE, echo = TRUE, fig.cap="Biplot 1ra y 2da componente", out.width = '130%', fig.pos = 'H', fig.align = "center"}
+fviz_pca_biplot(cp1, repel = TRUE, habillage=base2$region, gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")
+)
+
+fviz_pca_biplot(cp1, repel = TRUE, 
+                habillage=base2$region, 
+                addEllipses=TRUE,
+                ellipse.level=0.6, 
+                col.var = "brown"
+)
+
+```
+Podemos observar en el biplot que todos los indicadores de pobreza apuntan al lado derecho, podríamos concluir que los municipios mas pobres serían Orellana, Tena y Guaranda, asi como el indice de desarrollo humano apunta hacia el lado izquierdo, dado que es un valor que en concepto es contrario a los indicadores de pobreza, en este sentido observamos que las ciudades menos pobres son: Quito, que es la capital. San Cristobal y Cuenca. Esta dristribución correlaciona con lo que se observará en los análisis de factores y clusters.
+
+Podemos tambien obsrvar que las ciudades se agruparon en gran medida de acuerdo a la region a la que pertenecen, es decir si son parte de la region de la Amazonía, de la costa, la sierra o forman parte de la región insular.
+
+Los indicadores i4 (%hogares sin energía eléctrica), i5 (%hogares sin servicio de agua entubada) e i6 (%hogares con algun nivel de hacinamiento), se puede observar que estar tres dimensiones apuntan hacia el cuarto cuadrante que es donde se agrupan las ciudades que se encuantran en la region de la Amazonía, una probable hipótesis, sería que las condiciones geográficas específicas de esta region encarecen o dificultan la construcción de infraestructura básica para poder otorgar servicios de electricidad, agua entubada y la construccion de vivienda.
+
+Los indicadores i1 (% de poblacion de 15 años o mas analfabeta), i3 (% de ocupantes sin servicio de drenaje ni servicio sanitario), e i8 (porcentaje de poblacion coupada con 2 salarios mínimos o menos), estos indicadores apuntatan hacia el cuadrante 1 donde las ciudades ubicadas en esta direccion son predominantemente ciudades en la region de la sierra, lo cual podría sugerir como hipotesis que en esta region la infraestructura para escuelas o la disponibilidad de maestros sería menor a las otras regiones, en el caso del i3, la deficiencia hace referencia a la infraestructura de servicios basicos, y se encuantra muy cercana al cuadrante 4 junto con los otrs indicadores de carencias en cuaestion de viviendas. el indicador i8 que habla de la percepcion economica de las personas observamos que se encuentra en el cuadrante 1 y podriamos cuncluir que la ciudad de Guaranda es la de menor ingreso económico, aunque tambien es la que presenta una situación de pobreza mayor al resto de ciudades.
+
+El indicador de Indice de Desarrollo Humano IDH como se mencionó anteriormente es un indicador contrario a los indicadores de pobreza antes mencionados, por eso no es de sorprendernos que apunte en dicreccion contraria, ademas es interesante observar que practicamente forma un vector horizontal al eje ordenado, podrias plantear como hipótesis que el IDH representa un buen parametro para medir la No pobreza de las ciudades analizadas.
+
+
+### Análisis de clústers
+
+Vamos ahora a realizar el análisis de clústers. Este tipo de análisis nos permite encontar grupos dentro de un conjunto de observaciones. Estos grupos se forman de tal manera que las observaciones que quedan dentro de un mismo grupo tienen características similares entre si y diferentes a las de otros grupos. 
+
+Todos los métodos de clúster tienen en común que para poder realizar los grupos deben de definir lo que es que dos observaciones esten cerca o no. Para esto lo que se hace es definir una similitud o disimilitud entre las observaciones. En este caso, decidimos trabajar con la métrica euclidiana para obtener la matriz de distancias y así poder definir si dos ciudades estaban cerca o no de acuerdo a las variables estudiadas. Para calcular la matriz de distancias usamos la función `dist` del paquete `stats`. 
+
+
+
+```{r matriz_de_distancia, include = TRUE, echo = TRUE}
+mat_dist<- dist(x=base.cp1, method = "euclidean")
+matriz_dist <- as.matrix(mat_dist)
+```
+
+
+En el gráfico siguiente podemos visualizar la matriz de distancias y podemos empezar a darnos cuenta que si se forman ciertos grupos. Las intensidades azules indican que la disimilitud entre las ciudades es alta y las intensidades rojas que la disimilitud es baja.
+
+```{r visualizar_matriz, collapse=TRUE, include = TRUE, echo = TRUE, fig.pos = 'H', fig.align = "center", message=FALSE, fig.cap = 'Heatmap de la matriz de distancias' }
+
+fviz_dist(dist.obj = mat_dist, lab_size = 5)
+  #theme(legend.position = "none")+
+  
+```
+
+Ahora, vamos a generar los clústers con diferentes métodos para analizar cual es el más conveniente en este caso.  
+
+```{r  clusters, include = TRUE, echo = TRUE}
+set.seed(12345)
+hc_single <- hclust(d=mat_dist, method = "single")
+hc_average <- hclust(d=mat_dist, method = "average")
+hc_complete <- hclust(d=mat_dist, method = "complete")
+hc_ward <- hclust(d=mat_dist, method = "ward.D2")
+hc_median <- hclust(d=mat_dist, method = "median")
+hc_centroid <- hclust(d=mat_dist, method = "centroid")
+```
+
+Procedemos a graficar sus respectivos dendrogramas.
+
+```{r dendograma_average, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(14,7), fig.align = "center", message=FALSE, fig.cap = 'Dendrograma usando el método de Promedio'}
+fviz_dend(x = hc_average,
+          cex = 0.4,
+          main = "",
+          xlab = "Municipios",
+          ylab = "Distancia",
+          sub = "",
+          horiz = TRUE)
+```
+
+```{r dendograma_Ward, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(14,7), fig.align = "center", message=FALSE, fig.cap = 'Dendrograma usando el método de Ward' }
+fviz_dend(x = hc_ward,
+          cex = 0.3,
+          main = "",
+          xlab = "Municipios",
+          ylab = "Distancia",
+          sub = "",
+          horiz = TRUE)
+```
+
+
+```{r dendograma_single, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(14,7), fig.align = "center", message=FALSE, fig.cap = 'Dendrograma usando el método del vecino más cercano' }
+fviz_dend(x = hc_single,
+          cex = 0.4,
+          main = "",
+          xlab = "Municipios",
+          ylab = "Distancia",
+          sub = "",
+          horiz = TRUE)
+```
+
+```{r dendograma_complete, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(14,7), fig.align = "center", message=FALSE, fig.cap = 'Dendrograma usando el método de complete' }
+fviz_dend(x = hc_complete,
+          cex = 0.4,
+          main = "",
+          xlab = "Municipios",
+          ylab = "Distancia",
+          sub = "",horiz = TRUE)
+
+```
+
+
+```{r dendograma_median, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(14,7), fig.align = "center", message=FALSE, fig.cap = 'Dendrograma usando el método de mediana' }
+fviz_dend(x = hc_median,
+          cex = 0.4,
+          main = "",
+          xlab = "Municipios",
+          ylab = "Distancia",
+          sub = "",horiz = TRUE)
+```
+
+
+```{r dendograma_centroide, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(14,7), fig.align = "center", message=FALSE, fig.cap = 'Dendrograma usando el método del centroide'}
+fviz_dend(x = hc_centroid,
+          cex = 0.4,
+          main = "",
+          xlab = "Municipios",
+          ylab = "Distancia",
+          sub = "",horiz = TRUE)
+```
+
+
+Después de analizar los distintos dendrogramas para las diferentes ligas, en los que se aprecian mejor los grupos son los métodos de `ward` y `average`. Para evaluar cual dendrograma reflejaba mejor las distancias originales entre las observaciones, calculamos el coeficiente de correlación entre las distancias cofenéticas del dendrograma y la matriz de distancias originales, esta información está en el cuadro siguiente. Entre más cercano este el coeficiente de correlación a 1 nos indica que el dendrograma refleja mejor las distancias originales. 
+
+
+```{r comparacion_coef, collapse=TRUE, include = TRUE, echo = TRUE}
+library(kableExtra)
+library(purrr)
+# vector con nombre de los métodos
+m <- c( "average", "single", "complete", "ward.D2", "median", "centroid")
+names(m) <- c( "average", "single", "complete", "ward.D2", "median", "centroid")
+# Función para calcular el coeficiente de correlación
+coef_cor <- function(x) {
+  cor(x=mat_dist, cophenetic(hclust(d=mat_dist, method = x)))
+}
+# Tabla comparativa
+coef_tabla <- map_dbl(m, coef_cor) 
+
+kbl(coef_tabla, booktabs = TRUE, align = "c",
+    caption = "Cuadro comparativo de los coeficientes de correlación",
+    col.names = rownames(coef_tabla)) %>%
+  kable_styling(position = "center",
+                latex_options = c("repeat_header", "hold_position"),
+                font_size = 9) %>%
+  add_header_above(c("Método", "Coeficiente de correlación"))
+
+```
+
+Podemos observar que el dendrograma que mejor refleja la similitud entre las observaciones es la del método `average` y el segundo mejor es el del método `ward`. Decidimos usar el dendrograma de `Ward` ya que es en el que se visualizan mejor los grupos que se forman.
+
+Para determinar cuantos grupos nos conviene más tomar, usamos dos métodos: el método del codo y el paquete `NbClust`. Este paquete usa 30 índices para determinar el número más relevante de clústers variando todas las combinaciones de número de clústers, distancias y métodos. 
+
+```{r num_clusters_codo, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(14,7), fig.align = "center", message=FALSE, fig.cap = 'Número óbtimo de clusters usando el método del codo' }
+fviz_nbclust(x = base.cp1, FUNcluster = hcut, method = "wss", diss = mat_dist, k.max = 7) +
+  labs(title = "Número óptimo de clusters")
+
+```
+
+Podemos observar en la gráfica de codo que en 3 es donde se forma el codo, así que esto nos diría que debemos considerar 3 clústers.
+
+Usando el paquete 'NbClust' obtenemos los siguientes resultados. En la última gráfica de barras que se muestra es claro que deberíamos tomar 3 clústers. 
+
+```{r num_clusters_NbClust, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(14,7), fig.align = "center", message=FALSE, fig.cap = 'Número óbtimo de clusters usando el paquete NbClust' }
+library(NbClust)
+
+basef_scaled <- scale(base.cp1)
+
+res.nbclust <- NbClust(basef_scaled, distance = "euclidean",
+                       min.nc = 2, max.nc = 9, 
+                       method = "ward.D2", index ="all")
+
+best <- as.data.frame(res.nbclust$Best.nc)
+clusters <- as.numeric(best["Number_clusters", ])
+freq <- as.data.frame(table(clusters))
+colnames(freq) <- c("clusters", "freq")
+
+ggplot(freq, aes(x = clusters, y = freq)) +
+  geom_col(fill = "#2E9FDF") +
+  theme_minimal() +
+  labs(
+    x = "Número de clusters",
+    y = "Frecuencia como óptimo",
+    title = "Número óptimo de clusters según índices de NbClust"
+  )
+
+```
+
+Entonces, el mejor número de cluster que podemos tomar es 3. Vamos a proceder a encontrar el punto de corte del dendrograma y a identificar los grupos.
+
+El valor de $y$ al cual tomaremos el corte se obtiene como el promedio de las alturas obtenidas entre el grupo $3$ y el grupo $4$.
+
+```{r, include = TRUE, echo = TRUE}
+y <- round((hc_ward$height[22] + hc_average$height[21]) / 2, 5)
+y
+```
+
+Por lo tanto, el corte debe realizarse al nivel $y =$ `r y`. En el dendograma pueden identificarse los grupos que se forman al realizar dicho corte.
+
+```{r grupos_dendograma, include = TRUE, echo = TRUE, fig.pos = 'H', fig.dim = c(14,7), fig.align = "center", message=FALSE, fig.cap = 'Dendrograma con 3 grupos'}
+fviz_dend(x = hc_ward,
+          k = 3,
+          k_colors = c("#DE3A17", "#00AFBB", "#1131E7"),
+          color_labels_by_k = TRUE,
+          rect_border = c("#2E9FDF", "#00AFBB", "#E7B800", "#FC4E07"),
+          cex = 0.4,
+          xlab = "Municipios",
+          ylab = "Distancia",
+          sub = "", horiz = TRUE) +
+  geom_hline(yintercept = y, linetype = "dashed") +
+  labs(title = "Dendrograma",
+       subtitle = "Método de Ward, k = 3"
+       )
+```
+
+Podemos visualizar también estos grupos al hacer PCA y observamos en la figura siguiente.
+
+```{r pca-grupos, include = TRUE, echo = TRUE, fig.pos = 'H', fig.align = "center", message=FALSE, fig.cap = 'Grupos y PCA'}
+
+fviz_cluster(object = list(data=base.cp1, cluster=cutree(hc_ward, k=3)),
+             ellipse.type = "convex", repel = TRUE, show.clust.cent = FALSE,
+             labelsize = 8)  +
+  labs(title = "Clustering jerárquicos + Proyección PCA",
+       subtitle = "Distancia euclídea, Método Ward, K=3") +
+  theme_bw() +
+  theme(legend.position = "bottom")
+```
+
+Guardamos el corte realizado para obtener de manera explícita los grupos y poder presentarlos en la siguiente tabla.
+
+```{r, include = TRUE, echo = TRUE}
+# grupos obtenidos
+grupos_ward <-sort(cutree(hc_ward, 3))
+grupos_ward
+```
+
+Lo que podemos notar al realizar los grupos es que si quedan agrupados con respecto a su bienestar general, en el grupo 1 están los grupos de mayor bienestar/riqueza, en el grupo 2 los de riqueza intermedia y en el grupo 3 los más pobres o de menor bienestar.
+
+
+Podemos concluir que existen agrupaciones naturales respecto al bienestar, los municipios con mayor bienestar se encuentran en la sierra y unos pocos en la costa mientras los de menor bienestar en la Amazonía.
+
+**Pendiente:** Análisis de factores y análisis de discriminante en este mismo set de datos.
 
 ## Tutoriales de DataCamp sugeridos
 
@@ -1911,3 +2379,12 @@ corrplot(cor_base, type = "upper", order = "hclust", tl.col = "black", tl.srt = 
 2) [Cluster Analysis in R](https://app.datacamp.com/learn/courses/cluster-analysis-in-r)
 
 *Otro material sugerido:* [BiotrAIn course: Concepts, approaches and applications of Artificial Intelligence in bioscience](https://github.com/biotrain-latam/BiotrAIn-pilot-course/tree/main/Module%202%20Clustering)
+
+**Otros tutoriales:** 
+- https://rpubs.com/Dariel1102/1046632, 
+
+- https://rpubs.com/elias_jurgen/605966,
+
+- https://github.com/jlmelville/uwot
+
+- https://umap-learn.readthedocs.io/en/latest/clustering.html
