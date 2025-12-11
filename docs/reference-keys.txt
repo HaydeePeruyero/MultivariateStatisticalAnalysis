@@ -130,3 +130,4 @@ análisis-de-clústers
 fig:unnamed-chunk-6
 fig:unnamed-chunk-16-1
 fig:unnamed-chunk-16-2
+otros-métodos

@@ -263,12 +263,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4.1" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#k-means"><i class="fa fa-check"></i><b>5.4.1</b> K-means</a></li>
 <li class="chapter" data-level="5.4.2" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#ejercicios-7"><i class="fa fa-check"></i><b>5.4.2</b> Ejercicios</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#ejemplo-completo"><i class="fa fa-check"></i><b>5.5</b> Ejemplo Completo</a>
+<li class="chapter" data-level="5.5" data-path="04-AC.html"><a href="#otros-m%C3%A9todos"><i class="fa fa-check"></i><b>5.5</b> Otros métodos</a></li>
+<li class="chapter" data-level="5.6" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#ejemplo-completo"><i class="fa fa-check"></i><b>5.6</b> Ejemplo Completo</a>
 <ul>
-<li class="chapter" data-level="5.5.1" data-path="04-AC.html"><a href="#an%C3%A1lisis-de-componentes-principales-1"><i class="fa fa-check"></i><b>5.5.1</b> Análisis de componentes principales</a></li>
-<li class="chapter" data-level="5.5.2" data-path="04-AC.html"><a href="#an%C3%A1lisis-de-cl%C3%BAsters"><i class="fa fa-check"></i><b>5.5.2</b> Análisis de clústers</a></li>
+<li class="chapter" data-level="5.6.1" data-path="04-AC.html"><a href="#an%C3%A1lisis-de-componentes-principales-1"><i class="fa fa-check"></i><b>5.6.1</b> Análisis de componentes principales</a></li>
+<li class="chapter" data-level="5.6.2" data-path="04-AC.html"><a href="#an%C3%A1lisis-de-cl%C3%BAsters"><i class="fa fa-check"></i><b>5.6.2</b> Análisis de clústers</a></li>
 </ul></li>
-<li class="chapter" data-level="5.6" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1"><i class="fa fa-check"></i><b>5.6</b> Tutoriales de DataCamp sugeridos</a></li>
+<li class="chapter" data-level="5.7" data-path="análisis-de-conglomerados.html"><a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1"><i class="fa fa-check"></i><b>5.7</b> Tutoriales de DataCamp sugeridos</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="04-AC.html"><a href="#an%C3%A1lisis-de-discriminante"><i class="fa fa-check"></i><b>6</b> Análisis de Discriminante</a></li>
 <li class="chapter" data-level="7" data-path="04-AC.html"><a href="#ap%C3%A9ndices"><i class="fa fa-check"></i><b>7</b> Apéndices</a>
@@ -2754,8 +2755,12 @@ Además, para evitar que las diferencias en escala entre las variables influyan 
 </details>
 </div>
 </div>
-<div id="ejemplo-completo" class="section level2 hasAnchor" number="5.5">
-<h2><span class="header-section-number">5.5</span> Ejemplo Completo<a href="análisis-de-conglomerados.html#ejemplo-completo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="otros-métodos" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Otros métodos<a href="#otros-m%C3%A9todos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Otros métodos de clustering son por ejemplo <a href="https://rpubs.com/elias_jurgen/605966">DBSCAN</a> y <a href="https://umap-learn.readthedocs.io/en/latest/clustering.html">UMAP</a>. Existen también métodos basados en modelos estadísticos, una buena referencia es el libro de Johnson y Wichern.</p>
+</div>
+<div id="ejemplo-completo" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> Ejemplo Completo<a href="análisis-de-conglomerados.html#ejemplo-completo" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Según el diccionario de la Real Academia Española (RAE, 2014), bienestar proviene de la unión de las palabras bien y estar. Es el conjunto de las cosas necesarias para vivir bien. También lo define como vida holgada o abastecida de cuanto conduce a pasarlo bien y con tranquilidad.</p>
 <p>El presente trabajo tiene por objetivo analizar el bienestar de manera multivariante y territorial, para tal cometido se ha tomado varias dimensiones que afectan al bienestar como la marginación, la pobreza, la desigualdad. Adicionalmente se toma en consideración al desarrollo humano que es una medida que favorece al bienestar.</p>
 <p>A nivel territorial se ha tomado los datos de Ecuador provenientes del Censo de Población y Vivienda 2010. Se usará por tanto una base de datos denominada <code>base.csv</code> que contiene las diferentes dimensiones a ser estudiadas.</p>
@@ -2850,8 +2855,8 @@ Además, para evitar que las diferencias en escala entre las variables influyan 
 Figure 5.14: Correlograma con significancia
 </p>
 </div>
-<div id="análisis-de-componentes-principales-1" class="section level3 hasAnchor" number="5.5.1">
-<h3><span class="header-section-number">5.5.1</span> Análisis de componentes principales<a href="#an%C3%A1lisis-de-componentes-principales-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="análisis-de-componentes-principales-1" class="section level3 hasAnchor" number="5.6.1">
+<h3><span class="header-section-number">5.6.1</span> Análisis de componentes principales<a href="#an%C3%A1lisis-de-componentes-principales-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>El análisis de componenetes principales tiene como objetivo reducir la dimensión y conservar en lo posible su estructura, es decir la ”forma” de la nube de datos para esto el primer paro es obtener la matriz de correlaciones y la matriz de covarianzas.</p>
 <p>Cuando se trabaja con distintas unidades de medición, conviene hacer el análisis de componentes principales haciendo los cálculos con la matriz R de correlaciones.</p>
 <p>Calculamos primero la matriz de correlación.</p>
@@ -3112,8 +3117,8 @@ Figure 5.18: Biplot 1ra y 2da componente
 <p>Los indicadores i1 (% de poblacion de 15 años o mas analfabeta), i3 (% de ocupantes sin servicio de drenaje ni servicio sanitario), e i8 (porcentaje de poblacion coupada con 2 salarios mínimos o menos), estos indicadores apuntatan hacia el cuadrante 1 donde las ciudades ubicadas en esta direccion son predominantemente ciudades en la region de la sierra, lo cual podría sugerir como hipotesis que en esta region la infraestructura para escuelas o la disponibilidad de maestros sería menor a las otras regiones, en el caso del i3, la deficiencia hace referencia a la infraestructura de servicios basicos, y se encuantra muy cercana al cuadrante 4 junto con los otrs indicadores de carencias en cuaestion de viviendas. el indicador i8 que habla de la percepcion economica de las personas observamos que se encuentra en el cuadrante 1 y podriamos cuncluir que la ciudad de Guaranda es la de menor ingreso económico, aunque tambien es la que presenta una situación de pobreza mayor al resto de ciudades.</p>
 <p>El indicador de Indice de Desarrollo Humano IDH como se mencionó anteriormente es un indicador contrario a los indicadores de pobreza antes mencionados, por eso no es de sorprendernos que apunte en dicreccion contraria, ademas es interesante observar que practicamente forma un vector horizontal al eje ordenado, podrias plantear como hipótesis que el IDH representa un buen parametro para medir la No pobreza de las ciudades analizadas.</p>
 </div>
-<div id="análisis-de-clústers" class="section level3 hasAnchor" number="5.5.2">
-<h3><span class="header-section-number">5.5.2</span> Análisis de clústers<a href="#an%C3%A1lisis-de-cl%C3%BAsters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="análisis-de-clústers" class="section level3 hasAnchor" number="5.6.2">
+<h3><span class="header-section-number">5.6.2</span> Análisis de clústers<a href="#an%C3%A1lisis-de-cl%C3%BAsters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Vamos ahora a realizar el análisis de clústers. Este tipo de análisis nos permite encontar grupos dentro de un conjunto de observaciones. Estos grupos se forman de tal manera que las observaciones que quedan dentro de un mismo grupo tienen características similares entre si y diferentes a las de otros grupos.</p>
 <p>Todos los métodos de clúster tienen en común que para poder realizar los grupos deben de definir lo que es que dos observaciones esten cerca o no. Para esto lo que se hace es definir una similitud o disimilitud entre las observaciones. En este caso, decidimos trabajar con la métrica euclidiana para obtener la matriz de distancias y así poder definir si dos ciudades estaban cerca o no de acuerdo a las variables estudiadas. Para calcular la matriz de distancias usamos la función <code>dist</code> del paquete <code>stats</code>.</p>
 <div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="análisis-de-conglomerados.html#cb101-1" tabindex="-1"></a>mat_dist<span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="at">x=</span>base.cp1, <span class="at">method =</span> <span class="st">&quot;euclidean&quot;</span>)</span>
@@ -3435,8 +3440,8 @@ Figure 5.19: Grupos y PCA
 <p><strong>Pendiente:</strong> Análisis de factores y análisis de discriminante en este mismo set de datos.</p>
 </div>
 </div>
-<div id="tutoriales-de-datacamp-sugeridos-1" class="section level2 hasAnchor" number="5.6">
-<h2><span class="header-section-number">5.6</span> Tutoriales de DataCamp sugeridos<a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="tutoriales-de-datacamp-sugeridos-1" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> Tutoriales de DataCamp sugeridos<a href="análisis-de-conglomerados.html#tutoriales-de-datacamp-sugeridos-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li><p><a href="http://app.datacamp.com/learn/courses/cluster-analysis-in-python">Análisis de conglomerados en Python</a></p></li>
 <li><p><a href="https://app.datacamp.com/learn/courses/cluster-analysis-in-r">Cluster Analysis in R</a></p></li>

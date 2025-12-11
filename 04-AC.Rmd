@@ -1852,6 +1852,11 @@ plt.show()
 
 </details>
 
+
+## Otros métodos
+
+Otros métodos de clustering son por ejemplo [DBSCAN](https://rpubs.com/elias_jurgen/605966) y [UMAP](https://umap-learn.readthedocs.io/en/latest/clustering.html). Existen también métodos basados en modelos estadísticos, una buena referencia es el libro de Johnson y Wichern.
+
 ## Ejemplo Completo
 
 Según el diccionario de la Real Academia Española (RAE, 2014), bienestar proviene de la unión de las palabras bien y estar. Es el conjunto de las cosas necesarias para vivir bien. También lo define como vida holgada o abastecida de cuanto conduce a pasarlo bien y con tranquilidad. 
